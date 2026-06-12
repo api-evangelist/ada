@@ -1,0 +1,114 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "ada": "https://docs.ada.cx/vocabulary#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "KnowledgeSource": "ada:KnowledgeSource",
+    "KnowledgeArticle": "ada:KnowledgeArticle",
+    "EndUser": "ada:EndUser",
+    "Conversation": "ada:Conversation",
+    "Message": "ada:Message",
+    "Channel": "ada:Channel",
+    "Webhook": "ada:Webhook",
+    "Integration": "ada:Integration",
+    "DataSubjectRequest": "ada:DataSubjectRequest",
+
+    "sourceId": {
+      "@id": "ada:sourceId",
+      "@type": "xsd:string"
+    },
+    "articleId": {
+      "@id": "ada:articleId",
+      "@type": "xsd:string"
+    },
+    "chatterId": {
+      "@id": "ada:chatterId",
+      "@type": "xsd:string"
+    },
+    "endUserId": {
+      "@id": "ada:endUserId",
+      "@type": "xsd:string"
+    },
+    "conversationId": {
+      "@id": "ada:conversationId",
+      "@type": "xsd:string"
+    },
+    "agentHandle": {
+      "@id": "ada:agentHandle",
+      "@type": "xsd:string"
+    },
+    "bearerToken": {
+      "@id": "ada:bearerToken",
+      "@type": "xsd:string"
+    },
+    "isEscalated": {
+      "@id": "ada:isEscalated",
+      "@type": "xsd:boolean"
+    },
+    "isEngaged": {
+      "@id": "ada:isEngaged",
+      "@type": "xsd:boolean"
+    },
+    "isTestUser": {
+      "@id": "ada:isTestUser",
+      "@type": "xsd:boolean"
+    },
+    "dateCreated": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "dateUpdated": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "language": {
+      "@id": "schema:inLanguage",
+      "@type": "xsd:string"
+    },
+    "platform": {
+      "@id": "ada:platform",
+      "@type": "xsd:string"
+    },
+    "nextPageUri": {
+      "@id": "ada:nextPageUri",
+      "@type": "xsd:anyURI"
+    },
+    "webhookUrl": {
+      "@id": "ada:webhookUrl",
+      "@type": "xsd:anyURI"
+    },
+    "signingSecret": {
+      "@id": "ada:signingSecret",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url",
+      "@type": "xsd:anyURI"
+    },
+    "items": {
+      "@id": "ada:items",
+      "@container": "@list"
+    },
+    "tags": {
+      "@id": "ada:tags",
+      "@container": "@list"
+    },
+    "metadata": {
+      "@id": "ada:metadata"
+    }
+  }
+}

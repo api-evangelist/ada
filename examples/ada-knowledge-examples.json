@@ -1,0 +1,74 @@
+{
+  "list": {
+    "operationId": "list",
+    "summary": "Get article tags",
+    "method": "GET",
+    "path": "/v2/knowledge/tags/",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/tags"
+    ]
+  },
+  "create": {
+    "operationId": "create",
+    "summary": "Create a knowledge source",
+    "method": "POST",
+    "path": "/v2/knowledge/sources/",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/sources"
+    ]
+  },
+  "delete": {
+    "operationId": "delete",
+    "summary": "Delete a single article tag",
+    "method": "DELETE",
+    "path": "/v2/knowledge/tags/{id}",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/tags"
+    ]
+  },
+  "update": {
+    "operationId": "update",
+    "summary": "Update a knowledge source",
+    "method": "PATCH",
+    "path": "/v2/knowledge/sources/{id}",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/sources"
+    ]
+  },
+  "get": {
+    "operationId": "get",
+    "summary": "Get a single knowledge article",
+    "method": "GET",
+    "path": "/v2/knowledge/articles/{id}",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/articles"
+    ]
+  },
+  "delete-by-id": {
+    "operationId": "delete-by-id",
+    "summary": "Delete a single article",
+    "method": "DELETE",
+    "path": "/v2/knowledge/articles/{id}",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/articles"
+    ]
+  },
+  "bulk-upsert": {
+    "operationId": "bulk-upsert",
+    "summary": "Upsert multiple articles",
+    "method": "POST",
+    "path": "/v2/knowledge/bulk/articles/",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/articles"
+    ]
+  },
+  "upsert-multiple": {
+    "operationId": "upsert-multiple",
+    "summary": "Upsert multiple tags",
+    "method": "POST",
+    "path": "/v2/knowledge/bulk/tags/",
+    "tags": [
+      "subpackage_knowledge.subpackage_knowledge/tags"
+    ]
+  }
+}

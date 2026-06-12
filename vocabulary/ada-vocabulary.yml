@@ -1,0 +1,92 @@
+vocabulary:
+  name: Ada API Vocabulary
+  description: Key terms and concepts used across the Ada API platform
+  version: "1.0"
+  source: https://docs.ada.cx/reference/introduction/overview
+
+terms:
+  - term: knowledge_source
+    definition: A container of knowledge articles imported into Ada for AI agent use, identified by a unique source ID.
+    apis:
+      - Ada Knowledge API
+
+  - term: knowledge_article
+    definition: An individual piece of content (FAQ, help article) within a knowledge source used by the AI agent to generate responses.
+    apis:
+      - Ada Knowledge API
+
+  - term: end_user
+    definition: A profile representing a customer who interacts with the Ada AI agent, with optional metadata fields.
+    apis:
+      - Ada End Users API
+
+  - term: conversation
+    definition: A complete interaction session between an end user and the Ada AI agent, including all messages and escalation status.
+    apis:
+      - Ada Conversations API
+      - Ada Data Export API
+
+  - term: chatter_id
+    definition: Ada's internal unique identifier for a conversation participant (end user).
+    apis:
+      - Ada Data Export API
+      - Ada Data Compliance API
+
+  - term: channel
+    definition: A communication interface (web widget, custom app, third-party platform) through which the Ada agent is deployed.
+    apis:
+      - Ada Conversations API
+
+  - term: webhook
+    definition: An HTTP callback registered to receive Ada event notifications (e.g., new chat, profile update) at a client URL.
+    apis:
+      - Ada Knowledge API
+      - Ada End Users API
+
+  - term: bearer_token
+    definition: A rotatable API key used for authenticating all Ada API requests via the Authorization HTTP header.
+    apis:
+      - Ada Knowledge API
+      - Ada End Users API
+      - Ada Conversations API
+      - Ada Data Export API
+      - Ada Data Compliance API
+      - Ada Integrations API
+
+  - term: cursor_pagination
+    definition: Ada's pagination model using a next_page_uri or cursor token to traverse large result sets.
+    apis:
+      - Ada Knowledge API
+      - Ada Data Export API
+
+  - term: data_subject_request
+    definition: A GDPR-mandated deletion request that removes all personal data associated with a chatter's email address from Ada's systems.
+    apis:
+      - Ada Data Compliance API
+
+  - term: escalation
+    definition: The handoff of a conversation from the Ada AI agent to a human live agent.
+    apis:
+      - Ada Conversations API
+      - Ada Data Export API
+
+  - term: integration
+    definition: An OAuth-authenticated connection between Ada and an external application extending the agent's capabilities.
+    apis:
+      - Ada Integrations API
+
+  - term: agent_handle
+    definition: The subdomain identifier for an Ada customer's bot (e.g., "example" in example.ada.support).
+    apis:
+      - Ada Data Compliance API
+      - Ada Data Export API
+
+  - term: bulk_upsert
+    definition: A batch operation supporting up to 50,000 articles in a single request (max 10 MB payload) to create or update knowledge content.
+    apis:
+      - Ada Knowledge API
+
+  - term: sensitive_metadata
+    definition: Encrypted end-user metadata that is automatically deleted after 24 hours for privacy protection.
+    apis:
+      - Ada End Users API

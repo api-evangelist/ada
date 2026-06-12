@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ada Data Compliance Schemas",
+  "definitions": {
+    "TokenType": {
+      "type": "string",
+      "enum": [
+        "ERASURE"
+      ],
+      "description": "Type of data subject request. Must be set to ERASURE.",
+      "title": "TokenType"
+    },
+    "EmailType": {
+      "type": "string",
+      "description": "Email of the chatter whose data you wish to delete from Ada's systems.",
+      "title": "EmailType"
+    },
+    "IdentifiersTypeItemsType": {
+      "type": "string",
+      "enum": [
+        "email",
+        "chatter_id"
+      ],
+      "title": "IdentifiersTypeItemsType"
+    },
+    "IdentifiersTypeItems": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/components/schemas/IdentifiersTypeItemsType"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "IdentifiersTypeItems"
+    },
+    "IdentifiersType": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/IdentifiersTypeItems"
+      },
+      "description": "List containing extra identifiers sent with the data subject request.",
+      "title": "IdentifiersType"
+    },
+    "DeleteSubjectRequest": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/components/schemas/TokenType"
+        },
+        "email": {
+          "$ref": "#/components/schemas/EmailType"
+        },
+        "identifiers": {
+          "$ref": "#/components/schemas/IdentifiersType"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "DeleteSubjectRequest"
+    },
+    "DeleteSubjectResponse": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "$ref": "#/components/schemas/EmailType"
+        }
+      },
+      "title": "DeleteSubjectResponse"
+    }
+  }
+}

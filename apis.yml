@@ -37,6 +37,8 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.ada.cx/reference/introduction/overview
+      - type: OpenAPI
+        url: openapi/ada-knowledge-openapi.yml
 
   - name: Ada End Users API
     description: Real-time management of end-user profile information with webhook events for new chats and profile updates.
@@ -73,6 +75,10 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.ada.cx/reference/data-export/overview
+      - type: OpenAPI
+        url: openapi/ada-data-export-openapi.yml
+      - type: OpenAPI
+        url: openapi/ada-data-export-v1-4-openapi.yml
 
   - name: Ada Data Compliance API
     description: Delete personal data associated with user email addresses to support GDPR and other privacy regulations.
@@ -86,6 +92,8 @@ apis:
     properties:
       - type: Documentation
         url: https://developers.ada.cx/reference/data-compliance/overview
+      - type: OpenAPI
+        url: openapi/ada-data-compliance-openapi.yml
 
   - name: Ada Integrations API
     description: Connect external applications to Ada using OAuth to extend AI agent capabilities with partner-built integrations.
@@ -122,6 +130,10 @@ common:
     url: rate-limits/ada-rate-limits.yml
   - type: FinOps
     url: finops/ada-finops.yml
+  - type: Vocabulary
+    url: vocabulary/ada-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/ada-context.jsonld
 
 maintainers:
   - FN: Kin Lane
