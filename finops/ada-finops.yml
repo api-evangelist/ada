@@ -1,0 +1,78 @@
+spec: FinOps Framework 1.0
+focusVersion: "1.0"
+provider: Ada
+providerId: ada
+created: 2026-06-12
+modified: 2026-06-12
+url: https://www.ada.cx/blog/unpacking-ai-agent-pricing-resolution-based-vs-conversation-based-models/
+notes: >
+  Ada uses a consumption-based billing model tied to AI-handled customer interactions.
+  Two pricing models are offered: conversation-based (charge per conversation handled,
+  regardless of outcome) and resolution-based (charge only per successfully resolved
+  conversation). Ada advocates conversation-based pricing for its predictability and
+  scalability. Enterprise contracts are negotiated annually with usage-based overages.
+
+billingModel: consumption
+billingCycle: monthly
+contractModel: annual
+currency: USD
+
+focusColumns:
+  - column: BilledCost
+    description: Cost charged for each conversation or resolution unit consumed in the billing period
+  - column: ConsumedQuantity
+    description: Number of conversations handled or resolutions achieved by the AI agent
+  - column: ConsumedUnit
+    description: conversation | resolution
+  - column: ServiceName
+    description: Ada AI Customer Service Platform
+  - column: ServiceCategory
+    description: AI and Machine Learning
+  - column: ChargeType
+    description: Usage
+  - column: ResourceId
+    description: Ada instance subdomain identifier
+
+meters:
+  - name: conversations
+    description: Customer interactions handled by the Ada AI agent, regardless of resolution outcome
+    unit: conversation
+    priceLow: 0.35
+    priceHigh: 1.50
+    currency: USD
+    model: conversation-based
+
+  - name: resolutions
+    description: Customer interactions fully resolved by the Ada AI agent without human escalation
+    unit: resolution
+    priceLow: 1.00
+    priceHigh: 3.50
+    currency: USD
+    model: resolution-based
+
+  - name: api-requests
+    description: API calls made against Ada REST APIs beyond included platform quotas
+    unit: request
+    included: true
+    note: API access included in platform contract; no separate per-request charge documented
+
+principles:
+  - name: Understand Usage
+    description: Monitor conversation and resolution volumes monthly to forecast annual spend against contract minimums and overage thresholds
+  - name: Quantify Business Value
+    description: Track AI resolution rate (target 25-75%+) to measure cost-per-resolution versus cost-per-human-escalation ROI
+  - name: Optimize Cloud Usage & Cost
+    description: Prefer conversation-based pricing model for cost predictability as AI resolution rates improve over time
+  - name: Align Usage to Business Needs
+    description: Size annual contract volumes to expected conversation volume with 10-20% buffer to avoid mid-year renegotiation
+  - name: Benchmark Performance
+    description: Compare Ada cost-per-resolution against human agent cost-per-ticket to quantify automation ROI
+
+costAllocation:
+  dimensions:
+    - name: Channel
+      description: Allocate costs by deployment channel (web, mobile, voice, messaging)
+    - name: BusinessUnit
+      description: Allocate costs by internal team or product line using Ada
+    - name: Language
+      description: Track multilingual support costs separately as they may incur add-on fees

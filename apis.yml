@@ -1,0 +1,128 @@
+aid: ada
+name: Ada
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/apis.yml
+created: 2026-06-12
+modified: 2026-06-12
+specificationVersion: "0.19"
+description: >
+  Ada is an AI-powered customer service automation platform that enables enterprises to deploy
+  AI agents capable of resolving customer inquiries across digital channels without human intervention.
+  The platform exposes a suite of REST APIs for managing knowledge bases, end-user profiles,
+  conversation handling, data export, data compliance, and external integrations.
+  All APIs use rotatable API keys for authentication, return JSON, and support cursor-based pagination.
+  Ada serves global brands including Pinterest, Square, Ancestry, and Zendesk, and has powered
+  more than 6.4 billion customer interactions since its founding in 2016.
+tags:
+  - ai
+  - customer-service
+  - chatbot
+  - automation
+  - conversational-ai
+  - helpdesk
+  - crm
+  - integrations
+  - knowledge-management
+  - data-export
+apis:
+  - name: Ada Knowledge API
+    description: Import and sync knowledge articles into Ada so the AI agent can generate accurate responses from your existing content.
+    humanURL: https://docs.ada.cx/reference/introduction/overview
+    baseURL: https://api.ada.cx
+    tags:
+      - knowledge
+      - ai
+      - content
+    properties:
+      - type: Documentation
+        url: https://docs.ada.cx/reference/introduction/overview
+
+  - name: Ada End Users API
+    description: Real-time management of end-user profile information with webhook events for new chats and profile updates.
+    humanURL: https://docs.ada.cx/reference/introduction/overview
+    baseURL: https://api.ada.cx
+    tags:
+      - users
+      - profiles
+      - webhooks
+    properties:
+      - type: Documentation
+        url: https://docs.ada.cx/reference/introduction/overview
+
+  - name: Ada Conversations API
+    description: Build custom channels and extend Ada into proprietary apps or third-party platforms with full conversation lifecycle control.
+    humanURL: https://docs.ada.cx/reference/introduction/overview
+    baseURL: https://api.ada.cx
+    tags:
+      - conversations
+      - channels
+      - integrations
+    properties:
+      - type: Documentation
+        url: https://docs.ada.cx/reference/introduction/overview
+
+  - name: Ada Data Export API
+    description: Access conversation and message records for downstream analytics, storage, and reporting.
+    humanURL: https://docs.ada.cx/reference/data-export/overview
+    baseURL: https://api.ada.cx
+    tags:
+      - data-export
+      - analytics
+      - conversations
+    properties:
+      - type: Documentation
+        url: https://docs.ada.cx/reference/data-export/overview
+
+  - name: Ada Data Compliance API
+    description: Delete personal data associated with user email addresses to support GDPR and other privacy regulations.
+    humanURL: https://developers.ada.cx/reference/data-compliance/overview
+    baseURL: https://api.ada.cx
+    tags:
+      - compliance
+      - gdpr
+      - privacy
+      - data-deletion
+    properties:
+      - type: Documentation
+        url: https://developers.ada.cx/reference/data-compliance/overview
+
+  - name: Ada Integrations API
+    description: Connect external applications to Ada using OAuth to extend AI agent capabilities with partner-built integrations.
+    humanURL: https://docs.ada.cx/reference/integrations/overview
+    baseURL: https://api.ada.cx
+    tags:
+      - integrations
+      - oauth
+      - extensions
+    properties:
+      - type: Documentation
+        url: https://docs.ada.cx/reference/integrations/overview
+
+common:
+  - type: Website
+    url: https://www.ada.cx/
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: GitHubOrganization
+    url: https://github.com/adasupport
+  - type: LinkedIn
+    url: https://ca.linkedin.com/company/ada-cx
+  - type: Blog
+    url: https://www.ada.cx/blog/
+  - type: Pricing
+    url: https://www.ada.cx/platform/
+  - type: StatusPage
+    url: https://status.ada.support/
+  - type: X
+    url: https://x.com/ada_cx
+  - type: Plans
+    url: plans/ada-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/ada-rate-limits.yml
+  - type: FinOps
+    url: finops/ada-finops.yml
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

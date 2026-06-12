@@ -1,0 +1,80 @@
+spec: API Commons Rate Limits 0.1
+provider: Ada
+providerId: ada
+created: 2026-06-12
+modified: 2026-06-12
+url: https://docs.ada.cx/reference/introduction/limits
+notes: >
+  Ada enforces global rate limits across all REST API families to ensure high availability.
+  Individual API families may apply their own elevated or additional local limits.
+  Exceeding any limit returns HTTP 429 Too Many Requests. Ada recommends implementing
+  retry logic with exponential backoff and jitter. Rate limits were increased for the
+  End Users API and Conversations API in March 2026 (doubled from 30,000 to 60,000 per day).
+
+global:
+  throttledStatus: 429
+  retryAfter: true
+  retryStrategy: exponential-backoff-with-jitter
+  limits:
+    - name: Requests Per Second (Global Default)
+      unit: requests/second
+      limit: 10
+      scope: global
+    - name: Requests Per Minute (Global Default)
+      unit: requests/minute
+      limit: 100
+      scope: global
+    - name: Requests Per Day (Global Default)
+      unit: requests/day
+      limit: 10000
+      scope: global
+    - name: Maximum Request Body Size
+      unit: MB
+      limit: 10
+      errorStatus: 413
+
+apis:
+  - name: End Users API
+    limits:
+      - name: Requests Per Second
+        unit: requests/second
+        limit: 30
+      - name: Requests Per Minute
+        unit: requests/minute
+        limit: 300
+      - name: Requests Per Day
+        unit: requests/day
+        limit: 60000
+        note: Doubled from 30,000 on 2026-03-03
+    endpoints:
+      - pattern: /v2/end-users/{end_user_id}
+        methods: [GET, PUT, PATCH, DELETE]
+
+  - name: Conversations API
+    limits:
+      - name: Requests Per Second
+        unit: requests/second
+        limit: 30
+      - name: Requests Per Minute
+        unit: requests/minute
+        limit: 300
+      - name: Requests Per Day
+        unit: requests/day
+        limit: 60000
+        note: Doubled from 30,000 on 2026-03-03
+    endpoints:
+      - pattern: /v2/conversations/
+        methods: [POST]
+      - pattern: /v2/conversations/{conversation_id}/
+        methods: [GET]
+      - pattern: /v2/conversations/{conversation_id}/end/
+        methods: [POST]
+
+  - name: Data Export API
+    limits:
+      - name: Requests Per Second Per Endpoint
+        unit: requests/second
+        limit: 10
+      - name: Requests Per Day
+        unit: requests/day
+        limit: 15000
