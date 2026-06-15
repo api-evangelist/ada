@@ -1,0 +1,1247 @@
+"""
+Ada GraphQL Schema
+Ada is an AI-powered customer service automation platform enabling enterprises
+to deploy AI agents for customer inquiry resolution across digital channels.
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar URL
+scalar EmailAddress
+scalar UUID
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum ConversationStatus {
+  ACTIVE
+  RESOLVED
+  ESCALATED
+  ABANDONED
+  PENDING
+  CLOSED
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  CARD
+  CAROUSEL
+  QUICK_REPLY
+  BUTTON
+  VIDEO
+  AUDIO
+  TYPING_INDICATOR
+  SYSTEM
+}
+
+enum MessageSender {
+  BOT
+  USER
+  AGENT
+  SYSTEM
+}
+
+enum Channel {
+  WEB
+  MOBILE
+  FACEBOOK_MESSENGER
+  WHATSAPP
+  SLACK
+  EMAIL
+  SMS
+  CUSTOM
+  API
+}
+
+enum HandoffStatus {
+  PENDING
+  ACCEPTED
+  COMPLETED
+  DECLINED
+  TIMEOUT
+}
+
+enum IntentStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+enum KnowledgeSourceType {
+  URL
+  FILE
+  MANUAL
+  ZENDESK
+  SALESFORCE
+  CONFLUENCE
+  NOTION
+  CUSTOM
+}
+
+enum KnowledgeArticleStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+  SYNCING
+  ERROR
+}
+
+enum ResponseType {
+  TEXT
+  QUICK_REPLY
+  CARD
+  CAROUSEL
+  BUTTON_GROUP
+  FORM
+  HANDOFF
+  REDIRECT
+}
+
+enum UserProfileStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+  DELETED
+}
+
+enum AnalyticsMetric {
+  TOTAL_CONVERSATIONS
+  RESOLVED_CONVERSATIONS
+  ESCALATED_CONVERSATIONS
+  AVG_HANDLE_TIME
+  CUSTOMER_SATISFACTION
+  CONTAINMENT_RATE
+  FIRST_CONTACT_RESOLUTION
+  RESPONSE_TIME
+}
+
+enum AnalyticsInterval {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum WebhookEvent {
+  CONVERSATION_STARTED
+  CONVERSATION_ENDED
+  MESSAGE_RECEIVED
+  MESSAGE_SENT
+  HANDOFF_REQUESTED
+  HANDOFF_COMPLETED
+  USER_PROFILE_UPDATED
+  INTENT_MATCHED
+  ESCALATION_TRIGGERED
+}
+
+enum WebhookStatus {
+  ACTIVE
+  INACTIVE
+  FAILING
+  PAUSED
+}
+
+enum IntegrationStatus {
+  CONNECTED
+  DISCONNECTED
+  PENDING_AUTH
+  ERROR
+}
+
+enum IntegrationProvider {
+  ZENDESK
+  SALESFORCE
+  INTERCOM
+  FRESHDESK
+  SERVICENOW
+  JIRA
+  SLACK
+  TEAMS
+  CUSTOM
+}
+
+enum BotStatus {
+  LIVE
+  DRAFT
+  PAUSED
+  ARCHIVED
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+enum DataDeletionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  NOT_FOUND
+}
+
+enum TrainingStatus {
+  IDLE
+  TRAINING
+  COMPLETED
+  FAILED
+}
+
+# ─────────────────────────────────────────────
+# Core Entity Types
+# ─────────────────────────────────────────────
+
+"""A bot instance managed within the Ada platform."""
+type Bot {
+  id: UUID!
+  name: String!
+  status: BotStatus!
+  handle: String!
+  language: String!
+  channels: [Channel!]!
+  timezone: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  configuration: BotConfiguration
+  analytics: AnalyticsSummary
+  intents(first: Int, after: String): IntentConnection
+  knowledgeSources(first: Int, after: String): KnowledgeSourceConnection
+  webhooks(first: Int, after: String): WebhookConnection
+  integrations(first: Int, after: String): IntegrationConnection
+}
+
+"""Configuration settings for a bot."""
+type BotConfiguration {
+  id: UUID!
+  botId: UUID!
+  greetingMessage: String
+  fallbackMessage: String
+  handoffEnabled: Boolean!
+  handoffThreshold: Int
+  containmentGoal: Float
+  allowedChannels: [Channel!]!
+  customFields: JSON
+  updatedAt: DateTime!
+}
+
+"""A conversation between an end user and the Ada AI agent."""
+type Conversation {
+  id: UUID!
+  externalId: String
+  status: ConversationStatus!
+  channel: Channel!
+  startedAt: DateTime!
+  endedAt: DateTime
+  duration: Int
+  bot: Bot!
+  endUser: EndUser
+  agent: Agent
+  messages(first: Int, after: String): MessageConnection
+  intentsMatched: [String!]!
+  handoff: Handoff
+  satisfaction: SatisfactionRating
+  tags: [String!]!
+  metadata: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A single message within a conversation."""
+type Message {
+  id: UUID!
+  conversationId: UUID!
+  type: MessageType!
+  sender: MessageSender!
+  content: MessageContent!
+  timestamp: DateTime!
+  metadata: JSON
+  intentMatched: Intent
+}
+
+"""Polymorphic message content container."""
+type MessageContent {
+  text: String
+  imageUrl: URL
+  fileUrl: URL
+  fileName: String
+  cards: [Card!]
+  quickReplies: [QuickReply!]
+  buttons: [Button!]
+  videoUrl: URL
+  audioUrl: URL
+}
+
+"""A rich card displayed in conversation."""
+type Card {
+  title: String!
+  subtitle: String
+  imageUrl: URL
+  buttons: [Button!]
+  url: URL
+}
+
+"""A quick reply option presented to the user."""
+type QuickReply {
+  label: String!
+  value: String!
+  iconUrl: URL
+}
+
+"""An actionable button in a message."""
+type Button {
+  label: String!
+  type: String!
+  value: String!
+  url: URL
+}
+
+"""An end user interacting with the Ada bot."""
+type EndUser {
+  id: UUID!
+  externalId: String
+  email: EmailAddress
+  name: String
+  phone: String
+  status: UserProfileStatus!
+  language: String
+  timezone: String
+  metadata: JSON
+  tags: [String!]!
+  conversations(first: Int, after: String): ConversationConnection
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A human support agent who can accept handoffs."""
+type Agent {
+  id: UUID!
+  externalId: String
+  name: String!
+  email: EmailAddress!
+  status: String!
+  currentHandoffs: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Represents a handoff from the AI bot to a human agent."""
+type Handoff {
+  id: UUID!
+  conversationId: UUID!
+  status: HandoffStatus!
+  requestedAt: DateTime!
+  acceptedAt: DateTime
+  completedAt: DateTime
+  reason: String
+  agent: Agent
+  queuePosition: Int
+  waitTime: Int
+  metadata: JSON
+}
+
+"""An intent representing a user goal the AI can recognize."""
+type Intent {
+  id: UUID!
+  name: String!
+  description: String
+  status: IntentStatus!
+  trainingPhrases: [TrainingPhrase!]!
+  responses: [Response!]!
+  tags: [String!]!
+  matchCount: Int!
+  confidence: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A training phrase used to teach the AI to recognize an intent."""
+type TrainingPhrase {
+  id: UUID!
+  intentId: UUID!
+  text: String!
+  language: String!
+  createdAt: DateTime!
+}
+
+"""A configured response the bot delivers for a matched intent."""
+type Response {
+  id: UUID!
+  intentId: UUID!
+  type: ResponseType!
+  content: JSON!
+  language: String!
+  channel: Channel
+  isDefault: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A knowledge source feeding article content to the AI."""
+type KnowledgeSource {
+  id: UUID!
+  name: String!
+  type: KnowledgeSourceType!
+  url: URL
+  status: KnowledgeArticleStatus!
+  lastSyncedAt: DateTime
+  articleCount: Int!
+  syncSchedule: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  articles(first: Int, after: String): KnowledgeArticleConnection
+}
+
+"""An individual knowledge article available to the AI."""
+type KnowledgeArticle {
+  id: UUID!
+  sourceId: UUID!
+  externalId: String
+  title: String!
+  content: String!
+  url: URL
+  status: KnowledgeArticleStatus!
+  language: String!
+  tags: [String!]!
+  lastModified: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A webhook subscription for Ada platform events."""
+type Webhook {
+  id: UUID!
+  name: String!
+  url: URL!
+  events: [WebhookEvent!]!
+  status: WebhookStatus!
+  secretKey: String
+  headers: JSON
+  retryCount: Int!
+  lastTriggeredAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A webhook delivery record."""
+type WebhookDelivery {
+  id: UUID!
+  webhookId: UUID!
+  event: WebhookEvent!
+  payload: JSON!
+  responseStatus: Int
+  responseBody: String
+  success: Boolean!
+  deliveredAt: DateTime!
+  duration: Int!
+}
+
+"""An external service integration connected to Ada."""
+type Integration {
+  id: UUID!
+  provider: IntegrationProvider!
+  name: String!
+  status: IntegrationStatus!
+  configuration: JSON
+  oauthScopes: [String!]!
+  connectedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Aggregated analytics for a bot or channel."""
+type AnalyticsSummary {
+  botId: UUID!
+  period: AnalyticsPeriod!
+  totalConversations: Int!
+  resolvedConversations: Int!
+  escalatedConversations: Int!
+  avgHandleTimeSeconds: Float!
+  containmentRate: Float!
+  firstContactResolutionRate: Float!
+  avgResponseTimeSeconds: Float!
+  customerSatisfactionScore: Float
+  topIntents: [IntentMetric!]!
+  channelBreakdown: [ChannelMetric!]!
+}
+
+"""A time period for analytics queries."""
+type AnalyticsPeriod {
+  startDate: DateTime!
+  endDate: DateTime!
+  interval: AnalyticsInterval!
+}
+
+"""Metric data for a single intent."""
+type IntentMetric {
+  intentId: UUID!
+  intentName: String!
+  matchCount: Int!
+  resolutionRate: Float!
+  avgConfidence: Float!
+}
+
+"""Metric data for a single channel."""
+type ChannelMetric {
+  channel: Channel!
+  conversationCount: Int!
+  resolutionRate: Float!
+  avgHandleTimeSeconds: Float!
+}
+
+"""A time-series data point for analytics."""
+type AnalyticsDataPoint {
+  timestamp: DateTime!
+  metric: AnalyticsMetric!
+  value: Float!
+  dimensions: JSON
+}
+
+"""Customer satisfaction rating on a conversation."""
+type SatisfactionRating {
+  id: UUID!
+  conversationId: UUID!
+  score: Int!
+  comment: String
+  ratedAt: DateTime!
+}
+
+"""Result of a data deletion compliance request."""
+type DataDeletionResult {
+  requestId: UUID!
+  email: EmailAddress!
+  status: DataDeletionStatus!
+  recordsDeleted: Int!
+  requestedAt: DateTime!
+  completedAt: DateTime
+}
+
+"""AI model training job status."""
+type TrainingJob {
+  id: UUID!
+  botId: UUID!
+  status: TrainingStatus!
+  triggeredBy: String!
+  startedAt: DateTime!
+  completedAt: DateTime
+  error: String
+  metrics: JSON
+}
+
+"""Tag used to categorize conversations or users."""
+type Tag {
+  id: UUID!
+  name: String!
+  color: String
+  conversationCount: Int!
+  createdAt: DateTime!
+}
+
+"""Export job for bulk data retrieval."""
+type ExportJob {
+  id: UUID!
+  type: String!
+  status: String!
+  filters: JSON
+  downloadUrl: URL
+  recordCount: Int
+  startedAt: DateTime!
+  completedAt: DateTime
+  expiresAt: DateTime
+}
+
+# ─────────────────────────────────────────────
+# Connection / Pagination Types
+# ─────────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type ConversationEdge {
+  node: Conversation!
+  cursor: String!
+}
+
+type ConversationConnection {
+  edges: [ConversationEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MessageEdge {
+  node: Message!
+  cursor: String!
+}
+
+type MessageConnection {
+  edges: [MessageEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type EndUserEdge {
+  node: EndUser!
+  cursor: String!
+}
+
+type EndUserConnection {
+  edges: [EndUserEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type IntentEdge {
+  node: Intent!
+  cursor: String!
+}
+
+type IntentConnection {
+  edges: [IntentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type KnowledgeSourceEdge {
+  node: KnowledgeSource!
+  cursor: String!
+}
+
+type KnowledgeSourceConnection {
+  edges: [KnowledgeSourceEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type KnowledgeArticleEdge {
+  node: KnowledgeArticle!
+  cursor: String!
+}
+
+type KnowledgeArticleConnection {
+  edges: [KnowledgeArticleEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type WebhookEdge {
+  node: Webhook!
+  cursor: String!
+}
+
+type WebhookConnection {
+  edges: [WebhookEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type IntegrationEdge {
+  node: Integration!
+  cursor: String!
+}
+
+type IntegrationConnection {
+  edges: [IntegrationEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type BotEdge {
+  node: Bot!
+  cursor: String!
+}
+
+type BotConnection {
+  edges: [BotEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TagEdge {
+  node: Tag!
+  cursor: String!
+}
+
+type TagConnection {
+  edges: [TagEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+input ConversationFilterInput {
+  status: ConversationStatus
+  channel: Channel
+  botId: UUID
+  startedAfter: DateTime
+  startedBefore: DateTime
+  hasHandoff: Boolean
+  tags: [String!]
+  endUserId: UUID
+}
+
+input ConversationSortInput {
+  field: String!
+  order: SortOrder!
+}
+
+input CreateBotInput {
+  name: String!
+  handle: String!
+  language: String!
+  channels: [Channel!]!
+  timezone: String
+  greetingMessage: String
+  fallbackMessage: String
+}
+
+input UpdateBotInput {
+  name: String
+  status: BotStatus
+  language: String
+  channels: [Channel!]
+  timezone: String
+}
+
+input UpdateBotConfigurationInput {
+  greetingMessage: String
+  fallbackMessage: String
+  handoffEnabled: Boolean
+  handoffThreshold: Int
+  containmentGoal: Float
+  allowedChannels: [Channel!]
+  customFields: JSON
+}
+
+input CreateConversationInput {
+  botId: UUID!
+  channel: Channel!
+  endUserId: UUID
+  externalId: String
+  metadata: JSON
+  tags: [String!]
+}
+
+input SendMessageInput {
+  conversationId: UUID!
+  type: MessageType!
+  content: JSON!
+  metadata: JSON
+}
+
+input RequestHandoffInput {
+  conversationId: UUID!
+  reason: String
+  metadata: JSON
+}
+
+input CreateEndUserInput {
+  externalId: String
+  email: EmailAddress
+  name: String
+  phone: String
+  language: String
+  timezone: String
+  metadata: JSON
+  tags: [String!]
+}
+
+input UpdateEndUserInput {
+  email: EmailAddress
+  name: String
+  phone: String
+  language: String
+  timezone: String
+  metadata: JSON
+  tags: [String!]
+  status: UserProfileStatus
+}
+
+input CreateIntentInput {
+  name: String!
+  description: String
+  trainingPhrases: [String!]!
+  tags: [String!]
+  language: String!
+}
+
+input UpdateIntentInput {
+  name: String
+  description: String
+  status: IntentStatus
+  tags: [String!]
+}
+
+input AddTrainingPhraseInput {
+  intentId: UUID!
+  text: String!
+  language: String!
+}
+
+input CreateResponseInput {
+  intentId: UUID!
+  type: ResponseType!
+  content: JSON!
+  language: String!
+  channel: Channel
+  isDefault: Boolean
+}
+
+input UpdateResponseInput {
+  type: ResponseType
+  content: JSON
+  language: String
+  channel: Channel
+  isDefault: Boolean
+}
+
+input CreateKnowledgeSourceInput {
+  name: String!
+  type: KnowledgeSourceType!
+  url: URL
+  syncSchedule: String
+}
+
+input UpdateKnowledgeSourceInput {
+  name: String
+  url: URL
+  syncSchedule: String
+}
+
+input UpsertKnowledgeArticleInput {
+  externalId: String
+  title: String!
+  content: String!
+  url: URL
+  language: String!
+  tags: [String!]
+}
+
+input CreateWebhookInput {
+  name: String!
+  url: URL!
+  events: [WebhookEvent!]!
+  headers: JSON
+}
+
+input UpdateWebhookInput {
+  name: String
+  url: URL
+  events: [WebhookEvent!]
+  status: WebhookStatus
+  headers: JSON
+}
+
+input AnalyticsQueryInput {
+  botId: UUID!
+  startDate: DateTime!
+  endDate: DateTime!
+  interval: AnalyticsInterval!
+  metrics: [AnalyticsMetric!]!
+  channel: Channel
+}
+
+input DataDeletionInput {
+  email: EmailAddress!
+  reason: String
+}
+
+input CreateExportJobInput {
+  type: String!
+  startDate: DateTime
+  endDate: DateTime
+  filters: JSON
+}
+
+input EndUserFilterInput {
+  status: UserProfileStatus
+  tags: [String!]
+  createdAfter: DateTime
+  createdBefore: DateTime
+  channel: Channel
+}
+
+input IntentFilterInput {
+  status: IntentStatus
+  tags: [String!]
+  language: String
+  search: String
+}
+
+# ─────────────────────────────────────────────
+# Mutation Payloads
+# ─────────────────────────────────────────────
+
+type BotPayload {
+  bot: Bot
+  errors: [UserError!]!
+}
+
+type ConversationPayload {
+  conversation: Conversation
+  errors: [UserError!]!
+}
+
+type MessagePayload {
+  message: Message
+  errors: [UserError!]!
+}
+
+type HandoffPayload {
+  handoff: Handoff
+  errors: [UserError!]!
+}
+
+type EndUserPayload {
+  endUser: EndUser
+  errors: [UserError!]!
+}
+
+type IntentPayload {
+  intent: Intent
+  errors: [UserError!]!
+}
+
+type TrainingPhrasePayload {
+  trainingPhrase: TrainingPhrase
+  errors: [UserError!]!
+}
+
+type ResponsePayload {
+  response: Response
+  errors: [UserError!]!
+}
+
+type KnowledgeSourcePayload {
+  knowledgeSource: KnowledgeSource
+  errors: [UserError!]!
+}
+
+type KnowledgeArticlePayload {
+  article: KnowledgeArticle
+  errors: [UserError!]!
+}
+
+type WebhookPayload {
+  webhook: Webhook
+  errors: [UserError!]!
+}
+
+type IntegrationPayload {
+  integration: Integration
+  errors: [UserError!]!
+}
+
+type DataDeletionPayload {
+  result: DataDeletionResult
+  errors: [UserError!]!
+}
+
+type TrainingJobPayload {
+  trainingJob: TrainingJob
+  errors: [UserError!]!
+}
+
+type ExportJobPayload {
+  exportJob: ExportJob
+  errors: [UserError!]!
+}
+
+type DeletePayload {
+  success: Boolean!
+  errors: [UserError!]!
+}
+
+"""A user-facing error with field context."""
+type UserError {
+  field: String
+  message: String!
+  code: String
+}
+
+# ─────────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────────
+
+type Query {
+  """Retrieve a single bot by ID."""
+  bot(id: UUID!): Bot
+
+  """List all bots accessible to the authenticated account."""
+  bots(first: Int, after: String, status: BotStatus): BotConnection!
+
+  """Retrieve a single conversation by ID."""
+  conversation(id: UUID!): Conversation
+
+  """List conversations with optional filters."""
+  conversations(
+    first: Int
+    after: String
+    filter: ConversationFilterInput
+    sort: ConversationSortInput
+  ): ConversationConnection!
+
+  """Retrieve messages for a conversation."""
+  messages(conversationId: UUID!, first: Int, after: String): MessageConnection!
+
+  """Retrieve a single end user by ID."""
+  endUser(id: UUID!): EndUser
+
+  """Find an end user by external ID."""
+  endUserByExternalId(externalId: String!): EndUser
+
+  """List end users with optional filters."""
+  endUsers(
+    first: Int
+    after: String
+    filter: EndUserFilterInput
+  ): EndUserConnection!
+
+  """Retrieve a single intent by ID."""
+  intent(id: UUID!): Intent
+
+  """List intents with optional filters."""
+  intents(
+    first: Int
+    after: String
+    filter: IntentFilterInput
+  ): IntentConnection!
+
+  """Retrieve a single knowledge source by ID."""
+  knowledgeSource(id: UUID!): KnowledgeSource
+
+  """List knowledge sources."""
+  knowledgeSources(first: Int, after: String, botId: UUID): KnowledgeSourceConnection!
+
+  """Retrieve a single knowledge article by ID."""
+  knowledgeArticle(id: UUID!): KnowledgeArticle
+
+  """List knowledge articles within a source."""
+  knowledgeArticles(sourceId: UUID!, first: Int, after: String): KnowledgeArticleConnection!
+
+  """Retrieve a single webhook by ID."""
+  webhook(id: UUID!): Webhook
+
+  """List webhooks."""
+  webhooks(first: Int, after: String, botId: UUID): WebhookConnection!
+
+  """Retrieve delivery history for a webhook."""
+  webhookDeliveries(webhookId: UUID!, first: Int, after: String): [WebhookDelivery!]!
+
+  """Retrieve a single integration by ID."""
+  integration(id: UUID!): Integration
+
+  """List integrations."""
+  integrations(first: Int, after: String, botId: UUID): IntegrationConnection!
+
+  """Retrieve aggregated analytics summary."""
+  analyticsSummary(input: AnalyticsQueryInput!): AnalyticsSummary!
+
+  """Retrieve time-series analytics data points."""
+  analyticsTimeSeries(input: AnalyticsQueryInput!): [AnalyticsDataPoint!]!
+
+  """Retrieve a handoff by ID."""
+  handoff(id: UUID!): Handoff
+
+  """List handoffs optionally filtered by conversation."""
+  handoffs(conversationId: UUID, status: HandoffStatus, first: Int, after: String): [Handoff!]!
+
+  """Retrieve tags used in the account."""
+  tags(first: Int, after: String): TagConnection!
+
+  """Get a data deletion request status by request ID."""
+  dataDeletionRequest(requestId: UUID!): DataDeletionResult
+
+  """Retrieve the status of a training job."""
+  trainingJob(id: UUID!): TrainingJob
+
+  """List training jobs for a bot."""
+  trainingJobs(botId: UUID!, first: Int, after: String): [TrainingJob!]!
+
+  """Retrieve an export job by ID."""
+  exportJob(id: UUID!): ExportJob
+
+  """List export jobs."""
+  exportJobs(first: Int, after: String): [ExportJob!]!
+}
+
+# ─────────────────────────────────────────────
+# Mutation Root
+# ─────────────────────────────────────────────
+
+type Mutation {
+  # Bot management
+  """Create a new bot."""
+  createBot(input: CreateBotInput!): BotPayload!
+
+  """Update bot settings."""
+  updateBot(id: UUID!, input: UpdateBotInput!): BotPayload!
+
+  """Update bot configuration."""
+  updateBotConfiguration(botId: UUID!, input: UpdateBotConfigurationInput!): BotPayload!
+
+  """Archive a bot."""
+  archiveBot(id: UUID!): BotPayload!
+
+  # Conversation management
+  """Start a new conversation."""
+  createConversation(input: CreateConversationInput!): ConversationPayload!
+
+  """End a conversation."""
+  resolveConversation(id: UUID!): ConversationPayload!
+
+  """Tag a conversation."""
+  tagConversation(id: UUID!, tags: [String!]!): ConversationPayload!
+
+  """Remove tags from a conversation."""
+  untagConversation(id: UUID!, tags: [String!]!): ConversationPayload!
+
+  # Messaging
+  """Send a message in a conversation."""
+  sendMessage(input: SendMessageInput!): MessagePayload!
+
+  # Handoff management
+  """Request a handoff to a human agent."""
+  requestHandoff(input: RequestHandoffInput!): HandoffPayload!
+
+  """Accept a handoff (agent-facing)."""
+  acceptHandoff(id: UUID!, agentId: UUID!): HandoffPayload!
+
+  """Complete a handoff."""
+  completeHandoff(id: UUID!): HandoffPayload!
+
+  """Decline a handoff."""
+  declineHandoff(id: UUID!, reason: String): HandoffPayload!
+
+  # End user management
+  """Create or update an end user profile."""
+  upsertEndUser(input: CreateEndUserInput!): EndUserPayload!
+
+  """Update an existing end user."""
+  updateEndUser(id: UUID!, input: UpdateEndUserInput!): EndUserPayload!
+
+  """Block an end user."""
+  blockEndUser(id: UUID!): EndUserPayload!
+
+  """Delete an end user's profile."""
+  deleteEndUser(id: UUID!): DeletePayload!
+
+  # Intent management
+  """Create a new intent."""
+  createIntent(input: CreateIntentInput!): IntentPayload!
+
+  """Update an existing intent."""
+  updateIntent(id: UUID!, input: UpdateIntentInput!): IntentPayload!
+
+  """Delete an intent."""
+  deleteIntent(id: UUID!): DeletePayload!
+
+  """Add a training phrase to an intent."""
+  addTrainingPhrase(input: AddTrainingPhraseInput!): TrainingPhrasePayload!
+
+  """Remove a training phrase."""
+  removeTrainingPhrase(id: UUID!): DeletePayload!
+
+  # Response management
+  """Create a response for an intent."""
+  createResponse(input: CreateResponseInput!): ResponsePayload!
+
+  """Update a response."""
+  updateResponse(id: UUID!, input: UpdateResponseInput!): ResponsePayload!
+
+  """Delete a response."""
+  deleteResponse(id: UUID!): DeletePayload!
+
+  # Knowledge management
+  """Create a knowledge source."""
+  createKnowledgeSource(botId: UUID!, input: CreateKnowledgeSourceInput!): KnowledgeSourcePayload!
+
+  """Update a knowledge source."""
+  updateKnowledgeSource(id: UUID!, input: UpdateKnowledgeSourceInput!): KnowledgeSourcePayload!
+
+  """Delete a knowledge source."""
+  deleteKnowledgeSource(id: UUID!): DeletePayload!
+
+  """Trigger a sync of a knowledge source."""
+  syncKnowledgeSource(id: UUID!): KnowledgeSourcePayload!
+
+  """Upsert a knowledge article in a source."""
+  upsertKnowledgeArticle(sourceId: UUID!, input: UpsertKnowledgeArticleInput!): KnowledgeArticlePayload!
+
+  """Delete a knowledge article."""
+  deleteKnowledgeArticle(id: UUID!): DeletePayload!
+
+  # Webhook management
+  """Create a webhook subscription."""
+  createWebhook(botId: UUID!, input: CreateWebhookInput!): WebhookPayload!
+
+  """Update a webhook subscription."""
+  updateWebhook(id: UUID!, input: UpdateWebhookInput!): WebhookPayload!
+
+  """Delete a webhook."""
+  deleteWebhook(id: UUID!): DeletePayload!
+
+  """Send a test event to a webhook."""
+  testWebhook(id: UUID!, event: WebhookEvent!): WebhookPayload!
+
+  # Integration management
+  """Connect an external integration."""
+  connectIntegration(botId: UUID!, provider: IntegrationProvider!, configuration: JSON): IntegrationPayload!
+
+  """Update integration configuration."""
+  updateIntegration(id: UUID!, configuration: JSON!): IntegrationPayload!
+
+  """Disconnect an integration."""
+  disconnectIntegration(id: UUID!): DeletePayload!
+
+  # Data compliance
+  """Submit a data deletion request for a user email."""
+  requestDataDeletion(input: DataDeletionInput!): DataDeletionPayload!
+
+  # Training
+  """Trigger retraining of the AI model for a bot."""
+  triggerTraining(botId: UUID!): TrainingJobPayload!
+
+  # Export
+  """Create a data export job."""
+  createExportJob(input: CreateExportJobInput!): ExportJobPayload!
+}
+
+# ─────────────────────────────────────────────
+# Subscription Root
+# ─────────────────────────────────────────────
+
+type Subscription {
+  """Subscribe to new messages in a conversation."""
+  messageReceived(conversationId: UUID!): Message!
+
+  """Subscribe to conversation status changes."""
+  conversationStatusChanged(botId: UUID!): Conversation!
+
+  """Subscribe to handoff requests for a bot."""
+  handoffRequested(botId: UUID!): Handoff!
+
+  """Subscribe to handoff status changes."""
+  handoffStatusChanged(handoffId: UUID!): Handoff!
+
+  """Subscribe to training job updates."""
+  trainingJobUpdated(botId: UUID!): TrainingJob!
+
+  """Subscribe to export job completion."""
+  exportJobCompleted(jobId: UUID!): ExportJob!
+
+  """Subscribe to end user profile updates."""
+  endUserUpdated(botId: UUID!): EndUser!
+}
