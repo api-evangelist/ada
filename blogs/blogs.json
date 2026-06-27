@@ -3,13 +3,12 @@
   "feeds": [
     {
       "source": "https://www.ada.cx/blog/",
-      "feed_url": "https://www.ada.cx/blog/",
-      "title": "Ada Blog",
-      "saved": 0,
-      "method": "html-scrape",
-      "note": "No RSS/Atom feed resolved (feed/, rss/, feed.xml, atom.xml, index.xml, rss.xml all 404 or HTML); scraped HTML. Newest post 2026-06-13 predates cutoff 2026-06-14T20:42:17Z, so no new posts."
+      "feed_url": "",
+      "saved": 2,
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-21T17:00:00Z"
+  "post_count": 2,
+  "fetched": "2026-06-27T12:21:20Z",
+  "agent_pulled": "2026-06-27"
 }
