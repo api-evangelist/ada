@@ -1,0 +1,31 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.ada.cx
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 21 19:01:27 2026 GMT
+  hsts: true
+  hsts_max_age: 15552000
+- host: docs.ada.cx
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 28 16:41:43 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: api.ada.cx
+  https: false
+domains:
+- domain: ada.cx
+  dnssec: true
+  caa:
+  - 0 issue "awstrust.com"
+  - 0 issue "comodoca.com"
+  - 0 issue "digicert.com; cansignhttpexchanges=yes"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  - 0 issue "sectigo.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

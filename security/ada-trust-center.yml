@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://security.ada.cx/
+url: https://security.ada.cx/
+certifications:
+- SOC 2
+- HIPAA
+- GDPR
+evidence:
+- source: https://security.ada.cx/
+  keywords:
+  - soc 2
+  - hipaa
+  - trust center
+  - gdpr

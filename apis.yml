@@ -112,6 +112,14 @@ apis:
   - type: Documentation
     url: https://docs.ada.cx/reference/integrations/overview
 common:
+- type: TrustCenter
+  url: security/ada-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/ada-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/ada-domain-security.yml
+- type: Authentication
+  url: authentication/ada-authentication.yml
 - type: Website
   url: https://www.ada.cx/
 - type: Documentation
