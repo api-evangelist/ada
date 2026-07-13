@@ -2,13 +2,14 @@
   "repo": "ada",
   "feeds": [
     {
-      "source": "https://www.ada.cx/blog/",
-      "feed_url": "",
-      "saved": 2,
-      "method": "agent-scrape"
+      "source": "https://ca.linkedin.com/company/ada-cx",
+      "feed_url": "https://ca.linkedin.com/company/ada-cx",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 2,
-  "fetched": "2026-06-27T12:21:20Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "agent_pulled": "2026-06-27"
 }
