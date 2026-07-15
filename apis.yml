@@ -112,6 +112,8 @@ apis:
   - type: Documentation
     url: https://docs.ada.cx/reference/integrations/overview
 common:
+- type: AgenticAccess
+  url: agentic-access/ada-agentic-access.yml
 - type: TrustCenter
   url: security/ada-trust-center.yml
 - type: VulnerabilityDisclosure
