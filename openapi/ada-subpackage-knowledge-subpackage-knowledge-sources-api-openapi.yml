@@ -1,0 +1,363 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/sources API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_knowledge.subpackage_knowledge/sources
+paths:
+  /v2/knowledge/sources/:
+    get:
+      operationId: list
+      summary: Get knowledge sources
+      description: Get knowledge sources
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Knowledge sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_sources_list_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create
+      summary: Create a knowledge source
+      description: Create a knowledge source
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Knowledge source created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeSourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: Duplicate Resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeSourceCreateRequest'
+  /v2/knowledge/sources/{id}:
+    delete:
+      operationId: delete
+      summary: Delete a knowledge source
+      description: Delete a knowledge source, and its related articles
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+      - name: id
+        in: path
+        description: id of the knowledge source to delete
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Knowledge source deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_sources_delete_Response_204'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update
+      summary: Update a knowledge source
+      description: Update a knowledge source
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+      - name: id
+        in: path
+        description: id of the knowledge source to update
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Knowledge source updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeSourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeSourceUpdateRequest'
+components:
+  schemas:
+    KnowledgeSourceUpdateRequestMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceUpdateRequestMetadata
+    KnowledgeSourceCreateRequestMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceCreateRequestMetadata
+    KnowledgeSourceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the knowledge source
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: An external identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeSourceResponseMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+        created:
+          type: string
+          format: date-time
+          description: The date the knowledge source was created
+        updated:
+          type: string
+          format: date-time
+          description: The date the knowledge source was last updated
+        last_sync:
+          type: string
+          format: date-time
+          description: The date the knowledge source was last synchronized
+      required:
+      - id
+      - name
+      title: KnowledgeSourceResponse
+    KnowledgeSourceResponseMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceResponseMetadata
+    KnowledgeSourceCreateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeSourceCreateRequestMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      required:
+      - id
+      - name
+      title: KnowledgeSourceCreateRequest
+    knowledge_sources_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeSourceResponse'
+      title: knowledge_sources_list_Response_200
+    KnowledgeSourceUpdateRequest:
+      type: object
+      properties:
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: A unique identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeSourceUpdateRequestMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceUpdateRequest
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    knowledge_sources_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_sources_delete_Response_204
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

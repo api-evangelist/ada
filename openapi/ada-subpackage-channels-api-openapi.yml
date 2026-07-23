@@ -1,0 +1,343 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_channels
+paths:
+  /v2/channels/:
+    get:
+      operationId: get-channels
+      summary: Get a list of channels
+      description: Get a list of channels. This list can be filtered by modality and paginated. The default and maximum limits are 100 channels per page
+      tags:
+      - subpackage_channels
+      parameters:
+      - name: limit
+        in: query
+        description: The number of records to return
+        required: false
+        schema:
+          type: integer
+      - name: cursor
+        in: query
+        description: The ID that marks the start or beginning of the returned records
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: The type of the channels to retrieve
+        required: true
+        schema:
+          $ref: '#/components/schemas/V2ChannelsGetParametersType'
+      - name: modality
+        in: query
+        description: The modality of the channels to retrieve
+        required: false
+        schema:
+          $ref: '#/components/schemas/V2ChannelsGetParametersModality'
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Channels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channels_getChannels_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-channel
+      summary: Create a new channel
+      description: Create a new channel. A maximum of 100 channels can be created per account per day. The maximum request size is 10MB.
+      tags:
+      - subpackage_channels
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Channel created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomChannel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '413':
+          description: Content Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomChannel'
+components:
+  schemas:
+    CustomChannelMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: CustomChannelMetadata
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    V2ChannelsGetParametersModality:
+      type: string
+      enum:
+      - messaging
+      - email
+      - voice
+      title: V2ChannelsGetParametersModality
+    CustomChannel:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The channel ID
+        type:
+          $ref: '#/components/schemas/CustomChannelType'
+          description: The type of the channel
+        name:
+          type: string
+          description: The name of the channel
+        description:
+          type: string
+          description: A description of the channel
+        modality:
+          $ref: '#/components/schemas/BaseChannelModality'
+          description: The modality of the channel
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CustomChannelMetadata'
+          description: 'A dictionary of key, value pairs assigned to the channel. Metadata may not exceed 4KB total.
+
+            - `metadata` keys may only be of type: `string`
+
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+
+            '
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the channel was created
+      required:
+      - name
+      - description
+      - modality
+      title: CustomChannel
+    NativeChannelType:
+      type: string
+      enum:
+      - native
+      description: The type of the channel
+      title: NativeChannelType
+    BaseChannelModality:
+      type: string
+      enum:
+      - messaging
+      - email
+      - voice
+      description: The modality of the channel
+      title: BaseChannelModality
+    Channels_getChannels_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: Channels_getChannels_Response_200
+    CustomChannelType:
+      type: string
+      enum:
+      - custom
+      description: The type of the channel
+      title: CustomChannelType
+    V2ChannelsGetParametersType:
+      type: string
+      enum:
+      - custom
+      - native
+      title: V2ChannelsGetParametersType
+    Channel:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/CustomChannelType'
+            description: The type of the channel
+          id:
+            type: string
+            format: id
+            description: The channel ID
+          name:
+            type: string
+            description: The name of the channel
+          description:
+            type: string
+            description: A description of the channel
+          modality:
+            $ref: '#/components/schemas/BaseChannelModality'
+            description: The modality of the channel
+          metadata:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/CustomChannelMetadata'
+            description: 'A dictionary of key, value pairs assigned to the channel. Metadata may not exceed 4KB total.
+
+              - `metadata` keys may only be of type: `string`
+
+              - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+
+              '
+          created_at:
+            type: string
+            format: date-time
+            description: The date and time the channel was created
+        required:
+        - type
+        - name
+        - description
+        - modality
+        description: custom variant
+      - type: object
+        properties:
+          type:
+            $ref: '#/components/schemas/NativeChannelType'
+            description: The type of the channel
+          id:
+            type: string
+            description: The channel ID
+          name:
+            type: string
+            description: The name of the channel
+          description:
+            type: string
+            description: A description of the channel
+          modality:
+            $ref: '#/components/schemas/BaseChannelModality'
+            description: The modality of the channel
+        required:
+        - type
+        - name
+        - description
+        - modality
+        description: native variant
+      discriminator:
+        propertyName: type
+      title: Channel
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

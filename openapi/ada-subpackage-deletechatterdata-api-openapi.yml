@@ -1,29 +1,35 @@
 openapi: 3.1.0
 info:
-  title: Data Compliance
+  title: Data Compliance subpackage_channels subpackage_deleteChatterData API
   version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_deleteChatterData
 paths:
   /api/v1/data-subject-request:
     post:
       operationId: delete-all-data-associated-with-a-chatters-email-address
       summary: Delete all data associated with a chatter's email address
-      description: >-
-        Deletes all data associated with the provided chatter's email address linked to the bot. Replace `example` with
-        your agent's handle. A successful call returns the chatter's email supplied (null if email field was not
-        supplied) in the request whose data will be deleted from Ada's systems. In order to ensure emails are properly
-        linked to a chatter record, ensure the capture block validation when capturing email is set to `@
-        Email.`<br><br> **Note for multiple participant emails:** If you are requesting data deletion for one chatter’s
-        email address and they are a participant in a conversation that has multiple email participants (i.e., Email
-        thread with additional recipients in CC), the entire transcript will be deleted for all participants.
+      description: Deletes all data associated with the provided chatter's email address linked to the bot. Replace `example` with your agent's handle. A successful call returns the chatter's email supplied (null if email field was not supplied) in the request whose data will be deleted from Ada's systems. In order to ensure emails are properly linked to a chatter record, ensure the capture block validation when capturing email is set to `@ Email.`<br><br> **Note for multiple participant emails:** If you are requesting data deletion for one chatter’s email address and they are a participant in a conversation that has multiple email participants (i.e., Email thread with additional recipients in CC), the entire transcript will be deleted for all participants.
       tags:
-        - subpackage_deleteChatterData
+      - subpackage_deleteChatterData
       parameters:
-        - name: Authorization
-          in: header
-          description: Bearer authentication
-          required: true
-          schema:
-            type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: The request was successfully ingested into Ada's system.
@@ -72,49 +78,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DeleteSubjectRequest'
-servers:
-  - url: https://example.ada.support
-    description: ada
-  - url: https://example.att.ada.support
-    description: att.ada
-  - url: https://example.maple.ada.support
-    description: maple.ada
-  - url: https://example.ficanex.ada.support
-    description: ficanex.ada
-  - url: https://example.eu.ada.support
-    description: eu.ada
 components:
   schemas:
-    TokenType:
-      type: string
-      enum:
-        - ERASURE
-      description: Type of data subject request. Must be set to ERASURE.
-      title: TokenType
-    EmailType:
-      type: string
-      description: Email of the chatter whose data you wish to delete from Ada's systems.
-      title: EmailType
-    IdentifiersTypeItemsType:
-      type: string
-      enum:
-        - email
-        - chatter_id
-      title: IdentifiersTypeItemsType
-    IdentifiersTypeItems:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/IdentifiersTypeItemsType'
-        value:
-          type: string
-      title: IdentifiersTypeItems
-    IdentifiersType:
-      type: array
-      items:
-        $ref: '#/components/schemas/IdentifiersTypeItems'
-      description: List containing extra identifiers sent with the data subject request.
-      title: IdentifiersType
     DeleteSubjectRequest:
       type: object
       properties:
@@ -125,14 +90,44 @@ components:
         identifiers:
           $ref: '#/components/schemas/IdentifiersType'
       required:
-        - type
+      - type
       title: DeleteSubjectRequest
+    IdentifiersTypeItems:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/IdentifiersTypeItemsType'
+        value:
+          type: string
+      title: IdentifiersTypeItems
+    IdentifiersTypeItemsType:
+      type: string
+      enum:
+      - email
+      - chatter_id
+      title: IdentifiersTypeItemsType
+    TokenType:
+      type: string
+      enum:
+      - ERASURE
+      description: Type of data subject request. Must be set to ERASURE.
+      title: TokenType
     DeleteSubjectResponse:
       type: object
       properties:
         email:
           $ref: '#/components/schemas/EmailType'
       title: DeleteSubjectResponse
+    IdentifiersType:
+      type: array
+      items:
+        $ref: '#/components/schemas/IdentifiersTypeItems'
+      description: List containing extra identifiers sent with the data subject request.
+      title: IdentifiersType
+    EmailType:
+      type: string
+      description: Email of the chatter whose data you wish to delete from Ada's systems.
+      title: EmailType
   securitySchemes:
     bearerAuth:
       type: http

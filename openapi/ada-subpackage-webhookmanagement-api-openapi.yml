@@ -1,0 +1,494 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_webhookManagement API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_webhookManagement
+paths:
+  /v2/webhooks/:
+    get:
+      operationId: list-webhooks
+      summary: List webhooks
+      description: List all webhook subscriptions configured for this AI Agent
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of webhooks to return
+        required: false
+        schema:
+          type: integer
+      - name: cursor
+        in: query
+        description: Cursor for pagination
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of webhooks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_listWebhooks_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-webhook
+      summary: Create a webhook
+      description: Create a new webhook subscription. If this is the first webhook for this AI Agent, the webhook infrastructure is automatically provisioned
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL that will receive webhook events
+                description:
+                  type: string
+                  default: ''
+                  description: A description of the webhook
+                event_filters:
+                  type: array
+                  items:
+                    type: string
+                  description: Event types to subscribe to. An empty list subscribes to all events
+                enabled:
+                  type: boolean
+                  default: true
+                  description: Whether the webhook is enabled
+              required:
+              - url
+  /v2/webhooks/{id}:
+    get:
+      operationId: get-webhook
+      summary: Get a webhook
+      description: Get the details of a specific webhook subscription
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: id
+        in: path
+        description: The webhook ID
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete-webhook
+      summary: Delete a webhook
+      description: Delete a webhook subscription
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: id
+        in: path
+        description: The webhook ID
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Webhook deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_deleteWebhook_Response_204'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update-webhook
+      summary: Update a webhook
+      description: Update a webhook subscription. Only the fields provided in the request body will be updated
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: id
+        in: path
+        description: The webhook ID
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL that will receive webhook events
+                description:
+                  type: string
+                  description: A description of the webhook
+                event_filters:
+                  type: array
+                  items:
+                    type: string
+                  description: Event types to subscribe to. An empty list subscribes to all events
+                enabled:
+                  type: boolean
+                  description: Whether the webhook is enabled
+  /v2/webhooks/{id}/secret/:
+    get:
+      operationId: get-webhook-secret
+      summary: Get webhook signing secret
+      description: Get the signing secret for a webhook. Use this secret to verify that incoming webhook payloads are authentic
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: id
+        in: path
+        description: The webhook ID
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook signing secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_getWebhookSecret_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/webhooks/{id}/secret/rotate/:
+    post:
+      operationId: rotate-webhook-secret
+      summary: Rotate webhook signing secret
+      description: Rotate the signing secret for a webhook. Optionally provide a custom key. The new secret is not returned in the response — use the get secret endpoint to retrieve it
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: id
+        in: path
+        description: The webhook ID
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Signing secret rotated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_rotateWebhookSecret_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: An optional custom signing key. If not provided, a new key is generated automatically
+  /v2/webhooks/event-types/:
+    get:
+      operationId: list-webhook-event-types
+      summary: List webhook event types
+      description: List all available event types that webhooks can subscribe to
+      tags:
+      - subpackage_webhookManagement
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of event types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_listWebhookEventTypes_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+components:
+  schemas:
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The webhook ID
+        url:
+          type: string
+          format: uri
+          description: The URL that will receive webhook events
+        description:
+          type: string
+          description: A description of the webhook
+        event_filters:
+          type: array
+          items:
+            type: string
+          description: Event types this webhook is subscribed to. If empty, the webhook receives all events
+        enabled:
+          type: boolean
+          description: Whether the webhook is enabled
+        created_at:
+          type: string
+          format: date-time
+          description: When the webhook was created
+        updated_at:
+          type: string
+          format: date-time
+          description: When the webhook was last updated
+      title: Webhook
+    Webhook Management_listWebhookEventTypes_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
+      title: Webhook Management_listWebhookEventTypes_Response_200
+    Webhook Management_deleteWebhook_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Webhook Management_deleteWebhook_Response_204
+    V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The event type identifier
+        description:
+          type: string
+          description: Human-readable description of the event type
+      title: V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems
+    Webhook Management_getWebhookSecret_Response_200:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The webhook signing secret
+      title: Webhook Management_getWebhookSecret_Response_200
+    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page of results, or null if no pages remain
+      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
+    Webhook Management_rotateWebhookSecret_Response_200:
+      type: object
+      properties: {}
+      title: Webhook Management_rotateWebhookSecret_Response_200
+    Webhook Management_listWebhooks_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Webhook'
+        meta:
+          $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
+      title: Webhook Management_listWebhooks_Response_200
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

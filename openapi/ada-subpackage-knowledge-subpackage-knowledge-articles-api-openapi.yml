@@ -1,0 +1,655 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/articles API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_knowledge.subpackage_knowledge/articles
+paths:
+  /v2/knowledge/articles/:
+    get:
+      operationId: list
+      summary: Get knowledge articles
+      description: Get knowledge articles
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+      - name: cursor
+        in: query
+        description: The article cursor that marks the start or beginning of the returned article records
+        required: false
+        schema:
+          type: string
+          format: id
+      - name: limit
+        in: query
+        description: The number of article records to return
+        required: false
+        schema:
+          type: integer
+      - name: id
+        in: query
+        description: Filter by article id
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: id
+      - name: enabled
+        in: query
+        description: Filter by enabled status
+        required: false
+        schema:
+          type: array
+          items:
+            type: boolean
+      - name: language
+        in: query
+        description: Filter by language
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: knowledge_source_id
+        in: query
+        description: Filter by knowledge source
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: id
+      - name: tag_ids
+        in: query
+        description: Filter by tag ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching knowledge articles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_articles_list_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete
+      summary: Delete multiple articles
+      description: Delete multiple articles
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+      - name: id
+        in: query
+        description: Filter by article id
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: id
+      - name: enabled
+        in: query
+        description: Filter by enabled status
+        required: false
+        schema:
+          type: array
+          items:
+            type: boolean
+      - name: language
+        in: query
+        description: Filter by language
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: knowledge_source_id
+        in: query
+        description: Filter by knowledge source
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: id
+      - name: tag_ids
+        in: query
+        description: Filter by tag ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Articles successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_articles_delete_Response_204'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/articles/{id}:
+    get:
+      operationId: get
+      summary: Get a single knowledge article
+      description: Get knowledge article by id
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+      - name: id
+        in: path
+        description: The id of the article to retrieve
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Knowledge article
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeArticleResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete-by-id
+      summary: Delete a single article
+      description: Delete an article
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+      - name: id
+        in: path
+        description: The id of the article to delete
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Articles successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_articles_deleteById_Response_204'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/bulk/articles/:
+    post:
+      operationId: bulk-upsert
+      summary: Upsert multiple articles
+      description: 'Upsert an array of knowledge articles
+
+
+        This endpoint will create or update articles based on the unique `id` field of each article. If an article with the same `id` already exists, it will be updated. Otherwise, a new article will be created.
+
+
+        **Limits:**
+
+        - The maximum size of a request payload is 10MB
+
+        - The maximum size of an article is 100KB
+
+        - The maximum number of articles is 50,000
+
+        '
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Articles upserted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KnowledgeArticleUpsertResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/KnowledgeArticleUpsertRequest'
+components:
+  schemas:
+    knowledge_articles_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeArticleResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: knowledge_articles_list_Response_200
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    knowledge_articles_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_delete_Response_204
+    KnowledgeArticleUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article was created, `false` if an existing article was updated'
+        id:
+          type: string
+          description: A unique identifier for the article
+      required:
+      - id
+      title: KnowledgeArticleUpsertResponse
+    KnowledgeArticleUpsertRequestMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      title: KnowledgeArticleUpsertRequestMetadata
+    KnowledgeArticleUpsertRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the article
+        name:
+          type: string
+          description: The name or title of the article
+        content:
+          type: string
+          description: The content of the article in markdown format
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: The url of the article
+        knowledge_source_id:
+          type: string
+          description: The id of the `knowledge_source` the article belongs to
+        tag_ids:
+          type: array
+          items:
+            type: string
+          description: A list of ids for the tags associated with the article
+        language:
+          type: string
+          description: The IETF BCP 47 language code for the article, defaults to `en`
+        external_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date the article was created in the source system
+        external_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date the article was last updated in the source system
+        enabled:
+          type: boolean
+          description: Whether the article should be referenced during response generation, defaults to `true`
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeArticleUpsertRequestMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      required:
+      - id
+      - name
+      - content
+      - knowledge_source_id
+      title: KnowledgeArticleUpsertRequest
+    knowledge_articles_deleteById_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_deleteById_Response_204
+    KnowledgeArticleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the article
+        name:
+          type: string
+          description: The name or title of the article
+        content:
+          type: string
+          description: The content of the article in markdown format
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: The url of the article
+        knowledge_source_id:
+          type:
+          - string
+          - 'null'
+          description: The id of the `knowledge_source` the article belongs to
+        language:
+          $ref: '#/components/schemas/ArticleLanguage'
+        tag_ids:
+          type: array
+          items:
+            type: string
+          description: A list of ids for the tags associated with the article
+        created:
+          type: string
+          format: date-time
+          description: The date the article was created in Ada
+        updated:
+          type: string
+          format: date-time
+          description: The date the article was last updated in Ada
+        external_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date the article was created in the source system
+        external_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date the article was last updated in the source system
+        enabled:
+          type: boolean
+          description: Whether the article should be referenced during response generation, defaults to `true`
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeArticleResponseMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      required:
+      - id
+      - name
+      - content
+      title: KnowledgeArticleResponse
+    ArticleLanguage:
+      type: string
+      enum:
+      - ar
+      - zh
+      - zh-tw
+      - da
+      - nl
+      - en
+      - fi
+      - fr
+      - de
+      - he
+      - hi
+      - id
+      - in
+      - it
+      - ja
+      - ko
+      - ms
+      - pt
+      - pa
+      - ru
+      - es
+      - sv
+      - tl
+      - ta
+      - th
+      - tr
+      - vi
+      - ht
+      - my
+      - km
+      - bg
+      - ro
+      - el
+      - hu
+      - pl
+      - cs
+      - et
+      - hr
+      - lt
+      - lv
+      - sl
+      - sk
+      - is
+      - be
+      - uk
+      - ca
+      - sq
+      - bs
+      - sr
+      - kk
+      description: The ISO 639-1 language code of the article, defaults to `en`
+      title: ArticleLanguage
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    KnowledgeArticleResponseMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      title: KnowledgeArticleResponseMetadata
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

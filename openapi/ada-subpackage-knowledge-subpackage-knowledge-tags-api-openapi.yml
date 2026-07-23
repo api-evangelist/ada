@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/tags API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_knowledge.subpackage_knowledge/tags
+paths:
+  /v2/knowledge/tags/:
+    get:
+      operationId: list
+      summary: Get article tags
+      description: Get article tags
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/tags
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Article tags
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_tags_list_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/tags/{id}:
+    delete:
+      operationId: delete
+      summary: Delete a single article tag
+      description: Delete an article tag
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/tags
+      parameters:
+      - name: id
+        in: path
+        description: The id of the article tag to delete
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Article tag deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_tags_delete_Response_204'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/bulk/tags/:
+    post:
+      operationId: upsert-multiple
+      summary: Upsert multiple tags
+      description: 'Upsert an array of tags for articles
+
+
+        This endpoint will create or update tags based on the unique `id` field of each tag. If a tag with the same `id` already exists, it will be updated. Otherwise, a new tag will be created.
+
+        '
+      tags:
+      - subpackage_knowledge.subpackage_knowledge/tags
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tags upserted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArticleTagUpsertResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ArticleTag'
+components:
+  schemas:
+    ArticleTagUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article tag was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
+        id:
+          type: string
+          description: The id of the article tag
+      required:
+      - success
+      - created
+      - id
+      title: ArticleTagUpsertResponse
+    knowledge_tags_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_tags_delete_Response_204
+    ArticleTag:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the tag
+        name:
+          type: string
+          description: The name of the tag
+      required:
+      - id
+      - name
+      title: ArticleTag
+    knowledge_tags_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArticleTag'
+      title: knowledge_tags_list_Response_200
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,1502 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_conversations API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_conversations
+paths:
+  /v2/export/conversations:
+    get:
+      operationId: get-conversations
+      summary: Return conversations matching the parameters
+      description: Returns a list of `conversation` objects along with a `next_page_uri` if applicable
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: created_since
+        in: query
+        description: Return records that were created after this date. If `created_to` is not specified, only records within 7 days of this timestamp are returned. To retrieve data beyond that window, set `created_to` explicitly. Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_since
+        in: query
+        description: Return records that were updated after this date. Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: page_size
+        in: query
+        description: Number of records to return in response. The maximum and default is 10000, the minimum is 100.
+        required: false
+        schema:
+          type: integer
+          default: 10000
+      - name: created_to
+        in: query
+        description: Return records that were created earlier than this date. If `created_since` is used and this parameter is not specified, this value defaults to 7 days after `created_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      - name: updated_to
+        in: query
+        description: Return records that were updated earlier than this date. If `updated_since` is used and this parameter is not specified, this value defaults to 7 days after `updated_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Ada successfully processed the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationsResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /data_api/v1.4/conversations:
+    get:
+      operationId: return-conversations-matching-the-parameters
+      summary: Return conversations matching the parameters
+      description: Returns a list of `conversation` objects along with a status message and `next_page_uri` if applicable.
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: created_since
+        in: query
+        description: Return records that were created after this date.  Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: updated_since
+        in: query
+        description: Return records that were updated after this date. Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: page_size
+        in: query
+        description: Number of records to return in response. The maximum and default is 10000, the minimum is 100.
+        required: false
+        schema:
+          type: integer
+          default: 10000
+      - name: created_to
+        in: query
+        description: Return records that were created earlier than this date. If `created_since` is used and this parameter is not specified, this value defaults to 7 days after `created_since`.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      - name: updated_to
+        in: query
+        description: Return records that were updated earlier than this date. If `updated_since` is used and this parameter is not specified, this value defaults to 7 days after `updated_since`.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Ada successfully processed the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationsResponse_2'
+        '400':
+          description: Incorrect query.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '408':
+          description: Database query timed out.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: Invalid arguments or missing data for a required field.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '429':
+          description: Requests are within 1 s of each other.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Request timed out or there was a database error.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '502':
+          description: Nginx gateway issue on Ada's servers.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '503':
+          description: Server temporarily unable to handle the request.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '504':
+          description: Temporary infrastructure error on Ada's servers.
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /v2/conversations/email/:
+    post:
+      operationId: create-email-conversation
+      summary: Start a conversation over Ada's email channel
+      description: Start a conversation with an end user over Ada's native Email channel, providing context for their inquiry. **This endpoint is exclusive to the native Email channel and cannot be used for custom channels.** Your AI Agent can start conversations only with the default Ada-provided email address, or with email addresses you’ve configured through Bring Your Own Domain (BYOD) settings.
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversation Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailConversationCreateResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailConversationCreateRequest'
+  /v2/conversations/:
+    post:
+      operationId: create-conversation
+      summary: Create a new conversation
+      description: Create a new conversation. If `end_user_id` is not provided, the system creates a new end user automatically. The maximum request size is 10MB, and metadata must not exceed 4KB.
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Conversation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation_3'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationCreateRequest'
+  /v2/conversations/{conversation_id}/:
+    get:
+      operationId: get-conversation-by-id
+      summary: Get a conversation
+      description: Get a conversation by its ID
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation to retrieve
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversation retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation_3'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: patch-conversation-by-id
+      summary: Update a conversation
+      description: Update a conversation's metadata by its ID
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation to update
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation_3'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationPatchRequest'
+  /v2/conversations/{conversation_id}/messages/:
+    get:
+      operationId: fetch-conversation-messages-by-id
+      summary: Get conversation messages
+      description: Get messages (paginated) for a conversation by its ID
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: cursor
+        in: query
+        description: Cursor for pagination. Use the value from `meta.next_page_url` in the previous response.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of messages to return (default 100, max 100)
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-message
+      summary: Create a new message
+      description: Create a new message in a conversation. The maximum request size is 10MB.
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Message created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreateRequest'
+  /v2/conversations/{conversation_id}/end/:
+    post:
+      operationId: end-conversation
+      summary: End a conversation
+      description: Ends the conversation specified by the `conversation_id`
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation to end
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Conversation ended successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversations_endConversation_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/conversations/{conversation_id}/end-handoff/:
+    post:
+      operationId: end-handoff
+      summary: End Handoff
+      description: Ends the handoff for the conversation specified by the `conversation_id`. This endpoint returns control to the AI Agent and does not end the conversation. It also triggers CSAT for human agent (where applicable), leftover blocks processing, and agent presence dismissal messages.
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation to end handoff for
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Handoff ended successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversations_endHandoff_Response_200'
+        '404':
+          description: Conversation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '422':
+          description: Conversation is not in an active handoff state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/conversations/{conversation_id}/attachments/:
+    post:
+      operationId: upload-attachment
+      summary: Upload a file attachment
+      description: 'Upload a file attachment to a conversation. The file will be stored and a presigned URL
+
+        will be generated that is valid for 7 days. The maximum file size is 50MB.
+
+
+        The presigned URL can be used to create a file message by calling the
+
+        `/v2/conversations/{conversation_id}/messages/` endpoint with `content.type` set to `file`.
+
+
+        **Note:** Attachments can only be uploaded when the conversation is in a handoff state.
+
+
+        **Allowed file types:** TXT, LOG, CSV, EML, PNG, SVG, JPEG, JPG, GIF, HEIF, HEIC, AVIF, WAV, M4A, MP3, MP4, M4V, MOV, MPEG, MPG, ZIP, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, Keynote, Pages, Numbers
+
+        '
+      tags:
+      - subpackage_conversations
+      parameters:
+      - name: conversation_id
+        in: path
+        description: The ID of the conversation
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Attachment uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUploadResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload (max 50MB)
+              required:
+              - file
+components:
+  schemas:
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    MessageLogsType:
+      type: string
+      enum:
+      - message_logs
+      description: The type of the message
+      title: MessageLogsType
+    ConversationMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationMetadata
+    ConversationsResponseMeta:
+      type: object
+      properties:
+        next_page_uri:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page of results matching the query
+      title: ConversationsResponseMeta
+    Conversation:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique ID for the conversation record
+        agent_id:
+          type: array
+          items:
+            type: string
+          description: The list of unique IDs for agents involved in the conversation
+        agent_handle_time:
+          type: number
+          format: double
+          description: Time taken for a human agent to handle a conversation in seconds
+        agent_name:
+          type: array
+          items:
+            type: string
+          description: A list of names of the agents involved the conversation, corresponding to the agent IDs
+        automated_resolution_classification:
+          type: string
+          description: Classification of either Resolved or Not Resolved for the conversation
+        automated_resolution_classification_reason:
+          type: string
+          description: Explanation of the reason for the assigned automated_resolution_classification
+        bot_handle_time:
+          type: number
+          format: double
+          description: Time taken for the AI agent to handle a conversation in seconds
+        browser:
+          type: string
+          description: The browser used by the chatter
+        browser_version:
+          type: string
+          description: The version of the browser used by the chatter
+        chatter_id:
+          type: string
+          description: Ada ID of the chatter having this conversation
+        csat:
+          $ref: '#/components/schemas/ConversationCsat'
+          description: Object of customer satisfaction survey data for this conversation
+        date_created:
+          type: string
+          format: date-time
+          description: Date and time the record was created (UTC)
+        date_updated:
+          type: string
+          format: date-time
+          description: Last date and time the record was updated (UTC)
+        device:
+          type: string
+          description: The device the chatter used, such as iphone, android, etc.
+        end_user_id:
+          type:
+          - string
+          - 'null'
+          description: The End User ID used to identify the chatter profile in the conversation
+        generated_topic_id:
+          type: string
+          description: The unique ID Ada associated with the generated conversation topic
+        generated_topic_label:
+          type:
+          - string
+          - 'null'
+          description: The title of the generated conversation topic
+        generated_topic_v2_id:
+          type:
+          - string
+          - 'null'
+          description: The unique ID Ada associated with the generated conversation topic using Topics V2
+        generated_topic_v2_title:
+          type:
+          - string
+          - 'null'
+          description: The title of the generated conversation topic using Topics V2
+        generated_topic_v2_desc:
+          type:
+          - string
+          - 'null'
+          description: The descrtiption of the generated conversation topic using Topics V2
+        generated_topic_v2_parent_id:
+          type:
+          - string
+          - 'null'
+          description: The unique ID Ada associated with the generated conversation topic's parent category topic. Null if topic has no parent category topic.
+        inquiry_summary:
+          type: string
+          description: An automatically generated summary of the customer's inquiry
+        is_engaged:
+          type: boolean
+          description: Whether the chatter engaged with the bot during this conversation
+        is_escalated:
+          type: boolean
+          description: Whether the chatter escalated to a live agent during this conversation
+        is_test_user:
+          type: boolean
+          description: Whether the conversation was started by a test user
+        language:
+          type: string
+          description: The language the chatter used
+        metavariables:
+          $ref: '#/components/schemas/ConversationMetavariables'
+          description: Object of metavariables and their values active during this conversations
+        oauth_channel:
+          type: string
+          description: The channel used by Oauth
+        platform:
+          type: string
+          description: Ada platform through which this conversation occurred
+        record_last_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date and time the record was uploaded to the API
+        variables:
+          $ref: '#/components/schemas/ConversationVariables'
+          description: Object of autocapture and global variables and their values last active during this conversations
+      title: Conversation
+    ConversationMetavariables:
+      type: object
+      properties: {}
+      description: Object of metavariables and their values active during this conversations
+      title: ConversationMetavariables
+    MessageLogs:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/MessageLogsType'
+          description: The type of the message
+        message_id:
+          type: string
+          description: The ID of the message log
+        created_at:
+          type: string
+          description: The date and time the message was created
+        author:
+          $ref: '#/components/schemas/MessageLogsAuthor'
+          description: Information about the message author
+        content:
+          $ref: '#/components/schemas/MessageLogsContent'
+          description: 'The message content. The structure varies based on the `type` field. Supported types: text, link, file.'
+      title: MessageLogs
+    ConversationVariables:
+      type: object
+      properties: {}
+      description: Object of autocapture and global variables and their values last active during this conversations
+      title: ConversationVariables
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The ID of the message
+        conversation_id:
+          type: string
+          format: id
+          description: The ID of the conversation
+        author:
+          $ref: '#/components/schemas/ConversationMessageAuthor'
+        content:
+          $ref: '#/components/schemas/MessageContent'
+          description: The message content
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the message was created
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the message was updated
+      title: Message
+    MessageCreateRequestContent:
+      oneOf:
+      - $ref: '#/components/schemas/TextContent'
+      - $ref: '#/components/schemas/FileContent'
+      description: The message content
+      title: MessageCreateRequestContent
+    MessageCreateRequest:
+      type: object
+      properties:
+        author:
+          $ref: '#/components/schemas/ConversationMessageAuthor'
+        content:
+          $ref: '#/components/schemas/MessageCreateRequestContent'
+          description: The message content
+      required:
+      - author
+      - content
+      title: MessageCreateRequest
+    TextContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TextContentType'
+          description: The type of the message
+        body:
+          type: string
+          description: The body of the message
+      required:
+      - type
+      - body
+      description: The content of the text message
+      title: TextContent
+    LinkContentType:
+      type: string
+      enum:
+      - link
+      description: The type of the message
+      title: LinkContentType
+    ConversationCreateRequestMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationCreateRequestMetadata
+    Conversation_3:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The ID of the conversation
+        channel_id:
+          type: string
+          description: The ID of the channel
+        end_user_id:
+          type: string
+          format: id
+          description: The ID of the end user participating in the conversation
+        status:
+          $ref: '#/components/schemas/ConversationStatus'
+          description: The status of the conversation
+        created_at:
+          type: string
+          description: The date and time the conversation was created
+        updated_at:
+          type: string
+          description: The date and time the conversation was last updated
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationMetadata'
+          description: "A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada metavariables. To create or update metavariables, use the End Users API.\n - `metadata` keys may only be of type: `string`\n - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n"
+      title: Conversation
+    ConversationCreateRequest:
+      type: object
+      properties:
+        channel_id:
+          type: string
+          format: id
+          description: The ID of the channel to create a conversation in
+        end_user_id:
+          type: string
+          format: id
+          description: The ID of the end user participating in the conversation. If not provided, the system will create a new end user automatically.
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationCreateRequestMetadata'
+          description: "A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada metavariables. To create or update metavariables, use the End Users API.\n - `metadata` keys may only be of type: `string`\n - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n"
+      required:
+      - channel_id
+      title: ConversationCreateRequest
+    MessageList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageEvents'
+          description: List of messages in the conversation
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+      - data
+      - meta
+      title: MessageList
+    ConversationMessageAuthor:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the user that will be participating in the conversation. Required when the role is `end_user`.
+        role:
+          $ref: '#/components/schemas/ConversationMessageAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The author's display name. Required when the role is `human_agent`.
+      required:
+      - role
+      description: Information about the message author
+      title: ConversationMessageAuthor
+    Conversations_endHandoff_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Conversations_endHandoff_Response_200
+    MessageLogsAuthor:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: If the role is `end_user`, the ID of the end user. If the role is `ai_agent` or `human_agent`, this is null.
+        role:
+          $ref: '#/components/schemas/MessageLogsAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The author's display name
+      description: Information about the message author
+      title: MessageLogsAuthor
+    TextContentType:
+      type: string
+      enum:
+      - text
+      description: The type of the message
+      title: TextContentType
+    ConversationPatchRequestMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationPatchRequestMetadata
+    Conversation_2:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique ID for the conversation record
+        agent_id:
+          type: array
+          items:
+            type: string
+          description: The list of unique IDs for agents involved in the conversation
+        agent_name:
+          type: array
+          items:
+            type: string
+          description: A list of names of the agents involved the conversation, corresponding to the agent IDs
+        agent_handle_time:
+          type: number
+          format: double
+          description: Time taken for a human agent to handle a conversation in seconds
+        automated_resolution_classification:
+          type: string
+          description: Classification of either Resolved or Not Resolved for the conversation
+        automated_resolution_classification_reason:
+          type: string
+          description: Explanation of the reason for the assigned automated_resolution_classification
+        bot_handle_time:
+          type: number
+          format: double
+          description: Time taken for the AI agent to handle a conversation in seconds
+        browser:
+          type: string
+          description: The browser used by the chatter
+        browser_version:
+          type: string
+          description: The version of the browser used by the chatter
+        chatter_id:
+          type: string
+          description: Ada ID of the chatter having this conversation
+        csat:
+          $ref: '#/components/schemas/ConversationCsat'
+          description: Object of customer satisfaction survey data for this conversation
+        date_created:
+          type: string
+          format: date-time
+          description: Date and time the record was created (UTC)
+        date_updated:
+          type: string
+          format: date-time
+          description: Last date and time the record was updated (UTC)
+        device:
+          type: string
+          description: The device the chatter used, such as iphone, android, etc.
+        end_user_id:
+          type: string
+          description: The End User ID used to identify the chatter profile in the conversation.
+        generated_topic_id:
+          type: string
+          description: The unique ID Ada associated with the generated conversation topic
+        generated_topic_label:
+          type: string
+          description: The title of the generated conversation topic
+        generated_topic_v2_id:
+          type: string
+          description: The unique ID Ada associated with the generated conversation topic using Topics V2
+        generated_topic_v2_title:
+          type: string
+          description: The title of the generated conversation topic using Topics V2
+        generated_topic_v2_desc:
+          type: string
+          description: The descrtiption of the generated conversation topic using Topics V2
+        generated_topic_v2_parent_id:
+          type: string
+          description: The unique ID Ada associated with the generated conversation topic's parent category topic. Null if topic has no parent category topic.
+        inquiry_summary:
+          type: string
+          description: An automatically generated summary of the customer's inquiry
+        is_engaged:
+          type: boolean
+          description: Whether the chatter engaged with the bot during this conversation
+        is_escalated:
+          type: boolean
+          description: Whether the chatter escalated to a live agent during this conversation
+        is_test_user:
+          type: boolean
+          description: Whether the conversation was started by a test user
+        language:
+          type: string
+          description: The language the chatter used
+        metavariables:
+          $ref: '#/components/schemas/ConversationMetavariables'
+          description: Object of metavariables and their values active during this conversations
+        oauth_channel:
+          type: string
+          description: The channel used by Oauth
+        platform:
+          type: string
+          description: Ada platform through which this conversation occurred
+        record_last_updated:
+          type: string
+          format: date-time
+          description: Date and time the record was uploaded to the API
+        variables:
+          $ref: '#/components/schemas/ConversationVariables'
+          description: Object of autocapture and global variables and their values last active during this conversations
+      title: Conversation
+    FileContentType:
+      type: string
+      enum:
+      - file
+      description: The type of the message
+      title: FileContentType
+    ConversationStatus:
+      type: string
+      enum:
+      - active
+      - ended
+      description: The status of the conversation
+      title: ConversationStatus
+    EmailConversationCreateResponse:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: The Ada-generated conversation id
+      title: EmailConversationCreateResponse
+    MessageEvents:
+      oneOf:
+      - $ref: '#/components/schemas/MessageLogs'
+      title: MessageEvents
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    LinkContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/LinkContentType'
+          description: The type of the message
+        url:
+          type: string
+          description: The link's URL
+        link_text:
+          type:
+          - string
+          - 'null'
+          description: Text that can be used to display the link
+      description: The content of a standalone link style messages, such as CSAT
+      title: LinkContent
+    ConversationPatchRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/ConversationPatchRequestMetadata'
+            - type: 'null'
+          description: 'A dictionary of key, value pairs to add to the conversation metadata additively
+
+            - `metadata` keys may only be of type: `string`
+
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+
+            - `metadata` keys with a `null` value will be removed from the conversation metadata
+
+            '
+      required:
+      - metadata
+      title: ConversationPatchRequest
+    EmailConversationCreateRequestMetadata:
+      type: object
+      properties: {}
+      description: Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.
+      title: EmailConversationCreateRequestMetadata
+    ConversationCsat:
+      type: object
+      properties: {}
+      description: Object of customer satisfaction survey data for this conversation
+      title: ConversationCsat
+    EmailConversationCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The customer's full name
+        subject:
+          type: string
+          description: The subject of the customer's inquiry; used as the subject for the AI Agent's reply
+        reply_to:
+          type: string
+          description: The customer's email address
+        text:
+          type: string
+          description: The customer's inquiry, limited to 10 KB
+        reply_as:
+          type: string
+          description: The company email address you want to use to reply to the customer. Defaults to the Ada provided email address.
+        cc:
+          type: array
+          items:
+            type: string
+          description: The email addresses in the email's CC field
+        metadata:
+          $ref: '#/components/schemas/EmailConversationCreateRequestMetadata'
+          description: Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.
+      required:
+      - name
+      - subject
+      - reply_to
+      title: EmailConversationCreateRequest
+    FileContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FileContentType'
+          description: The type of the message
+        url:
+          type: string
+          format: uri
+          description: Presigned URL from the attachment upload endpoint (valid for 7 days)
+        mime_type:
+          type: string
+          description: MIME type of the file
+        filename:
+          type: string
+          description: Name of the file
+      required:
+      - type
+      - url
+      - mime_type
+      - filename
+      description: The content of a file message
+      title: FileContent
+    ConversationMessageAuthorRole:
+      type: string
+      enum:
+      - end_user
+      - human_agent
+      description: The author's role
+      title: ConversationMessageAuthorRole
+    MessageLogsAuthorRole:
+      type: string
+      enum:
+      - end_user
+      - ai_agent
+      - human_agent
+      description: The author's role
+      title: MessageLogsAuthorRole
+    Conversations_endConversation_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Conversations_endConversation_Response_200
+    ConversationsResponse_2:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Request status message
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation_2'
+          description: Records returned from the query
+        next_page_uri:
+          type: string
+          description: Relative link to the next page of results matching the query
+      title: ConversationsResponse
+    MessageLogsContent:
+      oneOf:
+      - $ref: '#/components/schemas/TextContent'
+      - $ref: '#/components/schemas/LinkContent'
+      - $ref: '#/components/schemas/FileContent'
+      description: 'The message content. The structure varies based on the `type` field. Supported types: text, link, file.'
+      title: MessageLogsContent
+    ConversationsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation'
+          description: Records returned from the query
+        meta:
+          $ref: '#/components/schemas/ConversationsResponseMeta'
+      title: ConversationsResponse
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    MessageContent:
+      oneOf:
+      - $ref: '#/components/schemas/TextContent'
+      - $ref: '#/components/schemas/FileContent'
+      description: The message content
+      title: MessageContent
+    AttachmentUploadResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Presigned URL to access the uploaded file (valid for 7 days)
+        mime_type:
+          type: string
+          description: MIME type of the uploaded file
+        filename:
+          type: string
+          description: Name of the uploaded file
+      required:
+      - url
+      - mime_type
+      - filename
+      title: AttachmentUploadResponse
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

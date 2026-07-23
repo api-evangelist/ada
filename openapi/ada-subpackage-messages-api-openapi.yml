@@ -1,0 +1,380 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_messages API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_messages
+paths:
+  /v2/export/messages:
+    get:
+      operationId: get-messages
+      summary: Return messages matching the parameters
+      description: Returns a list of `message` objects along with a `next_page_uri` if applicable
+      tags:
+      - subpackage_messages
+      parameters:
+      - name: created_since
+        in: query
+        description: Return records that were created after this date. If `created_to` is not specified, only records within 7 days of this timestamp are returned. To retrieve data beyond that window, set `created_to` explicitly. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - name: conversation_id
+        in: query
+        description: Return records with a `conversation_id` that matches this id
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: id
+      - name: page_size
+        in: query
+        description: Number of records to return in response. The maximum and default is 10000, the minimum is 100.
+        required: false
+        schema:
+          type: integer
+          default: 10000
+      - name: created_to
+        in: query
+        description: Return records that were created earlier than this date. If not specified, this value defaults to 7 days after `created_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Ada successfully processed the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagesResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /data_api/v1.4/messages:
+    get:
+      operationId: return-messages-matching-the-parameters
+      summary: Return messages matching the parameters
+      description: Returns a list of `message` objects along with a status message and `next_page_uri` if applicable.
+      tags:
+      - subpackage_messages
+      parameters:
+      - name: created_since
+        in: query
+        description: Return records that were created after this date. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - name: conversation_id
+        in: query
+        description: Return records with a `conversation_id` that matches this id.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      - name: page_size
+        in: query
+        description: Number of records to return in response. The maximum and default is 10000, the minimum is 100.
+        required: false
+        schema:
+          type: integer
+          default: 10000
+      - name: created_to
+        in: query
+        description: Return records that were created earlier than this date. If not specified, this value defaults to 7 days after `created_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+          format: date-time
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Ada successfully processed the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagesResponse_2'
+        '400':
+          description: Incorrect query.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '408':
+          description: Database query timed out.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: Invalid arguments or missing data for a required field.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '429':
+          description: Requests are within 1 s of each other.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Request timed out or there was a database error.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '502':
+          description: Nginx gateway issue on Ada's servers.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '503':
+          description: Server temporarily unable to handle the request.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '504':
+          description: Temporary infrastructure error on Ada's servers.
+          content:
+            application/json:
+              schema:
+                description: Any type
+components:
+  schemas:
+    Message_2:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique ID for the message record
+        answer_id:
+          type: string
+          description: Internal ID of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, and None if it was sent by a generative bot
+        answer_title:
+          type: string
+          description: Title of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, or if it was sent by a generative bot
+        chatter_id:
+          type: string
+          description: Internal ID of the chatter who sent this message. Corresponds to the `_id` field of Chatter objects
+        conversation_id:
+          type: string
+          description: Internal ID of the conversation in which this message was sent. Corresponds to the `_id` field of Conversation objects
+        date_created:
+          type: string
+          format: date-time
+          description: Time the record was created (UTC)
+        link_was_clicked:
+          type: boolean
+          description: Indicates if the link in the answer (response) was clicked
+        message_data:
+          $ref: '#/components/schemas/MessageMessageData'
+          description: Data associated with this message
+        recipient:
+          type: string
+          description: Recipient of this message
+        record_last_updated:
+          type: string
+          format: date-time
+          description: Date and time the record was uploaded to the API (UTC)
+        review:
+          type: integer
+          description: Rating given to this answer by the chatter
+        sender:
+          type: string
+          description: Sender of this message
+        in_response_to:
+          type: string
+          description: Internal ID of the message that this message is in response to. None if the message is not in response to another message
+      title: Message
+    MessagesResponseMeta:
+      type: object
+      properties:
+        next_page_uri:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page of results matching the query
+      title: MessagesResponseMeta
+    MessagesResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: Records returned from the query
+        meta:
+          $ref: '#/components/schemas/MessagesResponseMeta'
+      title: MessagesResponse
+    MessageMessageData:
+      type: object
+      properties: {}
+      description: Data associated with this message
+      title: MessageMessageData
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    Message:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique ID for the message record
+        answer_id:
+          type:
+          - string
+          - 'null'
+          description: Internal ID of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, and None if it was sent by a generative bot.
+        answer_title:
+          type:
+          - string
+          - 'null'
+          description: Title of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, or if it was sent by a generative bot.
+        chatter_id:
+          type:
+          - string
+          - 'null'
+          description: Internal ID of the chatter who sent this message. Corresponds to the `_id` field of Chatter objects.
+        conversation_id:
+          type: string
+          description: Internal ID of the conversation in which this message was sent. Corresponds to the `_id` field of Conversation objects.
+        date_created:
+          type: string
+          format: date-time
+          description: Time the record was created (UTC)
+        link_was_clicked:
+          type:
+          - boolean
+          - 'null'
+          description: Indicates if the link in the answer (response) was clicked
+        message_data:
+          $ref: '#/components/schemas/MessageMessageData'
+          description: Data associated with this message
+        recipient:
+          type: string
+          description: Recipient of this message
+        record_last_updated:
+          type: string
+          format: date-time
+          description: Date and time the record was uploaded to the API (UTC)
+        review:
+          type: integer
+          description: Rating given to this answer by the chatter
+        sender:
+          type: string
+          description: Sender of this message
+        in_response_to:
+          type: string
+          description: Internal ID of the message that this message is in response to. None if the message is not in response to another message.
+      title: Message
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    MessagesResponse_2:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message_2'
+          description: Records returned from the query
+        message:
+          type: string
+          description: Request status message
+        next_page_uri:
+          type: string
+          description: Relative link to the next page of results matching the query
+      title: MessagesResponse
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

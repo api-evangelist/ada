@@ -1,0 +1,579 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_endUsers API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_endUsers
+paths:
+  /v2/end-users/{end_user_id}:
+    get:
+      operationId: get-end-user-by-id
+      summary: Get an end user
+      description: Get a specific end user by id
+      tags:
+      - subpackage_endUsers
+      parameters:
+      - name: end_user_id
+        in: path
+        description: The Ada end_user_id
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndUser'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: patch-end-user-by-id
+      summary: Update an end user
+      description: Update a specific end user by id
+      tags:
+      - subpackage_endUsers
+      parameters:
+      - name: end_user_id
+        in: path
+        description: The Ada end_user_id
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndUser'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: Conflict — the requested external_id is already assigned to a different end user on this AI Agent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndUserRequest'
+  /v2/end-users/:
+    get:
+      operationId: get-end-users
+      summary: Get multiple end users
+      description: Get multiple end users. You can specify how many users appear per page, and which user id to start from. Alternatively, supply an `external_id` query parameter to look up a single end user by their caller-supplied identifier. When `external_id` is supplied, the 200 response is a single end user object (same shape as `GET /v2/end-users/{end_user_id}`) and is mutually exclusive with cursor/limit pagination. The `external_id` query parameter is available for custom channel integrations only (V1).
+      tags:
+      - subpackage_endUsers
+      parameters:
+      - name: external_id
+        in: query
+        description: Look up a single end user by the external identifier set at creation or via PATCH. Returns the matching end user with the same shape as GET /v2/end-users/{end_user_id}, or 404 if no mapping exists. Mutually exclusive with cursor/limit pagination. Available for custom channel integrations only (V1).
+        required: false
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: The ID that marks the start or beginning of the returned records
+        required: false
+        schema:
+          type: string
+          format: id
+      - name: limit
+        in: query
+        description: The number of records to return
+        required: false
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK. When `external_id` is supplied, returns a single end user object. Otherwise returns a paginated list of end users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/End Users_getEndUsers_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found — no end user is mapped to the requested external_id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-end-user
+      summary: Create an end user
+      description: Create a new end user with optional profile data and sensitive metadata. Use this endpoint to establish an end user with context (language, metadata, sensitive metadata) before starting a conversation via POST /v2/conversations/. This ensures the AI Agent has full user context from the first turn. Available for custom channel (Conversations API) integrations. End users created through this endpoint that are not associated with a conversation within 24 hours of creation are automatically deleted.
+      tags:
+      - subpackage_endUsers
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Existing end user returned. Issued when the request includes an external_id that is already mapped to an end user on the same AI Agent (idempotent upsert).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndUser'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '413':
+          description: Content Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEndUserRequest'
+components:
+  schemas:
+    EndUserRequest:
+      type: object
+      properties:
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: Set or update the external identifier for this end user. Pass null to remove the current external_id. Must be unique per AI Agent; maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. Returns 409 if the external_id is already assigned to a different end user. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserRequestProfile'
+          description: The end user's profile information
+      required:
+      - profile
+      title: EndUserRequest
+    CreateEndUserRequestProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+          - string
+          - 'null'
+          description: The end user's email address
+        language:
+          type:
+          - string
+          - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: 'A dictionary of arbitrary key, value pairs assigned to the end user.
+
+            <br>- `metadata` keys may only be of type: `string`
+
+            <br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`
+
+            <br>**Note**: The total size of metadata is limited to 10KB.</br>
+
+            '
+        sensitive_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/CreateEndUserRequestProfileSensitiveMetadata'
+          - type: 'null'
+          description: Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      description: The end user's profile information. Optional — omitting profile creates a blank end user.
+      title: CreateEndUserRequestProfile
+    EndUserRequestProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+          - string
+          - 'null'
+          description: The end user's email address
+        language:
+          type:
+          - string
+          - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: 'A dictionary of arbitrary key, value pairs assigned to the end user.
+
+            <br>- `metadata` keys may only be of type: `string`
+
+            <br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`
+
+            <br>**Note**: The total size of metadata is limited to 10KB.</br>
+
+            '
+        sensitive_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadata'
+          - type: 'null'
+          description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      description: The end user's profile information
+      title: EndUserRequestProfile
+    EndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      title: EndUserRequestProfileSensitiveMetadataFields
+    EndUser:
+      type: object
+      properties:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      title: EndUser
+    CreateEndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      title: CreateEndUserRequestProfileSensitiveMetadataFields
+    EndUserRequestProfileSensitiveMetadata:
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadataFields'
+            - type: 'null'
+          description: A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Setting a key to null removes the metavariable. Maximum 20 key-value pairs per request.
+      required:
+      - fields
+      description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      title: EndUserRequestProfileSensitiveMetadata
+    End Users_getEndUsers_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/EndUser'
+      - $ref: '#/components/schemas/EndUsers'
+      title: End Users_getEndUsers_Response_200
+    CursorPaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type: string
+          format: url
+          description: Link to the next page of data using a cursor value
+      description: Metadata returned with the results including but not limited to a link to the next page of data
+      title: CursorPaginationMetadata
+    EndUsers:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndUser'
+          description: The list of end user profiles
+        meta:
+          $ref: '#/components/schemas/CursorPaginationMetadata'
+      title: EndUsers
+    CreateEndUserRequest:
+      type: object
+      properties:
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: Optional caller-supplied identifier (for example a CRM contact ID or a phone number). Maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. If an end user with this external_id already exists, that existing user is returned with HTTP 200 (idempotent upsert); otherwise a new end user is created with HTTP 201. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/CreateEndUserRequestProfile'
+          description: The end user's profile information. Optional — omitting profile creates a blank end user.
+      title: CreateEndUserRequest
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    EndUserProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+          - string
+          - 'null'
+          description: The end user's email address
+        language:
+          type:
+          - string
+          - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: 'A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`'
+        system_properties:
+          $ref: '#/components/schemas/EndUserProfileSystemProperties'
+          description: Read-only profile information set by Ada
+      description: The end user's profile information
+      title: EndUserProfile
+    CreateEndUserRequestProfileSensitiveMetadata:
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/CreateEndUserRequestProfileSensitiveMetadataFields'
+            - type: 'null'
+          description: A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Maximum 20 key-value pairs per request. Keys must not overlap with keys in the sibling metadata field.
+      required:
+      - fields
+      description: Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      title: CreateEndUserRequestProfileSensitiveMetadata
+    EndUserProfileSystemProperties:
+      type: object
+      properties:
+        sunshine_user_id:
+          type:
+          - string
+          - 'null'
+          description: The Sunshine Conversations user id for the end user
+      description: Read-only profile information set by Ada
+      title: EndUserProfileSystemProperties
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

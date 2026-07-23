@@ -1,0 +1,755 @@
+openapi: 3.1.0
+info:
+  title: Data Compliance subpackage_channels subpackage_platformIntegrations API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support
+  description: ada
+- url: https://example.att.ada.support
+  description: att.ada
+- url: https://example.maple.ada.support
+  description: maple.ada
+- url: https://example.ficanex.ada.support
+  description: ficanex.ada
+- url: https://example.eu.ada.support
+  description: eu.ada
+tags:
+- name: subpackage_platformIntegrations
+paths:
+  /v2/platform-integrations/:
+    get:
+      operationId: get-platform-integrations
+      summary: List integrations
+      description: Get a list of platform integrations owned by your account (e.g. a developer sandbox)
+      tags:
+      - subpackage_platformIntegrations
+      parameters:
+      - name: cursor
+        in: query
+        description: The ID that marks the start or beginning of the returned records
+        required: false
+        schema:
+          type: string
+          format: id
+      - name: limit
+        in: query
+        description: The number of records to return
+        required: false
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Platform integrations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform Integrations_getPlatformIntegrations_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-platform-integration
+      summary: Create an integration
+      description: Create an integration. Integrations are created in `development` status by default.
+      tags:
+      - subpackage_platformIntegrations
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Platform integration created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform Integrations_createPlatformIntegration_Response_200'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformIntegrationCreateRequest'
+  /v2/platform-integrations/{id}:
+    patch:
+      operationId: update-single-platform-integration
+      summary: Update an integration
+      description: Update a platform integration. **_Note:_ only integrations in development may be updated. Integrations submitted for publication cannot be updated.**
+      tags:
+      - subpackage_platformIntegrations
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the platform integration to update
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Platform integration updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformIntegration'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformIntegrationUpdateRequest'
+  /v2/platform-integrations/{id}/installations/self:
+    get:
+      operationId: get-platform-integration-installation-self
+      summary: Get an installation
+      description: Get the platform integration installation associated with the access token. Use this endpoint to get the details of an installation, including the configuration form completed by the admin.
+      tags:
+      - subpackage_platformIntegrations
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the platform integration to fetch installation for
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformIntegrationInstallation'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/platform-integrations/{platform_integration_id}/installations/{installation_id}:
+    patch:
+      operationId: update-platform-integration-installation
+      summary: Update installation status
+      description: Update status after installation. An installation can be `complete` or `incomplete`.
+      tags:
+      - subpackage_platformIntegrations
+      parameters:
+      - name: platform_integration_id
+        in: path
+        description: The ID of the platform integration
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: installation_id
+        in: path
+        description: The ID of the installation to update
+        required: true
+        schema:
+          type: string
+          format: id
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Installation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformIntegrationInstallation'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformIntegrationInstallationUpdateRequest'
+components:
+  schemas:
+    PlatformIntegrationInstallationUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PlatformIntegrationInstallationUpdateRequestStatus'
+          description: The new status of the installation
+      title: PlatformIntegrationInstallationUpdateRequest
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    PlatformIntegrationTagsItems:
+      type: string
+      enum:
+      - knowledge
+      title: PlatformIntegrationTagsItems
+    IntegrationCommonFieldsErrorCodes:
+      type: object
+      properties: {}
+      description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+      title: IntegrationCommonFieldsErrorCodes
+    Platform Integrations_createPlatformIntegration_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the integration
+        status:
+          type: string
+          description: The current state of the integration (development, approved, archived)
+        created:
+          type: string
+          format: date-time
+          description: The date the integration was created
+        updated:
+          type: string
+          format: date-time
+          description: The date the integration was last updated
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegrationTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+          - $ref: '#/components/schemas/PlatformIntegrationErrorCodes'
+          - type: 'null'
+          description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/PlatformIntegrationConfigurationFields'
+          description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+        client_secret:
+          type: string
+          description: The OAuth client secret for the integration
+      required:
+      - id
+      - status
+      - identifier_field_path
+      - name
+      - description
+      - author
+      - contact
+      - uninstallation_url
+      - oauth_callback_url
+      - tags
+      - scopes
+      - configuration_fields
+      title: Platform Integrations_createPlatformIntegration_Response_200
+    PlatformIntegrationCreateRequestTagsItems:
+      type: string
+      enum:
+      - knowledge
+      title: PlatformIntegrationCreateRequestTagsItems
+    IntegrationIdentifierField:
+      type: string
+      description: JMESPath describing which of the fields in `configuration_fields` is the best human-friendly field to use to identify a specific installation (e.g., account name)
+      title: IntegrationIdentifierField
+    PlatformIntegrationCreateRequestConfigurationFields:
+      type: object
+      properties: {}
+      description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+      title: PlatformIntegrationCreateRequestConfigurationFields
+    PlatformIntegration:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the integration
+        status:
+          type: string
+          description: The current state of the integration (development, approved, archived)
+        created:
+          type: string
+          format: date-time
+          description: The date the integration was created
+        updated:
+          type: string
+          format: date-time
+          description: The date the integration was last updated
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegrationTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+          - $ref: '#/components/schemas/PlatformIntegrationErrorCodes'
+          - type: 'null'
+          description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/PlatformIntegrationConfigurationFields'
+          description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+      required:
+      - id
+      - status
+      - identifier_field_path
+      - name
+      - description
+      - author
+      - contact
+      - uninstallation_url
+      - oauth_callback_url
+      - tags
+      - scopes
+      - configuration_fields
+      title: PlatformIntegration
+    PlatformIntegrationInstallationUpdateRequestStatus:
+      type: string
+      enum:
+      - complete
+      - incomplete
+      description: The new status of the installation
+      title: PlatformIntegrationInstallationUpdateRequestStatus
+    PlatformIntegrationConfigurationFields:
+      type: object
+      properties: {}
+      description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+      title: PlatformIntegrationConfigurationFields
+    PlatformIntegrationUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationCommonFieldsTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+          - $ref: '#/components/schemas/IntegrationCommonFieldsErrorCodes'
+          - type: 'null'
+          description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/IntegrationCommonFieldsConfigurationFields'
+          description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+      title: PlatformIntegrationUpdateRequest
+    PlatformIntegrationCreateRequest:
+      type: object
+      properties:
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegrationCreateRequestTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+          - $ref: '#/components/schemas/PlatformIntegrationCreateRequestErrorCodes'
+          - type: 'null'
+          description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/PlatformIntegrationCreateRequestConfigurationFields'
+          description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+      required:
+      - identifier_field_path
+      - name
+      - description
+      - author
+      - contact
+      - uninstallation_url
+      - oauth_callback_url
+      - tags
+      - scopes
+      - configuration_fields
+      title: PlatformIntegrationCreateRequest
+    PlatformIntegrationCreateRequestErrorCodes:
+      type: object
+      properties: {}
+      description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+      title: PlatformIntegrationCreateRequestErrorCodes
+    PlatformIntegrationErrorCodes:
+      type: object
+      properties: {}
+      description: An object containing error codes and their corresponding error message the integration may return to the OAuth failure page to be displayed
+      title: PlatformIntegrationErrorCodes
+    PlatformIntegrationInstallationConfiguration:
+      type: object
+      properties: {}
+      description: The configuration settings for the integration
+      title: PlatformIntegrationInstallationConfiguration
+    IntegrationCallToAction:
+      type:
+      - string
+      - 'null'
+      description: The call to action text
+      title: IntegrationCallToAction
+    Platform Integrations_getPlatformIntegrations_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegration'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: Platform Integrations_getPlatformIntegrations_Response_200
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    IntegrationIconUrl:
+      type:
+      - string
+      - 'null'
+      format: url
+      description: The URL of the icon that should be displayed with your integration
+      title: IntegrationIconUrl
+    IntegrationCommonFieldsConfigurationFields:
+      type: object
+      properties: {}
+      description: A json-schema describing the settings fields that a user should be presented with when installing the integration
+      title: IntegrationCommonFieldsConfigurationFields
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    IntegrationCommonFieldsTagsItems:
+      type: string
+      enum:
+      - knowledge
+      title: IntegrationCommonFieldsTagsItems
+    PlatformIntegrationInstallation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The unique identifier for the integration installation
+        platform_integration_id:
+          type: string
+          format: id
+          description: The unique identifier for the integration
+        created:
+          type: string
+          format: date-time
+          description: The date and time the installation was created
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the installation was last updated
+        configuration:
+          $ref: '#/components/schemas/PlatformIntegrationInstallationConfiguration'
+          description: The configuration settings for the integration
+        status:
+          type: string
+          description: The current state of the integration installation (incomplete, complete)
+      title: PlatformIntegrationInstallation
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
