@@ -1,0 +1,32 @@
+{
+  "provider": "ada",
+  "sources": [
+    "ada-subpackage-channels-api-openapi.yml",
+    "ada-subpackage-conversations-api-openapi.yml",
+    "ada-subpackage-deletechatterdata-api-openapi.yml",
+    "ada-subpackage-endusers-api-openapi.yml",
+    "ada-subpackage-knowledge-subpackage-knowledge-articles-api-openapi.yml",
+    "ada-subpackage-knowledge-subpackage-knowledge-sources-api-openapi.yml",
+    "ada-subpackage-knowledge-subpackage-knowledge-tags-api-openapi.yml",
+    "ada-subpackage-messages-api-openapi.yml",
+    "ada-subpackage-platformintegrations-api-openapi.yml",
+    "ada-subpackage-webhookmanagement-api-openapi.yml"
+  ],
+  "outputs": [
+    "ada-subpackage-channels-api-openapi.yml",
+    "ada-subpackage-conversations-api-openapi.yml",
+    "ada-subpackage-deletechatterdata-api-openapi.yml",
+    "ada-subpackage-endusers-api-openapi.yml",
+    "ada-subpackage-knowledge-subpackage-knowledge-articles-api-openapi.yml",
+    "ada-subpackage-knowledge-subpackage-knowledge-sources-api-openapi.yml",
+    "ada-subpackage-knowledge-subpackage-knowledge-tags-api-openapi.yml",
+    "ada-subpackage-messages-api-openapi.yml",
+    "ada-subpackage-platformintegrations-api-openapi.yml",
+    "ada-subpackage-webhookmanagement-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

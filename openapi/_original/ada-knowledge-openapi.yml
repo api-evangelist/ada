@@ -1,0 +1,4702 @@
+openapi: 3.1.0
+info:
+  title: Knowledge
+  version: 1.0.0
+paths:
+  /v2/knowledge/sources/:
+    get:
+      operationId: list
+      summary: Get knowledge sources
+      description: Get knowledge sources
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Knowledge sources
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_sources_list_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create
+      summary: Create a knowledge source
+      description: Create a knowledge source
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Knowledge source created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeSourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: Duplicate Resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeSourceCreateRequest'
+  /v2/knowledge/sources/{id}:
+    delete:
+      operationId: delete
+      summary: Delete a knowledge source
+      description: Delete a knowledge source, and its related articles
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+        - name: id
+          in: path
+          description: id of the knowledge source to delete
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Knowledge source deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_sources_delete_Response_204'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update
+      summary: Update a knowledge source
+      description: Update a knowledge source
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/sources
+      parameters:
+        - name: id
+          in: path
+          description: id of the knowledge source to update
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Knowledge source updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeSourceResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeSourceUpdateRequest'
+  /v2/knowledge/articles/:
+    get:
+      operationId: list
+      summary: Get knowledge articles
+      description: Get knowledge articles
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+        - name: cursor
+          in: query
+          description: The article cursor that marks the start or beginning of the returned article records
+          required: false
+          schema:
+            type: string
+            format: id
+        - name: limit
+          in: query
+          description: The number of article records to return
+          required: false
+          schema:
+            type: integer
+        - name: id
+          in: query
+          description: Filter by article id
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: id
+        - name: enabled
+          in: query
+          description: Filter by enabled status
+          required: false
+          schema:
+            type: array
+            items:
+              type: boolean
+        - name: language
+          in: query
+          description: Filter by language
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: knowledge_source_id
+          in: query
+          description: Filter by knowledge source
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: id
+        - name: tag_ids
+          in: query
+          description: Filter by tag ids
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching knowledge articles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_articles_list_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete
+      summary: Delete multiple articles
+      description: Delete multiple articles
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+        - name: id
+          in: query
+          description: Filter by article id
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: id
+        - name: enabled
+          in: query
+          description: Filter by enabled status
+          required: false
+          schema:
+            type: array
+            items:
+              type: boolean
+        - name: language
+          in: query
+          description: Filter by language
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: knowledge_source_id
+          in: query
+          description: Filter by knowledge source
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: id
+        - name: tag_ids
+          in: query
+          description: Filter by tag ids
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Articles successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_articles_delete_Response_204'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/articles/{id}:
+    get:
+      operationId: get
+      summary: Get a single knowledge article
+      description: Get knowledge article by id
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+        - name: id
+          in: path
+          description: The id of the article to retrieve
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Knowledge article
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeArticleResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete-by-id
+      summary: Delete a single article
+      description: Delete an article
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+        - name: id
+          in: path
+          description: The id of the article to delete
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Articles successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_articles_deleteById_Response_204'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/bulk/articles/:
+    post:
+      operationId: bulk-upsert
+      summary: Upsert multiple articles
+      description: >
+        Upsert an array of knowledge articles
+
+
+        This endpoint will create or update articles based on the unique `id` field of each article. If an article with
+        the same `id` already exists, it will be updated. Otherwise, a new article will be created.
+
+
+        **Limits:**
+
+        - The maximum size of a request payload is 10MB
+
+        - The maximum size of an article is 100KB
+
+        - The maximum number of articles is 50,000
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/articles
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Articles upserted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KnowledgeArticleUpsertResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/KnowledgeArticleUpsertRequest'
+  /v2/knowledge/tags/:
+    get:
+      operationId: list
+      summary: Get article tags
+      description: Get article tags
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/tags
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Article tags
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_tags_list_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/tags/{id}:
+    delete:
+      operationId: delete
+      summary: Delete a single article tag
+      description: Delete an article tag
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/tags
+      parameters:
+        - name: id
+          in: path
+          description: The id of the article tag to delete
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Article tag deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/knowledge_tags_delete_Response_204'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/knowledge/bulk/tags/:
+    post:
+      operationId: upsert-multiple
+      summary: Upsert multiple tags
+      description: >
+        Upsert an array of tags for articles
+
+
+        This endpoint will create or update tags based on the unique `id` field of each tag. If a tag with the same `id`
+        already exists, it will be updated. Otherwise, a new tag will be created.
+      tags:
+        - subpackage_knowledge.subpackage_knowledge/tags
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Tags upserted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArticleTagUpsertResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ArticleTag'
+  /v2/end-users/{end_user_id}:
+    get:
+      operationId: get-end-user-by-id
+      summary: Get an end user
+      description: Get a specific end user by id
+      tags:
+        - subpackage_endUsers
+      parameters:
+        - name: end_user_id
+          in: path
+          description: The Ada end_user_id
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndUser'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: patch-end-user-by-id
+      summary: Update an end user
+      description: Update a specific end user by id
+      tags:
+        - subpackage_endUsers
+      parameters:
+        - name: end_user_id
+          in: path
+          description: The Ada end_user_id
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndUser'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: Conflict — the requested external_id is already assigned to a different end user on this AI Agent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndUserRequest'
+  /v2/end-users/:
+    get:
+      operationId: get-end-users
+      summary: Get multiple end users
+      description: >-
+        Get multiple end users. You can specify how many users appear per page, and which user id to start from.
+        Alternatively, supply an `external_id` query parameter to look up a single end user by their caller-supplied
+        identifier. When `external_id` is supplied, the 200 response is a single end user object (same shape as `GET
+        /v2/end-users/{end_user_id}`) and is mutually exclusive with cursor/limit pagination. The `external_id` query
+        parameter is available for custom channel integrations only (V1).
+      tags:
+        - subpackage_endUsers
+      parameters:
+        - name: external_id
+          in: query
+          description: >-
+            Look up a single end user by the external identifier set at creation or via PATCH. Returns the matching end
+            user with the same shape as GET /v2/end-users/{end_user_id}, or 404 if no mapping exists. Mutually exclusive
+            with cursor/limit pagination. Available for custom channel integrations only (V1).
+          required: false
+          schema:
+            type: string
+        - name: cursor
+          in: query
+          description: The ID that marks the start or beginning of the returned records
+          required: false
+          schema:
+            type: string
+            format: id
+        - name: limit
+          in: query
+          description: The number of records to return
+          required: false
+          schema:
+            type: integer
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            OK. When `external_id` is supplied, returns a single end user object. Otherwise returns a paginated list of
+            end users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/End Users_getEndUsers_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found — no end user is mapped to the requested external_id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-end-user
+      summary: Create an end user
+      description: >-
+        Create a new end user with optional profile data and sensitive metadata. Use this endpoint to establish an end
+        user with context (language, metadata, sensitive metadata) before starting a conversation via POST
+        /v2/conversations/. This ensures the AI Agent has full user context from the first turn. Available for custom
+        channel (Conversations API) integrations. End users created through this endpoint that are not associated with a
+        conversation within 24 hours of creation are automatically deleted.
+      tags:
+        - subpackage_endUsers
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Existing end user returned. Issued when the request includes an external_id that is already mapped to an end
+            user on the same AI Agent (idempotent upsert).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EndUser'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '413':
+          description: Content Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEndUserRequest'
+  /v2/platform-integrations/:
+    get:
+      operationId: get-platform-integrations
+      summary: List integrations
+      description: Get a list of platform integrations owned by your account (e.g. a developer sandbox)
+      tags:
+        - subpackage_platformIntegrations
+      parameters:
+        - name: cursor
+          in: query
+          description: The ID that marks the start or beginning of the returned records
+          required: false
+          schema:
+            type: string
+            format: id
+        - name: limit
+          in: query
+          description: The number of records to return
+          required: false
+          schema:
+            type: integer
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Platform integrations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform Integrations_getPlatformIntegrations_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-platform-integration
+      summary: Create an integration
+      description: Create an integration. Integrations are created in `development` status by default.
+      tags:
+        - subpackage_platformIntegrations
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Platform integration created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Platform Integrations_createPlatformIntegration_Response_200'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformIntegrationCreateRequest'
+  /v2/platform-integrations/{id}:
+    patch:
+      operationId: update-single-platform-integration
+      summary: Update an integration
+      description: >-
+        Update a platform integration. **_Note:_ only integrations in development may be updated. Integrations submitted
+        for publication cannot be updated.**
+      tags:
+        - subpackage_platformIntegrations
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the platform integration to update
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Platform integration updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformIntegration'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformIntegrationUpdateRequest'
+  /v2/platform-integrations/{id}/installations/self:
+    get:
+      operationId: get-platform-integration-installation-self
+      summary: Get an installation
+      description: >-
+        Get the platform integration installation associated with the access token. Use this endpoint to get the details
+        of an installation, including the configuration form completed by the admin.
+      tags:
+        - subpackage_platformIntegrations
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the platform integration to fetch installation for
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformIntegrationInstallation'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/platform-integrations/{platform_integration_id}/installations/{installation_id}:
+    patch:
+      operationId: update-platform-integration-installation
+      summary: Update installation status
+      description: Update status after installation. An installation can be `complete` or `incomplete`.
+      tags:
+        - subpackage_platformIntegrations
+      parameters:
+        - name: platform_integration_id
+          in: path
+          description: The ID of the platform integration
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: installation_id
+          in: path
+          description: The ID of the installation to update
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Installation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformIntegrationInstallation'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformIntegrationInstallationUpdateRequest'
+  /v2/channels/:
+    get:
+      operationId: get-channels
+      summary: Get a list of channels
+      description: >-
+        Get a list of channels. This list can be filtered by modality and paginated. The default and maximum limits are
+        100 channels per page
+      tags:
+        - subpackage_channels
+      parameters:
+        - name: limit
+          in: query
+          description: The number of records to return
+          required: false
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: The ID that marks the start or beginning of the returned records
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: The type of the channels to retrieve
+          required: true
+          schema:
+            $ref: '#/components/schemas/V2ChannelsGetParametersType'
+        - name: modality
+          in: query
+          description: The modality of the channels to retrieve
+          required: false
+          schema:
+            $ref: '#/components/schemas/V2ChannelsGetParametersModality'
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Channels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channels_getChannels_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-channel
+      summary: Create a new channel
+      description: >-
+        Create a new channel. A maximum of 100 channels can be created per account per day. The maximum request size is
+        10MB.
+      tags:
+        - subpackage_channels
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Channel created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomChannel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '413':
+          description: Content Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomChannel'
+  /v2/conversations/email/:
+    post:
+      operationId: create-email-conversation
+      summary: Start a conversation over Ada's email channel
+      description: >-
+        Start a conversation with an end user over Ada's native Email channel, providing context for their inquiry.
+        **This endpoint is exclusive to the native Email channel and cannot be used for custom channels.** Your AI Agent
+        can start conversations only with the default Ada-provided email address, or with email addresses you’ve
+        configured through Bring Your Own Domain (BYOD) settings.
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conversation Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailConversationCreateResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailConversationCreateRequest'
+  /v2/conversations/:
+    post:
+      operationId: create-conversation
+      summary: Create a new conversation
+      description: >-
+        Create a new conversation. If `end_user_id` is not provided, the system creates a new end user automatically.
+        The maximum request size is 10MB, and metadata must not exceed 4KB.
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Conversation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationCreateRequest'
+  /v2/conversations/{conversation_id}/:
+    get:
+      operationId: get-conversation-by-id
+      summary: Get a conversation
+      description: Get a conversation by its ID
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation to retrieve
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conversation retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: patch-conversation-by-id
+      summary: Update a conversation
+      description: Update a conversation's metadata by its ID
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation to update
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conversation updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationPatchRequest'
+  /v2/conversations/{conversation_id}/messages/:
+    get:
+      operationId: fetch-conversation-messages-by-id
+      summary: Get conversation messages
+      description: Get messages (paginated) for a conversation by its ID
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: cursor
+          in: query
+          description: Cursor for pagination. Use the value from `meta.next_page_url` in the previous response.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of messages to return (default 100, max 100)
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-message
+      summary: Create a new message
+      description: Create a new message in a conversation. The maximum request size is 10MB.
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Message created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreateRequest'
+  /v2/conversations/{conversation_id}/end/:
+    post:
+      operationId: end-conversation
+      summary: End a conversation
+      description: Ends the conversation specified by the `conversation_id`
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation to end
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Conversation ended successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversations_endConversation_Response_200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/conversations/{conversation_id}/end-handoff/:
+    post:
+      operationId: end-handoff
+      summary: End Handoff
+      description: >-
+        Ends the handoff for the conversation specified by the `conversation_id`. This endpoint returns control to the
+        AI Agent and does not end the conversation. It also triggers CSAT for human agent (where applicable), leftover
+        blocks processing, and agent presence dismissal messages.
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation to end handoff for
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Handoff ended successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversations_endHandoff_Response_200'
+        '404':
+          description: Conversation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '422':
+          description: Conversation is not in an active handoff state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/conversations/{conversation_id}/attachments/:
+    post:
+      operationId: upload-attachment
+      summary: Upload a file attachment
+      description: >
+        Upload a file attachment to a conversation. The file will be stored and a presigned URL
+
+        will be generated that is valid for 7 days. The maximum file size is 50MB.
+
+
+        The presigned URL can be used to create a file message by calling the
+
+        `/v2/conversations/{conversation_id}/messages/` endpoint with `content.type` set to `file`.
+
+
+        **Note:** Attachments can only be uploaded when the conversation is in a handoff state.
+
+
+        **Allowed file types:** TXT, LOG, CSV, EML, PNG, SVG, JPEG, JPG, GIF, HEIF, HEIC, AVIF, WAV, M4A, MP3, MP4, M4V,
+        MOV, MPEG, MPG, ZIP, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, Keynote, Pages, Numbers
+      tags:
+        - subpackage_conversations
+      parameters:
+        - name: conversation_id
+          in: path
+          description: The ID of the conversation
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Attachment uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUploadResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload (max 50MB)
+              required:
+                - file
+  /v2/webhooks/:
+    get:
+      operationId: list-webhooks
+      summary: List webhooks
+      description: List all webhook subscriptions configured for this AI Agent
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of webhooks to return
+          required: false
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          description: Cursor for pagination
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of webhooks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_listWebhooks_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-webhook
+      summary: Create a webhook
+      description: >-
+        Create a new webhook subscription. If this is the first webhook for this AI Agent, the webhook infrastructure is
+        automatically provisioned
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL that will receive webhook events
+                description:
+                  type: string
+                  default: ''
+                  description: A description of the webhook
+                event_filters:
+                  type: array
+                  items:
+                    type: string
+                  description: Event types to subscribe to. An empty list subscribes to all events
+                enabled:
+                  type: boolean
+                  default: true
+                  description: Whether the webhook is enabled
+              required:
+                - url
+  /v2/webhooks/{id}:
+    get:
+      operationId: get-webhook
+      summary: Get a webhook
+      description: Get the details of a specific webhook subscription
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: id
+          in: path
+          description: The webhook ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webhook details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete-webhook
+      summary: Delete a webhook
+      description: Delete a webhook subscription
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: id
+          in: path
+          description: The webhook ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Webhook deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_deleteWebhook_Response_204'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update-webhook
+      summary: Update a webhook
+      description: Update a webhook subscription. Only the fields provided in the request body will be updated
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: id
+          in: path
+          description: The webhook ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webhook updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL that will receive webhook events
+                description:
+                  type: string
+                  description: A description of the webhook
+                event_filters:
+                  type: array
+                  items:
+                    type: string
+                  description: Event types to subscribe to. An empty list subscribes to all events
+                enabled:
+                  type: boolean
+                  description: Whether the webhook is enabled
+  /v2/webhooks/{id}/secret/:
+    get:
+      operationId: get-webhook-secret
+      summary: Get webhook signing secret
+      description: Get the signing secret for a webhook. Use this secret to verify that incoming webhook payloads are authentic
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: id
+          in: path
+          description: The webhook ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webhook signing secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_getWebhookSecret_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/webhooks/{id}/secret/rotate/:
+    post:
+      operationId: rotate-webhook-secret
+      summary: Rotate webhook signing secret
+      description: >-
+        Rotate the signing secret for a webhook. Optionally provide a custom key. The new secret is not returned in the
+        response — use the get secret endpoint to retrieve it
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: id
+          in: path
+          description: The webhook ID
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Signing secret rotated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_rotateWebhookSecret_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                  description: An optional custom signing key. If not provided, a new key is generated automatically
+  /v2/webhooks/event-types/:
+    get:
+      operationId: list-webhook-event-types
+      summary: List webhook event types
+      description: List all available event types that webhooks can subscribe to
+      tags:
+        - subpackage_webhookManagement
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of event types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook Management_listWebhookEventTypes_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+servers:
+  - url: https://example.ada.support/api
+    description: Production
+webhooks:
+  end-user-created-webhook:
+    post:
+      operationId: end-user-created-webhook
+      summary: 'Webhook: End user created'
+      description: A webhook sent when a new end user is created
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndUserCreatedWebhookPayload'
+  end-user-updated-webhook:
+    post:
+      operationId: end-user-updated-webhook
+      summary: 'Webhook: End user updated'
+      description: A webhook sent when an end user is updated
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndUserUpdatedWebhookPayload'
+  conversation-created-webhook:
+    post:
+      operationId: conversation-created-webhook
+      summary: 'Webhook: Conversation created'
+      description: A webhook sent when a conversation is created
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationCreatedWebhookPayload'
+  conversation-message-webhook:
+    post:
+      operationId: conversation-message-webhook
+      summary: 'Webhook: Conversation message'
+      description: A webhook sent when a message is sent to a conversation
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationMessageWebhookPayload'
+  conversation-ended-webhook:
+    post:
+      operationId: conversation-ended-webhook
+      summary: 'Webhook: Conversation ended'
+      description: A webhook sent when a conversation ends
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationEndedWebhookPayload'
+  conversation-handoff-ended-webhook:
+    post:
+      operationId: conversation-handoff-ended-webhook
+      summary: 'Webhook: Conversation handoff ended'
+      description: A webhook sent when a handoff is ended
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayload'
+components:
+  schemas:
+    KnowledgeSourceResponseMetadata:
+      type: object
+      properties: {}
+      description: >-
+        A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
+        the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceResponseMetadata
+    KnowledgeSourceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the knowledge source
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: An external identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+            - $ref: '#/components/schemas/KnowledgeSourceResponseMetadata'
+            - type: 'null'
+          description: >-
+            A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
+            by the client to store additional information about                     the knowledge source.
+        created:
+          type: string
+          format: date-time
+          description: The date the knowledge source was created
+        updated:
+          type: string
+          format: date-time
+          description: The date the knowledge source was last updated
+        last_sync:
+          type: string
+          format: date-time
+          description: The date the knowledge source was last synchronized
+      required:
+        - id
+        - name
+      title: KnowledgeSourceResponse
+    knowledge_sources_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeSourceResponse'
+      title: knowledge_sources_list_Response_200
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+            - string
+            - 'null'
+          description: Extra information about the error
+      required:
+        - type
+        - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+        - errors
+      title: Errors
+    KnowledgeSourceCreateRequestMetadata:
+      type: object
+      properties: {}
+      description: >-
+        A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
+        the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceCreateRequestMetadata
+    KnowledgeSourceCreateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+            - $ref: '#/components/schemas/KnowledgeSourceCreateRequestMetadata'
+            - type: 'null'
+          description: >-
+            A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
+            by the client to store additional information about                     the knowledge source.
+      required:
+        - id
+        - name
+      title: KnowledgeSourceCreateRequest
+    knowledge_sources_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_sources_delete_Response_204
+    KnowledgeSourceUpdateRequestMetadata:
+      type: object
+      properties: {}
+      description: >-
+        A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
+        the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceUpdateRequestMetadata
+    KnowledgeSourceUpdateRequest:
+      type: object
+      properties:
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: A unique identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+            - $ref: '#/components/schemas/KnowledgeSourceUpdateRequestMetadata'
+            - type: 'null'
+          description: >-
+            A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
+            by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceUpdateRequest
+    ArticleLanguage:
+      type: string
+      enum:
+        - ar
+        - zh
+        - zh-tw
+        - da
+        - nl
+        - en
+        - fi
+        - fr
+        - de
+        - he
+        - hi
+        - id
+        - in
+        - it
+        - ja
+        - ko
+        - ms
+        - pt
+        - pa
+        - ru
+        - es
+        - sv
+        - tl
+        - ta
+        - th
+        - tr
+        - vi
+        - ht
+        - my
+        - km
+        - bg
+        - ro
+        - el
+        - hu
+        - pl
+        - cs
+        - et
+        - hr
+        - lt
+        - lv
+        - sl
+        - sk
+        - is
+        - be
+        - uk
+        - ca
+        - sq
+        - bs
+        - sr
+        - kk
+      description: The ISO 639-1 language code of the article, defaults to `en`
+      title: ArticleLanguage
+    KnowledgeArticleResponseMetadata:
+      type: object
+      properties: {}
+      description: >-
+        A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
+        the client to store additional information about                     the article.
+      title: KnowledgeArticleResponseMetadata
+    KnowledgeArticleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the article
+        name:
+          type: string
+          description: The name or title of the article
+        content:
+          type: string
+          description: The content of the article in markdown format
+        url:
+          type:
+            - string
+            - 'null'
+          format: url
+          description: The url of the article
+        knowledge_source_id:
+          type:
+            - string
+            - 'null'
+          description: The id of the `knowledge_source` the article belongs to
+        language:
+          $ref: '#/components/schemas/ArticleLanguage'
+        tag_ids:
+          type: array
+          items:
+            type: string
+          description: A list of ids for the tags associated with the article
+        created:
+          type: string
+          format: date-time
+          description: The date the article was created in Ada
+        updated:
+          type: string
+          format: date-time
+          description: The date the article was last updated in Ada
+        external_created:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: The date the article was created in the source system
+        external_updated:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: The date the article was last updated in the source system
+        enabled:
+          type: boolean
+          description: Whether the article should be referenced during response generation, defaults to `true`
+        metadata:
+          oneOf:
+            - $ref: '#/components/schemas/KnowledgeArticleResponseMetadata'
+            - type: 'null'
+          description: >-
+            A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
+            by the client to store additional information about                     the article.
+      required:
+        - id
+        - name
+        - content
+      title: KnowledgeArticleResponse
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+            - string
+            - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    knowledge_articles_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeArticleResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: knowledge_articles_list_Response_200
+    knowledge_articles_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_delete_Response_204
+    knowledge_articles_deleteById_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_deleteById_Response_204
+    KnowledgeArticleUpsertRequestMetadata:
+      type: object
+      properties: {}
+      description: >-
+        A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
+        the client to store additional information about                     the article.
+      title: KnowledgeArticleUpsertRequestMetadata
+    KnowledgeArticleUpsertRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the article
+        name:
+          type: string
+          description: The name or title of the article
+        content:
+          type: string
+          description: The content of the article in markdown format
+        url:
+          type:
+            - string
+            - 'null'
+          format: url
+          description: The url of the article
+        knowledge_source_id:
+          type: string
+          description: The id of the `knowledge_source` the article belongs to
+        tag_ids:
+          type: array
+          items:
+            type: string
+          description: A list of ids for the tags associated with the article
+        language:
+          type: string
+          description: The IETF BCP 47 language code for the article, defaults to `en`
+        external_created:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: The date the article was created in the source system
+        external_updated:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: The date the article was last updated in the source system
+        enabled:
+          type: boolean
+          description: Whether the article should be referenced during response generation, defaults to `true`
+        metadata:
+          oneOf:
+            - $ref: '#/components/schemas/KnowledgeArticleUpsertRequestMetadata'
+            - type: 'null'
+          description: >-
+            A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
+            by the client to store additional information about                     the article.
+      required:
+        - id
+        - name
+        - content
+        - knowledge_source_id
+      title: KnowledgeArticleUpsertRequest
+    KnowledgeArticleUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article was created, `false` if an existing article was updated'
+        id:
+          type: string
+          description: A unique identifier for the article
+      required:
+        - id
+      title: KnowledgeArticleUpsertResponse
+    ArticleTag:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the tag
+        name:
+          type: string
+          description: The name of the tag
+      required:
+        - id
+        - name
+      title: ArticleTag
+    knowledge_tags_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArticleTag'
+      title: knowledge_tags_list_Response_200
+    knowledge_tags_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_tags_delete_Response_204
+    ArticleTagUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article tag was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
+        id:
+          type: string
+          description: The id of the article tag
+      required:
+        - success
+        - created
+        - id
+      title: ArticleTagUpsertResponse
+    EndUserProfileSystemProperties:
+      type: object
+      properties:
+        sunshine_user_id:
+          type:
+            - string
+            - 'null'
+          description: The Sunshine Conversations user id for the end user
+      description: Read-only profile information set by Ada
+      title: EndUserProfileSystemProperties
+    EndUserProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+            - string
+            - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+            - string
+            - 'null'
+          description: The end user's email address
+        language:
+          type:
+            - string
+            - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: >-
+            A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys
+            may only be of type: `string`                      - `metadata` values may only be one of type: `string`,
+            `boolean`, or `integer`
+        system_properties:
+          $ref: '#/components/schemas/EndUserProfileSystemProperties'
+          description: Read-only profile information set by Ada
+      description: The end user's profile information
+      title: EndUserProfile
+    EndUser:
+      type: object
+      properties:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a
+            phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive.
+            Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      title: EndUser
+    EndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+      title: EndUserRequestProfileSensitiveMetadataFields
+    EndUserRequestProfileSensitiveMetadata:
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            oneOf:
+              - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadataFields'
+              - type: 'null'
+          description: >-
+            A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be
+            non-empty strings, booleans, integers, or null. Setting a key to null removes the metavariable. Maximum 20
+            key-value pairs per request.
+      required:
+        - fields
+      description: >-
+        Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are
+        never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are
+        automatically and permanently deleted after 24 hours.
+      title: EndUserRequestProfileSensitiveMetadata
+    EndUserRequestProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+            - string
+            - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+            - string
+            - 'null'
+          description: The end user's email address
+        language:
+          type:
+            - string
+            - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            description: Any type
+          description: |
+            A dictionary of arbitrary key, value pairs assigned to the end user.
+            <br>- `metadata` keys may only be of type: `string`
+            <br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`
+            <br>**Note**: The total size of metadata is limited to 10KB.</br>
+        sensitive_metadata:
+          oneOf:
+            - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadata'
+            - type: 'null'
+          description: >-
+            Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and
+            are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are
+            automatically and permanently deleted after 24 hours.
+      description: The end user's profile information
+      title: EndUserRequestProfile
+    EndUserRequest:
+      type: object
+      properties:
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Set or update the external identifier for this end user. Pass null to remove the current external_id. Must
+            be unique per AI Agent; maximum 36 characters; must not contain < or > characters. Values are stored
+            case-insensitively. Returns 409 if the external_id is already assigned to a different end user. Available
+            for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserRequestProfile'
+          description: The end user's profile information
+      required:
+        - profile
+      title: EndUserRequest
+    CursorPaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type: string
+          format: url
+          description: Link to the next page of data using a cursor value
+      description: Metadata returned with the results including but not limited to a link to the next page of data
+      title: CursorPaginationMetadata
+    EndUsers:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndUser'
+          description: The list of end user profiles
+        meta:
+          $ref: '#/components/schemas/CursorPaginationMetadata'
+      title: EndUsers
+    End Users_getEndUsers_Response_200:
+      oneOf:
+        - $ref: '#/components/schemas/EndUser'
+        - $ref: '#/components/schemas/EndUsers'
+      title: End Users_getEndUsers_Response_200
+    CreateEndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+      title: CreateEndUserRequestProfileSensitiveMetadataFields
+    CreateEndUserRequestProfileSensitiveMetadata:
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            oneOf:
+              - $ref: '#/components/schemas/CreateEndUserRequestProfileSensitiveMetadataFields'
+              - type: 'null'
+          description: >-
+            A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be
+            non-empty strings, booleans, integers, or null. Maximum 20 key-value pairs per request. Keys must not
+            overlap with keys in the sibling metadata field.
+      required:
+        - fields
+      description: >-
+        Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted,
+        isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM
+        prompt. Values are automatically and permanently deleted after 24 hours.
+      title: CreateEndUserRequestProfileSensitiveMetadata
+    CreateEndUserRequestProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+            - string
+            - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+            - string
+            - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+            - string
+            - 'null'
+          description: The end user's email address
+        language:
+          type:
+            - string
+            - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties:
+            description: Any type
+          description: |
+            A dictionary of arbitrary key, value pairs assigned to the end user.
+            <br>- `metadata` keys may only be of type: `string`
+            <br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`
+            <br>**Note**: The total size of metadata is limited to 10KB.</br>
+        sensitive_metadata:
+          oneOf:
+            - $ref: '#/components/schemas/CreateEndUserRequestProfileSensitiveMetadata'
+            - type: 'null'
+          description: >-
+            Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an
+            encrypted, isolated store and are never returned in any API response, dashboard view, conversation
+            transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      description: The end user's profile information. Optional — omitting profile creates a blank end user.
+      title: CreateEndUserRequestProfile
+    CreateEndUserRequest:
+      type: object
+      properties:
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Optional caller-supplied identifier (for example a CRM contact ID or a phone number). Maximum 36 characters;
+            must not contain < or > characters. Values are stored case-insensitively. If an end user with this
+            external_id already exists, that existing user is returned with HTTP 200 (idempotent upsert); otherwise a
+            new end user is created with HTTP 201. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/CreateEndUserRequestProfile'
+          description: The end user's profile information. Optional — omitting profile creates a blank end user.
+      title: CreateEndUserRequest
+    IntegrationIdentifierField:
+      type: string
+      description: >-
+        JMESPath describing which of the fields in `configuration_fields` is the best human-friendly field to use to
+        identify a specific installation (e.g., account name)
+      title: IntegrationIdentifierField
+    IntegrationIconUrl:
+      type:
+        - string
+        - 'null'
+      format: url
+      description: The URL of the icon that should be displayed with your integration
+      title: IntegrationIconUrl
+    IntegrationCallToAction:
+      type:
+        - string
+        - 'null'
+      description: The call to action text
+      title: IntegrationCallToAction
+    PlatformIntegrationTagsItems:
+      type: string
+      enum:
+        - knowledge
+      title: PlatformIntegrationTagsItems
+    PlatformIntegrationErrorCodes:
+      type: object
+      properties: {}
+      description: >-
+        An object containing error codes and their corresponding error message the integration may return to the OAuth
+        failure page to be displayed
+      title: PlatformIntegrationErrorCodes
+    PlatformIntegrationConfigurationFields:
+      type: object
+      properties: {}
+      description: >-
+        A json-schema describing the settings fields that a user should be presented with when installing the
+        integration
+      title: PlatformIntegrationConfigurationFields
+    PlatformIntegration:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the integration
+        status:
+          type: string
+          description: The current state of the integration (development, approved, archived)
+        created:
+          type: string
+          format: date-time
+          description: The date the integration was created
+        updated:
+          type: string
+          format: date-time
+          description: The date the integration was last updated
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegrationTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+            - $ref: '#/components/schemas/PlatformIntegrationErrorCodes'
+            - type: 'null'
+          description: >-
+            An object containing error codes and their corresponding error message the integration may return to the
+            OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/PlatformIntegrationConfigurationFields'
+          description: >-
+            A json-schema describing the settings fields that a user should be presented with when installing the
+            integration
+      required:
+        - id
+        - status
+        - identifier_field_path
+        - name
+        - description
+        - author
+        - contact
+        - uninstallation_url
+        - oauth_callback_url
+        - tags
+        - scopes
+        - configuration_fields
+      title: PlatformIntegration
+    Platform Integrations_getPlatformIntegrations_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegration'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: Platform Integrations_getPlatformIntegrations_Response_200
+    PlatformIntegrationCreateRequestTagsItems:
+      type: string
+      enum:
+        - knowledge
+      title: PlatformIntegrationCreateRequestTagsItems
+    PlatformIntegrationCreateRequestErrorCodes:
+      type: object
+      properties: {}
+      description: >-
+        An object containing error codes and their corresponding error message the integration may return to the OAuth
+        failure page to be displayed
+      title: PlatformIntegrationCreateRequestErrorCodes
+    PlatformIntegrationCreateRequestConfigurationFields:
+      type: object
+      properties: {}
+      description: >-
+        A json-schema describing the settings fields that a user should be presented with when installing the
+        integration
+      title: PlatformIntegrationCreateRequestConfigurationFields
+    PlatformIntegrationCreateRequest:
+      type: object
+      properties:
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegrationCreateRequestTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+            - $ref: '#/components/schemas/PlatformIntegrationCreateRequestErrorCodes'
+            - type: 'null'
+          description: >-
+            An object containing error codes and their corresponding error message the integration may return to the
+            OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/PlatformIntegrationCreateRequestConfigurationFields'
+          description: >-
+            A json-schema describing the settings fields that a user should be presented with when installing the
+            integration
+      required:
+        - identifier_field_path
+        - name
+        - description
+        - author
+        - contact
+        - uninstallation_url
+        - oauth_callback_url
+        - tags
+        - scopes
+        - configuration_fields
+      title: PlatformIntegrationCreateRequest
+    Platform Integrations_createPlatformIntegration_Response_200:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the integration
+        status:
+          type: string
+          description: The current state of the integration (development, approved, archived)
+        created:
+          type: string
+          format: date-time
+          description: The date the integration was created
+        updated:
+          type: string
+          format: date-time
+          description: The date the integration was last updated
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformIntegrationTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+            - $ref: '#/components/schemas/PlatformIntegrationErrorCodes'
+            - type: 'null'
+          description: >-
+            An object containing error codes and their corresponding error message the integration may return to the
+            OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/PlatformIntegrationConfigurationFields'
+          description: >-
+            A json-schema describing the settings fields that a user should be presented with when installing the
+            integration
+        client_secret:
+          type: string
+          description: The OAuth client secret for the integration
+      required:
+        - id
+        - status
+        - identifier_field_path
+        - name
+        - description
+        - author
+        - contact
+        - uninstallation_url
+        - oauth_callback_url
+        - tags
+        - scopes
+        - configuration_fields
+      title: Platform Integrations_createPlatformIntegration_Response_200
+    IntegrationCommonFieldsTagsItems:
+      type: string
+      enum:
+        - knowledge
+      title: IntegrationCommonFieldsTagsItems
+    IntegrationCommonFieldsErrorCodes:
+      type: object
+      properties: {}
+      description: >-
+        An object containing error codes and their corresponding error message the integration may return to the OAuth
+        failure page to be displayed
+      title: IntegrationCommonFieldsErrorCodes
+    IntegrationCommonFieldsConfigurationFields:
+      type: object
+      properties: {}
+      description: >-
+        A json-schema describing the settings fields that a user should be presented with when installing the
+        integration
+      title: IntegrationCommonFieldsConfigurationFields
+    PlatformIntegrationUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the integration
+        description:
+          type: string
+          description: A description of what the integration does and how to use it
+        author:
+          type: string
+          description: The name of the integration developer
+        contact:
+          type: string
+          description: The URL or email address where users of the integration can reach out for support
+        uninstallation_url:
+          type: string
+          format: url
+          description: The `delete` endpoint that initiates the uninstallation flow for the integration
+        oauth_callback_url:
+          type: string
+          format: url
+          description: The `get` endpoint that will be invoked after OAuth authorization
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntegrationCommonFieldsTagsItems'
+          description: A list of tags that describe the type of integration
+        error_codes:
+          oneOf:
+            - $ref: '#/components/schemas/IntegrationCommonFieldsErrorCodes'
+            - type: 'null'
+          description: >-
+            An object containing error codes and their corresponding error message the integration may return to the
+            OAuth failure page to be displayed
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The list of OAuth token permissions the integration requests when installed
+        configuration_fields:
+          $ref: '#/components/schemas/IntegrationCommonFieldsConfigurationFields'
+          description: >-
+            A json-schema describing the settings fields that a user should be presented with when installing the
+            integration
+        identifier_field_path:
+          $ref: '#/components/schemas/IntegrationIdentifierField'
+        icon_url:
+          $ref: '#/components/schemas/IntegrationIconUrl'
+        call_to_action:
+          $ref: '#/components/schemas/IntegrationCallToAction'
+      title: PlatformIntegrationUpdateRequest
+    PlatformIntegrationInstallationConfiguration:
+      type: object
+      properties: {}
+      description: The configuration settings for the integration
+      title: PlatformIntegrationInstallationConfiguration
+    PlatformIntegrationInstallation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The unique identifier for the integration installation
+        platform_integration_id:
+          type: string
+          format: id
+          description: The unique identifier for the integration
+        created:
+          type: string
+          format: date-time
+          description: The date and time the installation was created
+        updated:
+          type: string
+          format: date-time
+          description: The date and time the installation was last updated
+        configuration:
+          $ref: '#/components/schemas/PlatformIntegrationInstallationConfiguration'
+          description: The configuration settings for the integration
+        status:
+          type: string
+          description: The current state of the integration installation (incomplete, complete)
+      title: PlatformIntegrationInstallation
+    PlatformIntegrationInstallationUpdateRequestStatus:
+      type: string
+      enum:
+        - complete
+        - incomplete
+      description: The new status of the installation
+      title: PlatformIntegrationInstallationUpdateRequestStatus
+    PlatformIntegrationInstallationUpdateRequest:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PlatformIntegrationInstallationUpdateRequestStatus'
+          description: The new status of the installation
+      title: PlatformIntegrationInstallationUpdateRequest
+    V2ChannelsGetParametersType:
+      type: string
+      enum:
+        - custom
+        - native
+      title: V2ChannelsGetParametersType
+    V2ChannelsGetParametersModality:
+      type: string
+      enum:
+        - messaging
+        - email
+        - voice
+      title: V2ChannelsGetParametersModality
+    BaseChannelModality:
+      type: string
+      enum:
+        - messaging
+        - email
+        - voice
+      description: The modality of the channel
+      title: BaseChannelModality
+    CustomChannelType:
+      type: string
+      enum:
+        - custom
+      description: The type of the channel
+      title: CustomChannelType
+    CustomChannelMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+        - type: number
+          format: double
+      title: CustomChannelMetadata
+    NativeChannelType:
+      type: string
+      enum:
+        - native
+      description: The type of the channel
+      title: NativeChannelType
+    Channel:
+      oneOf:
+        - type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/CustomChannelType'
+              description: The type of the channel
+            id:
+              type: string
+              format: id
+              description: The channel ID
+            name:
+              type: string
+              description: The name of the channel
+            description:
+              type: string
+              description: A description of the channel
+            modality:
+              $ref: '#/components/schemas/BaseChannelModality'
+              description: The modality of the channel
+            metadata:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/CustomChannelMetadata'
+              description: |
+                A dictionary of key, value pairs assigned to the channel. Metadata may not exceed 4KB total.
+                - `metadata` keys may only be of type: `string`
+                - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+            created_at:
+              type: string
+              format: date-time
+              description: The date and time the channel was created
+          required:
+            - type
+            - name
+            - description
+            - modality
+          description: custom variant
+        - type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/NativeChannelType'
+              description: The type of the channel
+            id:
+              type: string
+              description: The channel ID
+            name:
+              type: string
+              description: The name of the channel
+            description:
+              type: string
+              description: A description of the channel
+            modality:
+              $ref: '#/components/schemas/BaseChannelModality'
+              description: The modality of the channel
+          required:
+            - type
+            - name
+            - description
+            - modality
+          description: native variant
+      discriminator:
+        propertyName: type
+      title: Channel
+    Channels_getChannels_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: Channels_getChannels_Response_200
+    CustomChannel:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The channel ID
+        type:
+          $ref: '#/components/schemas/CustomChannelType'
+          description: The type of the channel
+        name:
+          type: string
+          description: The name of the channel
+        description:
+          type: string
+          description: A description of the channel
+        modality:
+          $ref: '#/components/schemas/BaseChannelModality'
+          description: The modality of the channel
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CustomChannelMetadata'
+          description: |
+            A dictionary of key, value pairs assigned to the channel. Metadata may not exceed 4KB total.
+            - `metadata` keys may only be of type: `string`
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the channel was created
+      required:
+        - name
+        - description
+        - modality
+      title: CustomChannel
+    EmailConversationCreateRequestMetadata:
+      type: object
+      properties: {}
+      description: >-
+        Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as
+        metavariables in your dashboard.
+      title: EmailConversationCreateRequestMetadata
+    EmailConversationCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The customer's full name
+        subject:
+          type: string
+          description: The subject of the customer's inquiry; used as the subject for the AI Agent's reply
+        reply_to:
+          type: string
+          description: The customer's email address
+        text:
+          type: string
+          description: The customer's inquiry, limited to 10 KB
+        reply_as:
+          type: string
+          description: >-
+            The company email address you want to use to reply to the customer. Defaults to the Ada provided email
+            address.
+        cc:
+          type: array
+          items:
+            type: string
+          description: The email addresses in the email's CC field
+        metadata:
+          $ref: '#/components/schemas/EmailConversationCreateRequestMetadata'
+          description: >-
+            Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will
+            appear as metavariables in your dashboard.
+      required:
+        - name
+        - subject
+        - reply_to
+      title: EmailConversationCreateRequest
+    EmailConversationCreateResponse:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: The Ada-generated conversation id
+      title: EmailConversationCreateResponse
+    ConversationCreateRequestMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+        - type: number
+          format: double
+      title: ConversationCreateRequestMetadata
+    ConversationCreateRequest:
+      type: object
+      properties:
+        channel_id:
+          type: string
+          format: id
+          description: The ID of the channel to create a conversation in
+        end_user_id:
+          type: string
+          format: id
+          description: >-
+            The ID of the end user participating in the conversation. If not provided, the system will create a new end
+            user automatically.
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationCreateRequestMetadata'
+          description: >
+            A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada
+            metavariables. To create or update metavariables, use the End Users API.
+             - `metadata` keys may only be of type: `string`
+             - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+      required:
+        - channel_id
+      title: ConversationCreateRequest
+    ConversationStatus:
+      type: string
+      enum:
+        - active
+        - ended
+      description: The status of the conversation
+      title: ConversationStatus
+    ConversationMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+        - type: number
+          format: double
+      title: ConversationMetadata
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The ID of the conversation
+        channel_id:
+          type: string
+          description: The ID of the channel
+        end_user_id:
+          type: string
+          format: id
+          description: The ID of the end user participating in the conversation
+        status:
+          $ref: '#/components/schemas/ConversationStatus'
+          description: The status of the conversation
+        created_at:
+          type: string
+          description: The date and time the conversation was created
+        updated_at:
+          type: string
+          description: The date and time the conversation was last updated
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationMetadata'
+          description: >
+            A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada
+            metavariables. To create or update metavariables, use the End Users API.
+             - `metadata` keys may only be of type: `string`
+             - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+      title: Conversation
+    ConversationPatchRequestMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+        - type: number
+          format: double
+      title: ConversationPatchRequestMetadata
+    ConversationPatchRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            oneOf:
+              - $ref: '#/components/schemas/ConversationPatchRequestMetadata'
+              - type: 'null'
+          description: |
+            A dictionary of key, value pairs to add to the conversation metadata additively
+            - `metadata` keys may only be of type: `string`
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+            - `metadata` keys with a `null` value will be removed from the conversation metadata
+      required:
+        - metadata
+      title: ConversationPatchRequest
+    MessageLogsType:
+      type: string
+      enum:
+        - message_logs
+      description: The type of the message
+      title: MessageLogsType
+    MessageLogsAuthorRole:
+      type: string
+      enum:
+        - end_user
+        - ai_agent
+        - human_agent
+      description: The author's role
+      title: MessageLogsAuthorRole
+    MessageLogsAuthor:
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+          description: If the role is `end_user`, the ID of the end user. If the role is `ai_agent` or `human_agent`, this is null.
+        role:
+          $ref: '#/components/schemas/MessageLogsAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+            - string
+            - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+            - string
+            - 'null'
+          description: The author's display name
+      description: Information about the message author
+      title: MessageLogsAuthor
+    TextContentType:
+      type: string
+      enum:
+        - text
+      description: The type of the message
+      title: TextContentType
+    TextContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TextContentType'
+          description: The type of the message
+        body:
+          type: string
+          description: The body of the message
+      required:
+        - type
+        - body
+      description: The content of the text message
+      title: TextContent
+    LinkContentType:
+      type: string
+      enum:
+        - link
+      description: The type of the message
+      title: LinkContentType
+    LinkContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/LinkContentType'
+          description: The type of the message
+        url:
+          type: string
+          description: The link's URL
+        link_text:
+          type:
+            - string
+            - 'null'
+          description: Text that can be used to display the link
+      description: The content of a standalone link style messages, such as CSAT
+      title: LinkContent
+    FileContentType:
+      type: string
+      enum:
+        - file
+      description: The type of the message
+      title: FileContentType
+    FileContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FileContentType'
+          description: The type of the message
+        url:
+          type: string
+          format: uri
+          description: Presigned URL from the attachment upload endpoint (valid for 7 days)
+        mime_type:
+          type: string
+          description: MIME type of the file
+        filename:
+          type: string
+          description: Name of the file
+      required:
+        - type
+        - url
+        - mime_type
+        - filename
+      description: The content of a file message
+      title: FileContent
+    MessageLogsContent:
+      oneOf:
+        - $ref: '#/components/schemas/TextContent'
+        - $ref: '#/components/schemas/LinkContent'
+        - $ref: '#/components/schemas/FileContent'
+      description: 'The message content. The structure varies based on the `type` field. Supported types: text, link, file.'
+      title: MessageLogsContent
+    MessageLogs:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/MessageLogsType'
+          description: The type of the message
+        message_id:
+          type: string
+          description: The ID of the message log
+        created_at:
+          type: string
+          description: The date and time the message was created
+        author:
+          $ref: '#/components/schemas/MessageLogsAuthor'
+          description: Information about the message author
+        content:
+          $ref: '#/components/schemas/MessageLogsContent'
+          description: 'The message content. The structure varies based on the `type` field. Supported types: text, link, file.'
+      title: MessageLogs
+    MessageEvents:
+      oneOf:
+        - $ref: '#/components/schemas/MessageLogs'
+      title: MessageEvents
+    MessageList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageEvents'
+          description: List of messages in the conversation
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - data
+        - meta
+      title: MessageList
+    ConversationMessageAuthorRole:
+      type: string
+      enum:
+        - end_user
+        - human_agent
+      description: The author's role
+      title: ConversationMessageAuthorRole
+    ConversationMessageAuthor:
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+          description: The ID of the user that will be participating in the conversation. Required when the role is `end_user`.
+        role:
+          $ref: '#/components/schemas/ConversationMessageAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+            - string
+            - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+            - string
+            - 'null'
+          description: The author's display name. Required when the role is `human_agent`.
+      required:
+        - role
+      description: Information about the message author
+      title: ConversationMessageAuthor
+    MessageCreateRequestContent:
+      oneOf:
+        - $ref: '#/components/schemas/TextContent'
+        - $ref: '#/components/schemas/FileContent'
+      description: The message content
+      title: MessageCreateRequestContent
+    MessageCreateRequest:
+      type: object
+      properties:
+        author:
+          $ref: '#/components/schemas/ConversationMessageAuthor'
+        content:
+          $ref: '#/components/schemas/MessageCreateRequestContent'
+          description: The message content
+      required:
+        - author
+        - content
+      title: MessageCreateRequest
+    MessageContent:
+      oneOf:
+        - $ref: '#/components/schemas/TextContent'
+        - $ref: '#/components/schemas/FileContent'
+      description: The message content
+      title: MessageContent
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The ID of the message
+        conversation_id:
+          type: string
+          format: id
+          description: The ID of the conversation
+        author:
+          $ref: '#/components/schemas/ConversationMessageAuthor'
+        content:
+          $ref: '#/components/schemas/MessageContent'
+          description: The message content
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the message was created
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the message was updated
+      title: Message
+    Conversations_endConversation_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Conversations_endConversation_Response_200
+    Conversations_endHandoff_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Conversations_endHandoff_Response_200
+    AttachmentUploadResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Presigned URL to access the uploaded file (valid for 7 days)
+        mime_type:
+          type: string
+          description: MIME type of the uploaded file
+        filename:
+          type: string
+          description: Name of the uploaded file
+      required:
+        - url
+        - mime_type
+        - filename
+      title: AttachmentUploadResponse
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The webhook ID
+        url:
+          type: string
+          format: uri
+          description: The URL that will receive webhook events
+        description:
+          type: string
+          description: A description of the webhook
+        event_filters:
+          type: array
+          items:
+            type: string
+          description: Event types this webhook is subscribed to. If empty, the webhook receives all events
+        enabled:
+          type: boolean
+          description: Whether the webhook is enabled
+        created_at:
+          type: string
+          format: date-time
+          description: When the webhook was created
+        updated_at:
+          type: string
+          format: date-time
+          description: When the webhook was last updated
+      title: Webhook
+    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+            - string
+            - 'null'
+          description: URL for the next page of results, or null if no pages remain
+      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
+    Webhook Management_listWebhooks_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Webhook'
+        meta:
+          $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
+      title: Webhook Management_listWebhooks_Response_200
+    Webhook Management_deleteWebhook_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Webhook Management_deleteWebhook_Response_204
+    Webhook Management_getWebhookSecret_Response_200:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The webhook signing secret
+      title: Webhook Management_getWebhookSecret_Response_200
+    Webhook Management_rotateWebhookSecret_Response_200:
+      type: object
+      properties: {}
+      title: Webhook Management_rotateWebhookSecret_Response_200
+    V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The event type identifier
+        description:
+          type: string
+          description: Human-readable description of the event type
+      title: V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems
+    Webhook Management_listWebhookEventTypes_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
+      title: Webhook Management_listWebhookEventTypes_Response_200
+    EndUserCreatedWebhookPayloadData:
+      type: object
+      properties:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a
+            phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive.
+            Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      description: The webhook event data
+      title: EndUserCreatedWebhookPayloadData
+    EndUserCreatedWebhookPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The webhook event type description
+        timestamp:
+          type: string
+          description: >-
+            The timestamp for when the event was generated. Uses millisecond precision to help with event ordering
+            needs.
+        data:
+          $ref: '#/components/schemas/EndUserCreatedWebhookPayloadData'
+          description: The webhook event data
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            A list of tags that Ada provides. You can use tags to filter webhook events in the Ada dashboard. Includes
+            the `end_user_id` value for the webhook payload by default. Ada may add additional tags at any time.
+      title: EndUserCreatedWebhookPayload
+    EndUserUpdatedWebhookPayloadData:
+      type: object
+      properties:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a
+            phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive.
+            Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      description: The webhook event data
+      title: EndUserUpdatedWebhookPayloadData
+    EndUserUpdatedWebhookPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The webhook event type description
+        timestamp:
+          type: string
+          description: >-
+            The timestamp for when the event was generated. Uses millisecond precision to help with event ordering
+            needs.
+        data:
+          $ref: '#/components/schemas/EndUserUpdatedWebhookPayloadData'
+          description: The webhook event data
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            A list of tags that Ada provides. You can use tags to filter webhook events in the Ada dashboard. Includes
+            the `end_user_id` value for the webhook payload by default. Ada may add additional tags at any time.
+      title: EndUserUpdatedWebhookPayload
+    ConversationCreatedWebhookPayloadType:
+      type: string
+      enum:
+        - v1.conversation.created
+      description: The webhook event type
+      title: ConversationCreatedWebhookPayloadType
+    ConversationCreatedWebhookPayloadDataMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+        - type: number
+          format: double
+      title: ConversationCreatedWebhookPayloadDataMetadata
+    ConversationCreatedWebhookPayloadData:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: The ID of the conversation
+        channel_id:
+          type: string
+          description: The ID of the channel
+        created_at:
+          type: string
+          description: The date and time the conversation was created
+        end_user_id:
+          type: string
+          description: The ID of the end user associated with the conversation
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationCreatedWebhookPayloadDataMetadata'
+          description: |
+            A dictionary of key, value pairs assigned to the conversation
+            - `metadata` keys may only be of type: `string`
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
+      description: The webhook event data
+      title: ConversationCreatedWebhookPayloadData
+    ConversationCreatedWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationCreatedWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated (uses millisecond precision to help with event ordering)
+        data:
+          $ref: '#/components/schemas/ConversationCreatedWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationCreatedWebhookPayload
+    ConversationMessageWebhookPayloadType:
+      type: string
+      enum:
+        - v1.conversation.message
+      description: The webhook event type
+      title: ConversationMessageWebhookPayloadType
+    ConversationMessageWebhookNativeChannelType:
+      type: string
+      enum:
+        - native
+      description: The type of the channel
+      title: ConversationMessageWebhookNativeChannelType
+    ConversationMessageWebhookCustomChannelType:
+      type: string
+      enum:
+        - custom
+      description: The type of the channel
+      title: ConversationMessageWebhookCustomChannelType
+    ConversationMessageWebhookCustomChannelMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+      title: ConversationMessageWebhookCustomChannelMetadata
+    ConversationMessageWebhookChannel:
+      oneOf:
+        - type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/ConversationMessageWebhookNativeChannelType'
+              description: The type of the channel
+            id:
+              type: string
+              description: The channel ID
+            name:
+              type: string
+              description: The name of the channel
+            description:
+              type: string
+              description: A description of the channel
+            modality:
+              $ref: '#/components/schemas/BaseChannelModality'
+              description: The modality of the channel
+          required:
+            - type
+            - name
+            - description
+            - modality
+            - id
+          description: native variant
+        - type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/ConversationMessageWebhookCustomChannelType'
+              description: The type of the channel
+            id:
+              type: string
+              format: id
+              description: The channel ID
+            name:
+              type: string
+              description: The name of the channel
+            description:
+              type: string
+              description: A description of the channel
+            modality:
+              $ref: '#/components/schemas/BaseChannelModality'
+              description: The modality of the channel
+            metadata:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/ConversationMessageWebhookCustomChannelMetadata'
+              description: |
+                A dictionary of key/value pairs assigned to the channel. Metadata may not exceed 4KB total
+                - keys: string
+                - values: string, boolean, or integer
+            created_at:
+              type: string
+              format: date-time
+              description: The date and time the channel was created
+          required:
+            - type
+            - name
+            - description
+            - modality
+            - id
+          description: custom variant
+      discriminator:
+        propertyName: type
+      title: ConversationMessageWebhookChannel
+    ConversationMessageWebhookPayloadDataAuthorRole:
+      type: string
+      enum:
+        - end_user
+        - ai_agent
+        - human_agent
+      description: The author's role
+      title: ConversationMessageWebhookPayloadDataAuthorRole
+    ConversationMessageWebhookPayloadDataAuthor:
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+          description: The ID of the user that will be participating in the conversation
+        role:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+            - string
+            - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+            - string
+            - 'null'
+          description: The author's display name
+      description: Information about the message author
+      title: ConversationMessageWebhookPayloadDataAuthor
+    ConversationMessageWebhookPayloadDataContent:
+      oneOf:
+        - $ref: '#/components/schemas/TextContent'
+        - $ref: '#/components/schemas/LinkContent'
+        - $ref: '#/components/schemas/FileContent'
+      title: ConversationMessageWebhookPayloadDataContent
+    ConversationMessageWebhookPayloadData:
+      type: object
+      properties:
+        message_id:
+          type: string
+          description: The ID of the message that triggered the webhook event
+        conversation_id:
+          type: string
+          description: The ID of the conversation that contains the message
+        end_user_id:
+          type: string
+          description: The ID of the end user associated with the conversation
+        handoff_integration:
+          type:
+            - string
+            - 'null'
+          description: >-
+            The name of the handoff integration if the message is part of a handoff conversation. This field is null
+            when the message is directed to the AI Agent.
+        channel:
+          $ref: '#/components/schemas/ConversationMessageWebhookChannel'
+          description: The channel that the message was sent on
+        created_at:
+          type: string
+          description: The date and time the message was created
+        author:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataAuthor'
+          description: Information about the message author
+        content:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataContent'
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
+      description: The webhook event data
+      title: ConversationMessageWebhookPayloadData
+    ConversationMessageWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering needs
+        data:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationMessageWebhookPayload
+    ConversationEndedWebhookPayloadType:
+      type: string
+      enum:
+        - v1.conversation.ended
+      description: The webhook event type
+      title: ConversationEndedWebhookPayloadType
+    ConversationEndedWebhookPayloadDataEndedByRole:
+      type: string
+      enum:
+        - end_user
+        - system
+        - human_agent
+      description: The role that ended the conversation
+      title: ConversationEndedWebhookPayloadDataEndedByRole
+    ConversationEndedWebhookPayloadDataEndedBy:
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+          description: The ID of the user that ended the conversation
+        role:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataEndedByRole'
+          description: The role that ended the conversation
+      title: ConversationEndedWebhookPayloadDataEndedBy
+    ConversationEndedWebhookPayloadDataMetadata:
+      oneOf:
+        - type: string
+        - type: boolean
+        - type: integer
+        - type: number
+          format: double
+      title: ConversationEndedWebhookPayloadDataMetadata
+    ConversationEndedWebhookPayloadData:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: The ID of the conversation that was ended
+        channel_id:
+          type: string
+          description: The ID of the channel
+        end_user_id:
+          type: string
+          description: The ID of the end user associated with the conversation
+        created_at:
+          type: string
+          description: The date and time the conversation was created
+        updated_at:
+          type: string
+          description: The date and time the conversation was last updated
+        ended_by:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataEndedBy'
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataMetadata'
+          description: |
+            A dictionary of key, value pairs assigned to the conversation
+            - `metadata` keys may only be of type: `string`
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
+      description: The webhook event data
+      title: ConversationEndedWebhookPayloadData
+    ConversationEndedWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering
+        data:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationEndedWebhookPayload
+    ConversationHandoffEndedWebhookPayloadType:
+      type: string
+      enum:
+        - v1.conversation.handoff.ended
+      description: The webhook event type
+      title: ConversationHandoffEndedWebhookPayloadType
+    ConversationHandoffEndedWebhookPayloadData:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: The ID of the conversation where the handoff was ended
+        end_user_id:
+          type: string
+          description: The ID of the end user associated with the conversation
+        handoff_integration:
+          type: string
+          description: The handoff integration that was ended
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
+      required:
+        - conversation_id
+        - end_user_id
+        - handoff_integration
+        - ai_agent_domain
+      description: The webhook event data
+      title: ConversationHandoffEndedWebhookPayloadData
+    ConversationHandoffEndedWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering
+        data:
+          $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationHandoffEndedWebhookPayload
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
