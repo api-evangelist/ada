@@ -3,21 +3,27 @@ name: Ada
 type: Index
 accessModel:
   pricing: enterprise
-  onboarding: self-serve
+  onboarding: sales-led
   trial: false
   try_now: false
   public: false
-  label: Enterprise · Self-serve signup
+  label: Enterprise · Sales-led onboarding
   confidence: high
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  - https://www.ada.cx/
+  generated: '2026-08-14'
+  method: searched
+  note: >-
+    Corrected 2026-08-14. Ada has no self-serve signup: the site offers /demo/ (book a demo) and
+    /login/ (existing customers) and no pricing page, API keys are issued from an existing
+    instance dashboard, and the docs API Playground requires your own key against your own
+    instance. There is no anonymous way to obtain credentials.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ada.png
 url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/apis.yml
 created: 2026-06-12
-modified: 2026-06-12
+modified: 2026-08-14
 specificationVersion: '0.19'
 description: 'Ada is an AI-powered customer service automation platform that enables
   enterprises to deploy AI agents capable of resolving customer inquiries across digital
@@ -46,7 +52,7 @@ apis:
     Real-time management of end-user profile information with webhook events for new chats and profile
     updates.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - users
   - profiles
@@ -59,7 +65,7 @@ apis:
     Build custom channels and extend Ada into proprietary apps or third-party platforms with full conversation
     lifecycle control.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - conversations
   - channels
@@ -72,7 +78,7 @@ apis:
     Connect external applications to Ada using OAuth to extend AI agent capabilities with partner-built
     integrations.
   humanURL: https://docs.ada.cx/reference/integrations/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - integrations
   - oauth
@@ -80,20 +86,47 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.ada.cx/reference/integrations/overview
+- aid: ada:ada-mcp-server
+  name: Ada MCP Server
+  description: >-
+    Model Context Protocol server exposing Ada's management surface to AI assistants — metrics,
+    conversation transcripts, knowledge and coaching search, entity discovery, test cases and
+    runs, change sets, and staged writes to Agent behaviour. Served from the customer's own Ada
+    instance host over JSON-RPC 2.0 (SSE is not supported), authenticated by OAuth with
+    dashboard role-based access control, or by API key. Eighteen documented tools plus a
+    nine-prompt library.
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
+  tags:
+  - mcp
+  - agents
+  - analytics
+  - testing
+  properties:
+  - type: MCPServer
+    url: mcp/ada-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/ada-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Documentation
+    url: https://docs.ada.cx/mcp/introduction/overview
+  - type: Authentication
+    url: https://docs.ada.cx/mcp/introduction/authentication
 - aid: ada:ada-subpackage-channels-api
   name: Ada subpackage_channels API
   description: The subpackage_channels API from Ada — 1 operation(s) for subpackage_channels.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_channels
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-channels-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-channels-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -102,16 +135,16 @@ apis:
   name: Ada subpackage_conversations API
   description: The subpackage_conversations API from Ada — 9 operation(s) for subpackage_conversations.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_conversations
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-conversations-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-conversations-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -121,16 +154,16 @@ apis:
   description: >-
     The subpackage_deleteChatterData API from Ada — 1 operation(s) for subpackage_deletechatterdata.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_deleteChatterData
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-deletechatterdata-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-deletechatterdata-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -139,16 +172,16 @@ apis:
   name: Ada subpackage_endUsers API
   description: The subpackage_endUsers API from Ada — 2 operation(s) for subpackage_endusers.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_endUsers
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-endusers-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-endusers-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -158,16 +191,16 @@ apis:
   description: >-
     The subpackage_knowledge.subpackage_knowledge/articles API from Ada — 3 operation(s) for subpackage_knowledge.subpackage_knowledge/articles.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_knowledge.subpackage_knowledge/articles
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-knowledge-subpackage-knowledge-articles-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-knowledge-subpackage-knowledge-articles-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -177,16 +210,16 @@ apis:
   description: >-
     The subpackage_knowledge.subpackage_knowledge/sources API from Ada — 2 operation(s) for subpackage_knowledge.subpackage_knowledge/sources.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_knowledge.subpackage_knowledge/sources
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-knowledge-subpackage-knowledge-sources-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-knowledge-subpackage-knowledge-sources-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -196,16 +229,16 @@ apis:
   description: >-
     The subpackage_knowledge.subpackage_knowledge/tags API from Ada — 3 operation(s) for subpackage_knowledge.subpackage_knowledge/tags.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_knowledge.subpackage_knowledge/tags
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-knowledge-subpackage-knowledge-tags-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-knowledge-subpackage-knowledge-tags-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -214,16 +247,16 @@ apis:
   name: Ada subpackage_messages API
   description: The subpackage_messages API from Ada — 2 operation(s) for subpackage_messages.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_messages
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-messages-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-messages-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -233,16 +266,16 @@ apis:
   description: >-
     The subpackage_platformIntegrations API from Ada — 4 operation(s) for subpackage_platformintegrations.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_platformIntegrations
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-platformintegrations-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-platformintegrations-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -252,16 +285,16 @@ apis:
   description: >-
     The subpackage_webhookManagement API from Ada — 5 operation(s) for subpackage_webhookmanagement.
   humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://api.ada.cx
+  baseURL: https://example.ada.support
   tags:
   - subpackage_webhookManagement
   properties:
   - type: OpenAPI
     url: openapi/ada-subpackage-webhookmanagement-api-openapi.yml
+  - type: Overlay
+    url: overlays/ada-subpackage-webhookmanagement-overlay.yaml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
-  - type: GraphQL
-    url: graphql/ada-graphql.md
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
@@ -303,6 +336,79 @@ common:
   url: vocabulary/ada-vocabulary.yml
 - type: JSONLDContext
   url: json-ld/ada-context.jsonld
+- type: DeveloperPortal
+  url: https://docs.ada.cx/
+- type: APIReference
+  url: https://docs.ada.cx/generative/reference
+- type: GettingStarted
+  url: https://docs.ada.cx/docs/welcome/getting-started
+- type: Support
+  url: mailto:help@ada.cx
+- type: TermsOfService
+  url: https://www.ada.cx/legal/customer-terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.ada.cx/legal/privacy-policy/
+- type: Demo
+  url: https://www.ada.cx/demo/
+- type: Login
+  url: https://www.ada.cx/login/
+- type: YouTube
+  url: https://www.youtube.com/@ada_cx
+- type: Security
+  url: https://www.ada.cx/legal/vulnerability-disclosure/
+- type: Compliance
+  url: https://security.ada.cx/
+- type: Packages
+  url: packages/ada-packages.yml
+- type: SDKs
+  url: packages/ada-packages.yml
+- type: CLI
+  url: cli/ada-cli.yml
+- type: Components
+  url: components/ada-components.yml
+- type: Sandbox
+  url: sandbox/ada-sandbox.yml
+- type: Conventions
+  url: conventions/ada-conventions.yml
+- type: Idempotency
+  url: conventions/ada-conventions.yml
+- type: ErrorCatalog
+  url: errors/ada-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/ada-lifecycle.yml
+- type: Deprecation
+  url: https://docs.ada.cx/reference/introduction/migrate-to-v-2
+- type: ChangeLog
+  url: changelog/ada-changelog.yml
+- type: ReleaseNotes
+  url: https://docs.ada.cx/release-notes
+- type: Conformance
+  url: conformance/ada-conformance.yml
+- type: DataModel
+  url: data-model/ada-data-model.yml
+- type: OAuthScopes
+  url: scopes/ada-scopes.yml
+- type: WellKnown
+  url: well-known/ada-well-known.yml
+- type: APICatalog
+  url: https://docs.ada.cx/.well-known/api-catalog
+- type: LLMsTxt
+  url: llms/ada-llms.txt
+- type: MCPServer
+  url: mcp/ada-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/ada-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/ada-webhooks.yml
+- type: Overlay
+  url: overlays/ada-subpackage-knowledge-subpackage-knowledge-articles-overlay.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 36
+  pass: local-v1
