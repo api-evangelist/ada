@@ -1,0 +1,192 @@
+generated: '2026-08-14'
+method: searched
+status: published
+source: https://docs.ada.cx/mcp/introduction/overview
+docs: https://docs.ada.cx/mcp/tools/overview
+deployment:
+  mode: remote
+  endpoint: https://<your-ada-instance-domain>/api/mcp
+  auth: oauth
+  verified: searched
+  note: >-
+    Ada ships TWO distinct MCP surfaces and this block describes the primary one — the Ada
+    Platform MCP server, which is served from the customer's own Ada instance host, not from a
+    single shared vendor URL. Ada's docs give the connection URLs verbatim as
+    https://<your-ada-instance-domain>/api/mcp/oauth (OAuth, recommended) and
+    https://<your-ada-instance-domain>/api/mcp (API key), where the instance domain is the
+    dashboard login host (their examples: acme-corp.ada.support, acme-corp.eu.ada.support,
+    acme-corp.maple.ada.support). Because the host is per-tenant there is no anonymous endpoint
+    to probe, so `verified: searched` — the endpoint template is quoted from the provider, never
+    guessed. Transport is JSON-RPC 2.0 over HTTP; Ada states SSE streaming is NOT supported.
+    Clients needing a local process can bridge with `npx mcp-remote`, which Ada documents for
+    Claude Desktop and Gemini CLI — that is a bridge to the remote server, not a stdio server
+    Ada ships, so `mode` stays `remote`.
+servers:
+- name: ada-platform
+  transport: http
+  url_template: https://<your-ada-instance-domain>/api/mcp
+  oauth_url_template: https://<your-ada-instance-domain>/api/mcp/oauth
+  auth:
+  - oauth
+  - api-key
+  sse_supported: false
+  local_bridge: npx mcp-remote
+  probed: false
+  probe_note: Per-tenant host; no anonymous instance exists to call tools/list against.
+  rbac:
+    source: https://docs.ada.cx/mcp/introduction/authentication#permissions
+    applies_to: oauth
+    roles:
+    - role: Owner
+      access: all tools, including writes
+    - role: Admin
+      access: all tools, including writes
+    - role: Agent
+      access: read-only tools
+    - role: Read Only
+      access: read-only tools
+    note: >-
+      Write tools are hidden from the assistant's tool list for read-only roles. Role changes
+      apply on the next tool call. API-key requests use a separate auth path scoped by the key.
+- name: ada-docs
+  transport: http
+  url: https://docs.ada.cx/_mcp/server
+  auth:
+  - none
+  probed: true
+  probe:
+    date: '2026-08-14'
+    initialize:
+      http_status: 200
+      protocolVersion: '2025-06-18'
+      serverInfo: fern-docs-mcp-server 1.0.0
+    tools_list:
+      http_status: 200
+      tool_count: 1
+  note: >-
+    Anonymous documentation-search MCP server that Ada advertises in the header of every
+    docs.ada.cx page and in llms.txt. It is Fern's docs MCP running on Ada's docs host.
+    Version-scoped siblings exist at /generative/_mcp/server, /scripted/_mcp/server and
+    /release-notes/_mcp/server. Real, callable, and genuinely Ada's surface — but it searches
+    documentation, it does not touch the Platform APIs.
+  tools:
+  - name: searchDocs
+    description: Search the documentation at https://docs.ada.cx. Returns relevant doc passages with source URLs.
+    input_schema:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The search query to run against the docs
+      required:
+      - query
+    read_only: true
+tools:
+  source: https://docs.ada.cx/mcp/tools/overview
+  note: >-
+    Names and descriptions are published by Ada. Input schemas require an authenticated
+    tools/list against a real instance and are NOT recorded here rather than guessed.
+  tool_count: 18
+  categories:
+  - category: configuration
+    tools:
+    - name: get_ada_configuration
+      description: Fetches playbooks (summary), actions, custom instructions, and company description.
+      docs: https://docs.ada.cx/mcp/tools/get-ada-configuration
+  - category: metrics-and-conversations
+    tools:
+    - name: get_ada_metric
+      description: Returns AR rate, CSAT, containment, and engaged conversation volume with conversation-level metadata.
+      docs: https://docs.ada.cx/mcp/tools/get-ada-metric
+    - name: get_available_filters
+      description: Lists supported filter types and operators for conversation queries.
+      docs: https://docs.ada.cx/mcp/tools/get-available-filters
+    - name: get_conversations
+      description: Returns many conversations at IDS_ONLY or SUMMARY detail.
+      docs: https://docs.ada.cx/mcp/tools/get-conversations
+    - name: get_conversation
+      description: Returns the full transcript for a conversation ID.
+      docs: https://docs.ada.cx/mcp/tools/get-conversation
+  - category: knowledge-and-coaching
+    tools:
+    - name: search_knowledge
+      description: Searches existing knowledge articles.
+      docs: https://docs.ada.cx/mcp/tools/search-knowledge
+    - name: search_coaching
+      description: Searches existing coaching entries.
+      docs: https://docs.ada.cx/mcp/tools/search-coaching
+    - name: get_improvement_guide
+      description: Returns Ada's entity improvement guide and best practices. Call before proposing changes.
+      docs: https://docs.ada.cx/mcp/tools/get-improvement-guide
+    - name: list_glossary_terms
+      description: Lists glossary terms configured for the Agent.
+      docs: https://docs.ada.cx/mcp/tools/list-glossary-terms
+    - name: get_glossary_conflict_guide
+      description: Returns guidance for resolving glossary term conflicts.
+      docs: https://docs.ada.cx/mcp/tools/get-glossary-conflict-guide
+  - category: entity-discovery
+    tools:
+    - name: list_entities
+      description: >-
+        Lists channels, topics, variables, custom metrics, scorecards, Playbooks, handoffs,
+        processes, custom instructions, or tools configured for the Agent.
+      docs: https://docs.ada.cx/mcp/tools/list-entities
+  - category: testing
+    tools:
+    - name: get_test_cases
+      description: Retrieves test cases, optionally filtered by name or grouped by channel.
+      docs: https://docs.ada.cx/mcp/tools/get-test-cases
+    - name: get_test_runs
+      description: Retrieves test run results, pass/fail status, and evaluation rationale.
+      docs: https://docs.ada.cx/mcp/tools/get-test-runs
+    - name: get_test_run_quota
+      description: Returns daily test run quota, usage, and remaining runs.
+      docs: https://docs.ada.cx/mcp/tools/get-test-run-quota
+  - category: writes
+    requires_role: Owner or Admin (OAuth)
+    tools:
+    - name: edit_agent_behavior
+      description: >-
+        Stages changes to knowledge articles, coaching, Playbooks, Actions, and custom
+        instructions on a change set, then promotes, reverts, or discards it.
+      docs: https://docs.ada.cx/mcp/tools/edit-agent-behavior
+    - name: edit_agent_config
+      description: >-
+        Creates, updates, enables, disables, or deletes settings such as test cases, topics,
+        custom metrics, and scorecards, and triggers test runs. Applies immediately.
+      docs: https://docs.ada.cx/mcp/tools/edit-agent-config
+  - category: change-sets
+    tools:
+    - name: list_agent_changesets
+      description: Lists change sets by status, or returns one with a before-and-after comparison of its staged edits.
+      docs: https://docs.ada.cx/mcp/tools/list-agent-changesets
+  - category: feedback
+    tools:
+    - name: send_feedback
+      description: Sends structured feedback to Ada's development team when MCP tools are blocked, unclear, or missing capabilities.
+      docs: https://docs.ada.cx/mcp/tools/send-feedback
+prompts:
+  source: https://docs.ada.cx/mcp/prompt-library/overview
+  built_in: https://docs.ada.cx/mcp/introduction/built-in-prompts
+  library:
+  - Improvement recommendations
+  - Quick health checks
+  - Create visualizations
+  - Diagnose performance issues
+  - Identify optimization opportunities
+  - Review configuration
+  - Search knowledge and coaching
+  - Test agent responses
+  - Deep-dive analysis
+skills:
+  published_by_provider: true
+  repository: https://github.com/AdaSupport/ada-skills
+  note: Six Agent Skills bound to these MCP tools; captured verbatim in skills/.
+clients_documented:
+- Claude (Desktop, Code)
+- ChatGPT
+- Gemini CLI
+- Google ADK
+- Cursor
+- VS Code
+- Microsoft Copilot Studio (packaged agent import, coordinated with Ada — not the connection URLs)

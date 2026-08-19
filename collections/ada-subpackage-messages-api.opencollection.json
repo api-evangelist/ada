@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_messages API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return messages matching the parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/export/messages",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created after this date. If `created_to` is not specified, only records within 7 days of this timestamp are returned. To retrieve data beyond that window, set `created_to` explicitly. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "query",
+                "description": "Return records with a `conversation_id` that matches this id"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return in response. The maximum and default is 10000, the minimum is 100."
+              },
+              {
+                "name": "created_to",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created earlier than this date. If not specified, this value defaults to 7 days after `created_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              }
+            ]
+          },
+          "docs": "Returns a list of `message` objects along with a `next_page_uri` if applicable"
+        },
+        {
+          "info": {
+            "name": "Return messages matching the parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/data_api/v1.4/messages",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created after this date. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "query",
+                "description": "Return records with a `conversation_id` that matches this id."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return in response. The maximum and default is 10000, the minimum is 100."
+              },
+              {
+                "name": "created_to",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created earlier than this date. If not specified, this value defaults to 7 days after `created_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              }
+            ]
+          },
+          "docs": "Returns a list of `message` objects along with a status message and `next_page_uri` if applicable."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

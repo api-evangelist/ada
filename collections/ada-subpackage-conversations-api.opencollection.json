@@ -1,0 +1,363 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_conversations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Return conversations matching the parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/export/conversations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created after this date. If `created_to` is not specified, only records within 7 days of this timestamp are returned. To retrieve data beyond that window, set `created_to` explicitly. Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were updated after this date. Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return in response. The maximum and default is 10000, the minimum is 100."
+              },
+              {
+                "name": "created_to",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created earlier than this date. If `created_since` is used and this parameter is not specified, this value defaults to 7 days after `created_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "updated_to",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were updated earlier than this date. If `updated_since` is used and this parameter is not specified, this value defaults to 7 days after `updated_since`. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              }
+            ]
+          },
+          "docs": "Returns a list of `conversation` objects along with a `next_page_uri` if applicable"
+        },
+        {
+          "info": {
+            "name": "Return conversations matching the parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/data_api/v1.4/conversations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created after this date.  Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were updated after this date. Note that `updated_since` and `created_since` are mutually exclusive, so you must only use one in a request. Must be an ISO 8601 UTC timestamp ending with 'Z' (e.g., `2024-07-01T00:00:00Z`); required for valid API requests."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return in response. The maximum and default is 10000, the minimum is 100."
+              },
+              {
+                "name": "created_to",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were created earlier than this date. If `created_since` is used and this parameter is not specified, this value defaults to 7 days after `created_since`."
+              },
+              {
+                "name": "updated_to",
+                "value": "",
+                "type": "query",
+                "description": "Return records that were updated earlier than this date. If `updated_since` is used and this parameter is not specified, this value defaults to 7 days after `updated_since`."
+              }
+            ]
+          },
+          "docs": "Returns a list of `conversation` objects along with a status message and `next_page_uri` if applicable."
+        },
+        {
+          "info": {
+            "name": "Start a conversation over Ada's email channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/conversations/email/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a conversation with an end user over Ada's native Email channel, providing context for their inquiry. **This endpoint is exclusive to the native Email channel and cannot be used for custom channels.** Your AI Agent can start conversations only with the default Ada-provided email address, or with email addresses you’ve configured through Bring Your Own Domain (BYOD) settings."
+        },
+        {
+          "info": {
+            "name": "Create a new conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/conversations/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new conversation. If `end_user_id` is not provided, the system creates a new end user automatically. The maximum request size is 10MB, and metadata must not exceed 4KB."
+        },
+        {
+          "info": {
+            "name": "Get a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation to retrieve"
+              }
+            ]
+          },
+          "docs": "Get a conversation by its ID"
+        },
+        {
+          "info": {
+            "name": "Update a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a conversation's metadata by its ID"
+        },
+        {
+          "info": {
+            "name": "Get conversation messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/messages/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Use the value from `meta.next_page_url` in the previous response."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of messages to return (default 100, max 100)"
+              }
+            ]
+          },
+          "docs": "Get messages (paginated) for a conversation by its ID"
+        },
+        {
+          "info": {
+            "name": "Create a new message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/messages/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new message in a conversation. The maximum request size is 10MB."
+        },
+        {
+          "info": {
+            "name": "End a conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/end/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation to end"
+              }
+            ]
+          },
+          "docs": "Ends the conversation specified by the `conversation_id`"
+        },
+        {
+          "info": {
+            "name": "End Handoff",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/end-handoff/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation to end handoff for"
+              }
+            ]
+          },
+          "docs": "Ends the handoff for the conversation specified by the `conversation_id`. This endpoint returns control to the AI Agent and does not end the conversation. It also triggers CSAT for human agent (where applicable), leftover blocks processing, and agent presence dismissal messages."
+        },
+        {
+          "info": {
+            "name": "Upload a file attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/conversations/:conversation_id/attachments/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "conversation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the conversation"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a file attachment to a conversation. The file will be stored and a presigned URL\nwill be generated that is valid for 7 days. The maximum file size is 50MB.\n\nThe presigned URL can be used to create a file message by calling the\n`/v2/conversations/{conversation_id}/messages/` endpoint with `content.type` set to `file`.\n\n**Note:** Attachments can only be uploaded when the conversation is in a handoff state.\n\n**Allowed file types:** TXT, LOG, CSV, EML, PNG, SVG, JPEG, JPG, GIF, HEIF, HEIC, AV"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

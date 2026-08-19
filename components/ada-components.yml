@@ -1,0 +1,116 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/chat/introduction/overview,
+  https://docs.ada.cx/chat/web/getting-started,
+  https://docs.ada.cx/chat/web/sdk-api-reference,
+  https://docs.ada.cx/chat/ios/getting-started,
+  https://docs.ada.cx/chat/android/getting-started,
+  https://docs.ada.cx/chat/react-native/getting-started
+docs: https://docs.ada.cx/chat/introduction/overview
+description: >-
+  Ada's client-side surface is an embeddable chat widget, shipped as four platform SDKs. These
+  are UI components, not API clients — the Platform REST APIs have no first-party server-side
+  SDK at all (see packages/ada-packages.yml). The Web build is the reference implementation; iOS,
+  Android and React Native all wrap a webview around the same experience.
+families:
+- family: Web Chat
+  platform: web
+  loader:
+    type: script-tag
+    src: https://static.ada.support/embed2.js
+    pinned: false
+    note: Unpinned CDN URL — the version served is whatever Ada publishes.
+  registry_equivalent: '@ada-support/embed2'
+  global_object: adaEmbed
+  configuration_object: window.adaSettings
+  configuration_note: >-
+    window.adaSettings must be defined BEFORE the script loads, or the script must be marked
+    async and settings passed to adaEmbed.start().
+  surfaces:
+  - name: settings
+    description: >-
+      Declarative options on window.adaSettings (handle, cluster, language, greeting, metaFields,
+      sensitiveMetaFields, styles, lazy mode, adaReadyCallback, and more).
+    docs: https://docs.ada.cx/chat/web/sdk-api-reference#settings
+  - name: actions
+    description: Imperative methods on the adaEmbed global (start, stop, reset, toggle, setMetaFields, …).
+    docs: https://docs.ada.cx/chat/web/sdk-api-reference#actions
+  capabilities:
+  - delayed / lazy bot loading
+  - programmatic and headless control (shipped 2026-06-12)
+  - approved-domain restriction
+  - metafields and sensitive metafields
+- family: iOS SDK
+  platform: ios
+  package: AdaMessaging
+  repository: https://github.com/ada-cx-public/messaging-ios
+  version: 1.1.1
+  install:
+  - Swift Package Manager (recommended)
+  - CocoaPods (git-sourced)
+  - Carthage
+  - manual AdaMessaging.xcframework
+  requirements:
+    swift: '5.9'
+  entry_point: AdaWebHost
+  settings:
+  - appScheme
+  - cluster
+  - greeting
+  - language
+  - metaFields
+  supersedes: AdaEmbedFramework (AdaSupport/ios-sdk)
+  docs: https://docs.ada.cx/chat/ios/sdk-api-reference
+- family: Android SDK
+  platform: android
+  package: io.github.adasupport:android-sdk
+  variants:
+  - android-sdk
+  - android-sdk-appcompat
+  - android-sdk-appcompat-legacy
+  version: 1.8.6
+  published: '2023-08-18'
+  install:
+  - Maven Central (mavenCentral())
+  - local .aar in app/libs
+  entry_point: support.ada.embed.widget.AdaEmbedView
+  configuration:
+  - XML attributes (ada_handle, ada_cluster, ada_language, ada_greeting)
+  - AdaEmbedView.Settings.Builder (Kotlin/Java)
+  docs: https://docs.ada.cx/chat/android/sdk-api-reference
+  currency_note: No Maven Central release since 2023 — the oldest component in Ada's client surface.
+- family: React Native SDK
+  platform: react-native
+  package: '@ada-support/react-native-sdk'
+  version: 3.2.8
+  published: '2025-11-04'
+  install: npm install --save @ada-support/react-native-sdk
+  depends_on: react-native-webview
+  entry_point: AdaEmbedView (default export)
+  props:
+  - handle
+  - cluster
+  - greeting
+  - language
+  - metaFields
+  docs: https://docs.ada.cx/chat/react-native/sdk-api-reference
+- family: Widget SDK
+  platform: web
+  package: '@ada-support/ada-widget-sdk'
+  version: 2.7.2
+  published: '2026-03-31'
+  repository: https://github.com/AdaSupport/widget-sdk
+  description: >-
+    JS SDK for building custom in-conversation widgets/apps that render inside the Ada chat
+    surface. Distinct from the embed — this is for extending the chat UI, not placing it.
+  starter: https://github.com/AdaSupport/template-widget
+cluster_awareness:
+  note: >-
+    Every SDK exposes a `cluster` setting. It selects the hosting region and therefore the host
+    the widget loads the Agent from (<handle>.us2.ada.support vs <handle>.ada.support). Ada warns
+    that an incorrect cluster means the Agent silently fails to load or loads the wrong
+    environment. Known values seen in the docs: us (default), us2, ca, eu, maple.
+third_party_deployment:
+- name: Zendesk Messaging SDKs
+  docs: https://docs.ada.cx/docs/channels/third-party/zendesk-sdk-deployment.md

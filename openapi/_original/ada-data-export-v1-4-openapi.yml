@@ -9,7 +9,7 @@ paths:
       summary: Return conversations matching the parameters
       description: Returns a list of `conversation` objects along with a status message and `next_page_uri` if applicable.
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: created_since
           in: query
@@ -127,7 +127,7 @@ paths:
       summary: Return messages matching the parameters
       description: Returns a list of `message` objects along with a status message and `next_page_uri` if applicable.
       tags:
-        - subpackage_messages
+        - messages
       parameters:
         - name: created_since
           in: query

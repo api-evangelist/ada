@@ -1,0 +1,163 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/reference/introduction/errors,
+  openapi/_original/ada-knowledge-openapi.yml,
+  openapi/_original/ada-data-export-openapi.yml,
+  openapi/_original/ada-data-export-v1-4-openapi.yml,
+  openapi/_original/ada-data-compliance-openapi.yml
+docs: https://docs.ada.cx/reference/introduction/errors
+format: custom
+rfc9457: false
+note: >-
+  Ada does not use RFC 9457 problem+json. Every error is application/json carrying an `errors`
+  ARRAY — plural, even for a single failure — so an agent must read errors[0], not the body root.
+  There is no `type` URI namespace; `type` is a bare slug string such as `validation_error`.
+envelope:
+  content_type: application/json
+  root: errors
+  cardinality: array
+  fields:
+  - name: type
+    type: string
+    description: Machine-readable error slug (e.g. validation_error). Not a URI.
+  - name: message
+    type: string
+    description: Human-readable message.
+  - name: details
+    type: string | array | null
+    description: >-
+      Optional. For validation_error it is an array of {parameter, location, message} objects, or
+      null when there is no field-level detail. Otherwise a free-form string.
+  example: |
+    {
+      "errors": [
+        {
+          "type": "validation_error",
+          "message": "invalid articles data",
+          "details": [
+            {
+              "parameter": "$[0].knowledge_source_id",
+              "location": "body",
+              "message": "Knowledge source with id 'bogus_id' does not exist."
+            }
+          ]
+        }
+      ]
+    }
+validation_detail:
+  fields:
+  - name: parameter
+    description: JSON path identifying the field that failed validation, e.g. $[0].knowledge_source_id
+  - name: location
+    description: Where the parameter was found in the request, e.g. body
+  - name: message
+    description: Human-readable description of the problem
+problems:
+- status: 400
+  title: Bad Request
+  meaning: The request was malformed or contained invalid parameters.
+  observed_descriptions:
+  - Incorrect query.
+  - Invalid request body or headers.
+  - Bad Request (validation, cursor, or window drift)
+  remediation: Fix the request. On the Data Export endpoints a stale cursor or a shifted time window also returns 400.
+- status: 401
+  title: Unauthorized
+  meaning: Authentication credentials were missing or invalid.
+  observed_descriptions:
+  - Authentication token is missing or invalid. Try generating a new token.
+  - Unauthorized (missing or non-Bearer token)
+  - Authentication token is invalid or does not have the correct permissions. Try generating a new token.
+  remediation: >-
+    Send Authorization; Bearer <key>. Legacy per-API keys work only against v1 endpoints and will
+    401 on v2.
+- status: 403
+  title: Authorization Error
+  meaning: The authenticated principal lacks permission for the resource.
+  observed_descriptions:
+  - The token is not authorized to perform this operation.
+  remediation: For OAuth integrations, check the granted scopes (scopes/ada-scopes.yml).
+- status: 404
+  title: Not Found
+  meaning: The requested resource does not exist.
+  observed_descriptions:
+  - Not Found (Audit log API not enabled for this account)
+  - Not Found — no end user is mapped to the requested external_id
+  - Conversation not found
+  - No deletion job exists for the supplied `job_id` under this AI Agent.
+  remediation: >-
+    Note the entitlement case: the Audit Log API answers 404, not 403, when the feature is not
+    enabled for the account — absence and non-entitlement are indistinguishable to a client.
+- status: 408
+  title: Request Timeout
+  meaning: Database query timed out.
+  observed_descriptions:
+  - Database query timed out.
+  remediation: Narrow the query window or page size and retry.
+  source_apis:
+  - Data Export
+- status: 409
+  title: Duplicate Resource
+  meaning: A resource with the same identifier already exists, or a limit would be exceeded.
+  observed_descriptions:
+  - Conflict — the title is already used by another custom instruction, or enabling would exceed the AI Agent's enabled-instruction limit
+  - Conflict — the requested external_id is already assigned to a different end user on this AI Agent.
+  remediation: >-
+    409 is overloaded — it covers both true duplicates and quota ceilings. Read `message` to tell
+    them apart.
+- status: 413
+  title: Content Too Large
+  meaning: The request payload exceeds size limits.
+  observed_descriptions:
+  - The request body exceeds the maximum size of 512 KB. Split the identifiers across multiple requests.
+  remediation: Global cap is 10MB; bulk end-user deletion caps at 512 KB.
+- status: 422
+  title: Unprocessable Content
+  meaning: Syntactically valid, semantically rejected.
+  observed_descriptions:
+  - Conversation is not in an active handoff state
+  - Invalid arguments or missing data for a required field.
+  remediation: State-machine violations (e.g. end-handoff on a conversation not in handoff) land here, not on 409.
+- status: 429
+  title: Too Many Requests
+  meaning: Rate limit exceeded.
+  observed_descriptions:
+  - Requests are within 1 s of each other.
+  - Too many requests. Retry after slowing the request rate.
+  - Too Many Requests (rate limit)
+  remediation: >-
+    Exponential backoff with jitter. No RateLimit-*/Retry-After headers are documented, so the
+    client cannot compute a wait — it must guess.
+- status: 500
+  title: Internal Server Error
+  meaning: Something went wrong on Ada's end.
+  observed_descriptions:
+  - Something went wrong on Ada's end.
+  - Request timed out or there was a database error.
+  remediation: Retry with backoff; check https://status.ada.support/.
+- status: 502
+  title: Bad Gateway
+  meaning: Nginx gateway issue on Ada's servers.
+  observed_descriptions:
+  - Nginx gateway issue on Ada's servers.
+  source_apis:
+  - Data Compliance (deprecated)
+- status: 503
+  title: Service Unavailable
+  meaning: Server temporarily unable to handle the request.
+  source_apis:
+  - Data Compliance (deprecated)
+- status: 504
+  title: Gateway Timeout
+  meaning: Temporary infrastructure error on Ada's servers.
+  source_apis:
+  - Data Compliance (deprecated)
+error_types_observed:
+- validation_error
+coverage:
+  statuses_documented: 9
+  statuses_in_specs: 13
+  note: >-
+    The docs' status table stops at 500; 408, 502, 503 and 504 appear only in the OpenAPI
+    documents. Both were read.

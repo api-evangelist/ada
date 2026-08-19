@@ -1,0 +1,111 @@
+generated: '2026-08-14'
+method: searched
+source: https://docs.ada.cx/reference/integrations/getting-started
+docs: https://docs.ada.cx/reference/integrations/getting-started
+overview: https://docs.ada.cx/reference/integrations/overview
+note: >-
+  None of Ada's four published OpenAPI documents declares an oauth2 securityScheme — every spec
+  declares only http/bearer. The OAuth surface exists solely for the Integrations API (partner
+  apps installed into a customer's AI Agent) and is documented in prose, not in the machine-
+  readable contract. This artifact is therefore SEARCHED from the docs, not derived from a spec;
+  derive-oauth-scopes.py correctly found zero.
+schemes:
+- name: PlatformIntegrationsOAuth
+  type: oauth2
+  source: https://docs.ada.cx/reference/integrations/getting-started
+  in_openapi: false
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: null
+    authorization_note: >-
+      The authorization step is initiated from the Ada dashboard, which redirects the AI Agent
+      Manager to the partner's own oauth_callback_url. Ada does not publish a fixed /authorize URL.
+    tokenUrl: https://{bot-handle}.ada.support/api/platform_integrations/oauth/token
+    refreshUrl: https://{bot-handle}.ada.support/api/platform_integrations/oauth/token
+  - flow: refreshToken
+    tokenUrl: https://{bot-handle}.ada.support/api/platform_integrations/oauth/token
+  token_lifetimes:
+    authorization_code: 5 minutes
+    access_token: 1 hour
+    refresh_token: 30 days
+  refresh_rotation: true
+  refresh_rotation_note: >-
+    "The Ada authorization server issues a new refresh token each time one is used as a security
+    best practice." Callers must overwrite the stored refresh token on every exchange.
+  installation_lookup: https://{bot-handle}.ada.support/api/platform_integrations/oauth/self
+  registration:
+    endpoint: POST https://{bot-handle}.ada.support/api/v2/platform-integrations
+    auth: Ada API key (Bearer) from the development AI Agent
+    returns:
+    - id
+    - client_secret
+    fields:
+    - oauth_callback_url
+    - scopes
+scopes:
+- scope: articles:read
+  description: Read knowledge articles.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: articles:write
+  description: Create, update and delete knowledge articles.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: article_tags:read
+  description: Read knowledge article tags.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: article_tags:write
+  description: Create, update and delete knowledge article tags.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: knowledge_sources:read
+  description: Read knowledge sources.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: knowledge_sources:write
+  description: Create, update and delete knowledge sources.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: platform_integration_installations:read
+  description: Read the integration's own installation records.
+  always_granted: true
+  note: Granted implicitly even when omitted from the `scopes` field at registration.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+- scope: platform_integration_installations:write
+  description: Update the integration's own installation status (e.g. mark it `complete`).
+  always_granted: true
+  note: Granted implicitly even when omitted from the `scopes` field at registration.
+  flows:
+  - authorizationCode
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+scope_count: 8
+coverage:
+  note: >-
+    Ada states "More scopes will become available as more APIs become available." Today the OAuth
+    scope vocabulary covers Knowledge and the integration's own installation record ONLY — end
+    users, conversations, channels, webhooks, persona, variables, custom instructions and the
+    audit log are reachable with an API key but have no OAuth scope, so a partner integration
+    cannot be granted access to them.
+mcp_authorization:
+  note: >-
+    The Ada MCP server also supports OAuth (https://<instance>/api/mcp/oauth) but does NOT use
+    these scopes. MCP access is governed by the connected user's Ada dashboard role
+    (Owner/Admin = writes, Agent/Read Only = reads). See mcp/ada-mcp.yml.
+  source: https://docs.ada.cx/mcp/introduction/authentication

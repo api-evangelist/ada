@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Data Compliance
+  title: Data Compliance (Deprecated)
   version: 1.0.0
 paths:
   /api/v1/data-subject-request:
@@ -16,7 +16,7 @@ paths:
         email address and they are a participant in a conversation that has multiple email participants (i.e., Email
         thread with additional recipients in CC), the entire transcript will be deleted for all participants.
       tags:
-        - subpackage_deleteChatterData
+        - deleteChatterData
       parameters:
         - name: Authorization
           in: header
@@ -75,12 +75,8 @@ paths:
 servers:
   - url: https://example.ada.support
     description: ada
-  - url: https://example.att.ada.support
-    description: att.ada
   - url: https://example.maple.ada.support
     description: maple.ada
-  - url: https://example.ficanex.ada.support
-    description: ficanex.ada
   - url: https://example.eu.ada.support
     description: eu.ada
 components:

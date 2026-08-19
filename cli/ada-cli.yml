@@ -1,0 +1,291 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://github.com/AdaSupport/homebrew-tap,
+  https://github.com/AdaSupport/homebrew-tap/blob/main/Formula/adacli.rb,
+  https://github.com/AdaSupport/homebrew-tap/blob/main/bucket/adacli.json,
+  `adacli --help` and `adacli agent-context` from the official adacli-v0.4.0 darwin-arm64 release tarball
+name: adacli
+tagline: Agent-native CLI for managing and improving Ada AI Agents
+description: >-
+  A standalone binary (no Node runtime required) that drives Ada's management dashboard API — the
+  same private surface the MCP server sits on, and a much larger surface than the four public
+  REST APIs. 213 commands across 36 groups. Notably it is designed to be driven BY an agent:
+  `adacli agent-context` emits a 93 KB machine-readable JSON description of the entire command
+  tree, global flags, typed exit codes and the error envelope.
+version: 0.4.0
+released: '2026-07-03'
+license: Proprietary — "AdaCLI License Notice (© Ada Support Inc.)", not an SPDX/open-source licence
+repository: https://github.com/AdaSupport/homebrew-tap
+docs_in_binary: adacli docs guide | adacli docs claude-code
+install:
+- method: homebrew
+  platforms:
+  - macOS arm64
+  - macOS x64
+  - Linux arm64
+  - Linux x64
+  command: brew install adasupport/tap/adacli
+  upgrade: brew upgrade adacli
+- method: scoop
+  platforms:
+  - Windows x64
+  command: scoop bucket add adasupport https://github.com/AdaSupport/homebrew-tap.git && scoop install adacli
+  upgrade: scoop update adacli
+- method: release-tarball
+  url: https://github.com/AdaSupport/homebrew-tap/releases
+  note: >-
+    Per-arch tarballs attached to tag adacli-v<version>, SHA-256 verified by the formula. macOS
+    binaries are ad-hoc signed but not notarized.
+usage: adacli <instance> <command> [subcommand] [options]
+instance_argument:
+  required: true
+  description: >-
+    Nearly every command takes the Ada instance handle as its first positional argument
+    (e.g. `adacli gennie knowledge list`), matching the per-tenant <handle>.ada.support host model.
+global_flags:
+- flag: --json
+  description: JSON output on stdout (auto-on when piped)
+- flag: --output <table|json|quiet>
+  description: Select output mode
+- flag: --quiet, -q
+  description: Minimal output (ids only for lists)
+- flag: --no-color
+  description: Disable ANSI color
+- flag: --yes, -y
+  description: Skip confirmation prompts
+- flag: --version, -V
+  description: Output the version number
+env_vars:
+- name: ADACLI_OUTPUT
+  description: table|json|quiet — default output mode
+- name: NO_COLOR / FORCE_COLOR
+  description: Standard color control
+- name: ADACLI_PASSWORD / ADACLI_MFA_CODE
+  description: Non-interactive login
+- name: ADACLI_NO_UPDATE_CHECK
+  description: Silence the update nag
+exit_codes:
+  '0': OK
+  '1': GENERIC
+  '2': USAGE
+  '3': AUTH
+  '4': FORBIDDEN
+  '5': NOT_FOUND
+  '6': RATE_LIMIT
+  '7': READ_ONLY
+  '8': NETWORK
+error_contract:
+  description: >-
+    On failure in --json mode a JSON envelope is written to stderr and the process exits with the
+    typed code above.
+  category_to_exit_code:
+    usage: 2
+    auth: 3
+    forbidden: 4
+    not_found: 5
+    rate_limit: 6
+    read_only: 7
+    network: 8
+    api: 1
+    internal: 1
+  example: |
+    {
+      "error": {
+        "code": "SESSION_EXPIRED",
+        "category": "auth",
+        "message": "Session expired. Please log in again.",
+        "exitCode": 3,
+        "hint": "Run: adacli <instance> login"
+      }
+    }
+command_groups:
+- group: Auth
+  commands:
+  - name: login
+    description: Log in to an Ada instance
+    subcommands: 0
+  - name: logout
+    description: Log out of an Ada instance
+    subcommands: 0
+  - name: status
+    description: Check session health and instance connectivity
+    subcommands: 0
+- group: Content
+  commands:
+  - name: knowledge
+    aliases:
+    - kb
+    description: Manage knowledge articles
+    subcommands: 8
+    examples:
+    - knowledge list
+    - knowledge get
+    - knowledge create
+    - knowledge update
+    - knowledge delete
+    - knowledge set-rules
+    - knowledge sources
+    - knowledge scrape
+  - name: glossary
+    description: Manage glossary terms
+    subcommands: 6
+  - name: responses
+    description: Manage responses/dialogs
+    subcommands: 4
+  - name: variables
+    aliases:
+    - vars
+    description: Manage variables
+    subcommands: 5
+  - name: tags
+    description: Manage tags
+    subcommands: 5
+  - name: languages
+    description: Language reference data
+    subcommands: 1
+- group: Convos
+  commands:
+  - name: conversations
+    aliases:
+    - convos
+    description: Search and view conversations
+    subcommands: 12
+    examples:
+    - conversations search
+    - conversations recent
+    - conversations transcript
+    - conversations reasoning
+    - conversations export
+    - conversations diagnose
+    - conversations topic
+    - conversations coaching
+    - conversations guidance
+  - name: analytics
+    description: View analytics and insights
+    subcommands: 6
+    examples:
+    - analytics summary
+    - analytics topics
+    - analytics recommendations
+    - analytics reports
+    - analytics freshness
+  - name: coaching
+    description: Manage coaching (feedback on AI behavior)
+    subcommands: 6
+  - name: topics
+    description: Manage AI-generated conversation topics
+    subcommands: 23
+  - name: chatters
+    description: Manage end-user profiles
+    subcommands: 2
+- group: Quality
+  commands:
+  - name: scorecards
+    description: Manage analytics scorecards
+    subcommands: 6
+  - name: custom-metrics
+    description: Manage analytics custom metrics
+    subcommands: 6
+  - name: testing
+    description: Manage test cases and runs
+    subcommands: 14
+    examples:
+    - testing cases from-conversation
+    - testing runs create
+    - testing runs compare
+- group: Config
+  commands:
+  - name: client
+    description: View or update client/instance info
+    subcommands: 5
+  - name: channels
+    description: Manage channels
+    subcommands: 3
+  - name: integrations
+    description: Manage integrations
+    subcommands: 2
+  - name: api-keys
+    description: Manage API keys
+    subcommands: 3
+  - name: team
+    description: Manage team members
+    subcommands: 5
+  - name: webhooks
+    description: Manage webhooks (deprecated)
+    subcommands: 5
+    deprecated: true
+  - name: voice-terms
+    description: Manage voice transcription terms (brand names & industry vocabulary)
+    subcommands: 3
+  - name: redactions
+    description: Manage PII redaction rules
+    subcommands: 5
+- group: AI
+  commands:
+  - name: playbooks
+    description: Manage playbooks (v1 markdown & v2 structured steps)
+    subcommands: 9
+    examples:
+    - playbooks steps-schema
+    - playbooks export-steps
+    - playbooks generate
+    - playbooks test
+  - name: proactives
+    description: Manage proactive campaigns
+    subcommands: 5
+  - name: guidance
+    description: Manage custom agent instructions
+    subcommands: 6
+  - name: actions
+    description: Manage web actions
+    subcommands: 6
+  - name: processes
+    description: Manage processes (legacy)
+    subcommands: 5
+    deprecated: true
+    deprecation_note: superseded by playbooks
+- group: Improve
+  commands:
+  - name: snapshot
+    description: Export, import, or diff instance configuration snapshots
+    subcommands: 3
+  - name: optimize
+    description: Track and visualize an agent-optimization hill-climb (example → improved performance)
+    subcommands: 5
+  - name: chat
+    description: Interactive chat with the AI agent (browserless HTTP+Pusher transport)
+    subcommands: 1
+- group: Meta
+  commands:
+  - name: upgrade
+    description: Check for a newer adacli release and show how to install it
+  - name: docs
+    description: Print bundled documentation (guide, claude-code)
+  - name: agent-context
+    description: Emit a machine-readable description of the whole CLI (for agents)
+key_flows:
+- name: Diagnose a bad conversation
+  steps:
+  - adacli <instance> conversations search --resolution not-resolved --since 7d
+  - adacli <instance> conversations diagnose <conversation-id>
+- name: Turn a production conversation into a regression test
+  steps:
+  - adacli <instance> testing cases from-conversation <conversation-id>
+  - adacli <instance> testing runs create
+  - adacli <instance> testing runs compare --baseline r1 --candidate r2
+- name: Configuration as code
+  steps:
+  - adacli <instance> snapshot export -o config.json
+  - adacli <instance> snapshot diff
+  - adacli <instance> snapshot import
+- name: Drive the CLI from an agent
+  steps:
+  - adacli agent-context | jq '.commands | length'
+command_count: 213
+surface_note: >-
+  This CLI reaches roughly four times as many resources as Ada's four public OpenAPI documents —
+  glossary, coaching, topics, scorecards, custom metrics, playbooks, proactives, actions, test
+  cases/runs, redactions, team, snapshots and analytics all exist here with no published REST
+  contract. See mcp/ada-tool-crosswalk.yml.
+packaged_in: packages/ada-packages.yml

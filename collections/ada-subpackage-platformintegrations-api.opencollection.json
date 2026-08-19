@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_platformIntegrations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_platformIntegrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/platform-integrations/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The ID that marks the start or beginning of the returned records"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return"
+              }
+            ]
+          },
+          "docs": "Get a list of platform integrations owned by your account (e.g. a developer sandbox)"
+        },
+        {
+          "info": {
+            "name": "Create an integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/platform-integrations/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an integration. Integrations are created in `development` status by default."
+        },
+        {
+          "info": {
+            "name": "Update an integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://example.ada.support/v2/platform-integrations/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the platform integration to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a platform integration. **_Note:_ only integrations in development may be updated. Integrations submitted for publication cannot be updated.**"
+        },
+        {
+          "info": {
+            "name": "Get an installation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/platform-integrations/:id/installations/self",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the platform integration to fetch installation for"
+              }
+            ]
+          },
+          "docs": "Get the platform integration installation associated with the access token. Use this endpoint to get the details of an installation, including the configuration form completed by the admin."
+        },
+        {
+          "info": {
+            "name": "Update installation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://example.ada.support/v2/platform-integrations/:platform_integration_id/installations/:installation_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "platform_integration_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the platform integration"
+              },
+              {
+                "name": "installation_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the installation to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update status after installation. An installation can be `complete` or `incomplete`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

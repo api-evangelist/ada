@@ -2,9 +2,21 @@ spec: API Commons Plans 0.1
 provider: Ada
 providerId: ada
 created: 2026-06-12
-modified: 2026-06-12
+modified: 2026-08-14
 reconciled: true
+generated: '2026-08-14'
+method: searched
+source: https://www.ada.cx/platform/
 url: https://www.ada.cx/platform/
+plan_count: 1
+public_pricing: false
+public_pricing_note: >-
+  Re-checked 2026-08-14. Ada's site still has no /pricing/ page — the footer and nav carry
+  /platform/, /demo/ and /login/ but no pricing link, and the marketing origin bot-challenges
+  unauthenticated clients (403 to curl). Ada is enterprise sales-led: there is exactly one
+  commercial motion, a negotiated Enterprise contract, so plan_count is 1 rather than 0. The
+  per-conversation and per-resolution figures below are indicative, sourced from Ada's own
+  pricing-model commentary and third-party reporting, not from a published rate card.
 notes: >
   Ada does not publish public self-serve pricing tiers. Pricing is enterprise-only, sold
   through direct sales. Third-party sources and Ada's own blog indicate a conversation-based

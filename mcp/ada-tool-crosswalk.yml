@@ -1,0 +1,244 @@
+generated: '2026-08-14'
+method: derived
+source: mcp/ada-mcp.yml, openapi/_original/ada-knowledge-openapi.yml, skills/
+docs: https://docs.ada.cx/mcp/tools/overview
+summary: >
+  Ada's MCP server and Ada's REST APIs are NOT two views of one core. The Platform REST APIs are a
+  content/CRM surface (knowledge, end users, conversations, channels, webhooks, integrations); the
+  MCP server is an operator surface (metrics, transcripts, coaching, playbooks, test runs, change
+  sets) built on Ada's internal management-dashboard API — the same API the adacli binary drives.
+  Almost nothing overlaps. Only three MCP tools have a public REST backing, and the twelve most
+  valuable MCP tools have no public REST equivalent at all. That divergence is the finding.
+surfaces:
+  openapi:
+    files:
+    - openapi/_original/ada-knowledge-openapi.yml
+    - openapi/_original/ada-data-export-openapi.yml
+    - openapi/_original/ada-data-export-v1-4-openapi.yml
+    - openapi/_original/ada-data-compliance-openapi.yml
+    operations: 58
+    gated: false
+    note: >-
+      operationIds are unique only within a tag in the knowledge spec (list/get/create/delete
+      repeat), so rows below name the operation as "<tag>.<operationId>".
+  mcp:
+    url_template: https://<your-ada-instance-domain>/api/mcp
+    tools_named: 18
+    gated: true
+    gate: >-
+      Per-tenant host plus OAuth/API-key. tools/list cannot be called anonymously, so no tool
+      inherits a live inputSchema here; every binding below is by name and published description.
+  mcp_docs:
+    url: https://docs.ada.cx/_mcp/server
+    tools_named: 1
+    gated: false
+    note: Anonymous docs-search server; probed 2026-08-14, returned searchDocs with a real inputSchema.
+  graphql:
+    endpoint: null
+    note: >-
+      Ada publishes no GraphQL endpoint. graphql/ada-graphql.md in this repo is a conceptual
+      description, not a served schema, and is excluded from this crosswalk.
+  cli:
+    artifact: cli/ada-cli.yml
+    commands: 213
+    note: >-
+      adacli talks to "Ada's management dashboard API" (its own --help text) — the same private
+      surface the MCP server exposes. It is the best public evidence of what MCP tools sit on.
+crosswalk:
+- tool: search_knowledge
+  category: knowledge-and-coaching
+  rest:
+  - knowledge > articles.list
+  binding: rest
+  confidence: medium
+  note: >-
+    GET /v2/knowledge/articles/ lists and filters articles; the MCP tool is described as a search
+    over the same corpus. Ranking/relevance semantics are not exposed by the REST operation, so
+    the mapping is close but not exact.
+- tool: list_entities
+  category: entity-discovery
+  rest:
+  - channels.get-channels
+  - Variables.list
+  - customInstructions.list-custom-instructions
+  binding: rest
+  confidence: medium
+  note: >-
+    list_entities fans out across channels, topics, variables, custom metrics, scorecards,
+    Playbooks, handoffs, processes, custom instructions and tools. Only three of those entity
+    kinds have a public REST list operation; the rest are dashboard-only.
+- tool: get_ada_configuration
+  category: configuration
+  rest:
+  - persona.get-persona
+  - customInstructions.list-custom-instructions
+  binding: rest
+  confidence: low
+  note: >-
+    Partial overlap only. The tool returns playbooks, actions, custom instructions and the
+    company description in one call; REST publishes custom instructions and persona, and nothing
+    for playbooks or actions.
+mcp_only:
+- tool: get_ada_metric
+  reason: >-
+    AR rate, CSAT, containment and engaged-conversation volume are analytics; no public REST
+    analytics endpoint exists. Reachable via `adacli analytics summary`.
+- tool: get_available_filters
+  reason: Describes the conversation-query filter vocabulary of the internal analytics API. No REST equivalent.
+- tool: get_conversations
+  reason: >-
+    Searches conversations by filter across the whole Agent. The public REST
+    GET /v2/conversations/{conversation_id}/ fetches ONE conversation by id and cannot search;
+    the Data Export API exports by time window, not by filter. `adacli conversations search`.
+- tool: get_conversation
+  reason: >-
+    Returns a full transcript. Closest REST is conversations.fetch-conversation-messages-by-id,
+    but that returns raw messages for a custom-channel conversation, not the assembled transcript
+    with reasoning that the MCP tool returns. Deliberately not bound.
+- tool: search_coaching
+  reason: Coaching entries have no public REST resource. `adacli coaching list`.
+- tool: get_improvement_guide
+  reason: Server-side editorial content (Ada's entity improvement guide). Not a data resource.
+- tool: list_glossary_terms
+  reason: Glossary has no public REST resource. `adacli glossary list`.
+- tool: get_glossary_conflict_guide
+  reason: Server-side editorial content.
+- tool: get_test_cases
+  reason: Simulation test cases have no public REST resource. `adacli testing cases list`.
+- tool: get_test_runs
+  reason: Test runs have no public REST resource. `adacli testing runs list`.
+- tool: get_test_run_quota
+  reason: Quota metering for test runs; no public REST resource.
+- tool: edit_agent_behavior
+  reason: >-
+    Composite write across knowledge, coaching, Playbooks, Actions and custom instructions,
+    staged on a change set and then promoted/reverted/discarded. No REST change-set primitive
+    exists — the REST writes apply immediately and individually.
+- tool: edit_agent_config
+  reason: >-
+    Writes test cases, topics, custom metrics and scorecards and triggers test runs. None of
+    those resources are published in REST.
+- tool: list_agent_changesets
+  reason: Change sets are an MCP-era construct (shipped 2026-08-13); no REST representation.
+- tool: send_feedback
+  reason: Out-of-band channel to Ada's development team; not an API resource.
+- tool: searchDocs
+  reason: Documentation search on the docs host. Not a Platform API capability.
+rest_only:
+- capability: Knowledge sources
+  operations:
+  - knowledge > sources.list
+  - knowledge > sources.create
+  - knowledge > sources.update
+  - knowledge > sources.delete
+  note: Source registration/ingestion is REST-and-dashboard only; MCP reads articles, never sources.
+- capability: Knowledge article and tag writes
+  operations:
+  - knowledge > articles.get
+  - knowledge > articles.delete
+  - knowledge > articles.delete-by-id
+  - knowledge > articles.bulk-upsert
+  - knowledge > tags.list
+  - knowledge > tags.delete
+  - knowledge > tags.upsert-multiple
+  note: >-
+    Bulk article upsert (the main content-sync path) has no MCP tool; edit_agent_behavior stages
+    single-article edits instead.
+- capability: End users
+  operations:
+  - endUsers.get-end-users
+  - endUsers.get-end-user-by-id
+  - endUsers.create-end-user
+  - endUsers.patch-end-user-by-id
+  - submitDeletionRequest.submit-a-bulk-end-user-deletion-request
+  - getDeletionJob.get-a-deletion-job
+  note: No MCP tool touches end-user profiles or the bulk-deletion job at all.
+- capability: Conversations (custom channels)
+  operations:
+  - conversations.create-conversation
+  - conversations.create-email-conversation
+  - conversations.get-conversation-by-id
+  - conversations.patch-conversation-by-id
+  - conversations.create-message
+  - conversations.fetch-conversation-messages-by-id
+  - conversations.end-conversation
+  - conversations.end-handoff
+  - conversations.upload-attachment
+  note: Runtime conversation lifecycle is REST-only; MCP reads conversations but never drives one.
+- capability: Channels
+  operations:
+  - channels.create-channel
+  - channels.update-channel
+- capability: Webhook management
+  operations:
+  - webhookManagement.list-webhooks
+  - webhookManagement.create-webhook
+  - webhookManagement.get-webhook
+  - webhookManagement.update-webhook
+  - webhookManagement.delete-webhook
+  - webhookManagement.get-webhook-secret
+  - webhookManagement.rotate-webhook-secret
+  - webhookManagement.list-webhook-event-types
+  note: Entire event-subscription surface is REST-only.
+- capability: Platform integrations (OAuth partner apps)
+  operations:
+  - platformIntegrations.get-platform-integrations
+  - platformIntegrations.create-platform-integration
+  - platformIntegrations.update-single-platform-integration
+  - platformIntegrations.get-platform-integration-installation-self
+  - platformIntegrations.update-platform-integration-installation
+- capability: Audit log
+  operations:
+  - auditLog.list-audit-log-events
+- capability: Persona and custom instruction writes
+  operations:
+  - persona.update-persona
+  - customInstructions.create-custom-instruction
+  - customInstructions.get-custom-instruction-by-id
+  - customInstructions.update-custom-instruction
+  - customInstructions.delete-custom-instruction
+  note: >-
+    MCP can write custom instructions through edit_agent_behavior, but only as a staged change
+    set — the direct REST writes have no 1:1 tool.
+- capability: Data export
+  operations:
+  - conversations.get-conversations
+  - messages.get-messages
+  - conversations.return-conversations-matching-the-parameters
+  - messages.return-messages-matching-the-parameters
+- capability: Data compliance (deprecated)
+  operations:
+  - deleteChatterData.delete-all-data-associated-with-a-chatters-email-address
+skill_tool_divergence:
+  note: >-
+    Ada's own published Agent Skills (skills/, from github.com/AdaSupport/ada-skills, last pushed
+    2026-01-27) name three tools in their `allowed-tools` frontmatter that do not appear in the
+    current tool index at docs.ada.cx/mcp/tools/overview. This is a real, provider-side drift
+    between two provider-published artifacts, recorded rather than reconciled.
+  tools_in_skills_not_in_docs:
+  - tool: get_conversations_by_filters
+    used_by:
+    - ada-ar-optimization
+    - ada-csat-improvement
+    - ada-issue-diagnosis
+    likely_successor: get_conversations
+  - tool: list_channels
+    used_by:
+    - ada-configuration-review
+    - ada-conversation-simulation
+    likely_successor: list_entities
+  - tool: simulate_conversation
+    used_by:
+    - ada-conversation-simulation
+    note: The skill itself states it requires "MCP server with simulation beta access".
+coverage:
+  mcp_tools_named: 19
+  mcp_tools_named_platform: 18
+  mcp_tools_named_docs_server: 1
+  mcp_tools_bound_to_rest: 3
+  mcp_only: 16
+  rest_operations_total: 58
+  rest_operations_with_a_tool: 5
+  rest_only_operations: 53
+  binding_rate_mcp: 0.17
+  binding_rate_rest: 0.09

@@ -1,0 +1,2071 @@
+{
+  "item": [
+    {
+      "id": "9751edfb-a531-40aa-863d-81bf70859146",
+      "name": "subpackage_platformIntegrations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "367335aa-c0ba-4d71-a495-4132a2836caf",
+          "name": "List integrations",
+          "request": {
+            "name": "List integrations",
+            "description": {
+              "content": "Get a list of platform integrations owned by your account (e.g. a developer sandbox)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "platform-integrations",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<id>",
+                  "description": "The ID that marks the start or beginning of the returned records"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of records to return"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4b8a7c1-b72f-4fba-b0b7-fbc395a811a2",
+              "name": "Platform integrations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"string\",\n      \"identifier_field_path\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"author\": \"string\",\n      \"contact\": \"string\",\n      \"uninstallation_url\": \"string\",\n      \"oauth_callback_url\": \"string\",\n      \"tags\": [\n        \"knowledge\",\n        \"knowledge\"\n      ],\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"configuration_fields\": {},\n      \"created\": \"1955-01-04T04:17:29.836Z\",\n      \"updated\": \"2022-01-21T02:32:34.942Z\",\n      \"icon_url\": \"string\",\n      \"call_to_action\": \"string\",\n      \"error_codes\": {}\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"string\",\n      \"identifier_field_path\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"author\": \"string\",\n      \"contact\": \"string\",\n      \"uninstallation_url\": \"string\",\n      \"oauth_callback_url\": \"string\",\n      \"tags\": [\n        \"knowledge\",\n        \"knowledge\"\n      ],\n      \"scopes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"configuration_fields\": {},\n      \"created\": \"1991-07-15T02:23:27.488Z\",\n      \"updated\": \"1996-02-28T01:29:09.609Z\",\n      \"icon_url\": \"string\",\n      \"call_to_action\": \"string\",\n      \"error_codes\": {}\n    }\n  ],\n  \"meta\": {\n    \"next_page_url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f403a58d-f0c7-4542-85cb-c9de7fbe2d6f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb1d1ccb-c8f0-44f5-b09e-fdb6e321a9d5",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4563601c-a21b-46cf-a6b9-2873db4c24e1",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e57f5b8b-8200-409e-8bb3-22fa9698513f",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "93d3e975-8bd9-48bd-9e7e-1a4f1884afe4",
+          "name": "Create an integration",
+          "request": {
+            "name": "Create an integration",
+            "description": {
+              "content": "Create an integration. Integrations are created in `development` status by default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "platform-integrations",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier_field_path\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"<string,null-url>\",\n  \"call_to_action\": \"<string,null>\",\n  \"error_codes\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "71b03a03-e68a-488b-b005-0867086a9a47",
+              "name": "Platform integration created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_field_path\": \"string\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"string\",\n  \"identifier_field_path\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"author\": \"string\",\n  \"contact\": \"string\",\n  \"uninstallation_url\": \"string\",\n  \"oauth_callback_url\": \"string\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"configuration_fields\": {},\n  \"created\": \"1992-01-25T18:29:18.952Z\",\n  \"updated\": \"2025-10-19T05:06:38.415Z\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {},\n  \"client_secret\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0edc689-04e3-4c06-bf68-bdd46ab62795",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_field_path\": \"string\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "558b250f-261e-47c6-98fb-e8d3e8fba4e9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_field_path\": \"string\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8401838-1b13-4595-bd72-463962eb7b8e",
+              "name": "Authorization Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_field_path\": \"string\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "895a0f41-bc15-4f0a-bfd8-c453e9d0dff9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_field_path\": \"string\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6779ffaf-80eb-461b-85ed-4cf42915baf9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_field_path\": \"string\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c93770d-f4b7-46ee-a628-0705d0e850e5",
+          "name": "Update an integration",
+          "request": {
+            "name": "Update an integration",
+            "description": {
+              "content": "Update a platform integration. **_Note:_ only integrations in development may be updated. Integrations submitted for publication cannot be updated.**",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "platform-integrations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<id>",
+                  "key": "id",
+                  "description": "(Required) The ID of the platform integration to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"<string>\",\n  \"icon_url\": \"<string,null-url>\",\n  \"call_to_action\": \"<string,null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1135ddf4-33be-410d-b128-51e0c71b6129",
+              "name": "Platform integration updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"string\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"string\",\n  \"identifier_field_path\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"author\": \"string\",\n  \"contact\": \"string\",\n  \"uninstallation_url\": \"string\",\n  \"oauth_callback_url\": \"string\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"scopes\": [\n    \"string\",\n    \"string\"\n  ],\n  \"configuration_fields\": {},\n  \"created\": \"1992-10-16T03:25:01.360Z\",\n  \"updated\": \"1990-10-28T08:06:11.480Z\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\",\n  \"error_codes\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2131f37b-d11a-449f-9433-fe7b63761392",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"string\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1c6e2e6-d590-45a7-a579-dddc1f63764b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"string\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ec1b888-104d-48fb-bb86-9721370dea6a",
+              "name": "Authorization Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"string\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a10d8647-af88-42a7-94db-b0db7e2b115e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"string\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a33e2bb4-3360-46ca-ad9c-1fe0f86aaac7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"author\": \"<string>\",\n  \"contact\": \"<string>\",\n  \"uninstallation_url\": \"<url>\",\n  \"oauth_callback_url\": \"<url>\",\n  \"tags\": [\n    \"knowledge\",\n    \"knowledge\"\n  ],\n  \"error_codes\": {},\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configuration_fields\": {},\n  \"identifier_field_path\": \"string\",\n  \"icon_url\": \"string\",\n  \"call_to_action\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9182494-6248-4c3c-bba0-aa9438dfee61",
+          "name": "Get an installation",
+          "request": {
+            "name": "Get an installation",
+            "description": {
+              "content": "Get the platform integration installation associated with the access token. Use this endpoint to get the details of an installation, including the configuration form completed by the admin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "platform-integrations",
+                ":id",
+                "installations",
+                "self"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<id>",
+                  "key": "id",
+                  "description": "(Required) The ID of the platform integration to fetch installation for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9743da58-94d2-48d6-a542-2937e4c020db",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"platform_integration_id\": \"string\",\n  \"created\": \"2000-06-17T15:31:25.416Z\",\n  \"updated\": \"1963-12-21T23:25:09.994Z\",\n  \"configuration\": {},\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1e59305-ef01-487e-92d9-beff9762263a",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bc4b38b-de9f-45a9-93ee-becc63558bab",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7db535ba-5f2f-4ec1-a7cb-2453206d7c5c",
+              "name": "Authorization Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "172c6549-36ae-4e4a-853f-801b7682e44b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0e9238d-a0f8-48de-9f7f-d2435d44241d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4694d7a2-d178-4a66-9b6b-0925fe6691e8",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":id",
+                    "installations",
+                    "self"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "id",
+                      "description": "(Required) The ID of the platform integration to fetch installation for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce84e770-ded7-4147-b326-43d75057e996",
+          "name": "Update installation status",
+          "request": {
+            "name": "Update installation status",
+            "description": {
+              "content": "Update status after installation. An installation can be `complete` or `incomplete`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "platform-integrations",
+                ":platform_integration_id",
+                "installations",
+                ":installation_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<id>",
+                  "key": "platform_integration_id",
+                  "description": "(Required) The ID of the platform integration"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<id>",
+                  "key": "installation_id",
+                  "description": "(Required) The ID of the installation to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8020b69d-beed-4a4d-aec4-e63d0dddce11",
+              "name": "Installation updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"platform_integration_id\": \"string\",\n  \"created\": \"2000-06-17T15:31:25.416Z\",\n  \"updated\": \"1963-12-21T23:25:09.994Z\",\n  \"configuration\": {},\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "973bad21-e89c-44d2-9c87-a2d70e73262b",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4247c05-9351-4a15-a1c8-1c18a261d143",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a892279e-2c6a-4cb1-8704-4a8d64691989",
+              "name": "Authorization Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebc61989-61d2-41aa-b112-7b5420f8d688",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "968ffa2c-29bc-4a0b-8cee-e1d4de0c01c1",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cfcb549-eda1-4c65-ab2f-e5f5b9c874d2",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "platform-integrations",
+                    ":platform_integration_id",
+                    "installations",
+                    ":installation_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "platform_integration_id",
+                      "description": "(Required) The ID of the platform integration"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<id>",
+                      "key": "installation_id",
+                      "description": "(Required) The ID of the installation to update"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"incomplete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://example.ada.support",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16420c4e-3fbc-4b2a-ab91-5776376c62f8",
+    "name": "Data Compliance subpackage_channels subpackage_platformIntegrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

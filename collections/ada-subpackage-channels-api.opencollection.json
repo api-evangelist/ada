@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/channels/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The ID that marks the start or beginning of the returned records"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The type of the channels to retrieve"
+              },
+              {
+                "name": "modality",
+                "value": "",
+                "type": "query",
+                "description": "The modality of the channels to retrieve"
+              }
+            ]
+          },
+          "docs": "Get a list of channels. This list can be filtered by modality and paginated. The default and maximum limits are 100 channels per page"
+        },
+        {
+          "info": {
+            "name": "Create a new channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/channels/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new channel. A maximum of 100 channels can be created per account per day. The maximum request size is 10MB."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,336 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  openapi/_original/ada-knowledge-openapi.yml, openapi/_original/ada-data-export-openapi.yml,
+  openapi/_original/ada-data-export-v1-4-openapi.yml,
+  openapi/_original/ada-data-compliance-openapi.yml
+docs: https://docs.ada.cx/reference/introduction/overview
+note: >-
+  Derived from $ref graph and id-reference fields across the four published OpenAPI documents
+  (206 component schemas, 58 operations). Relationships are read from concrete `*_id` fields in
+  the schemas — nothing inferred from naming alone. Ada publishes no id prefixes: identifiers are
+  bare 24-character MongoDB-style hex strings (e.g. 5f7e0e2c1e7c7e000f0f9c3a) with no type
+  discriminator, so an id alone does not tell a caller what it points at. The one exception is
+  webhook endpoints, which carry the Svix `ep_` prefix.
+tenancy:
+  root: AI Agent (instance)
+  boundary: the host, <handle>.ada.support
+  note: >-
+    Every entity below is scoped to one AI Agent. There is no cross-tenant identifier and no
+    account/organization object in the API — the instance host IS the account.
+entities:
+- name: KnowledgeSource
+  schema: KnowledgeSourceResponse
+  api: Knowledge
+  operations:
+  - GET /v2/knowledge/sources/
+  - POST /v2/knowledge/sources/
+  - PATCH /v2/knowledge/sources/{id}
+  - DELETE /v2/knowledge/sources/{id}
+  key: id
+  fields_of_note:
+  - external_id
+  - metadata (free-form)
+- name: KnowledgeArticle
+  schema: KnowledgeArticleResponse
+  api: Knowledge
+  operations:
+  - GET /v2/knowledge/articles/
+  - GET /v2/knowledge/articles/{id}
+  - POST /v2/knowledge/bulk/articles/
+  - DELETE /v2/knowledge/articles/
+  - DELETE /v2/knowledge/articles/{id}
+  key: id
+  fields_of_note:
+  - knowledge_source_id
+  - tag_ids
+  - availability_rules
+  - metadata (free-form)
+- name: ArticleTag
+  schema: ArticleTag
+  api: Knowledge
+  operations:
+  - GET /v2/knowledge/tags/
+  - POST /v2/knowledge/bulk/tags/
+  - DELETE /v2/knowledge/tags/{id}
+  key: id
+- name: EndUser
+  schema: EndUser
+  api: End Users
+  operations:
+  - GET /v2/end-users/
+  - GET /v2/end-users/{end_user_id}
+  - POST /v2/end-users/
+  - PATCH /v2/end-users/{end_user_id}
+  key: id
+  natural_key: external_id
+  fields_of_note:
+  - profile
+  - profile.sensitive_metadata (encrypted, never returned, purged after 24h)
+  - system properties incl. sunshine_user_id
+- name: DeletionJob
+  schema: DeletionJob
+  api: End Users (bulk deletion)
+  operations:
+  - POST /v2/end-users/delete
+  - GET /v2/jobs/{job_id}
+  key: job_id
+  fields_of_note:
+  - client_reference (idempotency key, 24h)
+  - status
+- name: Conversation
+  schema: Conversation
+  api: Conversations
+  operations:
+  - POST /v2/conversations/
+  - POST /v2/conversations/email/
+  - GET /v2/conversations/{conversation_id}/
+  - PATCH /v2/conversations/{conversation_id}/
+  - POST /v2/conversations/{conversation_id}/end/
+  - POST /v2/conversations/{conversation_id}/end-handoff/
+  key: id
+  fields_of_note:
+  - end_user_id
+  - channel_id
+  - metadata (max 4 KB)
+- name: Message
+  schema: Message
+  api: Conversations
+  operations:
+  - GET /v2/conversations/{conversation_id}/messages/
+  - POST /v2/conversations/{conversation_id}/messages/
+  key: id
+  fields_of_note:
+  - conversation_id
+- name: Attachment
+  api: Conversations
+  operations:
+  - POST /v2/conversations/{conversation_id}/attachments/
+  media_type: multipart/form-data
+- name: Channel
+  schema: Channel
+  api: Channels
+  operations:
+  - GET /v2/channels/
+  - POST /v2/channels/
+  - PATCH /v2/channels/{channel_id}
+  key: id
+- name: Webhook
+  api: Webhook Management
+  operations:
+  - GET /v2/webhooks/
+  - POST /v2/webhooks/
+  - GET /v2/webhooks/{id}
+  - PATCH /v2/webhooks/{id}
+  - DELETE /v2/webhooks/{id}
+  - GET /v2/webhooks/{id}/secret/
+  - POST /v2/webhooks/{id}/secret/rotate/
+  key: id
+  id_prefix: ep_
+  id_prefix_note: Svix endpoint id, e.g. ep_2bxE8VNtkWEMpJrMJv74FlSQmqP
+  fields_of_note:
+  - channels (Svix channel tags)
+  - custom headers
+- name: WebhookEventType
+  api: Webhook Management
+  operations:
+  - GET /v2/webhooks/event-types/
+- name: PlatformIntegration
+  schema: PlatformIntegration
+  api: Integrations
+  operations:
+  - GET /v2/platform-integrations/
+  - POST /v2/platform-integrations/
+  - PATCH /v2/platform-integrations/{id}
+  key: id
+  fields_of_note:
+  - client_secret (returned once at registration)
+  - oauth_callback_url
+  - scopes
+- name: PlatformIntegrationInstallation
+  schema: PlatformIntegrationInstallation
+  api: Integrations
+  operations:
+  - GET /v2/platform-integrations/{id}/installations/self
+  - PATCH /v2/platform-integrations/{platform_integration_id}/installations/{installation_id}
+  key: id
+  fields_of_note:
+  - platform_integration_id
+  - status
+- name: AuditLogEvent
+  schema: AuditLogEvent
+  api: Audit Log
+  operations:
+  - GET /v2/analytics/audit-log/events/
+  key: id
+  fields_of_note:
+  - actor_user_id
+  - entity_id
+  note: Returns 404 (not 403) when the Audit Log API is not enabled for the account.
+- name: Persona
+  api: Persona
+  operations:
+  - GET /v2/persona/
+  - PATCH /v2/persona/
+  cardinality: singleton per AI Agent
+- name: Variable
+  api: Variables
+  operations:
+  - GET /v2/variables/
+  - GET /v2/variables/{id}
+  key: id
+  read_only: true
+  note: >-
+    Read-only in REST. Writes exist only in the dashboard, the CLI (`adacli variables create`)
+    and MCP.
+- name: CustomInstruction
+  api: Custom Instructions
+  operations:
+  - GET /v2/custom-instructions/
+  - POST /v2/custom-instructions/
+  - GET /v2/custom-instructions/{custom_instruction_id}
+  - PATCH /v2/custom-instructions/{custom_instruction_id}
+  - DELETE /v2/custom-instructions/{custom_instruction_id}
+  key: id
+  constraints:
+  - unique title per AI Agent (409 on conflict)
+  - per-agent cap on enabled instructions (409 when exceeded)
+- name: ExportedConversation
+  api: Data Export
+  operations:
+  - GET /v2/export/conversations
+  - GET /data_api/v1.4/conversations
+  read_only: true
+- name: ExportedMessage
+  api: Data Export
+  operations:
+  - GET /v2/export/messages
+  - GET /data_api/v1.4/messages
+  read_only: true
+- name: DataSubjectRequest
+  api: Data Compliance (deprecated)
+  operations:
+  - POST /api/v1/data-subject-request
+  deprecated: true
+relationships:
+- from: KnowledgeArticle
+  to: KnowledgeSource
+  type: belongs_to
+  via: knowledge_source_id
+- from: KnowledgeSource
+  to: KnowledgeArticle
+  type: has_many
+  via: knowledge_source_id
+- from: KnowledgeArticle
+  to: ArticleTag
+  type: has_many
+  via: tag_ids
+- from: KnowledgeArticle
+  to: AvailabilityRule
+  type: has_one
+  via: availability_rules
+- from: AvailabilityRuleCondition
+  to: Variable
+  type: belongs_to
+  via: variable.id
+- from: Conversation
+  to: EndUser
+  type: belongs_to
+  via: end_user_id
+- from: EndUser
+  to: Conversation
+  type: has_many
+  via: end_user_id
+- from: Conversation
+  to: Channel
+  type: belongs_to
+  via: channel_id
+- from: Channel
+  to: Conversation
+  type: has_many
+  via: channel_id
+- from: Message
+  to: Conversation
+  type: belongs_to
+  via: conversation_id
+- from: Conversation
+  to: Message
+  type: has_many
+  via: conversation_id
+- from: PlatformIntegrationInstallation
+  to: PlatformIntegration
+  type: belongs_to
+  via: platform_integration_id
+- from: PlatformIntegration
+  to: PlatformIntegrationInstallation
+  type: has_many
+  via: platform_integration_id
+- from: DeletionJob
+  to: EndUser
+  type: has_many
+  via: identifiers (external_id / email supplied in the request)
+- from: AuditLogEvent
+  to: TeamUser
+  type: belongs_to
+  via: actor_user_id
+  note: >-
+    actor_user_id points at a dashboard team member. There is no public REST resource for team
+    users — they are reachable only through `adacli team list`. A dangling reference for any
+    REST-only consumer.
+- from: AuditLogEvent
+  to: any entity
+  type: belongs_to
+  via: entity_id
+  polymorphic: true
+  note: entity_id is untyped; the companion entity-type field is required to resolve it.
+- from: EndUser
+  to: SunshineUser
+  type: has_one
+  via: system properties sunshine_user_id
+  external: true
+  note: Zendesk Sunshine Conversations user id, when the Social channel is configured.
+webhook_payloads:
+- event: v1.end_user.created
+  schema: EndUserCreatedWebhookPayloadData
+  references:
+  - end_user_id
+- event: v1.end_user.updated
+  schema: EndUserUpdatedWebhookPayloadData
+  references:
+  - end_user_id
+- event: v1.conversation.created
+  schema: ConversationCreatedWebhookPayloadData
+  references:
+  - conversation_id
+  - end_user_id
+  - channel_id
+- event: v1.conversation.ended
+  schema: ConversationEndedWebhookPayloadData
+  references:
+  - conversation_id
+  - end_user_id
+  - channel_id
+- event: v1.conversation.message
+  schema: ConversationMessageWebhookPayloadData
+  references:
+  - conversation_id
+  - end_user_id
+  - message_id
+- event: v1.audit_log.emitted
+  schema: AuditLogWebhookEventData
+  references:
+  - actor_user_id
+  - entity_id
+counts:
+  schemas_total: 206
+  schemas_knowledge: 174
+  entities: 21
+  relationships: 18
+  operations: 58
+gaps:
+  note: >-
+    The dashboard data model is far larger than the published one. Glossary terms, coaching
+    entries, topics, scorecards, custom metrics, playbooks, proactives, actions, test cases, test
+    runs, redaction rules, team users and change sets all exist as first-class entities in the
+    CLI and MCP surfaces but have no OpenAPI schema, so they cannot be modelled here. See
+    cli/ada-cli.yml and mcp/ada-tool-crosswalk.yml.

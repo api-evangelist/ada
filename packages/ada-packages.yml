@@ -1,0 +1,150 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/chat/web/getting-started, https://docs.ada.cx/chat/ios/getting-started,
+  https://docs.ada.cx/chat/android/getting-started, https://docs.ada.cx/chat/react-native/getting-started,
+  registry.npmjs.org, search.maven.org, github.com/AdaSupport, github.com/ada-cx-public
+notes: >
+  Ada ships client-side chat/messaging SDKs (Web, iOS, Android, React Native) plus a standalone
+  CLI binary. There is NO first-party server-side REST client library for the Platform APIs in
+  any language registry — Ada's own docs show raw curl/requests/fetch examples for every REST
+  operation. The Android SDK on Maven Central has not shipped a release since 2023-08-18, which
+  is the clearest published decay signal in Ada's package surface; the iOS SDK was re-homed to a
+  new repo (ada-cx-public/messaging-ios, AdaMessaging) and is current.
+packages:
+- language: javascript
+  registry: npm
+  name: '@ada-support/embed2'
+  url: https://www.npmjs.com/package/@ada-support/embed2
+  install: npm install @ada-support/embed2
+  official: true
+  version: 1.14.24
+  published: '2026-08-10'
+  repository: https://github.com/AdaSupport/monorepo
+  note: Embed 2 — the Web Chat embed library behind the adaEmbed global. Also distributed by CDN.
+- language: javascript
+  registry: npm
+  name: '@ada-support/react-native-sdk'
+  url: https://www.npmjs.com/package/@ada-support/react-native-sdk
+  install: npm install --save @ada-support/react-native-sdk
+  official: true
+  version: 3.2.8
+  published: '2025-11-04'
+  note: >-
+    React Native chat SDK, documented at https://docs.ada.cx/chat/react-native/getting-started.
+    Latest release predates every 2026 Platform API addition.
+- language: javascript
+  registry: npm
+  name: '@ada-support/ada-widget-sdk'
+  url: https://www.npmjs.com/package/@ada-support/ada-widget-sdk
+  install: npm install @ada-support/ada-widget-sdk
+  official: true
+  version: 2.7.2
+  published: '2026-03-31'
+  repository: https://github.com/AdaSupport/widget-sdk
+  note: JS SDK for building custom Ada widgets/apps (see AdaSupport/template-widget).
+- language: javascript
+  registry: npm
+  name: '@ada-support/embed-types'
+  url: https://www.npmjs.com/package/@ada-support/embed-types
+  install: npm install @ada-support/embed-types
+  official: true
+  version: 1.9.5
+  published: '2026-04-09'
+  repository: https://github.com/AdaSupport/embed-types
+  note: TypeScript type definitions for the Web Chat embed surface.
+- language: javascript
+  registry: cdn
+  name: embed2.js
+  url: https://static.ada.support/embed2.js
+  install: '<script src="https://static.ada.support/embed2.js"></script>'
+  official: true
+  version: null
+  published: null
+  note: >-
+    The canonical Web Chat install in Ada's own docs is this unpinned CDN script tag. The URL
+    carries no version, so it floats to whatever Ada publishes — a consumer cannot tell which
+    build they are loading, and neither can this probe. Registry-published equivalent is
+    @ada-support/embed2.
+- language: java
+  registry: maven
+  name: io.github.adasupport:android-sdk
+  url: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk
+  install: implementation "io.github.adasupport:android-sdk:1.8.6"
+  official: true
+  version: 1.8.6
+  published: '2023-08-18'
+  note: Android chat SDK. No Maven Central release in nearly three years.
+- language: java
+  registry: maven
+  name: io.github.adasupport:android-sdk-appcompat
+  url: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk-appcompat
+  install: implementation "io.github.adasupport:android-sdk-appcompat:1.8.6"
+  official: true
+  version: 1.8.6
+  published: '2023-08-18'
+- language: java
+  registry: maven
+  name: io.github.adasupport:android-sdk-appcompat-legacy
+  url: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk-appcompat-legacy
+  install: implementation "io.github.adasupport:android-sdk-appcompat-legacy:1.8.6"
+  official: true
+  version: 1.8.6
+  published: '2023-08-18'
+- language: swift
+  registry: swift-package-manager
+  name: AdaMessaging
+  url: https://github.com/ada-cx-public/messaging-ios
+  install: >-
+    .package(url: "https://github.com/ada-cx-public/messaging-ios.git", from: "1.0.2")
+  official: true
+  version: 1.1.1
+  published: '2026-05-07'
+  note: >-
+    Distributed from GitHub (SPM / CocoaPods `pod "AdaMessaging", :git => ...` / Carthage /
+    manual xcframework) rather than a package registry, so version+date are read from the
+    repository's GitHub Releases. Supersedes the legacy AdaEmbedFramework pod in
+    AdaSupport/ios-sdk (last pushed 2025-02-27).
+- language: swift
+  registry: cocoapods
+  name: AdaMessaging
+  url: https://github.com/ada-cx-public/messaging-ios
+  install: >-
+    pod "AdaMessaging", :git => "https://github.com/ada-cx-public/messaging-ios", :tag => "1.0.2"
+  official: true
+  version: 1.1.1
+  published: '2026-05-07'
+  note: >-
+    Git-sourced pod, not published to the CocoaPods trunk registry, so there is no
+    trunk metadata endpoint to query; version+date read from GitHub Releases.
+- language: binary
+  registry: homebrew
+  name: adasupport/tap/adacli
+  url: https://github.com/AdaSupport/homebrew-tap
+  install: brew install adasupport/tap/adacli
+  official: true
+  version: 0.4.0
+  published: '2026-07-03'
+  note: >-
+    Standalone adacli binary (macOS arm64/x64, Linux arm64/x64). Proprietary licence
+    ("AdaCLI License Notice", not SPDX). Command surface captured in cli/ada-cli.yml.
+- language: binary
+  registry: scoop
+  name: adacli
+  url: https://github.com/AdaSupport/homebrew-tap/blob/main/bucket/adacli.json
+  install: scoop bucket add adasupport https://github.com/AdaSupport/homebrew-tap.git && scoop install adacli
+  official: true
+  version: 0.4.0
+  published: '2026-07-03'
+  note: Windows x64 build of the same adacli release.
+absent:
+- language: python
+  reason: >-
+    No first-party Ada Platform API client on PyPI. AdaSupport/ada-integrations-demo,
+    ada-conversations-api-demo and ada-handoffs-api-demo are unpublished example apps, not SDKs.
+- language: go
+  reason: No first-party module on pkg.go.dev.
+- language: ruby
+  reason: No first-party gem on rubygems.org.
+- language: dotnet
+  reason: No first-party package on nuget.org.

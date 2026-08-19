@@ -1,0 +1,40 @@
+generated: '2026-08-14'
+method: searched
+source: https://docs.ada.cx/llms.txt
+note: >-
+  Provenance sidecar. The .txt files beside it are Ada's own, saved verbatim and unmodified — no
+  frontmatter was injected into them.
+files:
+- file: ada-llms.txt
+  url: https://docs.ada.cx/llms.txt
+  http_status: 200
+  fetched: '2026-08-14'
+  lines: 12
+  note: >-
+    The canonical root index. It is a pointer document, not a content index: it states the `.md`
+    suffix convention, the per-section /llms.txt convention, the docs MCP server URL, and links
+    the two version-scoped indexes.
+- file: ada-generative-llms.txt
+  url: https://docs.ada.cx/generative/llms.txt
+  http_status: 200
+  fetched: '2026-08-14'
+  lines: 528
+  note: >-
+    The substantive index for the default (Generative) docs version — every doc page, every API
+    reference page, all 18 MCP tool pages, the prompt library, and the four chat SDK references,
+    each as a .md URL.
+conventions_advertised:
+- Append `.md` to any page URL for clean Markdown
+- Append `/llms.txt` to any section URL for a section index
+- MCP server at https://docs.ada.cx/_mcp/server (and per-section siblings)
+sections:
+- Docs
+- API Docs
+- OpenAPI Specification
+other_indexes:
+- https://docs.ada.cx/scripted/llms.txt
+- https://docs.ada.cx/release-notes/llms.txt
+- https://docs.ada.cx/generative/reference/llms.txt
+llms_full:
+  published: false
+  note: Ada publishes no llms-full.txt.

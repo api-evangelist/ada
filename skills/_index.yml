@@ -1,0 +1,109 @@
+generated: '2026-08-14'
+method: searched
+source: https://github.com/AdaSupport/ada-skills
+provenance: >-
+  PROVIDER-PUBLISHED. These six Agent Skills are Ada's own, saved VERBATIM from
+  github.com/AdaSupport/ada-skills (main, last pushed 2026-01-27). None was generated or derived
+  by this pipeline. Each is Apache-2.0 licensed with `metadata.author: ada`.
+repository: https://github.com/AdaSupport/ada-skills
+format: https://agentskills.io
+license: Apache-2.0
+binds_to:
+  surface: mcp
+  server: mcp/ada-mcp.yml
+  note: >-
+    Every skill targets the Ada MCP server, not the REST APIs. `allowed-tools` frontmatter names
+    MCP tool names, and each skill requires an MCP server connected to Claude Desktop or a
+    compatible client. There are no REST operationIds to ground them in — that is Ada's own
+    design choice, not a gap in the capture.
+installation:
+  claude_code: |
+    /plugin marketplace add AdaSupport/ada-skills
+    /plugin install ada-mcp-skills@ada-skills
+  openai_codex: git clone https://github.com/AdaSupport/ada-skills.git && cp -r ada-skills/* ~/.codex/skills/
+  cursor: git clone https://github.com/AdaSupport/ada-skills.git ~/.cursor/skills/ada-skills
+skills:
+- file: ada-csat-improvement.md
+  name: ada-csat-improvement
+  description: >-
+    Analyze CSAT performance and get actionable improvement recommendations using Ada's AI agent
+    data.
+  api: mcp/ada-mcp.yml
+  version: '1.0'
+  operations:
+  - get_ada_metric
+  - get_available_filters
+  - get_conversations_by_filters
+  - get_conversation
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
+- file: ada-ar-optimization.md
+  name: ada-ar-optimization
+  description: >-
+    Analyze automated resolution rate and get recommendations for improving AR using Ada's AI
+    agent data.
+  api: mcp/ada-mcp.yml
+  version: '1.0'
+  operations:
+  - get_ada_metric
+  - get_available_filters
+  - get_conversations_by_filters
+  - get_conversation
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
+- file: ada-performance-check.md
+  name: ada-performance-check
+  description: >-
+    Quick health check of Ada AI agent performance metrics including CSAT, AR rate, and
+    conversation volume.
+  api: mcp/ada-mcp.yml
+  version: '1.0'
+  operations:
+  - get_ada_metric
+  - get_available_filters
+- file: ada-issue-diagnosis.md
+  name: ada-issue-diagnosis
+  description: Diagnose performance issues and investigate sudden changes in Ada AI agent metrics.
+  api: mcp/ada-mcp.yml
+  version: '1.0'
+  operations:
+  - get_ada_metric
+  - get_available_filters
+  - get_conversations_by_filters
+  - get_conversation
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
+- file: ada-conversation-simulation.md
+  name: ada-conversation-simulation
+  description: Test and validate Ada AI agent responses before making changes live.
+  api: mcp/ada-mcp.yml
+  version: '1.0'
+  requires: MCP server with simulation beta access (contact your Customer Solutions Consultant)
+  operations:
+  - simulate_conversation
+  - list_channels
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
+- file: ada-configuration-review.md
+  name: ada-configuration-review
+  description: >-
+    Review and understand Ada AI agent configuration including playbooks, coaching, actions, and
+    custom instructions.
+  api: mcp/ada-mcp.yml
+  version: '1.0'
+  operations:
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
+  - list_channels
+skill_count: 6
+drift:
+  note: >-
+    Three tool names in these skills — get_conversations_by_filters, list_channels and
+    simulate_conversation — do not appear in Ada's current tool index at
+    docs.ada.cx/mcp/tools/overview. The skills repo has not been pushed since 2026-01-27 while
+    the tool index kept moving. Recorded, not corrected; see mcp/ada-tool-crosswalk.yml.

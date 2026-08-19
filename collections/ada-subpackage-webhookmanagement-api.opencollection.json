@@ -1,0 +1,220 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_webhookManagement API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_webhookManagement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/webhooks/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of webhooks to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination"
+              }
+            ]
+          },
+          "docs": "List all webhook subscriptions configured for this AI Agent"
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/webhooks/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new webhook subscription. If this is the first webhook for this AI Agent, the webhook infrastructure is automatically provisioned"
+        },
+        {
+          "info": {
+            "name": "Get a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The webhook ID"
+              }
+            ]
+          },
+          "docs": "Get the details of a specific webhook subscription"
+        },
+        {
+          "info": {
+            "name": "Update a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://example.ada.support/v2/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The webhook ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a webhook subscription. Only the fields provided in the request body will be updated"
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://example.ada.support/v2/webhooks/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The webhook ID"
+              }
+            ]
+          },
+          "docs": "Delete a webhook subscription"
+        },
+        {
+          "info": {
+            "name": "Get webhook signing secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/webhooks/:id/secret/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The webhook ID"
+              }
+            ]
+          },
+          "docs": "Get the signing secret for a webhook. Use this secret to verify that incoming webhook payloads are authentic"
+        },
+        {
+          "info": {
+            "name": "Rotate webhook signing secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/webhooks/:id/secret/rotate/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The webhook ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate the signing secret for a webhook. Optionally provide a custom key. The new secret is not returned in the response — use the get secret endpoint to retrieve it"
+        },
+        {
+          "info": {
+            "name": "List webhook event types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/webhooks/event-types/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List all available event types that webhooks can subscribe to"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

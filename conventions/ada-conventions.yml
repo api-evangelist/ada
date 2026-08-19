@@ -1,0 +1,169 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/reference/introduction/overview,
+  https://docs.ada.cx/reference/introduction/authentication,
+  https://docs.ada.cx/reference/introduction/versioning,
+  https://docs.ada.cx/reference/introduction/limits,
+  https://docs.ada.cx/reference/introduction/pagination,
+  https://docs.ada.cx/reference/introduction/errors,
+  https://docs.ada.cx/reference/introduction/availability-rules,
+  https://docs.ada.cx/reference/end-users/getting-started,
+  openapi/_original/ada-knowledge-openapi.yml
+docs: https://docs.ada.cx/reference/introduction/overview
+base_url:
+  pattern: https://<instance-subdomain>.ada.support
+  api_prefix: /api/v2
+  example: https://example.ada.support/api/v2/end-users/
+  note: >-
+    Every Ada customer gets their own instance host. Ada's docs tell you to "double-click the
+    endpoint URL to replace `example` with your Ada instance's subdomain", and the OpenAPI
+    servers[] blocks ship the same `example.ada.support` placeholder. Regional/cluster variants
+    exist and are part of the host, not a header: <handle>.eu.ada.support,
+    <handle>.maple.ada.support, <handle>.us2.ada.support.
+authentication:
+  style: bearer-token
+  header: Authorization
+  scheme: Bearer
+  key_type: API key, non-expiring until revoked
+  rotation: multiple concurrent keys supported for zero-downtime rotation
+  scope: one key grants read+write across every API the organization has access to
+  oauth: >-
+    Additionally, partner-built platform integrations authenticate with OAuth 2.0
+    (authorization_code + refresh_token). See scopes/ada-scopes.yml.
+  artifact: authentication/ada-authentication.yml
+  docs: https://docs.ada.cx/reference/introduction/authentication
+idempotency:
+  supported: true
+  mechanism: caller-supplied reference field (no dedicated header)
+  keys:
+  - name: client_reference
+    applies_to: POST /v2/end-users/delete (bulk end-user deletion)
+    location: request body
+    retention: 24 hours
+    behaviour: >-
+      "Optional caller-supplied reference echoed back on the job. It is also the idempotency key:
+      two identical requests that set the same reference within 24 hours resolve to the same job.
+      Requests that omit it are not deduplicated."
+    source: openapi/_original/ada-knowledge-openapi.yml
+  - name: external_id
+    applies_to: POST /v2/end-users/
+    location: request body
+    retention: lifetime of the end user
+    behaviour: >-
+      "POST /v2/end-users/ is idempotent when external_id is supplied. If a user with that
+      external_id already exists, the response is 200 with the existing record. A new user
+      returns 201." Idempotent upsert, distinguished by status code.
+    source: https://docs.ada.cx/reference/end-users/getting-started
+  gaps: >-
+    There is no global Idempotency-Key header. Article and tag writes use bulk upsert semantics
+    (POST /v2/knowledge/bulk/articles/, /v2/knowledge/bulk/tags/) which are naturally idempotent
+    on the caller-supplied id, but Ada does not document a replay window for them. Conversation
+    and message creation have no idempotency key at all, so a retried POST
+    /v2/conversations/{id}/messages/ will duplicate the message.
+pagination:
+  style: cursor
+  docs: https://docs.ada.cx/reference/introduction/pagination
+  request_params:
+  - name: limit
+    in: query
+    description: Records returned per request.
+  - name: cursor
+    in: query
+    description: Opaque cursor carried in next_page_url.
+  response:
+    envelope_field: meta
+    next_field: next_page_url
+    null_on_last_page: true
+    note: >-
+      Responses carry `meta.next_page_url`, an absolute URL to replay unchanged. On the audit-log
+      and custom-instruction endpoints the spec is explicit: "Replay it unchanged to keep the time
+      window and the cursor constant across pages." null on the last or empty page.
+  schemas:
+  - PaginationMetadata
+  - CursorPaginationMetadata
+  - AuditLogEventListMeta
+  - CustomInstructionListMeta
+error_envelope:
+  format: custom
+  rfc9457: false
+  content_type: application/json
+  shape: |
+    {
+      "errors": [
+        { "type": "error_type", "message": "Human readable message", "details": "Optional, additional error details" }
+      ]
+    }
+  validation_detail: >-
+    For "type": "validation_error", `details` is a list of {parameter, location, message} objects
+    (or null). `parameter` is a JSON path such as `$[0].knowledge_source_id`; `location` is where
+    it was found, e.g. `body`.
+  artifact: errors/ada-problem-types.yml
+  docs: https://docs.ada.cx/reference/introduction/errors
+rate_limiting:
+  signalled_by_headers: false
+  note: >-
+    Ada publishes numeric limits in the docs but documents NO RateLimit-*/X-RateLimit-* response
+    headers and no Retry-After value — an agent learns it is throttled only by receiving 429.
+    This is the single largest runtime-semantics gap in Ada's API.
+  exhaustion_status: 429
+  guidance: exponential backoff with jitter
+  artifact: rate-limits/ada-rate-limits.yml
+  docs: https://docs.ada.cx/reference/introduction/limits
+versioning:
+  scheme: uri-path
+  current: v2
+  legacy: v1 (path form https://<handle>.ada.support/api/end-users/v1/)
+  webhook_versioning: payload `type` field carries the version prefix, e.g. `v1.end_user.created`
+  policy: >-
+    "New versions are introduced when changes are not backwards-compatible." Ada enumerates what
+    it considers backwards-compatible and therefore shippable without a version bump: new auth
+    options, additional endpoints or HTTP headers, optional request fields or query params, new
+    response/webhook properties, expanded enum values or webhook triggers, field-order changes,
+    relaxed input validation, more specific error status codes, and modified string formats.
+  consumer_obligation: >-
+    Clients must ignore unknown keys and tolerate new enum values — Ada states this explicitly.
+  artifact: lifecycle/ada-lifecycle.yml
+  docs: https://docs.ada.cx/reference/introduction/versioning
+request_tracing:
+  request_id_header: null
+  note: No correlation/request-id header is documented on requests or responses.
+metadata:
+  supported: true
+  note: >-
+    Most resources accept a free-form `metadata` object of arbitrary key/value pairs that Ada
+    stores but does not interpret. End users additionally support a separate
+    `sensitive_metadata.fields` map (max 20 pairs) whose values are held in an encrypted isolated
+    store, are never returned in any response, dashboard view, transcript or LLM prompt, and are
+    permanently deleted after 24 hours. Conversation metadata is capped at 4 KB.
+field_expansion:
+  supported: false
+  note: No expand/include/sparse-fieldset parameter is documented.
+conditional_availability:
+  supported: true
+  mechanism: availability_rules
+  description: >-
+    A two-level condition tree ({match: all|any, conditions:[...]}) set on supported resources
+    (knowledge articles, glossary terms) that gates whether the AI Agent may use the resource in
+    a given conversation, based on variable values. Max 1000 conditions per rule. Operators
+    include equals/does_not_equal/starts_with/ends_with/contains/does_not_contain plus the unary
+    is_set/is_not_set; `case_sensitive` defaults to false.
+  docs: https://docs.ada.cx/reference/introduction/availability-rules
+data_limits:
+  max_request_body: 10MB
+  max_request_body_status: 413
+  exceptions:
+  - endpoint: POST /v2/end-users/delete
+    limit: 512 KB
+    note: "The request body exceeds the maximum size of 512 KB. Split the identifiers across multiple requests."
+media_types:
+  request: application/json
+  response: application/json
+  attachments: multipart/form-data (POST /v2/conversations/{conversation_id}/attachments/)
+cross_links:
+  errors: errors/ada-problem-types.yml
+  lifecycle: lifecycle/ada-lifecycle.yml
+  authentication: authentication/ada-authentication.yml
+  scopes: scopes/ada-scopes.yml
+  rate_limits: rate-limits/ada-rate-limits.yml
+  webhooks: asyncapi/ada-webhooks.yml

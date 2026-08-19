@@ -1,0 +1,97 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/reference/introduction/versioning,
+  https://docs.ada.cx/reference/introduction/migrate-to-v-2,
+  https://docs.ada.cx/release-notes,
+  https://status.ada.support/,
+  openapi/_original/
+versioning:
+  scheme: uri-path
+  current: v2
+  docs: https://docs.ada.cx/reference/introduction/versioning
+  policy: >-
+    "Ada's API follows a strict versioning policy designed to avoid disruption by enabling
+    controlled adoption of breaking changes. Versioning applies to both API calls and webhooks.
+    New versions are introduced when changes are not backwards-compatible."
+  backwards_compatible_changes:
+  - New authentication options
+  - Additional endpoints or HTTP headers
+  - Optional request fields or query parameters
+  - New properties in responses or webhook payloads
+  - Expanded enum values or webhook triggers
+  - Field order adjustments in responses
+  - Relaxed input validation rules
+  - More specific error status codes (e.g., 500 to 401)
+  - Modified string formats or lengths (e.g., IDs, messages)
+  webhook_versioning:
+    scheme: payload-type-prefix
+    example: v1.end_user.created
+    current: v1
+    note: Webhook event versions move independently of the REST path version.
+  version_trains:
+  - version: v2
+    status: current
+    base: https://<handle>.ada.support/api/v2/
+  - version: v1
+    status: legacy
+    base: https://<handle>.ada.support/api/end-users/v1/
+    note: >-
+      Per-API legacy keys work only against v1. Migration guide at
+      https://docs.ada.cx/reference/introduction/migrate-to-v-2. Ada names v1→v2 as
+      "backward-incompatible" but publishes no v1 sunset date.
+deprecation:
+  policy_url: https://docs.ada.cx/reference/introduction/migrate-to-v-2
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  mechanism: >-
+    Deprecation is announced in the dated Release Notes and marked in the API reference title.
+    Ada does NOT emit RFC 8594 Sunset/Deprecation response headers, so a running client gets no
+    machine-readable warning — it must be watching the changelog.
+  deprecated_apis:
+  - name: Data Compliance API
+    spec: openapi/_original/ada-data-compliance-openapi.yml
+    marker: info.title is literally "Data Compliance (Deprecated)"
+    published_as: https://docs.ada.cx/openapi/data-compliance-deprecated.yaml
+    operations:
+    - POST /api/v1/data-subject-request
+    sunset_date: null
+    successor: POST /v2/end-users/delete (Bulk End-User Deletion API, GA 2026-07-14)
+  - name: Data Export API v1.4
+    spec: openapi/_original/ada-data-export-v1-4-openapi.yml
+    marker: superseded by the v2 export endpoints (/v2/export/conversations, /v2/export/messages)
+    sunset_date: null
+  - name: Webhooks (adacli)
+    marker: '`adacli webhooks` is labelled "Manage webhooks (deprecated)" in the CLI command tree'
+  - name: Processes
+    marker: '`adacli processes` is labelled "[deprecated — superseded by playbooks]"'
+  deprecated_operations: []
+  deprecated_operations_note: >-
+    No operation in any of the four published OpenAPI documents carries `deprecated: true`.
+    Deprecation is signalled at the document/product level only, never per operation.
+status_page:
+  url: https://status.ada.support/
+  provider: Atlassian Statuspage
+  machine_readable:
+  - https://status.ada.support/api/v2/summary.json
+  - https://status.ada.support/api/v2/status.json
+  - https://status.ada.support/history.rss
+  probed: '2026-08-14'
+  http_status: 200
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public uptime SLA. Ada sells enterprise contracts only, so availability commitments sit in
+    the negotiated agreement rather than on a public page.
+change_log:
+  url: https://docs.ada.cx/release-notes
+  rss: https://docs.ada.cx/release-notes.rss
+  llms: https://docs.ada.cx/release-notes/llms.txt
+  email: Weekly summary, Fridays 11 a.m. Eastern, when there was at least one release that week
+  artifact: changelog/ada-changelog.yml
+support:
+  email: help@ada.cx
+  partner_email: developer-partnerships@ada.support
+  security_email: security@ada.support

@@ -9,7 +9,7 @@ paths:
       summary: Get knowledge sources
       description: Get knowledge sources
       tags:
-        - subpackage_knowledge.subpackage_knowledge/sources
+        - knowledge > sources
       parameters:
         - name: Authorization
           in: header
@@ -53,7 +53,7 @@ paths:
       summary: Create a knowledge source
       description: Create a knowledge source
       tags:
-        - subpackage_knowledge.subpackage_knowledge/sources
+        - knowledge > sources
       parameters:
         - name: Authorization
           in: header
@@ -107,9 +107,17 @@ paths:
     delete:
       operationId: delete
       summary: Delete a knowledge source
-      description: Delete a knowledge source, and its related articles
+      description: >
+        Delete a knowledge source, and its related articles
+
+
+        Deletion is asynchronous: a `204` response means the deletion request was accepted and is processed in the
+        background. While deletion is in progress, the source reports a `status` of `deleting`; if deletion fails, the
+        source reports `delete_failed`, and you can re-issue the request to retry. To confirm completion, re-query the
+        knowledge source list until the source no longer appears. A `404` is still returned when the knowledge source
+        does not exist.
       tags:
-        - subpackage_knowledge.subpackage_knowledge/sources
+        - knowledge > sources
       parameters:
         - name: id
           in: path
@@ -125,7 +133,7 @@ paths:
             type: string
       responses:
         '204':
-          description: Knowledge source deleted
+          description: Knowledge source deletion accepted; the source and its related articles are deleted in the background
           content:
             application/json:
               schema:
@@ -159,7 +167,7 @@ paths:
       summary: Update a knowledge source
       description: Update a knowledge source
       tags:
-        - subpackage_knowledge.subpackage_knowledge/sources
+        - knowledge > sources
       parameters:
         - name: id
           in: path
@@ -221,7 +229,7 @@ paths:
       summary: Get knowledge articles
       description: Get knowledge articles
       tags:
-        - subpackage_knowledge.subpackage_knowledge/articles
+        - knowledge > articles
       parameters:
         - name: cursor
           in: query
@@ -325,9 +333,15 @@ paths:
     delete:
       operationId: delete
       summary: Delete multiple articles
-      description: Delete multiple articles
+      description: >
+        Delete multiple articles
+
+
+        Deletion is asynchronous: a `204` response means the deletion request was accepted and the matching articles are
+        deleted in the background. To confirm completion, re-query `GET /v2/knowledge/articles/` with the same filters
+        until no articles match. A `404` is still returned when no articles match the provided filters.
       tags:
-        - subpackage_knowledge.subpackage_knowledge/articles
+        - knowledge > articles
       parameters:
         - name: id
           in: query
@@ -380,7 +394,7 @@ paths:
             type: string
       responses:
         '204':
-          description: Articles successfully deleted
+          description: Article deletion accepted; matching articles are deleted in the background
           content:
             application/json:
               schema:
@@ -421,7 +435,7 @@ paths:
       summary: Get a single knowledge article
       description: Get knowledge article by id
       tags:
-        - subpackage_knowledge.subpackage_knowledge/articles
+        - knowledge > articles
       parameters:
         - name: id
           in: path
@@ -471,7 +485,7 @@ paths:
       summary: Delete a single article
       description: Delete an article
       tags:
-        - subpackage_knowledge.subpackage_knowledge/articles
+        - knowledge > articles
       parameters:
         - name: id
           in: path
@@ -540,9 +554,21 @@ paths:
 
         - The maximum size of an article is 100KB
 
-        - The maximum number of articles is 50,000
+        - The maximum number of articles is 50,000 by default. Higher limits are available for eligible plans — contact
+        your Ada team.
+
+
+        **Behavior at the article limit:**
+
+        Requests that only update existing articles (every `id` in the request already exists) continue to succeed even
+        when your knowledge base is at its article limit. A request that introduces any new article `id` while at the
+        limit is rejected as a whole with a `400` response. The error message is `Maximum article limit of {N}
+        exceeded`, where `{N}` is your article limit, and the error details include a `code` of
+        `knowledge.articles.total_exceeded`, the list of `new_article_ids` that triggered the rejection (capped at the
+        first 100), and the total `new_article_count`. Use these fields to separate new articles from update-only
+        batches, which can still be submitted.
       tags:
-        - subpackage_knowledge.subpackage_knowledge/articles
+        - knowledge > articles
       parameters:
         - name: Authorization
           in: header
@@ -596,7 +622,7 @@ paths:
       summary: Get article tags
       description: Get article tags
       tags:
-        - subpackage_knowledge.subpackage_knowledge/tags
+        - knowledge > tags
       parameters:
         - name: Authorization
           in: header
@@ -641,7 +667,7 @@ paths:
       summary: Delete a single article tag
       description: Delete an article tag
       tags:
-        - subpackage_knowledge.subpackage_knowledge/tags
+        - knowledge > tags
       parameters:
         - name: id
           in: path
@@ -703,7 +729,7 @@ paths:
         This endpoint will create or update tags based on the unique `id` field of each tag. If a tag with the same `id`
         already exists, it will be updated. Otherwise, a new tag will be created.
       tags:
-        - subpackage_knowledge.subpackage_knowledge/tags
+        - knowledge > tags
       parameters:
         - name: Authorization
           in: header
@@ -757,7 +783,7 @@ paths:
       summary: Get an end user
       description: Get a specific end user by id
       tags:
-        - subpackage_endUsers
+        - endUsers
       parameters:
         - name: end_user_id
           in: path
@@ -814,7 +840,7 @@ paths:
       summary: Update an end user
       description: Update a specific end user by id
       tags:
-        - subpackage_endUsers
+        - endUsers
       parameters:
         - name: end_user_id
           in: path
@@ -888,7 +914,7 @@ paths:
         /v2/end-users/{end_user_id}`) and is mutually exclusive with cursor/limit pagination. The `external_id` query
         parameter is available for custom channel integrations only (V1).
       tags:
-        - subpackage_endUsers
+        - endUsers
       parameters:
         - name: external_id
           in: query
@@ -967,7 +993,7 @@ paths:
         channel (Conversations API) integrations. End users created through this endpoint that are not associated with a
         conversation within 24 hours of creation are automatically deleted.
       tags:
-        - subpackage_endUsers
+        - endUsers
       parameters:
         - name: Authorization
           in: header
@@ -1019,13 +1045,121 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateEndUserRequest'
+  /v2/end-users/delete:
+    post:
+      operationId: submit-a-bulk-end-user-deletion-request
+      summary: Submit a bulk end-user deletion request
+      description: >-
+        Submits a request to erase all personal data associated with the supplied identifiers. Replace `example` with
+        your AI Agent's handle. A successful call returns a `202` with a `job_id` you can poll for status. Requests that
+        set `client_reference` are idempotent for 24 hours: an identical resubmission within that window returns the
+        original job instead of creating a new one. Requests that omit `client_reference` are not deduplicated.
+        Separately, the erasure engine rejects an identifier submitted within the previous 7 days, and a single
+        identifier in that cooldown can fail an entire job.
+      tags:
+        - submitDeletionRequest
+      responses:
+        '202':
+          description: The deletion request was accepted and a job was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionRequestAccepted'
+        '400':
+          description: Invalid request body, for example no identifiers.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: Authentication token is missing or invalid. Try generating a new token.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: The token is not authorized to perform this operation.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '413':
+          description: The request body exceeds the maximum size of 512 KB. Split the identifiers across multiple requests.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '429':
+          description: Too many requests. Retry after slowing the request rate.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Something went wrong on Ada's end.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletionRequest'
+  /v2/jobs/{job_id}:
+    get:
+      operationId: get-a-deletion-job
+      summary: Get a deletion job
+      description: >-
+        Returns the current state of a deletion job, including the per-identifier dispositions. A job for an unknown or
+        unowned `job_id` returns `404`.
+      tags:
+        - getDeletionJob
+      parameters:
+        - name: job_id
+          in: path
+          description: Identifier of the deletion job returned when the request was submitted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The deletion job was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionJob'
+        '401':
+          description: Authentication token is missing or invalid. Try generating a new token.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: No deletion job exists for the supplied `job_id` under this AI Agent.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '429':
+          description: Too many requests. Retry after slowing the request rate.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Something went wrong on Ada's end.
+          content:
+            application/json:
+              schema:
+                description: Any type
   /v2/platform-integrations/:
     get:
       operationId: get-platform-integrations
       summary: List integrations
       description: Get a list of platform integrations owned by your account (e.g. a developer sandbox)
       tags:
-        - subpackage_platformIntegrations
+        - platformIntegrations
       parameters:
         - name: cursor
           in: query
@@ -1082,7 +1216,7 @@ paths:
       summary: Create an integration
       description: Create an integration. Integrations are created in `development` status by default.
       tags:
-        - subpackage_platformIntegrations
+        - platformIntegrations
       parameters:
         - name: Authorization
           in: header
@@ -1140,7 +1274,7 @@ paths:
         Update a platform integration. **_Note:_ only integrations in development may be updated. Integrations submitted
         for publication cannot be updated.**
       tags:
-        - subpackage_platformIntegrations
+        - platformIntegrations
       parameters:
         - name: id
           in: path
@@ -1205,7 +1339,7 @@ paths:
         Get the platform integration installation associated with the access token. Use this endpoint to get the details
         of an installation, including the configuration form completed by the admin.
       tags:
-        - subpackage_platformIntegrations
+        - platformIntegrations
       parameters:
         - name: id
           in: path
@@ -1269,7 +1403,7 @@ paths:
       summary: Update installation status
       description: Update status after installation. An installation can be `complete` or `incomplete`.
       tags:
-        - subpackage_platformIntegrations
+        - platformIntegrations
       parameters:
         - name: platform_integration_id
           in: path
@@ -1339,6 +1473,116 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PlatformIntegrationInstallationUpdateRequest'
+  /v2/analytics/audit-log/events/:
+    get:
+      operationId: list-audit-log-events
+      summary: List Audit log events
+      description: >-
+        Retrieve the authenticated account's own Audit log events, newest first, in cursor-paginated pages. Intended for
+        pulling the Audit log into a SIEM.
+
+
+        Pagination is cursor-based: read `meta.next_page_url` and replay it verbatim to fetch the next page.
+        `next_page_url` is `null` on the last or empty page. The time window and `cursor` must be held constant across
+        pages; the recommended way to guarantee this is to replay the returned `next_page_url` unchanged.
+
+
+        No field filters are exposed: callers pull the full time window and filter on their own side (the SIEM).
+
+
+        Validation errors (missing or invalid `start_date` or `end_date`, a window wider than 30 days, a malformed
+        cursor, or a window change mid-pagination) return `400`.
+
+
+        Rate limits (per account): 10 requests per second, 120 per minute, and 40,000 per day. A `429` means a limit was
+        exceeded; back off and retry. For ongoing ingestion, poll on a steady cadence (for example, every few minutes)
+        rather than in a tight loop.
+
+
+        Backfilling vs incremental pulls: a single request covers at most 30 days. To backfill more history, issue
+        successive requests over adjacent windows of up to 30 days. For incremental pulls, set `start_date` to just
+        after the newest `timestamp` you have already stored, then follow `next_page_url` until it is `null`.
+      tags:
+        - auditLog
+      parameters:
+        - name: start_date
+          in: query
+          description: Start of the time window (inclusive), ISO 8601. The window (`end_date - start_date`) may not exceed 30 days.
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: end_date
+          in: query
+          description: >-
+            End of the time window (inclusive), ISO 8601. When omitted it defaults to the request time (UTC); the
+            resolved value is reflected in `next_page_url`, so replay the returned `next_page_url` verbatim to keep the
+            window fixed across pages.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          description: >-
+            Maximum events per page. Out-of-range or non-integer values are rejected with `400`; the applied limit is
+            not echoed in the response.
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: cursor
+          in: query
+          description: >-
+            Opaque base64-encoded pagination cursor from a previous response's `meta.next_page_url`. Treat it as an
+            opaque token, not an id. The time window and `cursor` must be held constant across pages: replay the
+            returned `next_page_url` unchanged.
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A cursor-paginated page of Audit log events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogEventList'
+        '400':
+          description: Bad Request (validation, cursor, or window drift)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized (missing or non-Bearer token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found (Audit log API not enabled for this account)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests (rate limit)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
   /v2/channels/:
     get:
       operationId: get-channels
@@ -1347,7 +1591,7 @@ paths:
         Get a list of channels. This list can be filtered by modality and paginated. The default and maximum limits are
         100 channels per page
       tags:
-        - subpackage_channels
+        - channels
       parameters:
         - name: limit
           in: query
@@ -1417,7 +1661,7 @@ paths:
         Create a new channel. A maximum of 100 channels can be created per account per day. The maximum request size is
         10MB.
       tags:
-        - subpackage_channels
+        - channels
       parameters:
         - name: Authorization
           in: header
@@ -1467,6 +1711,69 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CustomChannel'
+  /v2/channels/{channel_id}:
+    patch:
+      operationId: update-channel
+      summary: Update a channel
+      description: Update a channel's capabilities. Only custom channels can be updated; native channels are read-only.
+      tags:
+        - channels
+      parameters:
+        - name: channel_id
+          in: path
+          description: The ID of the channel to update
+          required: true
+          schema:
+            type: string
+            format: id
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Channel updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomChannel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateChannel'
   /v2/conversations/email/:
     post:
       operationId: create-email-conversation
@@ -1477,7 +1784,7 @@ paths:
         can start conversations only with the default Ada-provided email address, or with email addresses you’ve
         configured through Bring Your Own Domain (BYOD) settings.
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: Authorization
           in: header
@@ -1535,7 +1842,7 @@ paths:
         Create a new conversation. If `end_user_id` is not provided, the system creates a new end user automatically.
         The maximum request size is 10MB, and metadata must not exceed 4KB.
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: Authorization
           in: header
@@ -1591,7 +1898,7 @@ paths:
       summary: Get a conversation
       description: Get a conversation by its ID
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -1648,7 +1955,7 @@ paths:
       summary: Update a conversation
       description: Update a conversation's metadata by its ID
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -1711,7 +2018,7 @@ paths:
       summary: Get conversation messages
       description: Get messages (paginated) for a conversation by its ID
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -1781,7 +2088,7 @@ paths:
       summary: Create a new message
       description: Create a new message in a conversation. The maximum request size is 10MB.
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -1844,7 +2151,7 @@ paths:
       summary: End a conversation
       description: Ends the conversation specified by the `conversation_id`
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -1905,7 +2212,7 @@ paths:
         AI Agent and does not end the conversation. It also triggers CSAT for human agent (where applicable), leftover
         blocks processing, and agent presence dismissal messages.
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -1950,14 +2257,37 @@ paths:
       operationId: upload-attachment
       summary: Upload a file attachment
       description: >
-        Upload a file attachment to a conversation. The file will be stored and a presigned URL
+        Upload a temporary file attachment to a conversation. The file is stored on Ada-managed
 
-        will be generated that is valid for 7 days. The maximum file size is 50MB.
+        storage and a presigned URL is returned that is valid for up to 7 days. Use that URL to
+
+        create a file message by calling the `/v2/conversations/{conversation_id}/messages/`
+
+        endpoint with `content.type` set to `file`. The maximum file size is 50MB.
 
 
-        The presigned URL can be used to create a file message by calling the
+        This endpoint provides temporary media storage for use within a conversation. It is
 
-        `/v2/conversations/{conversation_id}/messages/` endpoint with `content.type` set to `file`.
+        **not** equivalent to the native attachment experience in Ada's widget handoff
+
+        integrations (for example, the paperclip in Zendesk Messaging). With native widget
+
+        attachments, files are uploaded directly into your agent platform (such as Sunshine
+
+        Conversations / Zendesk) and hosted there. That native path is only available to Ada's
+
+        web channel and is not accessible through the Conversations API.
+
+
+        If you are building a headless Conversations API integration and want to send an
+
+        attachment from an end user to a human agent mid-conversation so that it appears natively
+
+        in your agent platform, upload the file using your agent platform's own attachment
+
+        endpoints (for example, the Sunshine Conversations Attachments API for Zendesk) and
+
+        consult that platform's documentation.
 
 
         **Note:** Attachments can only be uploaded when the conversation is in a handoff state.
@@ -1966,7 +2296,7 @@ paths:
         **Allowed file types:** TXT, LOG, CSV, EML, PNG, SVG, JPEG, JPG, GIF, HEIF, HEIC, AVIF, WAV, M4A, MP3, MP4, M4V,
         MOV, MPEG, MPG, ZIP, PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX, Keynote, Pages, Numbers
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: conversation_id
           in: path
@@ -2036,7 +2366,7 @@ paths:
       summary: List webhooks
       description: List all webhook subscriptions configured for this AI Agent
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: limit
           in: query
@@ -2082,7 +2412,7 @@ paths:
         Create a new webhook subscription. If this is the first webhook for this AI Agent, the webhook infrastructure is
         automatically provisioned
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: Authorization
           in: header
@@ -2140,7 +2470,7 @@ paths:
       summary: Get a webhook
       description: Get the details of a specific webhook subscription
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: id
           in: path
@@ -2178,7 +2508,7 @@ paths:
       summary: Delete a webhook
       description: Delete a webhook subscription
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: id
           in: path
@@ -2216,7 +2546,7 @@ paths:
       summary: Update a webhook
       description: Update a webhook subscription. Only the fields provided in the request body will be updated
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: id
           in: path
@@ -2282,7 +2612,7 @@ paths:
       summary: Get webhook signing secret
       description: Get the signing secret for a webhook. Use this secret to verify that incoming webhook payloads are authentic
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: id
           in: path
@@ -2323,7 +2653,7 @@ paths:
         Rotate the signing secret for a webhook. Optionally provide a custom key. The new secret is not returned in the
         response — use the get secret endpoint to retrieve it
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: id
           in: path
@@ -2371,7 +2701,7 @@ paths:
       summary: List webhook event types
       description: List all available event types that webhooks can subscribe to
       tags:
-        - subpackage_webhookManagement
+        - webhookManagement
       parameters:
         - name: Authorization
           in: header
@@ -2392,6 +2722,509 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Errors'
+  /v2/persona/:
+    get:
+      operationId: get-persona
+      summary: Get persona
+      description: Retrieve the current persona configuration.
+      tags:
+        - persona
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update-persona
+      summary: Update persona
+      description: >-
+        Partially update the persona configuration. Only the fields provided in the request body are updated; omitted
+        fields retain their existing values. Fields that are not part of the public persona schema are rejected.
+      tags:
+        - persona
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonaUpdate'
+  /v2/variables/:
+    get:
+      operationId: list
+      summary: List Variables
+      description: |
+        Returns the Variables accessible to the AI Agent (the Variables shown
+        on the dashboard). Note: Reserved and internal Variables are not included.
+      tags:
+        - Variables
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of Variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variables_list_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/variables/{id}:
+    get:
+      operationId: get
+      summary: Get a Variable
+      description: |
+        Returns a single accessible Variable by id. An id that is unknown,
+        malformed, or refers to a reserved or internal Variable returns `404`.
+      tags:
+        - Variables
+      parameters:
+        - name: id
+          in: path
+          description: The id of the Variable to retrieve
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The Variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableSummary'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/custom-instructions/:
+    get:
+      operationId: list-custom-instructions
+      summary: List custom instructions
+      description: >-
+        Retrieve the AI Agent's custom instructions, live and inactive, in cursor-paginated pages ordered by id.
+
+
+        Pagination is cursor-based: read `meta.next_page_url` and replay it verbatim to fetch the next page.
+        `next_page_url` is `null` on the last or empty page.
+      tags:
+        - customInstructions
+      parameters:
+        - name: cursor
+          in: query
+          description: >-
+            The id that marks the start of the returned records. Use the value from `meta.next_page_url` in the previous
+            response.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: The number of records to return
+          required: false
+          schema:
+            type: integer
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstructionList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-custom-instruction
+      summary: Create a custom instruction
+      description: >-
+        Create a new custom instruction for the AI Agent. New instructions default to inactive (`enabled: false`);
+        enable one by setting `enabled: true` on create or via a later update.
+      tags:
+        - customInstructions
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstruction'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: >-
+            Conflict — the title is already used by another custom instruction, or enabling would exceed the AI Agent's
+            enabled-instruction limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomInstructionCreate'
+  /v2/custom-instructions/{custom_instruction_id}:
+    get:
+      operationId: get-custom-instruction-by-id
+      summary: Get a custom instruction
+      description: Retrieve a single custom instruction by its id
+      tags:
+        - customInstructions
+      parameters:
+        - name: custom_instruction_id
+          in: path
+          description: The id of the custom instruction
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstruction'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete-custom-instruction
+      summary: Delete a custom instruction
+      description: Delete a custom instruction by its id
+      tags:
+        - customInstructions
+      parameters:
+        - name: custom_instruction_id
+          in: path
+          description: The id of the custom instruction
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Custom Instructions_deleteCustomInstruction_Response_204'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update-custom-instruction
+      summary: Update a custom instruction
+      description: >-
+        Update a custom instruction. Only the fields provided in the request body are changed; omitted fields are left
+        as they are.
+      tags:
+        - customInstructions
+      parameters:
+        - name: custom_instruction_id
+          in: path
+          description: The id of the custom instruction
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearer authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstruction'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: >-
+            Conflict — the new title is already used by another custom instruction, or enabling would exceed the AI
+            Agent's enabled-instruction limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomInstructionUpdate'
 servers:
   - url: https://example.ada.support/api
     description: Production
@@ -2422,6 +3255,22 @@ webhooks:
           application/json:
             schema:
               $ref: '#/components/schemas/EndUserUpdatedWebhookPayload'
+  audit-log-webhook:
+    post:
+      operationId: audit-log-webhook
+      summary: 'Webhook: Audit log event'
+      description: >-
+        A webhook sent when a configuration change is recorded in the Audit log. Delivery is best-effort; use the Audit
+        log pull API (`GET /api/v2/analytics/audit-log/events/`) as the durable record to reconcile any events that were
+        not delivered.
+      responses:
+        '200':
+          description: Webhook received successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditLogWebhookPayload'
   conversation-created-webhook:
     post:
       operationId: conversation-created-webhook
@@ -2483,6 +3332,15 @@ components:
         A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
         the client to store additional information about                     the knowledge source.
       title: KnowledgeSourceResponseMetadata
+    KnowledgeSourceResponseStatus:
+      type: string
+      enum:
+        - deleting
+        - delete_failed
+      description: >-
+        Deletion lifecycle status of the knowledge source: `deleting` while an asynchronous deletion is in progress,
+        `delete_failed` if the deletion failed. `null` when no deletion is in progress.
+      title: KnowledgeSourceResponseStatus
     KnowledgeSourceResponse:
       type: object
       properties:
@@ -2516,6 +3374,11 @@ components:
           type: string
           format: date-time
           description: The date the knowledge source was last synchronized
+        status:
+          $ref: '#/components/schemas/KnowledgeSourceResponseStatus'
+          description: >-
+            Deletion lifecycle status of the knowledge source: `deleting` while an asynchronous deletion is in progress,
+            `delete_failed` if the deletion failed. `null` when no deletion is in progress.
       required:
         - id
         - name
@@ -2677,6 +3540,125 @@ components:
         A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by
         the client to store additional information about                     the article.
       title: KnowledgeArticleResponseMetadata
+    AvailabilityRuleMatch:
+      type: string
+      enum:
+        - all
+        - any
+      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+      title: AvailabilityRuleMatch
+    AvailabilityRuleConditionVariable:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the variable.
+      required:
+        - id
+      description: >-
+        The variable to test, referenced by `id`. Look up the ids for your Agent through the variables endpoint. Not
+        every variable can be used in a rule; referencing one that can't returns a `400`.
+      title: AvailabilityRuleConditionVariable
+    AvailabilityRuleConditionOperator:
+      type: string
+      enum:
+        - equals
+        - does_not_equal
+        - greater_than
+        - less_than
+        - starts_with
+        - ends_with
+        - contains
+        - does_not_contain
+        - is_set
+        - is_not_set
+      description: The comparison operator. Unary operators (`is_set`, `is_not_set`) must not include a `value` field.
+      title: AvailabilityRuleConditionOperator
+    AvailabilityRuleConditionValue:
+      oneOf:
+        - type: string
+        - type: number
+          format: double
+        - type: boolean
+      description: The value to compare against. Omit for unary operators (`is_set`, `is_not_set`).
+      title: AvailabilityRuleConditionValue
+    AvailabilityRuleCondition:
+      type: object
+      properties:
+        variable:
+          $ref: '#/components/schemas/AvailabilityRuleConditionVariable'
+          description: >-
+            The variable to test, referenced by `id`. Look up the ids for your Agent through the variables endpoint. Not
+            every variable can be used in a rule; referencing one that can't returns a `400`.
+        operator:
+          $ref: '#/components/schemas/AvailabilityRuleConditionOperator'
+          description: The comparison operator. Unary operators (`is_set`, `is_not_set`) must not include a `value` field.
+        value:
+          $ref: '#/components/schemas/AvailabilityRuleConditionValue'
+          description: The value to compare against. Omit for unary operators (`is_set`, `is_not_set`).
+        case_sensitive:
+          type: boolean
+          description: >-
+            Whether the comparison is case-sensitive. Defaults to `false`. Only meaningful for the equality (`equals`,
+            `does_not_equal`) and string (`starts_with`, `ends_with`, `contains`, `does_not_contain`) operators. Omitted
+            from responses when `false`.
+      required:
+        - variable
+        - operator
+      description: A single condition comparing a variable to a value.
+      title: AvailabilityRuleCondition
+    AvailabilityRuleConditionGroupMatch:
+      type: string
+      enum:
+        - all
+        - any
+      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+      title: AvailabilityRuleConditionGroupMatch
+    AvailabilityRuleConditionGroup:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/AvailabilityRuleConditionGroupMatch'
+          description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilityRuleCondition'
+          description: List of conditions inside this condition group. Must contain at least one entry.
+      required:
+        - match
+        - conditions
+      description: >-
+        A nested group of conditions inside a rule's top-level `conditions` list. Condition groups may contain only
+        `Condition` objects — further nesting is not supported.
+      title: AvailabilityRuleConditionGroup
+    AvailabilityRuleConditionsItems:
+      oneOf:
+        - $ref: '#/components/schemas/AvailabilityRuleCondition'
+        - $ref: '#/components/schemas/AvailabilityRuleConditionGroup'
+      title: AvailabilityRuleConditionsItems
+    AvailabilityRule:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/AvailabilityRuleMatch'
+          description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilityRuleConditionsItems'
+          description: >-
+            List of conditions or condition groups. Must contain at least one entry. Each entry is either a `Condition`
+            object (with `variable`, `operator`, and optional `value`) or a `ConditionGroup` object (with its own
+            `match` and nested `conditions` list).
+      required:
+        - match
+        - conditions
+      description: >-
+        A two-level tree of conditions that determines availability based on variable values during a conversation. The
+        root group has a `match` combinator and a list of conditions or condition groups. A rule may contain at most
+        1000 conditions in total, counting every condition across the root and all nested condition groups.
+      title: AvailabilityRule
     KnowledgeArticleResponse:
       type: object
       properties:
@@ -2737,6 +3719,13 @@ components:
           description: >-
             A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
             by the client to store additional information about                     the article.
+        availability_rules:
+          oneOf:
+            - $ref: '#/components/schemas/AvailabilityRule'
+            - type: 'null'
+          description: >-
+            Availability rule controlling which articles the AI Agent can access during a conversation. `null` when no
+            rule is set.
       required:
         - id
         - name
@@ -2829,6 +3818,15 @@ components:
           description: >-
             A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used
             by the client to store additional information about                     the article.
+        availability_rules:
+          oneOf:
+            - $ref: '#/components/schemas/AvailabilityRule'
+            - type: 'null'
+          description: >-
+            Availability rule controlling which articles the AI Agent can access during a conversation. Send a rule
+            object to attach or replace a rule, `null` to detach an existing rule, or omit the field to leave any
+            existing rule unchanged. A rule may contain at most 1000 conditions in total. See [Availability
+            rules](/reference/introduction/availability-rules) for the full schema and examples.
       required:
         - id
         - name
@@ -3192,6 +4190,172 @@ components:
           $ref: '#/components/schemas/CreateEndUserRequestProfile'
           description: The end user's profile information. Optional — omitting profile creates a blank end user.
       title: CreateEndUserRequest
+    DeletionIdentifierType:
+      type: string
+      enum:
+        - email
+        - chatter_id
+        - external_id
+        - end_user_id
+        - variable_match
+      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
+      title: DeletionIdentifierType
+    DeletionIdentifier:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DeletionIdentifierType'
+        value:
+          type: string
+          description: >-
+            The identifier value. Email values are normalized and matched case-insensitively; `external_id` values are
+            trimmed and lowercased at intake.
+        variable:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Name of the stored variable to match against `value`. Required only when `type` is `variable_match`; leave
+            null for all other types.
+      required:
+        - type
+        - value
+      description: A single reference to the end user(s) whose data should be erased.
+      title: DeletionIdentifier
+    DeletionRequest:
+      type: object
+      properties:
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletionIdentifier'
+          description: The identifiers to erase. At least one is required, and a single request accepts at most 1000.
+        client_reference:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Optional caller-supplied reference echoed back on the job. It is also the idempotency key: two identical
+            requests that set the same reference within 24 hours resolve to the same job. Requests that omit it are not
+            deduplicated.
+      required:
+        - identifiers
+      title: DeletionRequest
+    DeletionJobStatus:
+      type: string
+      enum:
+        - queued
+        - in_progress
+        - completed
+        - partial
+        - failed
+      description: >-
+        Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and
+        `failed` are terminal.
+      title: DeletionJobStatus
+    DeletionRequestAccepted:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Identifier of the created deletion job. Use it to poll job status.
+        status:
+          $ref: '#/components/schemas/DeletionJobStatus'
+        submitted_count:
+          type: integer
+          description: Number of identifiers received in the request.
+        created_at:
+          type: string
+          format: date-time
+          description: Time the job was created, in ISO 8601 format.
+      description: Acknowledgment returned when a deletion request is accepted for processing.
+      title: DeletionRequestAccepted
+    IdentifierDispositionDisposition:
+      type: string
+      enum:
+        - accepted
+        - not_found
+        - invalid
+        - exceeds_limit
+        - duplicate
+      description: >-
+        How the identifier was handled. `accepted` identifiers are queued for erasure; the other values indicate the
+        identifier contributed no erasure.
+      title: IdentifierDispositionDisposition
+    IdentifierDisposition:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DeletionIdentifierType'
+        value:
+          type: string
+          description: The identifier value as submitted.
+        variable:
+          type:
+            - string
+            - 'null'
+          description: The matched variable name, or null when not applicable.
+        disposition:
+          $ref: '#/components/schemas/IdentifierDispositionDisposition'
+          description: >-
+            How the identifier was handled. `accepted` identifiers are queued for erasure; the other values indicate the
+            identifier contributed no erasure.
+        matched_chatters:
+          type: integer
+          description: Number of end users matched by this identifier.
+        reason:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Human-readable explanation for a non-accepted disposition. Always set for `invalid` and `exceeds_limit`, and
+            for `not_found` on ID-based identifiers; may be null for a `not_found` `email` or `variable_match` selector,
+            and for `accepted`/`duplicate`. Do not assume it is non-null from `disposition` alone.
+      description: The outcome for one submitted identifier.
+      title: IdentifierDisposition
+    DeletionJob:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Identifier of the deletion job.
+        type:
+          type: string
+          description: The job type.
+        client_reference:
+          type:
+            - string
+            - 'null'
+          description: The caller-supplied reference from the original request, or null.
+        status:
+          $ref: '#/components/schemas/DeletionJobStatus'
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentifierDisposition'
+          description: >-
+            Per-identifier outcomes. Inspect this array to understand exactly what was erased, rather than relying on
+            the top-level status alone.
+        created_at:
+          type: string
+          format: date-time
+          description: Time the job was created, in ISO 8601 format.
+        completed_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: Time the job reached a terminal state, in ISO 8601 format, or null while the job is still running.
+        failure_reason:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Opaque, machine-readable diagnostic present only when `status` is `failed`, or null otherwise. This value is
+            subject to change; to understand outcomes per identifier, inspect each identifier's `disposition` and
+            `reason`.
+      description: Full state of a deletion job, including the per-identifier outcomes.
+      title: DeletionJob
     IntegrationIdentifierField:
       type: string
       description: >-
@@ -3599,6 +4763,95 @@ components:
           $ref: '#/components/schemas/PlatformIntegrationInstallationUpdateRequestStatus'
           description: The new status of the installation
       title: PlatformIntegrationInstallationUpdateRequest
+    AuditLogEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Globally unique event id (uuid4)
+        timestamp:
+          type: string
+          format: date-time
+          description: When the change occurred (ISO 8601, UTC, millisecond precision)
+        actor_email:
+          type: string
+          description: >-
+            Email of the user who made the change, or the owner of a dashboard-created Platform API key. Empty for
+            system and service-token actors.
+        actor_name:
+          type: string
+          description: Display name of the actor; empty when unavailable
+        actor_user_id:
+          type: string
+          description: >-
+            User id of the actor. For an API key, the id of the user who created the key. Empty for system and
+            service-token actors.
+        entity_type:
+          type: string
+          description: The type of entity that was changed
+        entity_id:
+          type: string
+          description: The id of the entity that was changed
+        entity_name:
+          type: string
+          description: A human-readable name for the changed entity
+        activity:
+          type: string
+          description: >-
+            What happened to the entity. One of `created`, `updated`, `deleted`, `executed`, `invited`, `activated`, or
+            `deactivated`.
+        interface:
+          type: string
+          description: >-
+            Where the change originated, such as `dashboard`, `api`, `mcp`, `cli`, `import`, `export`, or `system`
+            (background jobs and Ada's internal processing).
+        context_ip:
+          type: string
+          description: Source IP address of the request that made the change
+        context_user_agent:
+          type: string
+          description: User agent string of the request that made the change
+        api_key_name:
+          type: string
+          description: Name of the API key used, when the change was made by a dashboard-created Platform API key; empty otherwise.
+      required:
+        - id
+        - timestamp
+        - entity_type
+        - entity_id
+        - activity
+      description: >-
+        A single Audit log event: one configuration change recorded for the account. Empty-string fields mean the value
+        was unavailable for that event (for example, a system actor has no email).
+      title: AuditLogEvent
+    AuditLogEventListMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+            - string
+            - 'null'
+          description: >-
+            URL for the next page of results, or `null` on the last or empty page. Replay it unchanged to keep the time
+            window and the cursor constant across pages.
+      description: Pagination metadata
+      title: AuditLogEventListMeta
+    AuditLogEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEvent'
+          description: The page of Audit log events (at most `limit` items)
+        meta:
+          $ref: '#/components/schemas/AuditLogEventListMeta'
+          description: Pagination metadata
+      required:
+        - data
+        - meta
+      description: A cursor-paginated page of Audit log events
+      title: AuditLogEventList
     V2ChannelsGetParametersType:
       type: string
       enum:
@@ -3620,6 +4873,17 @@ components:
         - voice
       description: The modality of the channel
       title: BaseChannelModality
+    BaseChannelCapabilities:
+      type: object
+      properties:
+        markdown:
+          type: boolean
+          default: false
+          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
+      description: >-
+        What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields
+        default to false. Read-only on native channels, whose capabilities are fixed by the surface.
+      title: BaseChannelCapabilities
     CustomChannelType:
       type: string
       enum:
@@ -3660,6 +4924,12 @@ components:
             modality:
               $ref: '#/components/schemas/BaseChannelModality'
               description: The modality of the channel
+            capabilities:
+              $ref: '#/components/schemas/BaseChannelCapabilities'
+              description: >-
+                What the channel's surface can render. The AI Agent tailors replies to the declared capabilities.
+                Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the
+                surface.
             metadata:
               type: object
               additionalProperties:
@@ -3695,6 +4965,12 @@ components:
             modality:
               $ref: '#/components/schemas/BaseChannelModality'
               description: The modality of the channel
+            capabilities:
+              $ref: '#/components/schemas/BaseChannelCapabilities'
+              description: >-
+                What the channel's surface can render. The AI Agent tailors replies to the declared capabilities.
+                Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the
+                surface.
           required:
             - type
             - name
@@ -3733,6 +5009,11 @@ components:
         modality:
           $ref: '#/components/schemas/BaseChannelModality'
           description: The modality of the channel
+        capabilities:
+          $ref: '#/components/schemas/BaseChannelCapabilities'
+          description: >-
+            What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted
+            fields default to false. Read-only on native channels, whose capabilities are fixed by the surface.
         metadata:
           type: object
           additionalProperties:
@@ -3750,6 +5031,24 @@ components:
         - description
         - modality
       title: CustomChannel
+    UpdateChannelCapabilities:
+      type: object
+      properties:
+        markdown:
+          type: boolean
+          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
+      description: Capabilities to update. Only the fields you include are changed; omitted fields keep their current value.
+      title: UpdateChannelCapabilities
+    UpdateChannel:
+      type: object
+      properties:
+        capabilities:
+          $ref: '#/components/schemas/UpdateChannelCapabilities'
+          description: Capabilities to update. Only the fields you include are changed; omitted fields keep their current value.
+      required:
+        - capabilities
+      description: Fields that can be updated on an existing custom channel
+      title: UpdateChannel
     EmailConversationCreateRequestMetadata:
       type: object
       properties: {}
@@ -4251,6 +5550,253 @@ components:
           items:
             $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
       title: Webhook Management_listWebhookEventTypes_Response_200
+    PersonaMessageLength:
+      type: string
+      enum:
+        - concise
+        - normal
+      title: PersonaMessageLength
+    Persona:
+      type: object
+      properties:
+        personality:
+          type: array
+          items:
+            type: string
+        emoji_usage:
+          type: boolean
+        allowed_emojis:
+          type: string
+        default_timezone:
+          type: string
+        company_description:
+          type:
+            - string
+            - 'null'
+        community_guidelines_url:
+          type:
+            - string
+            - 'null'
+        message_length:
+          $ref: '#/components/schemas/PersonaMessageLength'
+        ask_for_more_help:
+          type: boolean
+        no_customer_pi:
+          type: boolean
+        no_competitors:
+          type: boolean
+        competitor_names:
+          type:
+            - string
+            - 'null'
+        enable_acknowledgment_messages:
+          type: boolean
+      required:
+        - personality
+        - emoji_usage
+        - allowed_emojis
+        - default_timezone
+        - message_length
+        - ask_for_more_help
+        - no_customer_pi
+        - no_competitors
+        - enable_acknowledgment_messages
+      description: Persona configuration
+      title: Persona
+    PersonaUpdateMessageLength:
+      type: string
+      enum:
+        - concise
+        - normal
+      title: PersonaUpdateMessageLength
+    PersonaUpdate:
+      type: object
+      properties:
+        personality:
+          type: array
+          items:
+            type: string
+        emoji_usage:
+          type: boolean
+        allowed_emojis:
+          type: string
+        default_timezone:
+          type: string
+        company_description:
+          type:
+            - string
+            - 'null'
+        community_guidelines_url:
+          type:
+            - string
+            - 'null'
+        message_length:
+          $ref: '#/components/schemas/PersonaUpdateMessageLength'
+        ask_for_more_help:
+          type: boolean
+        no_customer_pi:
+          type: boolean
+        no_competitors:
+          type: boolean
+        competitor_names:
+          type:
+            - string
+            - 'null'
+        enable_acknowledgment_messages:
+          type: boolean
+      description: Partial persona update. All fields optional.
+      title: PersonaUpdate
+    VariableSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the Variable
+        name:
+          type: string
+          description: The name of the Variable
+      required:
+        - id
+        - name
+      description: |
+        A Variable as returned by the list and get endpoints. Carries the
+        Variable's id, used to reference it elsewhere, and its name.
+      title: VariableSummary
+    variables_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableSummary'
+      required:
+        - data
+      title: variables_list_Response_200
+    CustomInstruction:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the custom instruction
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          default: false
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type:
+            - string
+            - 'null'
+          description: Internal notes about this instruction (not shown to the Agent)
+        availability_rules:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Availability rule gating which end users this instruction applies to, as a rule-expression string with
+            `v("<variable_name>")` variable lookups. `null` when no rule is set.
+      required:
+        - id
+        - title
+        - text
+        - enabled
+      description: A custom instruction — system-level behavioral guidance for the AI Agent
+      title: CustomInstruction
+    CustomInstructionListMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+            - string
+            - 'null'
+          description: >-
+            URL for the next page of results, or null on the last/empty page. Replay it unchanged to fetch the next
+            page.
+      description: Pagination metadata
+      title: CustomInstructionListMeta
+    CustomInstructionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomInstruction'
+          description: The list of custom instructions
+        meta:
+          $ref: '#/components/schemas/CustomInstructionListMeta'
+          description: Pagination metadata
+      required:
+        - data
+        - meta
+      title: CustomInstructionList
+    CustomInstructionCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          default: false
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type: string
+          description: Internal notes about this instruction (not shown to the Agent)
+        availability_rules:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Omit or send
+            `null` for no rule. A rule that references an unknown variable, or that is malformed or uses an unsupported
+            operator, is rejected with 400.
+      required:
+        - title
+        - text
+      description: Fields for creating a custom instruction
+      title: CustomInstructionCreate
+    Custom Instructions_deleteCustomInstruction_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Instructions_deleteCustomInstruction_Response_204
+    CustomInstructionUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type: string
+          description: >-
+            Internal notes about this instruction (not shown to the Agent). Send an empty string to blank it; omit it to
+            leave the existing notes unchanged.
+        availability_rules:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Send a non-empty
+            string to set or replace it, `null` to clear it, or omit to leave it unchanged. A rule that references an
+            unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
+      description: >-
+        Fields for updating a custom instruction. Only the fields provided are changed; omitted fields are left as they
+        are.
+      title: CustomInstructionUpdate
     EndUserCreatedWebhookPayloadData:
       type: object
       properties:
@@ -4345,6 +5891,103 @@ components:
             A list of tags that Ada provides. You can use tags to filter webhook events in the Ada dashboard. Includes
             the `end_user_id` value for the webhook payload by default. Ada may add additional tags at any time.
       title: EndUserUpdatedWebhookPayload
+    AuditLogWebhookEventDataActivity:
+      type: string
+      enum:
+        - created
+        - updated
+        - deleted
+        - executed
+        - invited
+        - activated
+        - deactivated
+      description: What happened to the entity
+      title: AuditLogWebhookEventDataActivity
+    AuditLogWebhookEventData:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Globally unique audit event id
+        timestamp:
+          type: string
+          format: date-time
+          description: When the configuration change occurred (ISO 8601, UTC, millisecond precision)
+        actor_email:
+          type: string
+          description: >-
+            Email of the actor (the user, or the owner of a dashboard-created Platform API key); empty for system and
+            service-token actors.
+        actor_name:
+          type: string
+          description: Display name of the actor; empty when unavailable
+        actor_user_id:
+          type: string
+          description: >-
+            User id of the actor. For an API key, the id of the user who created the key. Empty for system and
+            service-token actors.
+        entity_type:
+          type: string
+          description: The type of entity that was changed
+        entity_id:
+          type: string
+          description: The id of the entity that was changed
+        entity_name:
+          type: string
+          description: Human-readable name of the changed entity
+        activity:
+          $ref: '#/components/schemas/AuditLogWebhookEventDataActivity'
+          description: What happened to the entity
+        interface:
+          type: string
+          description: Where the change originated, such as `dashboard`, `api`, `mcp`, `cli`, `import`, `export`, or `system`.
+        context_ip:
+          type: string
+          description: Source IP address of the request that made the change
+        context_user_agent:
+          type: string
+          description: User agent string of the request that made the change
+        api_key_name:
+          type: string
+          description: Name of the API key used, when the change was made by a dashboard-created Platform API key; empty otherwise.
+      required:
+        - id
+        - timestamp
+        - entity_type
+        - entity_id
+        - activity
+      description: >-
+        A configuration change recorded by the Audit log, delivered as the `data` field of a `v1.audit_log.emitted`
+        webhook.
+      title: AuditLogWebhookEventData
+    AuditLogWebhookPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          description: >-
+            The webhook event type. Audit log events use `v1.audit_log.emitted`; the `data.activity` field identifies
+            what changed.
+        timestamp:
+          type: string
+          format: date-time
+          description: When the event was generated (millisecond precision, to help with event ordering)
+        data:
+          $ref: '#/components/schemas/AuditLogWebhookEventData'
+          description: The Audit log event data
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            Tags for filtering webhook events in the Ada dashboard. Includes `entity_type`, `activity`, and `entity_id`
+            by default. Ada may add additional tags at any time.
+      required:
+        - type
+        - timestamp
+        - data
+      description: The body delivered to your endpoint for a `v1.audit_log.emitted` event
+      title: AuditLogWebhookPayload
     ConversationCreatedWebhookPayloadType:
       type: string
       enum:
@@ -4443,6 +6086,12 @@ components:
             modality:
               $ref: '#/components/schemas/BaseChannelModality'
               description: The modality of the channel
+            capabilities:
+              $ref: '#/components/schemas/BaseChannelCapabilities'
+              description: >-
+                What the channel's surface can render. The AI Agent tailors replies to the declared capabilities.
+                Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the
+                surface.
           required:
             - type
             - name
@@ -4468,6 +6117,12 @@ components:
             modality:
               $ref: '#/components/schemas/BaseChannelModality'
               description: The modality of the channel
+            capabilities:
+              $ref: '#/components/schemas/BaseChannelCapabilities'
+              description: >-
+                What the channel's surface can render. The AI Agent tailors replies to the declared capabilities.
+                Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the
+                surface.
             metadata:
               type: object
               additionalProperties:

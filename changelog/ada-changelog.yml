@@ -1,0 +1,240 @@
+generated: '2026-08-14'
+method: searched
+source: https://docs.ada.cx/release-notes
+docs: https://docs.ada.cx/release-notes
+feeds:
+  rss: https://docs.ada.cx/release-notes.rss
+  llms: https://docs.ada.cx/release-notes/llms.txt
+  mcp: https://docs.ada.cx/release-notes/_mcp/server
+  email: Weekly summary every Friday at 11 a.m. Eastern, when there was at least one release that week
+scheme:
+  type: dated-entries
+  cadence: continuous (multiple entries per week)
+  api_version_current: v2
+  filterable: Ada tags entries; filter by the "APIs" tag to see only API updates
+  note: >-
+    Entries are dated, not numbered. There is no semantic version for the platform; the only
+    version identifier that moves is the REST path version (v2) and the webhook payload prefix (v1).
+window:
+  from: '2026-06-08'
+  to: '2026-08-13'
+  note: Recent window only — the live changelog is the source of truth.
+entries:
+- date: '2026-08-13'
+  title: 'MCP: Change sets — draft, test, promote, and revert Agent changes'
+  area: mcp
+  kind: addition
+  url: https://docs.ada.cx/2026-08-13-mcp-change-sets
+- date: '2026-08-12'
+  title: Trusted senders for email
+  area: channels
+  kind: addition
+  url: https://docs.ada.cx/2026-08-12-trusted-senders
+- date: '2026-08-11'
+  title: Localized Knowledge falls back within the same language
+  area: knowledge
+  kind: change
+  url: https://docs.ada.cx/2026-08-11-localized-knowledge-locale-fallback
+- date: '2026-08-07'
+  title: Adjustable speaking pace for Voice
+  area: voice
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/8/7
+- date: '2026-08-06'
+  title: 'Conversations API: opt-in Markdown formatting for custom channels'
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/2026-08-06-conversations-api-markdown
+- date: '2026-08-04'
+  title: Conversation start events for Playbooks
+  area: automation
+  kind: addition
+  url: https://docs.ada.cx/2026-08-04-conversation-start-events
+- date: '2026-08-03'
+  title: Playbook and reply images can be driven by a Variable
+  area: automation
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/8/3
+- date: '2026-07-31'
+  title: Always-on AI Agent terms and User term aliases for Glossary
+  area: knowledge
+  kind: addition
+  url: https://docs.ada.cx/2026-07-31-glossary-always-on-terms-and-aliases
+- date: '2026-07-30'
+  title: Increased bulk end-user deletion match limit
+  area: api
+  kind: change
+  url: https://docs.ada.cx/2026-07-30-increase-bulk-end-user-deletion-match-limit
+- date: '2026-07-29'
+  title: Launch controls no longer reroute test chats
+  area: testing
+  kind: fix
+  url: https://docs.ada.cx/2026-07-29-launch-controls-test-chat
+- date: '2026-07-27'
+  title: Custom Instructions API now generally available
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/7/27
+  note: Added GET/POST/PATCH/DELETE /v2/custom-instructions/ to the Knowledge OpenAPI document.
+- date: '2026-07-23'
+  title: 'Data Export API: last_agent fields now reflect the most recent handler'
+  area: api
+  kind: change
+  url: https://docs.ada.cx/2026-07-23-data-export-last-agent-activity
+- date: '2026-07-22'
+  title: Availability rules for Glossary
+  area: knowledge
+  kind: addition
+  url: https://docs.ada.cx/2026-07-22-glossary-availability-rules
+- date: '2026-07-22'
+  title: Instagram DMs for the AI Agent
+  area: channels
+  kind: addition
+  url: https://docs.ada.cx/2026-07-22-instagram-channel
+- date: '2026-07-21'
+  title: See Glossary usage in the Conversation View
+  area: dashboard
+  kind: addition
+  url: https://docs.ada.cx/2026-07-21-glossary-conversation-visibility
+- date: '2026-07-20'
+  title: 'MCP: polymorphic tool shape in get_ada_configuration and list_entities'
+  area: mcp
+  kind: breaking
+  url: https://docs.ada.cx/2026-07-20-mcp-polymorphic-tool-shape
+  note: Response shape change on two MCP tools.
+- date: '2026-07-16'
+  title: 'MCP: Voice capture and confirmation on Ask steps'
+  area: mcp
+  kind: addition
+  url: https://docs.ada.cx/2026-07-16-mcp-voice-capture-confirmation
+- date: '2026-07-14'
+  title: Bulk End-User Deletion API
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/7/14
+  note: Added POST /v2/end-users/delete and GET /v2/jobs/{job_id}. Successor to the deprecated Data Compliance API.
+- date: '2026-07-14'
+  title: 'Data Export API: last_agent_id and last_agent_name on the Conversations endpoint'
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/2026-07-14-data-export-last-agent-fields
+- date: '2026-07-10'
+  title: MCP Server connections are now listed and revoked per application
+  area: mcp
+  kind: change
+  url: https://docs.ada.cx/2026-07-10-mcp-per-application-connections
+- date: '2026-07-09'
+  title: Manage MCP Server connections from the dashboard
+  area: mcp
+  kind: addition
+  url: https://docs.ada.cx/2026-07-09-mcp-connections-management
+- date: '2026-07-08'
+  title: Glossary changes now appear in the Audit log
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/2026-07-08-glossary-audit-log
+- date: '2026-07-07'
+  title: Chronological order for agent arrays in the Data Export API
+  area: api
+  kind: change
+  url: https://docs.ada.cx/2026-07-07-agent-array-chronological-order-data-export
+- date: '2026-07-06'
+  title: Glossary is now generally available
+  area: knowledge
+  kind: addition
+  url: https://docs.ada.cx/2026-07-06-glossary-ga
+- date: '2026-07-03'
+  title: Article availability rules in the Knowledge API
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/2026-07-03-kb-article-availability-rules
+- date: '2026-07-02'
+  title: Persona API now generally available
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/7/2
+  note: Added GET/PATCH /v2/persona/ to the Knowledge OpenAPI document.
+- date: '2026-06-30'
+  title: New knowledge articles and Playbooks fields in the Data Export API
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/2026-06-30-used-articles-and-playbooks-data-export
+- date: '2026-06-30'
+  title: 'Realistic Voice simulations: now matching real call behavior'
+  area: testing
+  kind: change
+  url: https://docs.ada.cx/2026-06-30-voice-simulations-end-to-end
+- date: '2026-06-29'
+  title: Audit log API
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/6/29
+  note: Added GET /v2/analytics/audit-log/events/.
+- date: '2026-06-26'
+  title: Consistent validation error details
+  area: api
+  kind: change
+  url: https://docs.ada.cx/release-notes/2026/6/26
+  note: Standardised the validation_error `details` array shape documented in errors/ada-problem-types.yml.
+- date: '2026-06-24'
+  title: Topic and Intent classifications in Data Export
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/2026-06-24-classifications-data-export
+- date: '2026-06-23'
+  title: New Variables API
+  area: api
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/6/23
+  note: Added GET /v2/variables/ and GET /v2/variables/{id}.
+- date: '2026-06-23'
+  title: Filter conversations by moderation category
+  area: dashboard
+  kind: addition
+  url: https://docs.ada.cx/2026-06-23-moderation-conversation-filter
+- date: '2026-06-22'
+  title: Genesys handoff integration
+  area: integrations
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/6/22
+- date: '2026-06-18'
+  title: MCP role-based access control
+  area: mcp
+  kind: addition
+  url: https://docs.ada.cx/2026-06-18-mcp-rbac
+- date: '2026-06-16'
+  title: 'MCP: create coaching with propose_change'
+  area: mcp
+  kind: addition
+  url: https://docs.ada.cx/2026-06-16-mcp-coaching-create
+- date: '2026-06-12'
+  title: Programmatic and headless control for the Web Chat SDK
+  area: sdk
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/6/12
+- date: '2026-06-11'
+  title: Amazon Connect handoff documentation
+  area: integrations
+  kind: addition
+  url: https://docs.ada.cx/release-notes/2026/6/11
+- date: '2026-06-11'
+  title: Increased test case and simulation limits
+  area: testing
+  kind: change
+  url: https://docs.ada.cx/release-notes/2026/6/11
+- date: '2026-06-08'
+  title: Sunshine Conversations webhook config moved to the Social channel settings
+  area: channels
+  kind: change
+  url: https://docs.ada.cx/2026-06-08-sunshine-webhook-config-moved-to-social
+- date: '2026-06-03'
+  title: 'MCP: improvement guide, feedback tool, and propose_change confirmation'
+  area: mcp
+  kind: addition
+  url: https://docs.ada.cx/2026-06-03-mcp-improvement-and-confirmation
+entry_count: 41
+observation: >-
+  Thirteen of the last ten weeks' entries are API additions that landed in the Knowledge OpenAPI
+  document (Custom Instructions, Persona, Variables, Audit Log, Bulk End-User Deletion, channel
+  PATCH) — the spec grew from 40 to 53 operations between the 2026-07-22 harvest and 2026-08-14.
+  MCP is the fastest-moving surface in the changelog by entry count.

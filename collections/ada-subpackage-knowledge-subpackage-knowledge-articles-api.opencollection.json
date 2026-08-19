@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/articles API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_knowledge.subpackage_knowledge/articles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get knowledge articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/knowledge/articles/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The article cursor that marks the start or beginning of the returned article records"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of article records to return"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article id"
+              },
+              {
+                "name": "enabled",
+                "value": "",
+                "type": "query",
+                "description": "Filter by enabled status"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Filter by language"
+              },
+              {
+                "name": "knowledge_source_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by knowledge source"
+              },
+              {
+                "name": "tag_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag ids"
+              }
+            ]
+          },
+          "docs": "Get knowledge articles"
+        },
+        {
+          "info": {
+            "name": "Delete multiple articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://example.ada.support/v2/knowledge/articles/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by article id"
+              },
+              {
+                "name": "enabled",
+                "value": "",
+                "type": "query",
+                "description": "Filter by enabled status"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Filter by language"
+              },
+              {
+                "name": "knowledge_source_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by knowledge source"
+              },
+              {
+                "name": "tag_ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag ids"
+              }
+            ]
+          },
+          "docs": "Delete multiple articles"
+        },
+        {
+          "info": {
+            "name": "Get a single knowledge article",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/knowledge/articles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the article to retrieve"
+              }
+            ]
+          },
+          "docs": "Get knowledge article by id"
+        },
+        {
+          "info": {
+            "name": "Delete a single article",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://example.ada.support/v2/knowledge/articles/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the article to delete"
+              }
+            ]
+          },
+          "docs": "Delete an article"
+        },
+        {
+          "info": {
+            "name": "Upsert multiple articles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/knowledge/bulk/articles/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert an array of knowledge articles\n\nThis endpoint will create or update articles based on the unique `id` field of each article. If an article with the same `id` already exists, it will be updated. Otherwise, a new article will be created.\n\n**Limits:**\n- The maximum size of a request payload is 10MB\n- The maximum size of an article is 100KB\n- The maximum number of articles is 50,000\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

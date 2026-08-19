@@ -1,0 +1,48 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Ada — Data Compliance subpackage_channels subpackage_messages
+    API
+  version: 1.0.0
+extends: openapi/ada-subpackage-messages-api-openapi.yml
+x-generated: '2026-08-14'
+x-method: generated
+x-source: apis.yml + repo artifacts; never mutates the harvested spec
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: ada
+    x-apievangelist-artifacts:
+      authentication: authentication/ada-authentication.yml
+      scopes: scopes/ada-scopes.yml
+      conventions: conventions/ada-conventions.yml
+      errors: errors/ada-problem-types.yml
+      lifecycle: lifecycle/ada-lifecycle.yml
+      rate_limits: rate-limits/ada-rate-limits.yml
+      data_model: data-model/ada-data-model.yml
+      webhooks: asyncapi/ada-webhooks.yml
+      mcp: mcp/ada-mcp.yml
+      tool_crosswalk: mcp/ada-tool-crosswalk.yml
+      skills: skills/_index.yml
+      conformance: conformance/ada-conformance.yml
+      sandbox: sandbox/ada-sandbox.yml
+    x-apievangelist-docs: https://docs.ada.cx/reference/introduction/overview
+    x-apievangelist-api-catalog: https://docs.ada.cx/.well-known/api-catalog
+- target: $.servers
+  update:
+  - url: https://{instance}.ada.support/api
+    description: 'Per-tenant Ada instance host. Ada publishes this as https://example.ada.support/api
+      and instructs callers to replace `example` with their own dashboard subdomain. Regional clusters:
+      {instance}.eu.ada.support, {instance}.maple.ada.support, {instance}.us2.ada.support.'
+    variables:
+      instance:
+        default: example
+        description: Your Ada instance subdomain, taken from your dashboard URL.
+- target: $.info
+  update:
+    x-apievangelist-runtime:
+      error_envelope: '{"errors":[{"type","message","details"}]} — application/json, NOT RFC 9457'
+      pagination: cursor; limit/cursor query params; meta.next_page_url, null on last page
+      idempotency: client_reference (24h) on POST /v2/end-users/delete; external_id upsert on POST /v2/end-users/
+      rate_limit_signal: 429 only — no RateLimit-*/Retry-After response headers are published
+      deprecation_signal: release notes only — no RFC 8594 Sunset/Deprecation headers
+      auth: 'Authorization: Bearer <api-key>; keys are non-expiring, unscoped, full read+write'

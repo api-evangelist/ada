@@ -9,7 +9,7 @@ paths:
       summary: Return conversations matching the parameters
       description: Returns a list of `conversation` objects along with a `next_page_uri` if applicable
       tags:
-        - subpackage_conversations
+        - conversations
       parameters:
         - name: created_since
           in: query
@@ -119,7 +119,7 @@ paths:
       summary: Return messages matching the parameters
       description: Returns a list of `message` objects along with a `next_page_uri` if applicable
       tags:
-        - subpackage_messages
+        - messages
       parameters:
         - name: created_since
           in: query
@@ -214,6 +214,34 @@ servers:
     description: https://example.ada.support/api
 components:
   schemas:
+    ConversationClassificationsItemsIntentsItems:
+      type: object
+      properties:
+        intent_id:
+          type: string
+          description: Ada ID of the classified Intent
+        intent_name:
+          type: string
+          description: Name of the classified Intent
+        status:
+          type: string
+          description: Status of the Intent (for example, active)
+      title: ConversationClassificationsItemsIntentsItems
+    ConversationClassificationsItems:
+      type: object
+      properties:
+        topic_id:
+          type: string
+          description: Ada ID of the classified Topic
+        topic_name:
+          type: string
+          description: Name of the classified Topic
+        intents:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationClassificationsItemsIntentsItems'
+          description: Intents classified within this Topic
+      title: ConversationClassificationsItems
     ConversationCsat:
       type: object
       properties: {}
@@ -224,6 +252,62 @@ components:
       properties: {}
       description: Object of metavariables and their values active during this conversations
       title: ConversationMetavariables
+    ConversationUsedCoachingItems:
+      type: object
+      properties:
+        id:
+          type:
+            - string
+            - 'null'
+        entity_name:
+          type:
+            - string
+            - 'null'
+        coaching_type:
+          type:
+            - string
+            - 'null'
+        coaching_instructions:
+          type:
+            - string
+            - 'null'
+        coaching_intent:
+          type:
+            - string
+            - 'null'
+      title: ConversationUsedCoachingItems
+    ConversationUsedArticlesItems:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        url:
+          type:
+            - string
+            - 'null'
+        source:
+          type:
+            - string
+            - 'null'
+      title: ConversationUsedArticlesItems
+    ConversationUsedPlaybooksItems:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        playbook_execution_id:
+          type:
+            - string
+            - 'null'
+        outcome_status:
+          type:
+            - string
+            - 'null'
+      title: ConversationUsedPlaybooksItems
     ConversationVariables:
       type: object
       properties: {}
@@ -268,6 +352,13 @@ components:
         chatter_id:
           type: string
           description: Ada ID of the chatter having this conversation
+        classifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationClassificationsItems'
+          description: >-
+            Topic and Intent classifications for this conversation. Returns an empty array when the conversation has no
+            classifications.
         csat:
           $ref: '#/components/schemas/ConversationCsat'
           description: Object of customer satisfaction survey data for this conversation
@@ -332,6 +423,16 @@ components:
         language:
           type: string
           description: The language the chatter used
+        last_agent_id:
+          type: string
+          description: >-
+            The unique ID of the agent who most recently handled the conversation (latest activity timestamp). Null when
+            no agent was assigned. Populated only for clients on the generative export path.
+        last_agent_name:
+          type: string
+          description: >-
+            The name of the agent who most recently handled the conversation, corresponding to last_agent_id. Null when
+            no agent was assigned. Populated only for clients on the generative export path.
         metavariables:
           $ref: '#/components/schemas/ConversationMetavariables'
           description: Object of metavariables and their values active during this conversations
@@ -347,6 +448,28 @@ components:
             - 'null'
           format: date-time
           description: Date and time the record was uploaded to the API
+        used_coaching:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationUsedCoachingItems'
+          description: >-
+            Coaching events that were applied during the conversation. Each entry includes the coaching applied event
+            id, entity_name, coaching_type, coaching_instructions, and coaching_intent. Returns an empty array when no
+            coaching was applied.
+        used_articles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationUsedArticlesItems'
+          description: >-
+            Knowledge articles that were referenced during the conversation. Each entry includes the article id, name,
+            url, and source. Returns an empty array when no articles were referenced.
+        used_playbooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationUsedPlaybooksItems'
+          description: >-
+            Playbooks that were invoked during the conversation. Each entry includes the playbook id, name,
+            playbook_execution_id, and outcome_status. Returns an empty array when no Playbooks were invoked.
         variables:
           $ref: '#/components/schemas/ConversationVariables'
           description: Object of autocapture and global variables and their values last active during this conversations
@@ -363,7 +486,7 @@ components:
     ConversationsResponse:
       type: object
       properties:
-        items:
+        data:
           type: array
           items:
             $ref: '#/components/schemas/Conversation'
@@ -478,7 +601,7 @@ components:
     MessagesResponse:
       type: object
       properties:
-        items:
+        data:
           type: array
           items:
             $ref: '#/components/schemas/Message'

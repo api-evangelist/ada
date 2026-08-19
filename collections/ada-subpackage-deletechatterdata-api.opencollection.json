@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_deleteChatterData API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_deleteChatterData",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete all data associated with a chatter's email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/api/v1/data-subject-request",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes all data associated with the provided chatter's email address linked to the bot. Replace `example` with your agent's handle. A successful call returns the chatter's email supplied (null if email field was not supplied) in the request whose data will be deleted from Ada's systems. In order to ensure emails are properly linked to a chatter record, ensure the capture block validation when capturing email is set to `@ Email.`<br><br> **Note for multiple participant emails:** If you are reque"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

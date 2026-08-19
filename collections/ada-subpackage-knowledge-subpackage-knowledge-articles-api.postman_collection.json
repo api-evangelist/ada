@@ -1,0 +1,2291 @@
+{
+  "item": [
+    {
+      "id": "075e51d6-ce0c-4586-a317-c76d23ef6c99",
+      "name": "subpackage_knowledge.subpackage_knowledge/articles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f9b4393e-a714-401a-aeb0-682b3b8de78a",
+          "name": "Get knowledge articles",
+          "request": {
+            "name": "Get knowledge articles",
+            "description": {
+              "content": "Get knowledge articles",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "knowledge",
+                "articles",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<id>",
+                  "description": "The article cursor that marks the start or beginning of the returned article records"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of article records to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<id>",
+                  "description": "Filter by article id"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<id>",
+                  "description": "Filter by article id"
+                },
+                {
+                  "disabled": false,
+                  "key": "enabled",
+                  "value": "<boolean>",
+                  "description": "Filter by enabled status"
+                },
+                {
+                  "disabled": false,
+                  "key": "enabled",
+                  "value": "<boolean>",
+                  "description": "Filter by enabled status"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "Filter by language"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "Filter by language"
+                },
+                {
+                  "disabled": false,
+                  "key": "knowledge_source_id",
+                  "value": "<id>",
+                  "description": "Filter by knowledge source"
+                },
+                {
+                  "disabled": false,
+                  "key": "knowledge_source_id",
+                  "value": "<id>",
+                  "description": "Filter by knowledge source"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag_ids",
+                  "value": "<id>",
+                  "description": "Filter by tag ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag_ids",
+                  "value": "<id>",
+                  "description": "Filter by tag ids"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa291d9e-15e6-4a7c-9121-7158868385de",
+              "name": "Matching knowledge articles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"content\": \"string\",\n      \"url\": \"string\",\n      \"knowledge_source_id\": \"string\",\n      \"language\": \"sl\",\n      \"tag_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created\": \"1960-06-09T21:03:40.064Z\",\n      \"updated\": \"2021-01-22T08:58:46.593Z\",\n      \"external_created\": \"2017-09-25T03:01:24.881Z\",\n      \"external_updated\": \"1990-04-06T03:22:43.144Z\",\n      \"enabled\": false,\n      \"metadata\": {}\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"content\": \"string\",\n      \"url\": \"string\",\n      \"knowledge_source_id\": \"string\",\n      \"language\": \"pa\",\n      \"tag_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"created\": \"2019-06-01T03:53:24.351Z\",\n      \"updated\": \"1959-03-13T13:11:47.814Z\",\n      \"external_created\": \"1960-11-25T04:02:55.336Z\",\n      \"external_updated\": \"1995-06-24T00:21:45.093Z\",\n      \"enabled\": false,\n      \"metadata\": {}\n    }\n  ],\n  \"meta\": {\n    \"next_page_url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01d76a80-a857-40f8-a8fe-f56eadd56b85",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50a4861b-688f-4546-a741-48a80ab6f348",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e826310-2bd8-4406-8d70-5e9488df6ab0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2f025ca-7544-4b4b-bda7-637978d9807b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9bddff1-1b31-42f8-9857-e576894f5cdb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45fc5ddc-f8d1-48c3-b60c-f9ac52b83f53",
+          "name": "Delete multiple articles",
+          "request": {
+            "name": "Delete multiple articles",
+            "description": {
+              "content": "Delete multiple articles",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "knowledge",
+                "articles",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<id>",
+                  "description": "Filter by article id"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<id>",
+                  "description": "Filter by article id"
+                },
+                {
+                  "disabled": false,
+                  "key": "enabled",
+                  "value": "<boolean>",
+                  "description": "Filter by enabled status"
+                },
+                {
+                  "disabled": false,
+                  "key": "enabled",
+                  "value": "<boolean>",
+                  "description": "Filter by enabled status"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "Filter by language"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "<string>",
+                  "description": "Filter by language"
+                },
+                {
+                  "disabled": false,
+                  "key": "knowledge_source_id",
+                  "value": "<id>",
+                  "description": "Filter by knowledge source"
+                },
+                {
+                  "disabled": false,
+                  "key": "knowledge_source_id",
+                  "value": "<id>",
+                  "description": "Filter by knowledge source"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag_ids",
+                  "value": "<id>",
+                  "description": "Filter by tag ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag_ids",
+                  "value": "<id>",
+                  "description": "Filter by tag ids"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae863d4c-b69f-4f48-8a28-0208fb7e07ab",
+              "name": "Articles successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2efa4ad4-d605-4f93-8f89-5ba420278a68",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "651caa21-7347-4d6f-b83c-69d4592bbcfb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44422e6e-bf00-471a-a3d2-c59ca32b62ed",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a589db15-4ba2-4547-b161-ebb8fef1da29",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba77f056-aa15-4cd7-918d-f4403b96ffbb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "enabled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "knowledge_source_id",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    },
+                    {
+                      "key": "tag_ids",
+                      "value": "<id>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "adb04b00-e621-489f-ace8-e2d9eabedf09",
+          "name": "Get a single knowledge article",
+          "request": {
+            "name": "Get a single knowledge article",
+            "description": {
+              "content": "Get knowledge article by id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "knowledge",
+                "articles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the article to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "826270e0-6acf-4d45-a33d-f61d60780336",
+              "name": "Knowledge article",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"content\": \"string\",\n  \"url\": \"string\",\n  \"knowledge_source_id\": \"string\",\n  \"language\": \"hr\",\n  \"tag_ids\": [\n    \"string\",\n    \"string\"\n  ],\n  \"created\": \"2000-05-09T16:39:36.863Z\",\n  \"updated\": \"2019-05-15T01:39:43.246Z\",\n  \"external_created\": \"2013-05-11T03:10:36.566Z\",\n  \"external_updated\": \"1961-05-12T18:16:35.492Z\",\n  \"enabled\": false,\n  \"metadata\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1186e6be-d025-46da-9f50-25fd924e4be8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b2e3d30-5a0d-4f30-8727-ea4384db8856",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1fa3b56-acb7-4f49-afe2-54c347db4abb",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5275db4-865a-4661-bbd1-081f13a10771",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b192bf0c-bb9d-4858-87ae-1889782dfa2a",
+          "name": "Delete a single article",
+          "request": {
+            "name": "Delete a single article",
+            "description": {
+              "content": "Delete an article",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "knowledge",
+                "articles",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The id of the article to delete"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1c128ca-e9f9-47a4-8e6d-6b24ebf98a44",
+              "name": "Articles successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0796774-7136-4a88-98ca-bd575b14be1e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efc0ae92-5f72-48ad-810f-29d8debc34c7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e0c8554-11a8-4fd1-9973-4a689648fd16",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dc94ece-bbf8-48db-a025-55e15f4c0d86",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35529e17-2dc0-4550-ab5a-bdd33cf4fd8d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "articles",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The id of the article to delete"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f998dab0-2a44-4a51-9afc-01afdd563379",
+          "name": "Upsert multiple articles",
+          "request": {
+            "name": "Upsert multiple articles",
+            "description": {
+              "content": "Upsert an array of knowledge articles\n\nThis endpoint will create or update articles based on the unique `id` field of each article. If an article with the same `id` already exists, it will be updated. Otherwise, a new article will be created.\n\n**Limits:**\n- The maximum size of a request payload is 10MB\n- The maximum size of an article is 100KB\n- The maximum number of articles is 50,000\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "knowledge",
+                "bulk",
+                "articles",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"content\": \"<string>\",\n    \"knowledge_source_id\": \"<string>\",\n    \"url\": \"<string,null-url>\",\n    \"tag_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"language\": \"<string>\",\n    \"external_created\": \"<string,null-date-time>\",\n    \"external_updated\": \"<string,null-date-time>\",\n    \"enabled\": \"<boolean>\",\n    \"metadata\": {}\n  },\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"content\": \"<string>\",\n    \"knowledge_source_id\": \"<string>\",\n    \"url\": \"<string,null-url>\",\n    \"tag_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"language\": \"<string>\",\n    \"external_created\": \"<string,null-date-time>\",\n    \"external_updated\": \"<string,null-date-time>\",\n    \"enabled\": \"<boolean>\",\n    \"metadata\": {}\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a4614b5-dbd9-4ba5-be0c-afc29441f225",
+              "name": "Articles upserted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "bulk",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"2001-10-13T17:23:10.483Z\",\n    \"external_updated\": \"2014-11-09T19:15:53.959Z\",\n    \"enabled\": false,\n    \"metadata\": {}\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"1949-10-13T21:12:21.491Z\",\n    \"external_updated\": \"1981-09-16T15:50:17.975Z\",\n    \"enabled\": true,\n    \"metadata\": {}\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"success\": true,\n    \"created\": false\n  },\n  {\n    \"id\": \"string\",\n    \"success\": false,\n    \"created\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f2dc412-7022-4618-b681-8cbddac879c3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "bulk",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"2001-10-13T17:23:10.483Z\",\n    \"external_updated\": \"2014-11-09T19:15:53.959Z\",\n    \"enabled\": false,\n    \"metadata\": {}\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"1949-10-13T21:12:21.491Z\",\n    \"external_updated\": \"1981-09-16T15:50:17.975Z\",\n    \"enabled\": true,\n    \"metadata\": {}\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "774458ae-40c2-4fb7-a077-a5a65567ccc7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "bulk",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"2001-10-13T17:23:10.483Z\",\n    \"external_updated\": \"2014-11-09T19:15:53.959Z\",\n    \"enabled\": false,\n    \"metadata\": {}\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"1949-10-13T21:12:21.491Z\",\n    \"external_updated\": \"1981-09-16T15:50:17.975Z\",\n    \"enabled\": true,\n    \"metadata\": {}\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cd3b41a-9a5d-4d34-a25f-3d0345200856",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "bulk",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"2001-10-13T17:23:10.483Z\",\n    \"external_updated\": \"2014-11-09T19:15:53.959Z\",\n    \"enabled\": false,\n    \"metadata\": {}\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"1949-10-13T21:12:21.491Z\",\n    \"external_updated\": \"1981-09-16T15:50:17.975Z\",\n    \"enabled\": true,\n    \"metadata\": {}\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7510d7b9-f72b-4463-8cd6-25172a032985",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "knowledge",
+                    "bulk",
+                    "articles",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer authentication",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"2001-10-13T17:23:10.483Z\",\n    \"external_updated\": \"2014-11-09T19:15:53.959Z\",\n    \"enabled\": false,\n    \"metadata\": {}\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"content\": \"string\",\n    \"knowledge_source_id\": \"string\",\n    \"url\": \"string\",\n    \"tag_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"language\": \"string\",\n    \"external_created\": \"1949-10-13T21:12:21.491Z\",\n    \"external_updated\": \"1981-09-16T15:50:17.975Z\",\n    \"enabled\": true,\n    \"metadata\": {}\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"message\": \"string\",\n      \"details\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://example.ada.support",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b10c6741-cb6d-4098-8bcc-ac1740e6246b",
+    "name": "Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/articles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

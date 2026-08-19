@@ -1,4 +1,18 @@
 """
+!! NOT A PUBLISHED ADA CONTRACT !!
+
+Ada publishes NO GraphQL API. Verified 2026-08-14: there is no /graphql endpoint on any Ada
+host, no GraphQL surface in the docs (docs.ada.cx), and no GraphQL entry in Ada's RFC 9727
+api-catalog (https://docs.ada.cx/.well-known/api-catalog), which names four OpenAPI YAML
+documents and nothing else. Ada's real contracts are REST/OpenAPI 3.1 plus an MCP server.
+
+This file is a SPECULATIVE, MODEL-AUTHORED sketch of what a GraphQL projection of Ada's REST
+API might look like. It describes nothing Ada operates, no client can execute it, and it must
+never be treated as, published as, or scored as an Ada contract. Its apis.yml `type: GraphQL`
+pointers were removed on 2026-08-14 for exactly that reason. Retained only as an audit trail.
+"""
+
+"""
 Ada GraphQL Schema
 Ada is an AI-powered customer service automation platform enabling enterprises
 to deploy AI agents for customer inquiry resolution across digital channels.

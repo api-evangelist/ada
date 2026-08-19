@@ -1,16 +1,90 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/ada-data-compliance-openapi.yml, openapi/ada-data-export-openapi.yml, openapi/ada-data-export-v1-4-openapi.yml,
-  openapi/ada-knowledge-openapi.yml
+generated: '2026-08-14'
+method: searched
+docs: https://docs.ada.cx/reference/introduction/authentication
+source: >-
+  https://docs.ada.cx/reference/introduction/authentication,
+  https://docs.ada.cx/reference/integrations/getting-started,
+  https://docs.ada.cx/mcp/introduction/authentication,
+  openapi/_original/ada-data-compliance-openapi.yml,
+  openapi/_original/ada-data-export-openapi.yml,
+  openapi/_original/ada-data-export-v1-4-openapi.yml,
+  openapi/_original/ada-knowledge-openapi.yml
 summary:
   types:
   - http
+  - oauth2
+  http_schemes:
+  - bearer
+  oauth2_flows:
+  - authorizationCode
+  - refreshToken
+  api_key_in:
+  - header
+  note: >-
+    The published OpenAPI documents declare exactly one scheme — http/bearer. The docs add a
+    second, spec-invisible model: OAuth 2.0 for partner platform integrations. A third path,
+    dashboard-role-scoped OAuth, governs the MCP server. All three are recorded here.
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
+  in_openapi: true
   sources:
-  - openapi/ada-data-compliance-openapi.yml
-  - openapi/ada-data-export-openapi.yml
-  - openapi/ada-data-export-v1-4-openapi.yml
-  - openapi/ada-knowledge-openapi.yml
+  - openapi/_original/ada-data-compliance-openapi.yml
+  - openapi/_original/ada-data-export-openapi.yml
+  - openapi/_original/ada-data-export-v1-4-openapi.yml
+  - openapi/_original/ada-knowledge-openapi.yml
+  credential: Ada API key
+  header: 'Authorization: Bearer <api-key>'
+  properties:
+    expiry: none — keys remain valid until manually revoked
+    rotation: multiple concurrent keys supported, so keys can be rotated without downtime
+    permissions: read AND write across every API the organization has access to; no per-key scoping
+    display: the key value is shown once at creation and never again
+    generation: Ada dashboard — Config > PLATFORM > API keys (generative) or Settings > Integrations > APIs (scripted)
+  legacy:
+    note: >-
+      Per-API "(Legacy)" keys still exist and work ONLY against v1 endpoints. They cannot be
+      renamed and will 401 against v2.
+  security_observation: >-
+    Ada's API keys are non-expiring, unscoped and grant full read/write. There is no read-only
+    key, no per-resource scoping and no key TTL. An agent handed an Ada key holds every
+    permission the organization has.
+- name: PlatformIntegrationsOAuth
+  type: oauth2
+  in_openapi: false
+  sources:
+  - https://docs.ada.cx/reference/integrations/getting-started
+  flows:
+  - flow: authorizationCode
+    tokenUrl: https://{bot-handle}.ada.support/api/platform_integrations/oauth/token
+    scopes: 8
+  - flow: refreshToken
+    tokenUrl: https://{bot-handle}.ada.support/api/platform_integrations/oauth/token
+  token_lifetimes:
+    authorization_code: 5 minutes
+    access_token: 1 hour
+    refresh_token: 30 days (rotated on every use)
+  audience: partner-built platform integrations installed into a customer AI Agent
+  artifact: scopes/ada-scopes.yml
+- name: MCPOAuth
+  type: oauth2
+  in_openapi: false
+  sources:
+  - https://docs.ada.cx/mcp/introduction/authentication
+  endpoint: https://<your-ada-instance-domain>/api/mcp/oauth
+  authorization_model: role-based, not scope-based
+  roles:
+    Owner: all tools, including writes
+    Admin: all tools, including writes
+    Agent: read-only tools
+    Read Only: read-only tools
+  note: >-
+    Role changes apply on the next tool call. Write tools are hidden from the assistant's tool
+    list for read-only roles. The API-key MCP endpoint (/api/mcp) uses a separate auth path
+    scoped by the key's permissions, which — per the key model above — is effectively full access.
+host_model:
+  note: >-
+    Credentials are scoped to one Ada instance. The host itself is the tenant boundary:
+    <handle>.ada.support, with regional/cluster variants <handle>.eu.ada.support,
+    <handle>.maple.ada.support, <handle>.us2.ada.support.

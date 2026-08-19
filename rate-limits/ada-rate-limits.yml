@@ -2,8 +2,27 @@ spec: API Commons Rate Limits 0.1
 provider: Ada
 providerId: ada
 created: 2026-06-12
-modified: 2026-06-12
+modified: 2026-08-14
+generated: '2026-08-14'
+method: searched
+source: https://docs.ada.cx/reference/introduction/limits
 url: https://docs.ada.cx/reference/introduction/limits
+limit_count: 6
+scope: per Ada instance
+headers:
+  published: false
+  request: []
+  response: []
+  retry_after: false
+  note: >-
+    Re-read 2026-08-14. Ada publishes the numbers but NOT the runtime signal: no RateLimit-*,
+    no X-RateLimit-*, no Retry-After, and no remaining/reset field in any response. Neither the
+    limits page nor any of the four OpenAPI documents declares a rate-limit response header. An
+    agent therefore cannot see itself approaching a limit — it only discovers it has crossed one
+    by receiving a 429, and must then guess the wait. Ada's own guidance is "implement retry
+    logic with exponential backoff and jitter", which is the workaround for exactly this gap.
+  exhaustion_status: 429
+  oversize_status: 413
 notes: >
   Ada enforces global rate limits across all REST API families to ensure high availability.
   Individual API families may apply their own elevated or additional local limits.

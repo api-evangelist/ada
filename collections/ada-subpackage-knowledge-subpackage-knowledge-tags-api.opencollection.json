@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/tags API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_knowledge.subpackage_knowledge/tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get article tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/knowledge/tags/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get article tags"
+        },
+        {
+          "info": {
+            "name": "Delete a single article tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://example.ada.support/v2/knowledge/tags/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the article tag to delete"
+              }
+            ]
+          },
+          "docs": "Delete an article tag"
+        },
+        {
+          "info": {
+            "name": "Upsert multiple tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/knowledge/bulk/tags/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert an array of tags for articles\n\nThis endpoint will create or update tags based on the unique `id` field of each tag. If a tag with the same `id` already exists, it will be updated. Otherwise, a new tag will be created.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

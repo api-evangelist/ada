@@ -1,0 +1,118 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/reference/introduction/overview,
+  https://docs.ada.cx/docs/optimization/testing,
+  https://docs.ada.cx/docs/optimization/testing/interactive-testing,
+  https://docs.ada.cx/docs/optimization/testing/simulations,
+  https://docs.ada.cx/reference/integrations/getting-started,
+  https://docs.ada.cx/reference/introduction/migrate-to-v-2
+docs: https://docs.ada.cx/docs/optimization/testing
+model: separate-instance
+summary: >-
+  Ada has NO test/live key split, no test-mode prefix, no magic test identifiers and no fixture
+  values. Isolation is achieved by using a whole separate AI Agent instance — Ada's guidance for
+  integration partners is "use a sandbox AI Agent specifically for testing and developing your
+  integration, not a live AI Agent", and its v2 migration guide says "test your updated requests
+  in a staging or sandbox environment". Everything below is what Ada actually publishes; nothing
+  was invented.
+test_live_separation:
+  key_prefixes: none
+  mode_flag: none
+  mechanism: >-
+    A dedicated development/sandbox AI Agent with its own instance host and its own API keys.
+    Keys are scoped to an instance, so pointing at a different <handle>.ada.support is the
+    boundary. There is no in-band way for a caller to tell a test key from a live one.
+  integration_guidance: >-
+    "Access to an Ada development AI Agent: Use a sandbox AI Agent specifically for testing and
+    developing your integration, not a live AI Agent. This AI Agent should be dedicated
+    exclusively to managing integrations."
+  source: https://docs.ada.cx/reference/integrations/getting-started
+console:
+  name: API Playground
+  url: https://docs.ada.cx/reference/introduction/overview
+  hosted_in: the documentation site (Fern)
+  auth: >-
+    Click Login and paste your own API key. "Your key is stored securely in your local browser
+    session and will be cleared when the tab is closed."
+  usage: >-
+    A ▶️ Play button sits next to every API call example. The endpoint URL is editable —
+    double-click it to replace `example` with your instance subdomain.
+  note: >-
+    The playground runs against YOUR live instance with YOUR key. There is no shared demo tenant
+    and no anonymous try-it, so an evaluator without an Ada account cannot execute a single call.
+testing_tools:
+- name: Interactive Testing
+  kind: test chat
+  description: >-
+    Chat with the AI Agent in real time as an end user would. Supports opening the test chat in a
+    new window/browser, impersonating different user types, and resetting or ending a test chat.
+  docs: https://docs.ada.cx/docs/optimization/testing/interactive-testing
+  note: >-
+    "Launch controls no longer reroute test chats" (release note 2026-07-29) — launch/targeting
+    rules are bypassed for test chats.
+- name: Simulations
+  kind: scripted test cases
+  description: >-
+    Create test cases (including from a real production conversation), define expected outcomes,
+    run simulations against the Agent, and review pass/fail results with evaluation rationale.
+    Voice simulations were upgraded to match real call behaviour end-to-end (2026-06-30).
+  docs: https://docs.ada.cx/docs/optimization/testing/simulations
+  quota: >-
+    Test runs are metered. The MCP tool get_test_run_quota returns "daily test run quota, usage,
+    and remaining runs"; limits were increased 2026-06-11.
+  agent_access:
+    mcp:
+    - get_test_cases
+    - get_test_runs
+    - get_test_run_quota
+    - edit_agent_config (creates cases, triggers runs)
+    cli:
+    - adacli <instance> testing cases from-conversation <conversation-id>
+    - adacli <instance> testing runs create
+    - adacli <instance> testing runs compare --baseline r1 --candidate r2
+- name: Change sets
+  kind: staged writes
+  description: >-
+    MCP writes to Agent behaviour stage on a change set rather than applying live: new resources
+    are inactive by default, and the set is tested before being promoted, reverted or discarded.
+    Shipped 2026-08-13. This is Ada's closest analogue to a test mode for write operations.
+  docs: https://docs.ada.cx/mcp/tools/edit-agent-behavior
+  agent_access:
+    mcp:
+    - edit_agent_behavior
+    - list_agent_changesets
+- name: Instance snapshots
+  kind: config export/import/diff
+  description: >-
+    adacli snapshot export/import/diff moves a whole instance configuration between environments,
+    which is how a sandbox Agent gets seeded from production.
+  docs: https://github.com/AdaSupport/homebrew-tap
+- name: Action / Playbook test
+  kind: unit test
+  description: >-
+    adacli actions test and adacli playbooks test exercise a single web action or playbook
+    without running a conversation.
+test_data:
+  magic_values: none
+  test_cards: n/a
+  fixtures: none published
+  note: >-
+    Ada publishes no magic identifiers, no sandbox tokens and no seeded fixture data. The
+    interactive test chat and simulations generate their own conversation data inside the
+    development Agent.
+example_implementations:
+- name: ada-integrations-demo
+  url: https://github.com/AdaSupport/ada-integrations-demo
+  language: python
+  description: Working sample of a Knowledge integration server, including the OAuth callback flow.
+- name: ada-conversations-api-demo
+  url: https://github.com/AdaSupport/ada-conversations-api-demo
+  language: python
+- name: ada-handoffs-api-demo
+  url: https://github.com/AdaSupport/ada-handoffs-api-demo
+  language: python
+- name: template-widget
+  url: https://github.com/AdaSupport/template-widget
+  language: javascript
+  description: Minimal Ada widget app scaffold for the Widget SDK.

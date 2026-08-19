@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Data Compliance subpackage_channels subpackage_endUsers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_endUsers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an end user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/end-users/:end_user_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "end_user_id",
+                "value": "",
+                "type": "path",
+                "description": "The Ada end_user_id"
+              }
+            ]
+          },
+          "docs": "Get a specific end user by id"
+        },
+        {
+          "info": {
+            "name": "Update an end user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://example.ada.support/v2/end-users/:end_user_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "end_user_id",
+                "value": "",
+                "type": "path",
+                "description": "The Ada end_user_id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a specific end user by id"
+        },
+        {
+          "info": {
+            "name": "Get multiple end users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://example.ada.support/v2/end-users/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "external_id",
+                "value": "",
+                "type": "query",
+                "description": "Look up a single end user by the external identifier set at creation or via PATCH. Returns the matching end user with the same shape as GET /v2/end-users/{end_user_id}, or 404 if no mapping exists. Mutually exclusive with cursor/limit pagination. Available for custom channel integrations only (V1)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "The ID that marks the start or beginning of the returned records"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of records to return"
+              }
+            ]
+          },
+          "docs": "Get multiple end users. You can specify how many users appear per page, and which user id to start from. Alternatively, supply an `external_id` query parameter to look up a single end user by their caller-supplied identifier. When `external_id` is supplied, the 200 response is a single end user object (same shape as `GET /v2/end-users/{end_user_id}`) and is mutually exclusive with cursor/limit pagination. The `external_id` query parameter is available for custom channel integrations only (V1)."
+        },
+        {
+          "info": {
+            "name": "Create an end user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://example.ada.support/v2/end-users/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new end user with optional profile data and sensitive metadata. Use this endpoint to establish an end user with context (language, metadata, sensitive metadata) before starting a conversation via POST /v2/conversations/. This ensures the AI Agent has full user context from the first turn. Available for custom channel (Conversations API) integrations. End users created through this endpoint that are not associated with a conversation within 24 hours of creation are automatically deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

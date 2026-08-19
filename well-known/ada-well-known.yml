@@ -1,0 +1,128 @@
+generated: '2026-08-14'
+method: probed
+source: live GET of each /.well-known/ path on every host named in apis.yml and openapi servers[]
+summary: >
+  One real hit: docs.ada.cx serves an RFC 9727 /.well-known/api-catalog (application/linkset+json)
+  naming all four of Ada's published OpenAPI documents. Everything else 404s, is bot-challenged,
+  or is an SPA catch-all. Note that api.ada.cx — the baseURL previously recorded in apis.yml —
+  does not resolve at all (dangling CNAME to Vercel, no A record), so it could not be probed; the
+  real API host is the per-instance <handle>.ada.support domain.
+hosts:
+- host: https://docs.ada.cx
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+    file: ada-api-catalog.json
+    real_document: true
+    note: >-
+      Four linkset entries, each pairing a service-desc OpenAPI YAML with its service-doc HTML:
+      openapi/knowledge.yaml, openapi/data-compliance-deprecated.yaml, openapi/data-export.yaml,
+      openapi/data-export-v1-4.yaml.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://www.ada.cx
+  note: >-
+    Every path returns 403 with an HTML interstitial — the marketing site bot-challenges
+    unauthenticated clients. A July 2026 pass did read a real security.txt here; that result is
+    preserved in security/ada-vulnerability-disclosure.yml and is not downgraded by this probe.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    real_document: false
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://api.ada.support
+  note: >-
+    SPA catch-all — every /.well-known/* path answers HTTP 200 with the same text/html shell.
+    Treated as a miss on all paths; no document was served.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    real_document: false
+- host: https://security.ada.cx
+  note: >-
+    Ada's trust centre is hosted by SafeBase. The two OAuth/OIDC discovery documents that answer
+    200 here declare issuer "https://app.safebase.io/api/mcp" — they describe SafeBase's own MCP
+    authorization server, NOT an Ada API authorization server, and are therefore recorded but not
+    credited to Ada.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    real_document: true
+    belongs_to: SafeBase (app.safebase.io), not Ada
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    real_document: true
+    belongs_to: SafeBase (app.safebase.io), not Ada
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://ada.support
+  note: Marketing redirect, bot-challenged.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://api.ada.cx
+  note: >-
+    Does not resolve. dig returns a CNAME to b727863c9357963d.vercel-dns-013.com with no A
+    record; curl fails with "Could not resolve host". No probe was possible.
+  documents: []
+agent_card:
+  found: false
+  note: >-
+    /.well-known/agent-card.json and /.well-known/agent.json were probed on docs.ada.cx,
+    www.ada.cx, ada.cx, ada.support, api.ada.support and security.ada.cx. No host returned a JSON
+    AgentCard. Per the pipeline's search-only rule no a2a/ artifact was written.

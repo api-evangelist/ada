@@ -1,0 +1,116 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  https://docs.ada.cx/reference/webhooks/overview,
+  https://docs.ada.cx/reference/introduction/versioning,
+  openapi/_original/ada-knowledge-openapi.yml
+docs: https://docs.ada.cx/reference/webhooks/overview
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Ada publishes NO AsyncAPI document. The event surface is real and well documented, and the
+  webhook payload schemas are carried inside the Knowledge OpenAPI document
+  (ConversationCreatedWebhookPayload, etc.) rather than in an event spec. This artifact captures
+  the webhook catalog; no AsyncAPI was fabricated.
+delivery:
+  transport: HTTPS POST
+  provider: Svix
+  provider_note: >-
+    Ada states channel filtering "is applied by Svix before delivery" and points at
+    https://docs.svix.com/receiving/source-ips for the allowlist, so the event bus is Svix.
+    Webhook ids carry the Svix endpoint prefix, e.g. ep_2bxE8VNtkWEMpJrMJv74FlSQmqP.
+  ack_requirement: 2xx within 15 seconds
+  retry_policy:
+    strategy: exponential backoff
+    schedule:
+    - immediate
+    - 5 seconds
+    - 5 minutes
+    - 30 minutes
+    - 2 hours
+    - 5 hours
+    - 10 hours (repeated for up to 2 attempts)
+    total_window: 1 week
+    on_exhaustion: endpoint is automatically disabled; re-enable manually in the dashboard
+  replay: true
+  replay_note: Message replay is supported to recover from downtime or missed events.
+  ip_allowlist: https://docs.svix.com/receiving/source-ips
+  custom_headers:
+    supported: true
+    scope: per endpoint, not per message
+    note: Message-level custom headers are explicitly not supported.
+security:
+  signing: per-endpoint signing secret, retrievable and rotatable via API or dashboard
+  operations:
+  - webhookManagement.get-webhook-secret
+  - webhookManagement.rotate-webhook-secret
+versioning:
+  scheme: payload type prefix
+  current: v1
+  example: '{"type": "v1.end_user.created", "timestamp": "...", "data": {...}}'
+  policy: https://docs.ada.cx/reference/introduction/versioning
+events:
+- type: v1.end_user.created
+  trigger: A new user is created through any of Ada's supported channels.
+  docs: https://docs.ada.cx/reference/end-users/end-user-created-webhook
+- type: v1.end_user.updated
+  trigger: A value on the end user's profile changes.
+  docs: https://docs.ada.cx/reference/end-users/end-user-updated-webhook
+- type: v1.conversation.created
+  trigger: A new conversation is created for a supported channel.
+  docs: https://docs.ada.cx/reference/conversations/conversation-created-webhook
+- type: v1.conversation.ended
+  trigger: >-
+    A conversation ends — either via POST /v2/conversations/{conversation_id}/end/ or when a
+    Voice call disconnects.
+  docs: https://docs.ada.cx/reference/conversations/conversation-ended-webhook
+- type: v1.conversation.message
+  trigger: A new message is added to a supported channel.
+  docs: https://docs.ada.cx/reference/conversations/conversation-message-webhook
+- type: v1.audit_log.emitted
+  trigger: A configuration change is recorded in the Audit log.
+  docs: https://docs.ada.cx/reference/audit-log/audit-log-webhook
+event_count: 6
+channel_filtering:
+  mechanism: Svix channel tags
+  tags:
+  - source: Conversations API custom channel
+    tag: the custom channel's ID (e.g. 5df263b7db5a7e6ea03fae9b)
+  - source: Handoff integration
+    tag: the handoff integration name (e.g. salesforce, zendesk_chat)
+  - source: Conversations API conversation in an active handoff
+    tag: both the custom channel ID and the handoff integration name
+  - source: Native Chat, Voice, or Email without a handoff
+    tag: none
+  note: >-
+    Events with no channel tag are delivered to every unfiltered endpoint. An endpoint with a
+    Channels filter receives only events tagged with at least one listed value.
+management_api:
+  auth: Ada API key (Bearer)
+  spec: openapi/_original/ada-knowledge-openapi.yml
+  refined_spec: openapi/ada-subpackage-webhookmanagement-api-openapi.yml
+  operations:
+  - operationId: list-webhooks
+    method: GET
+    path: /v2/webhooks/
+  - operationId: create-webhook
+    method: POST
+    path: /v2/webhooks/
+  - operationId: get-webhook
+    method: GET
+    path: /v2/webhooks/{id}
+  - operationId: update-webhook
+    method: PATCH
+    path: /v2/webhooks/{id}
+  - operationId: delete-webhook
+    method: DELETE
+    path: /v2/webhooks/{id}
+  - operationId: get-webhook-secret
+    method: GET
+    path: /v2/webhooks/{id}/secret/
+  - operationId: rotate-webhook-secret
+    method: POST
+    path: /v2/webhooks/{id}/secret/rotate/
+  - operationId: list-webhook-event-types
+    method: GET
+    path: /v2/webhooks/event-types/
