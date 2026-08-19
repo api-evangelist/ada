@@ -24,7 +24,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ada.png
 url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/apis.yml
 created: 2026-06-12
 modified: 2026-08-14
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 description: 'Ada is an AI-powered customer service automation platform that enables
   enterprises to deploy AI agents capable of resolving customer inquiries across digital
   channels without human intervention. The platform exposes a suite of REST APIs for
