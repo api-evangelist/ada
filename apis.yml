@@ -36,6 +36,17 @@ description: 'Ada is an AI-powered customer service automation platform that ena
 
   '
 tags:
+- Artificial Intelligence
+- Customer Service
+- Chatbots
+- Automation
+- Conversational AI
+- Help Desk
+- CRM
+- Integration
+- Knowledge-Management
+- Data Export
+tags_raw:
 - ai
 - customer-service
 - chatbot
@@ -54,6 +65,10 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - User
+  - Profiles
+  - Webhook
+  tags_raw:
   - users
   - profiles
   - webhooks
@@ -67,6 +82,10 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Conversations
+  - Channels
+  - Integration
+  tags_raw:
   - conversations
   - channels
   - integrations
@@ -80,6 +99,10 @@ apis:
   humanURL: https://docs.ada.cx/reference/integrations/overview
   baseURL: https://example.ada.support
   tags:
+  - Integration
+  - Authentication
+  - Extensions
+  tags_raw:
   - integrations
   - oauth
   - extensions
@@ -98,6 +121,11 @@ apis:
   humanURL: https://docs.ada.cx/mcp/introduction/overview
   baseURL: https://example.ada.support/api/mcp
   tags:
+  - MCP
+  - Agents
+  - Analytics
+  - Testing
+  tags_raw:
   - mcp
   - agents
   - analytics
@@ -118,7 +146,8 @@ apis:
   description: The subpackage_channels API from Ada — 1 operation(s) for subpackage_channels.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_channels
   properties:
   - type: OpenAPI
@@ -136,7 +165,8 @@ apis:
   description: The subpackage_conversations API from Ada — 9 operation(s) for subpackage_conversations.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_conversations
   properties:
   - type: OpenAPI
@@ -248,7 +278,8 @@ apis:
   description: The subpackage_messages API from Ada — 2 operation(s) for subpackage_messages.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_messages
   properties:
   - type: OpenAPI
