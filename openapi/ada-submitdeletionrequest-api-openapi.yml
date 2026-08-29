@@ -1,0 +1,142 @@
+openapi: 3.2.0
+info:
+  title: Knowledge Submit Deletion Request API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support/api
+  description: Production
+tags:
+- name: submitDeletionRequest
+paths:
+  /v2/end-users/delete:
+    post:
+      operationId: submit-a-bulk-end-user-deletion-request
+      summary: Submit a bulk end-user deletion request
+      description: 'Submits a request to erase all personal data associated with the supplied identifiers. Replace `example` with your AI Agent''s handle. A successful call returns a `202` with a `job_id` you can poll for status. Requests that set `client_reference` are idempotent for 24 hours: an identical resubmission within that window returns the original job instead of creating a new one. Requests that omit `client_reference` are not deduplicated. Separately, the erasure engine rejects an identifier submitted within the previous 7 days, and a single identifier in that cooldown can fail an entire job.'
+      tags:
+      - submitDeletionRequest
+      responses:
+        '202':
+          description: The deletion request was accepted and a job was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionRequestAccepted'
+        '400':
+          description: Invalid request body, for example no identifiers.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: Authentication token is missing or invalid. Try generating a new token.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '403':
+          description: The token is not authorized to perform this operation.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '413':
+          description: The request body exceeds the maximum size of 512 KB. Split the identifiers across multiple requests.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '429':
+          description: Too many requests. Retry after slowing the request rate.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Something went wrong on Ada's end.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletionRequest'
+components:
+  schemas:
+    DeletionIdentifier:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DeletionIdentifierType'
+        value:
+          type: string
+          description: The identifier value. Email values are normalized and matched case-insensitively; `external_id` values are trimmed and lowercased at intake.
+        variable:
+          type:
+          - string
+          - 'null'
+          description: Name of the stored variable to match against `value`. Required only when `type` is `variable_match`; leave null for all other types.
+      required:
+      - type
+      - value
+      description: A single reference to the end user(s) whose data should be erased.
+      title: DeletionIdentifier
+    DeletionRequestAccepted:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Identifier of the created deletion job. Use it to poll job status.
+        status:
+          $ref: '#/components/schemas/DeletionJobStatus'
+        submitted_count:
+          type: integer
+          description: Number of identifiers received in the request.
+        created_at:
+          type: string
+          format: date-time
+          description: Time the job was created, in ISO 8601 format.
+      description: Acknowledgment returned when a deletion request is accepted for processing.
+      title: DeletionRequestAccepted
+    DeletionIdentifierType:
+      type: string
+      enum:
+      - email
+      - chatter_id
+      - external_id
+      - end_user_id
+      - variable_match
+      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
+      title: DeletionIdentifierType
+    DeletionJobStatus:
+      type: string
+      enum:
+      - queued
+      - in_progress
+      - completed
+      - partial
+      - failed
+      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
+      title: DeletionJobStatus
+    DeletionRequest:
+      type: object
+      properties:
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeletionIdentifier'
+          description: The identifiers to erase. At least one is required, and a single request accepts at most 1000.
+        client_reference:
+          type:
+          - string
+          - 'null'
+          description: 'Optional caller-supplied reference echoed back on the job. It is also the idempotency key: two identical requests that set the same reference within 24 hours resolve to the same job. Requests that omit it are not deduplicated.'
+      required:
+      - identifiers
+      title: DeletionRequest
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

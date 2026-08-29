@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  title: Knowledge Audit Log API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support/api
+  description: Production
+tags:
+- name: auditLog
+paths:
+  /v2/analytics/audit-log/events/:
+    get:
+      operationId: list-audit-log-events
+      summary: List Audit log events
+      description: 'Retrieve the authenticated account''s own Audit log events, newest first, in cursor-paginated pages. Intended for pulling the Audit log into a SIEM.
+
+
+        Pagination is cursor-based: read `meta.next_page_url` and replay it verbatim to fetch the next page. `next_page_url` is `null` on the last or empty page. The time window and `cursor` must be held constant across pages; the recommended way to guarantee this is to replay the returned `next_page_url` unchanged.
+
+
+        No field filters are exposed: callers pull the full time window and filter on their own side (the SIEM).
+
+
+        Validation errors (missing or invalid `start_date` or `end_date`, a window wider than 30 days, a malformed cursor, or a window change mid-pagination) return `400`.
+
+
+        Rate limits (per account): 10 requests per second, 120 per minute, and 40,000 per day. A `429` means a limit was exceeded; back off and retry. For ongoing ingestion, poll on a steady cadence (for example, every few minutes) rather than in a tight loop.
+
+
+        Backfilling vs incremental pulls: a single request covers at most 30 days. To backfill more history, issue successive requests over adjacent windows of up to 30 days. For incremental pulls, set `start_date` to just after the newest `timestamp` you have already stored, then follow `next_page_url` until it is `null`.'
+      tags:
+      - auditLog
+      parameters:
+      - name: start_date
+        in: query
+        description: Start of the time window (inclusive), ISO 8601. The window (`end_date - start_date`) may not exceed 30 days.
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        description: End of the time window (inclusive), ISO 8601. When omitted it defaults to the request time (UTC); the resolved value is reflected in `next_page_url`, so replay the returned `next_page_url` verbatim to keep the window fixed across pages.
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        in: query
+        description: Maximum events per page. Out-of-range or non-integer values are rejected with `400`; the applied limit is not echoed in the response.
+        required: false
+        schema:
+          type: integer
+          default: 50
+      - name: cursor
+        in: query
+        description: 'Opaque base64-encoded pagination cursor from a previous response''s `meta.next_page_url`. Treat it as an opaque token, not an id. The time window and `cursor` must be held constant across pages: replay the returned `next_page_url` unchanged.'
+        required: false
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A cursor-paginated page of Audit log events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogEventList'
+        '400':
+          description: Bad Request (validation, cursor, or window drift)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized (missing or non-Bearer token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found (Audit log API not enabled for this account)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests (rate limit)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+components:
+  schemas:
+    AuditLogEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEvent'
+          description: The page of Audit log events (at most `limit` items)
+        meta:
+          $ref: '#/components/schemas/AuditLogEventListMeta'
+          description: Pagination metadata
+      required:
+      - data
+      - meta
+      description: A cursor-paginated page of Audit log events
+      title: AuditLogEventList
+    AuditLogEventListMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page of results, or `null` on the last or empty page. Replay it unchanged to keep the time window and the cursor constant across pages.
+      description: Pagination metadata
+      title: AuditLogEventListMeta
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    AuditLogEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Globally unique event id (uuid4)
+        timestamp:
+          type: string
+          format: date-time
+          description: When the change occurred (ISO 8601, UTC, millisecond precision)
+        actor_email:
+          type: string
+          description: Email of the user who made the change, or the owner of a dashboard-created Platform API key. Empty for system and service-token actors.
+        actor_name:
+          type: string
+          description: Display name of the actor; empty when unavailable
+        actor_user_id:
+          type: string
+          description: User id of the actor. For an API key, the id of the user who created the key. Empty for system and service-token actors.
+        entity_type:
+          type: string
+          description: The type of entity that was changed
+        entity_id:
+          type: string
+          description: The id of the entity that was changed
+        entity_name:
+          type: string
+          description: A human-readable name for the changed entity
+        activity:
+          type: string
+          description: What happened to the entity. One of `created`, `updated`, `deleted`, `executed`, `invited`, `activated`, or `deactivated`.
+        interface:
+          type: string
+          description: Where the change originated, such as `dashboard`, `api`, `mcp`, `cli`, `import`, `export`, or `system` (background jobs and Ada's internal processing).
+        context_ip:
+          type: string
+          description: Source IP address of the request that made the change
+        context_user_agent:
+          type: string
+          description: User agent string of the request that made the change
+        api_key_name:
+          type: string
+          description: Name of the API key used, when the change was made by a dashboard-created Platform API key; empty otherwise.
+      required:
+      - id
+      - timestamp
+      - entity_type
+      - entity_id
+      - activity
+      description: 'A single Audit log event: one configuration change recorded for the account. Empty-string fields mean the value was unavailable for that event (for example, a system actor has no email).'
+      title: AuditLogEvent
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

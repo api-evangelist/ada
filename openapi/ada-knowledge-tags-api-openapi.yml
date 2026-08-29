@@ -1,20 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/tags API
+  title: knowledge > tags API
   version: 1.0.0
 servers:
-- url: https://example.ada.support
-  description: ada
-- url: https://example.att.ada.support
-  description: att.ada
-- url: https://example.maple.ada.support
-  description: maple.ada
-- url: https://example.ficanex.ada.support
-  description: ficanex.ada
-- url: https://example.eu.ada.support
-  description: eu.ada
+- url: https://example.ada.support/api
+  description: Production
 tags:
-- name: subpackage_knowledge.subpackage_knowledge/tags
+- name: knowledge > tags
 paths:
   /v2/knowledge/tags/:
     get:
@@ -22,7 +14,7 @@ paths:
       summary: Get article tags
       description: Get article tags
       tags:
-      - subpackage_knowledge.subpackage_knowledge/tags
+      - knowledge > tags
       parameters:
       - name: Authorization
         in: header
@@ -67,7 +59,7 @@ paths:
       summary: Delete a single article tag
       description: Delete an article tag
       tags:
-      - subpackage_knowledge.subpackage_knowledge/tags
+      - knowledge > tags
       parameters:
       - name: id
         in: path
@@ -129,7 +121,7 @@ paths:
 
         '
       tags:
-      - subpackage_knowledge.subpackage_knowledge/tags
+      - knowledge > tags
       parameters:
       - name: Authorization
         in: header
@@ -196,11 +188,35 @@ components:
       - created
       - id
       title: ArticleTagUpsertResponse
-    knowledge_tags_delete_Response_204:
+    ErrorsErrorsItems:
       type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_tags_delete_Response_204
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     ArticleTag:
       type: object
       properties:
@@ -222,36 +238,12 @@ components:
           items:
             $ref: '#/components/schemas/ArticleTag'
       title: knowledge_tags_list_Response_200
-    Errors:
+    knowledge_tags_delete_Response_204:
       type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
+      properties: {}
+      description: Empty response body
+      title: knowledge_tags_delete_Response_204
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer

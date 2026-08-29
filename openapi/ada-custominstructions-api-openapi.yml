@@ -1,0 +1,439 @@
+openapi: 3.2.0
+info:
+  title: Knowledge Custom Instructions API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support/api
+  description: Production
+tags:
+- name: customInstructions
+paths:
+  /v2/custom-instructions/:
+    get:
+      operationId: list-custom-instructions
+      summary: List custom instructions
+      description: 'Retrieve the AI Agent''s custom instructions, live and inactive, in cursor-paginated pages ordered by id.
+
+
+        Pagination is cursor-based: read `meta.next_page_url` and replay it verbatim to fetch the next page. `next_page_url` is `null` on the last or empty page.'
+      tags:
+      - customInstructions
+      parameters:
+      - name: cursor
+        in: query
+        description: The id that marks the start of the returned records. Use the value from `meta.next_page_url` in the previous response.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The number of records to return
+        required: false
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstructionList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    post:
+      operationId: create-custom-instruction
+      summary: Create a custom instruction
+      description: 'Create a new custom instruction for the AI Agent. New instructions default to inactive (`enabled: false`); enable one by setting `enabled: true` on create or via a later update.'
+      tags:
+      - customInstructions
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstruction'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: Conflict — the title is already used by another custom instruction, or enabling would exceed the AI Agent's enabled-instruction limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomInstructionCreate'
+  /v2/custom-instructions/{custom_instruction_id}:
+    get:
+      operationId: get-custom-instruction-by-id
+      summary: Get a custom instruction
+      description: Retrieve a single custom instruction by its id
+      tags:
+      - customInstructions
+      parameters:
+      - name: custom_instruction_id
+        in: path
+        description: The id of the custom instruction
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstruction'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    delete:
+      operationId: delete-custom-instruction
+      summary: Delete a custom instruction
+      description: Delete a custom instruction by its id
+      tags:
+      - customInstructions
+      parameters:
+      - name: custom_instruction_id
+        in: path
+        description: The id of the custom instruction
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Custom_Instructions_deleteCustomInstruction_Response_204'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update-custom-instruction
+      summary: Update a custom instruction
+      description: Update a custom instruction. Only the fields provided in the request body are changed; omitted fields are left as they are.
+      tags:
+      - customInstructions
+      parameters:
+      - name: custom_instruction_id
+        in: path
+        description: The id of the custom instruction
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomInstruction'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '409':
+          description: Conflict — the new title is already used by another custom instruction, or enabling would exceed the AI Agent's enabled-instruction limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomInstructionUpdate'
+components:
+  schemas:
+    CustomInstruction:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the custom instruction
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          default: false
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type:
+          - string
+          - 'null'
+          description: Internal notes about this instruction (not shown to the Agent)
+        availability_rules:
+          type:
+          - string
+          - 'null'
+          description: Availability rule gating which end users this instruction applies to, as a rule-expression string with `v("<variable_name>")` variable lookups. `null` when no rule is set.
+      required:
+      - id
+      - title
+      - text
+      - enabled
+      description: A custom instruction — system-level behavioral guidance for the AI Agent
+      title: CustomInstruction
+    CustomInstructionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomInstruction'
+          description: The list of custom instructions
+        meta:
+          $ref: '#/components/schemas/CustomInstructionListMeta'
+          description: Pagination metadata
+      required:
+      - data
+      - meta
+      title: CustomInstructionList
+    Custom_Instructions_deleteCustomInstruction_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Custom Instructions_deleteCustomInstruction_Response_204
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    CustomInstructionListMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page of results, or null on the last/empty page. Replay it unchanged to fetch the next page.
+      description: Pagination metadata
+      title: CustomInstructionListMeta
+    CustomInstructionCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          default: false
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type: string
+          description: Internal notes about this instruction (not shown to the Agent)
+        availability_rules:
+          type:
+          - string
+          - 'null'
+          description: Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Omit or send `null` for no rule. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
+      required:
+      - title
+      - text
+      description: Fields for creating a custom instruction
+      title: CustomInstructionCreate
+    CustomInstructionUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type: string
+          description: Internal notes about this instruction (not shown to the Agent). Send an empty string to blank it; omit it to leave the existing notes unchanged.
+        availability_rules:
+          type:
+          - string
+          - 'null'
+          description: Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Send a non-empty string to set or replace it, `null` to clear it, or omit to leave it unchanged. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
+      description: Fields for updating a custom instruction. Only the fields provided are changed; omitted fields are left as they are.
+      title: CustomInstructionUpdate
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

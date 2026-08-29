@@ -1,20 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Data Compliance subpackage_channels subpackage_webhookManagement API
+  title: Knowledge Webhook Management API
   version: 1.0.0
 servers:
-- url: https://example.ada.support
-  description: ada
-- url: https://example.att.ada.support
-  description: att.ada
-- url: https://example.maple.ada.support
-  description: maple.ada
-- url: https://example.ficanex.ada.support
-  description: ficanex.ada
-- url: https://example.eu.ada.support
-  description: eu.ada
+- url: https://example.ada.support/api
+  description: Production
 tags:
-- name: subpackage_webhookManagement
+- name: webhookManagement
 paths:
   /v2/webhooks/:
     get:
@@ -22,7 +14,7 @@ paths:
       summary: List webhooks
       description: List all webhook subscriptions configured for this AI Agent
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: limit
         in: query
@@ -48,7 +40,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook Management_listWebhooks_Response_200'
+                $ref: '#/components/schemas/Webhook_Management_listWebhooks_Response_200'
         '401':
           description: Unauthorized
           content:
@@ -66,7 +58,7 @@ paths:
       summary: Create a webhook
       description: Create a new webhook subscription. If this is the first webhook for this AI Agent, the webhook infrastructure is automatically provisioned
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: Authorization
         in: header
@@ -124,7 +116,7 @@ paths:
       summary: Get a webhook
       description: Get the details of a specific webhook subscription
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: id
         in: path
@@ -162,7 +154,7 @@ paths:
       summary: Delete a webhook
       description: Delete a webhook subscription
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: id
         in: path
@@ -182,7 +174,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook Management_deleteWebhook_Response_204'
+                $ref: '#/components/schemas/Webhook_Management_deleteWebhook_Response_204'
         '401':
           description: Unauthorized
           content:
@@ -200,7 +192,7 @@ paths:
       summary: Update a webhook
       description: Update a webhook subscription. Only the fields provided in the request body will be updated
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: id
         in: path
@@ -266,7 +258,7 @@ paths:
       summary: Get webhook signing secret
       description: Get the signing secret for a webhook. Use this secret to verify that incoming webhook payloads are authentic
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: id
         in: path
@@ -286,7 +278,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook Management_getWebhookSecret_Response_200'
+                $ref: '#/components/schemas/Webhook_Management_getWebhookSecret_Response_200'
         '401':
           description: Unauthorized
           content:
@@ -305,7 +297,7 @@ paths:
       summary: Rotate webhook signing secret
       description: Rotate the signing secret for a webhook. Optionally provide a custom key. The new secret is not returned in the response — use the get secret endpoint to retrieve it
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: id
         in: path
@@ -325,7 +317,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook Management_rotateWebhookSecret_Response_200'
+                $ref: '#/components/schemas/Webhook_Management_rotateWebhookSecret_Response_200'
         '401':
           description: Unauthorized
           content:
@@ -353,7 +345,7 @@ paths:
       summary: List webhook event types
       description: List all available event types that webhooks can subscribe to
       tags:
-      - subpackage_webhookManagement
+      - webhookManagement
       parameters:
       - name: Authorization
         in: header
@@ -367,7 +359,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Webhook Management_listWebhookEventTypes_Response_200'
+                $ref: '#/components/schemas/Webhook_Management_listWebhookEventTypes_Response_200'
         '401':
           description: Unauthorized
           content:
@@ -376,6 +368,80 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
+    Webhook_Management_listWebhooks_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Webhook'
+        meta:
+          $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
+      title: Webhook Management_listWebhooks_Response_200
+    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page of results, or null if no pages remain
+      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
+    Webhook_Management_rotateWebhookSecret_Response_200:
+      type: object
+      properties: {}
+      title: Webhook Management_rotateWebhookSecret_Response_200
+    V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The event type identifier
+        description:
+          type: string
+          description: Human-readable description of the event type
+      title: V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems
+    Webhook_Management_deleteWebhook_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Webhook Management_deleteWebhook_Response_204
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    Webhook_Management_getWebhookSecret_Response_200:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The webhook signing secret
+      title: Webhook Management_getWebhookSecret_Response_200
     Webhook:
       type: object
       properties:
@@ -406,7 +472,7 @@ components:
           format: date-time
           description: When the webhook was last updated
       title: Webhook
-    Webhook Management_listWebhookEventTypes_Response_200:
+    Webhook_Management_listWebhookEventTypes_Response_200:
       type: object
       properties:
         data:
@@ -414,81 +480,7 @@ components:
           items:
             $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
       title: Webhook Management_listWebhookEventTypes_Response_200
-    Webhook Management_deleteWebhook_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Webhook Management_deleteWebhook_Response_204
-    V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems:
-      type: object
-      properties:
-        name:
-          type: string
-          description: The event type identifier
-        description:
-          type: string
-          description: Human-readable description of the event type
-      title: V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems
-    Webhook Management_getWebhookSecret_Response_200:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The webhook signing secret
-      title: Webhook Management_getWebhookSecret_Response_200
-    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: URL for the next page of results, or null if no pages remain
-      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
-    Webhook Management_rotateWebhookSecret_Response_200:
-      type: object
-      properties: {}
-      title: Webhook Management_rotateWebhookSecret_Response_200
-    Webhook Management_listWebhooks_Response_200:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Webhook'
-        meta:
-          $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
-      title: Webhook Management_listWebhooks_Response_200
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer

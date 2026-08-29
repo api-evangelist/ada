@@ -1,0 +1,155 @@
+openapi: 3.2.0
+info:
+  title: Knowledge Get Deletion Job API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support/api
+  description: Production
+tags:
+- name: getDeletionJob
+paths:
+  /v2/jobs/{job_id}:
+    get:
+      operationId: get-a-deletion-job
+      summary: Get a deletion job
+      description: Returns the current state of a deletion job, including the per-identifier dispositions. A job for an unknown or unowned `job_id` returns `404`.
+      tags:
+      - getDeletionJob
+      parameters:
+      - name: job_id
+        in: path
+        description: Identifier of the deletion job returned when the request was submitted.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The deletion job was found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionJob'
+        '401':
+          description: Authentication token is missing or invalid. Try generating a new token.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: No deletion job exists for the supplied `job_id` under this AI Agent.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '429':
+          description: Too many requests. Retry after slowing the request rate.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '500':
+          description: Something went wrong on Ada's end.
+          content:
+            application/json:
+              schema:
+                description: Any type
+components:
+  schemas:
+    DeletionJob:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Identifier of the deletion job.
+        type:
+          type: string
+          description: The job type.
+        client_reference:
+          type:
+          - string
+          - 'null'
+          description: The caller-supplied reference from the original request, or null.
+        status:
+          $ref: '#/components/schemas/DeletionJobStatus'
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentifierDisposition'
+          description: Per-identifier outcomes. Inspect this array to understand exactly what was erased, rather than relying on the top-level status alone.
+        created_at:
+          type: string
+          format: date-time
+          description: Time the job was created, in ISO 8601 format.
+        completed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Time the job reached a terminal state, in ISO 8601 format, or null while the job is still running.
+        failure_reason:
+          type:
+          - string
+          - 'null'
+          description: Opaque, machine-readable diagnostic present only when `status` is `failed`, or null otherwise. This value is subject to change; to understand outcomes per identifier, inspect each identifier's `disposition` and `reason`.
+      description: Full state of a deletion job, including the per-identifier outcomes.
+      title: DeletionJob
+    IdentifierDisposition:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/DeletionIdentifierType'
+        value:
+          type: string
+          description: The identifier value as submitted.
+        variable:
+          type:
+          - string
+          - 'null'
+          description: The matched variable name, or null when not applicable.
+        disposition:
+          $ref: '#/components/schemas/IdentifierDispositionDisposition'
+          description: How the identifier was handled. `accepted` identifiers are queued for erasure; the other values indicate the identifier contributed no erasure.
+        matched_chatters:
+          type: integer
+          description: Number of end users matched by this identifier.
+        reason:
+          type:
+          - string
+          - 'null'
+          description: Human-readable explanation for a non-accepted disposition. Always set for `invalid` and `exceeds_limit`, and for `not_found` on ID-based identifiers; may be null for a `not_found` `email` or `variable_match` selector, and for `accepted`/`duplicate`. Do not assume it is non-null from `disposition` alone.
+      description: The outcome for one submitted identifier.
+      title: IdentifierDisposition
+    DeletionIdentifierType:
+      type: string
+      enum:
+      - email
+      - chatter_id
+      - external_id
+      - end_user_id
+      - variable_match
+      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
+      title: DeletionIdentifierType
+    DeletionJobStatus:
+      type: string
+      enum:
+      - queued
+      - in_progress
+      - completed
+      - partial
+      - failed
+      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
+      title: DeletionJobStatus
+    IdentifierDispositionDisposition:
+      type: string
+      enum:
+      - accepted
+      - not_found
+      - invalid
+      - exceeds_limit
+      - duplicate
+      description: How the identifier was handled. `accepted` identifiers are queued for erasure; the other values indicate the identifier contributed no erasure.
+      title: IdentifierDispositionDisposition
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

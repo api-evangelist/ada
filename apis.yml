@@ -124,12 +124,11 @@ apis:
 - aid: ada:ada-mcp-server
   name: Ada MCP Server
   description: >-
-    Model Context Protocol server exposing Ada's management surface to AI assistants — metrics,
-    conversation transcripts, knowledge and coaching search, entity discovery, test cases and
-    runs, change sets, and staged writes to Agent behaviour. Served from the customer's own Ada
-    instance host over JSON-RPC 2.0 (SSE is not supported), authenticated by OAuth with
-    dashboard role-based access control, or by API key. Eighteen documented tools plus a
-    nine-prompt library.
+    Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation
+    transcripts, knowledge and coaching search, entity discovery, test cases and runs, change sets, and
+    staged writes to Agent behaviour. Served from the customer's own Ada instance host over JSON-RPC 2.0
+    (SSE is not supported), authenticated by OAuth with dashboard role-based access control, or by API
+    key. Eighteen documented tools plus a nine-prompt library.
   humanURL: https://docs.ada.cx/mcp/introduction/overview
   baseURL: https://example.ada.support/api/mcp
   tags:
@@ -153,189 +152,272 @@ apis:
     url: https://docs.ada.cx/mcp/introduction/overview
   - type: Authentication
     url: https://docs.ada.cx/mcp/introduction/authentication
-- aid: ada:ada-subpackage-channels-api
-  name: Ada subpackage_channels API
-  description: The subpackage_channels API from Ada — 1 operation(s) for subpackage_channels.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - subpackage_channels
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-subpackage-channels-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-channels-overlay.yaml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-conversations-api
-  name: Ada subpackage_conversations API
-  description: The subpackage_conversations API from Ada — 9 operation(s) for subpackage_conversations.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - subpackage_conversations
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-subpackage-conversations-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-conversations-overlay.yaml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-deletechatterdata-api
-  name: Ada subpackage_deleteChatterData API
-  description: >-
-    The subpackage_deleteChatterData API from Ada — 1 operation(s) for subpackage_deletechatterdata.
+- aid: ada:ada-auditlog-api
+  name: Ada Audit Log API
+  description: The auditLog API from Ada — 1 operation(s) for auditlog.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_deleteChatterData
+  - auditLog
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-deletechatterdata-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-deletechatterdata-overlay.yaml
+    url: openapi/ada-auditlog-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-endusers-api
-  name: Ada subpackage_endUsers API
-  description: The subpackage_endUsers API from Ada — 2 operation(s) for subpackage_endusers.
+- aid: ada:ada-channels-api
+  name: Ada Channels API
+  description: The channels API from Ada — 2 operation(s) for channels.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_endUsers
+  - channels
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-endusers-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-endusers-overlay.yaml
+    url: openapi/ada-channels-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-knowledge-subpackage-knowledge-articles-api
-  name: Ada subpackage_knowledge.subpackage_knowledge/articles API
-  description: >-
-    The subpackage_knowledge.subpackage_knowledge/articles API from Ada — 3 operation(s) for subpackage_knowledge.subpackage_knowledge/articles.
+- aid: ada:ada-conversations-api
+  name: Ada Conversations API
+  description: The conversations API from Ada — 9 operation(s) for conversations.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_knowledge.subpackage_knowledge/articles
+  - conversations
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-knowledge-subpackage-knowledge-articles-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-knowledge-subpackage-knowledge-articles-overlay.yaml
+    url: openapi/ada-conversations-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-knowledge-subpackage-knowledge-sources-api
-  name: Ada subpackage_knowledge.subpackage_knowledge/sources API
-  description: >-
-    The subpackage_knowledge.subpackage_knowledge/sources API from Ada — 2 operation(s) for subpackage_knowledge.subpackage_knowledge/sources.
+- aid: ada:ada-custominstructions-api
+  name: Ada Custom Instructions API
+  description: The customInstructions API from Ada — 2 operation(s) for custominstructions.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_knowledge.subpackage_knowledge/sources
+  - customInstructions
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-knowledge-subpackage-knowledge-sources-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-knowledge-subpackage-knowledge-sources-overlay.yaml
+    url: openapi/ada-custominstructions-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-knowledge-subpackage-knowledge-tags-api
-  name: Ada subpackage_knowledge.subpackage_knowledge/tags API
-  description: >-
-    The subpackage_knowledge.subpackage_knowledge/tags API from Ada — 3 operation(s) for subpackage_knowledge.subpackage_knowledge/tags.
+- aid: ada:ada-deletechatterdata-api
+  name: Ada Delete Chatter Data API
+  description: The deleteChatterData API from Ada — 1 operation(s) for deletechatterdata.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_knowledge.subpackage_knowledge/tags
+  - deleteChatterData
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-knowledge-subpackage-knowledge-tags-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-knowledge-subpackage-knowledge-tags-overlay.yaml
+    url: openapi/ada-deletechatterdata-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-messages-api
-  name: Ada subpackage_messages API
-  description: The subpackage_messages API from Ada — 2 operation(s) for subpackage_messages.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - subpackage_messages
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-subpackage-messages-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-messages-overlay.yaml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-platformintegrations-api
-  name: Ada subpackage_platformIntegrations API
-  description: >-
-    The subpackage_platformIntegrations API from Ada — 4 operation(s) for subpackage_platformintegrations.
+- aid: ada:ada-endusers-api
+  name: Ada End Users API
+  description: The endUsers API from Ada — 2 operation(s) for endusers.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_platformIntegrations
+  - endUsers
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-platformintegrations-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-platformintegrations-overlay.yaml
+    url: openapi/ada-endusers-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-subpackage-webhookmanagement-api
-  name: Ada subpackage_webhookManagement API
-  description: >-
-    The subpackage_webhookManagement API from Ada — 5 operation(s) for subpackage_webhookmanagement.
+- aid: ada:ada-getdeletionjob-api
+  name: Ada Get Deletion Job API
+  description: The getDeletionJob API from Ada — 1 operation(s) for getdeletionjob.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - subpackage_webhookManagement
+  - getDeletionJob
   properties:
   - type: OpenAPI
-    url: openapi/ada-subpackage-webhookmanagement-api-openapi.yml
-  - type: Overlay
-    url: overlays/ada-subpackage-webhookmanagement-overlay.yaml
+    url: openapi/ada-getdeletionjob-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-knowledge-api
+  name: Ada Knowledge API
+  description: The Knowledge API from Ada — 0 operation(s) for knowledge.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Knowledge
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-knowledge-articles-api
+  name: Ada knowledge > articles API
+  description: The knowledge > articles API from Ada — 3 operation(s) for knowledge > articles.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - knowledge > articles
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-articles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-knowledge-sources-api
+  name: Ada knowledge > sources API
+  description: The knowledge > sources API from Ada — 2 operation(s) for knowledge > sources.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - knowledge > sources
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-knowledge-tags-api
+  name: Ada knowledge > tags API
+  description: The knowledge > tags API from Ada — 3 operation(s) for knowledge > tags.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - knowledge > tags
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-messages-api
+  name: Ada Messages API
+  description: The messages API from Ada — 2 operation(s) for messages.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - messages
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-messages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-persona-api
+  name: Ada Persona API
+  description: The persona API from Ada — 1 operation(s) for persona.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - persona
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-persona-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-platformintegrations-api
+  name: Ada Platform Integrations API
+  description: The platformIntegrations API from Ada — 4 operation(s) for platformintegrations.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - platformIntegrations
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-platformintegrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-submitdeletionrequest-api
+  name: Ada Submit Deletion Request API
+  description: The submitDeletionRequest API from Ada — 1 operation(s) for submitdeletionrequest.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - submitDeletionRequest
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-submitdeletionrequest-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-variables-api
+  name: Ada Variables API
+  description: The Variables API from Ada — 2 operation(s) for variables.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-variables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-webhookmanagement-api
+  name: Ada Webhook Management API
+  description: The webhookManagement API from Ada — 5 operation(s) for webhookmanagement.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - webhookManagement
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-webhookmanagement-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
@@ -343,6 +425,24 @@ apis:
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
 common:
+- type: Overlay
+  url: overlays/ada-subpackage-channels-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-conversations-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-deletechatterdata-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-endusers-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-knowledge-subpackage-knowledge-sources-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-knowledge-subpackage-knowledge-tags-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-messages-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-platformintegrations-overlay.yaml
+- type: Overlay
+  url: overlays/ada-subpackage-webhookmanagement-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/ada-agentic-access.yml
 - type: TrustCenter

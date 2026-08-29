@@ -1,20 +1,12 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/articles API
+  title: knowledge > articles API
   version: 1.0.0
 servers:
-- url: https://example.ada.support
-  description: ada
-- url: https://example.att.ada.support
-  description: att.ada
-- url: https://example.maple.ada.support
-  description: maple.ada
-- url: https://example.ficanex.ada.support
-  description: ficanex.ada
-- url: https://example.eu.ada.support
-  description: eu.ada
+- url: https://example.ada.support/api
+  description: Production
 tags:
-- name: subpackage_knowledge.subpackage_knowledge/articles
+- name: knowledge > articles
 paths:
   /v2/knowledge/articles/:
     get:
@@ -22,7 +14,7 @@ paths:
       summary: Get knowledge articles
       description: Get knowledge articles
       tags:
-      - subpackage_knowledge.subpackage_knowledge/articles
+      - knowledge > articles
       parameters:
       - name: cursor
         in: query
@@ -126,9 +118,14 @@ paths:
     delete:
       operationId: delete
       summary: Delete multiple articles
-      description: Delete multiple articles
+      description: 'Delete multiple articles
+
+
+        Deletion is asynchronous: a `204` response means the deletion request was accepted and the matching articles are deleted in the background. To confirm completion, re-query `GET /v2/knowledge/articles/` with the same filters until no articles match. A `404` is still returned when no articles match the provided filters.
+
+        '
       tags:
-      - subpackage_knowledge.subpackage_knowledge/articles
+      - knowledge > articles
       parameters:
       - name: id
         in: query
@@ -181,7 +178,7 @@ paths:
           type: string
       responses:
         '204':
-          description: Articles successfully deleted
+          description: Article deletion accepted; matching articles are deleted in the background
           content:
             application/json:
               schema:
@@ -222,7 +219,7 @@ paths:
       summary: Get a single knowledge article
       description: Get knowledge article by id
       tags:
-      - subpackage_knowledge.subpackage_knowledge/articles
+      - knowledge > articles
       parameters:
       - name: id
         in: path
@@ -272,7 +269,7 @@ paths:
       summary: Delete a single article
       description: Delete an article
       tags:
-      - subpackage_knowledge.subpackage_knowledge/articles
+      - knowledge > articles
       parameters:
       - name: id
         in: path
@@ -339,11 +336,16 @@ paths:
 
         - The maximum size of an article is 100KB
 
-        - The maximum number of articles is 50,000
+        - The maximum number of articles is 50,000 by default. Higher limits are available for eligible plans — contact your Ada team.
+
+
+        **Behavior at the article limit:**
+
+        Requests that only update existing articles (every `id` in the request already exists) continue to succeed even when your knowledge base is at its article limit. A request that introduces any new article `id` while at the limit is rejected as a whole with a `400` response. The error message is `Maximum article limit of {N} exceeded`, where `{N}` is your article limit, and the error details include a `code` of `knowledge.articles.total_exceeded`, the list of `new_article_ids` that triggered the rejection (capped at the first 100), and the total `new_article_count`. Use these fields to separate new articles from update-only batches, which can still be submitted.
 
         '
       tags:
-      - subpackage_knowledge.subpackage_knowledge/articles
+      - knowledge > articles
       parameters:
       - name: Authorization
         in: header
@@ -393,110 +395,114 @@ paths:
                 $ref: '#/components/schemas/KnowledgeArticleUpsertRequest'
 components:
   schemas:
-    knowledge_articles_list_Response_200:
+    AvailabilityRuleCondition:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/KnowledgeArticleResponse'
-        meta:
-          $ref: '#/components/schemas/PaginationMetadata'
-      title: knowledge_articles_list_Response_200
-    PaginationMetadata:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: The URL to the next page of results
-      title: PaginationMetadata
-    knowledge_articles_delete_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_articles_delete_Response_204
-    KnowledgeArticleUpsertResponse:
-      type: object
-      properties:
-        success:
+        variable:
+          $ref: '#/components/schemas/AvailabilityRuleConditionVariable'
+          description: The variable to test, referenced by `id`. Look up the ids for your Agent through the variables endpoint. Not every variable can be used in a rule; referencing one that can't returns a `400`.
+        operator:
+          $ref: '#/components/schemas/AvailabilityRuleConditionOperator'
+          description: The comparison operator. Unary operators (`is_set`, `is_not_set`) must not include a `value` field.
+        value:
+          $ref: '#/components/schemas/AvailabilityRuleConditionValue'
+          description: The value to compare against. Omit for unary operators (`is_set`, `is_not_set`).
+        case_sensitive:
           type: boolean
-          description: Whether the article was successfully created/updated
-        created:
-          type: boolean
-          description: '`True` if a new article was created, `false` if an existing article was updated'
-        id:
-          type: string
-          description: A unique identifier for the article
+          description: Whether the comparison is case-sensitive. Defaults to `false`. Only meaningful for the equality (`equals`, `does_not_equal`) and string (`starts_with`, `ends_with`, `contains`, `does_not_contain`) operators. Omitted from responses when `false`.
       required:
-      - id
-      title: KnowledgeArticleUpsertResponse
-    KnowledgeArticleUpsertRequestMetadata:
+      - variable
+      - operator
+      description: A single condition comparing a variable to a value.
+      title: AvailabilityRuleCondition
+    KnowledgeArticleResponseMetadata:
       type: object
       properties: {}
       description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
-      title: KnowledgeArticleUpsertRequestMetadata
-    KnowledgeArticleUpsertRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the article
-        name:
-          type: string
-          description: The name or title of the article
-        content:
-          type: string
-          description: The content of the article in markdown format
-        url:
-          type:
-          - string
-          - 'null'
-          format: url
-          description: The url of the article
-        knowledge_source_id:
-          type: string
-          description: The id of the `knowledge_source` the article belongs to
-        tag_ids:
-          type: array
-          items:
-            type: string
-          description: A list of ids for the tags associated with the article
-        language:
-          type: string
-          description: The IETF BCP 47 language code for the article, defaults to `en`
-        external_created:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date the article was created in the source system
-        external_updated:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date the article was last updated in the source system
-        enabled:
-          type: boolean
-          description: Whether the article should be referenced during response generation, defaults to `true`
-        metadata:
-          oneOf:
-          - $ref: '#/components/schemas/KnowledgeArticleUpsertRequestMetadata'
-          - type: 'null'
-          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
-      required:
-      - id
-      - name
-      - content
-      - knowledge_source_id
-      title: KnowledgeArticleUpsertRequest
+      title: KnowledgeArticleResponseMetadata
     knowledge_articles_deleteById_Response_204:
       type: object
       properties: {}
       description: Empty response body
       title: knowledge_articles_deleteById_Response_204
+    AvailabilityRuleConditionsItems:
+      oneOf:
+      - $ref: '#/components/schemas/AvailabilityRuleCondition'
+      - $ref: '#/components/schemas/AvailabilityRuleConditionGroup'
+      title: AvailabilityRuleConditionsItems
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    ArticleLanguage:
+      type: string
+      enum:
+      - ar
+      - zh
+      - zh-tw
+      - da
+      - nl
+      - en
+      - fi
+      - fr
+      - de
+      - he
+      - hi
+      - id
+      - in
+      - it
+      - ja
+      - ko
+      - ms
+      - pt
+      - pa
+      - ru
+      - es
+      - sv
+      - tl
+      - ta
+      - th
+      - tr
+      - vi
+      - ht
+      - my
+      - km
+      - bg
+      - ro
+      - el
+      - hu
+      - pl
+      - cs
+      - et
+      - hr
+      - lt
+      - lv
+      - sl
+      - sk
+      - is
+      - be
+      - uk
+      - ca
+      - sq
+      - bs
+      - sr
+      - kk
+      description: The ISO 639-1 language code of the article, defaults to `en`
+      title: ArticleLanguage
     KnowledgeArticleResponse:
       type: object
       properties:
@@ -555,66 +561,199 @@ components:
           - $ref: '#/components/schemas/KnowledgeArticleResponseMetadata'
           - type: 'null'
           description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+        availability_rules:
+          oneOf:
+          - $ref: '#/components/schemas/AvailabilityRule'
+          - type: 'null'
+          description: Availability rule controlling which articles the AI Agent can access during a conversation. `null` when no rule is set.
       required:
       - id
       - name
       - content
       title: KnowledgeArticleResponse
-    ArticleLanguage:
+    AvailabilityRuleConditionVariable:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the variable.
+      required:
+      - id
+      description: The variable to test, referenced by `id`. Look up the ids for your Agent through the variables endpoint. Not every variable can be used in a rule; referencing one that can't returns a `400`.
+      title: AvailabilityRuleConditionVariable
+    AvailabilityRuleConditionGroup:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/AvailabilityRuleConditionGroupMatch'
+          description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilityRuleCondition'
+          description: List of conditions inside this condition group. Must contain at least one entry.
+      required:
+      - match
+      - conditions
+      description: A nested group of conditions inside a rule's top-level `conditions` list. Condition groups may contain only `Condition` objects — further nesting is not supported.
+      title: AvailabilityRuleConditionGroup
+    AvailabilityRuleConditionValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      description: The value to compare against. Omit for unary operators (`is_set`, `is_not_set`).
+      title: AvailabilityRuleConditionValue
+    knowledge_articles_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_delete_Response_204
+    AvailabilityRuleMatch:
       type: string
       enum:
-      - ar
-      - zh
-      - zh-tw
-      - da
-      - nl
-      - en
-      - fi
-      - fr
-      - de
-      - he
-      - hi
+      - all
+      - any
+      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+      title: AvailabilityRuleMatch
+    AvailabilityRuleConditionOperator:
+      type: string
+      enum:
+      - equals
+      - does_not_equal
+      - greater_than
+      - less_than
+      - starts_with
+      - ends_with
+      - contains
+      - does_not_contain
+      - is_set
+      - is_not_set
+      description: The comparison operator. Unary operators (`is_set`, `is_not_set`) must not include a `value` field.
+      title: AvailabilityRuleConditionOperator
+    KnowledgeArticleUpsertRequestMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      title: KnowledgeArticleUpsertRequestMetadata
+    KnowledgeArticleUpsertRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the article
+        name:
+          type: string
+          description: The name or title of the article
+        content:
+          type: string
+          description: The content of the article in markdown format
+        url:
+          type:
+          - string
+          - 'null'
+          format: url
+          description: The url of the article
+        knowledge_source_id:
+          type: string
+          description: The id of the `knowledge_source` the article belongs to
+        tag_ids:
+          type: array
+          items:
+            type: string
+          description: A list of ids for the tags associated with the article
+        language:
+          type: string
+          description: The IETF BCP 47 language code for the article, defaults to `en`
+        external_created:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date the article was created in the source system
+        external_updated:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date the article was last updated in the source system
+        enabled:
+          type: boolean
+          description: Whether the article should be referenced during response generation, defaults to `true`
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeArticleUpsertRequestMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+        availability_rules:
+          oneOf:
+          - $ref: '#/components/schemas/AvailabilityRule'
+          - type: 'null'
+          description: Availability rule controlling which articles the AI Agent can access during a conversation. Send a rule object to attach or replace a rule, `null` to detach an existing rule, or omit the field to leave any existing rule unchanged. A rule may contain at most 1000 conditions in total. See [Availability rules](/reference/introduction/availability-rules) for the full schema and examples.
+      required:
       - id
-      - in
-      - it
-      - ja
-      - ko
-      - ms
-      - pt
-      - pa
-      - ru
-      - es
-      - sv
-      - tl
-      - ta
-      - th
-      - tr
-      - vi
-      - ht
-      - my
-      - km
-      - bg
-      - ro
-      - el
-      - hu
-      - pl
-      - cs
-      - et
-      - hr
-      - lt
-      - lv
-      - sl
-      - sk
-      - is
-      - be
-      - uk
-      - ca
-      - sq
-      - bs
-      - sr
-      - kk
-      description: The ISO 639-1 language code of the article, defaults to `en`
-      title: ArticleLanguage
+      - name
+      - content
+      - knowledge_source_id
+      title: KnowledgeArticleUpsertRequest
+    KnowledgeArticleUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article was created, `false` if an existing article was updated'
+        id:
+          type: string
+          description: A unique identifier for the article
+      required:
+      - id
+      title: KnowledgeArticleUpsertResponse
+    AvailabilityRuleConditionGroupMatch:
+      type: string
+      enum:
+      - all
+      - any
+      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+      title: AvailabilityRuleConditionGroupMatch
+    AvailabilityRule:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/AvailabilityRuleMatch'
+          description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilityRuleConditionsItems'
+          description: List of conditions or condition groups. Must contain at least one entry. Each entry is either a `Condition` object (with `variable`, `operator`, and optional `value`) or a `ConditionGroup` object (with its own `match` and nested `conditions` list).
+      required:
+      - match
+      - conditions
+      description: A two-level tree of conditions that determines availability based on variable values during a conversation. The root group has a `match` combinator and a list of conditions or condition groups. A rule may contain at most 1000 conditions in total, counting every condition across the root and all nested condition groups.
+      title: AvailabilityRule
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    knowledge_articles_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeArticleResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: knowledge_articles_list_Response_200
     Errors:
       type: object
       properties:
@@ -626,30 +765,7 @@ components:
       required:
       - errors
       title: Errors
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    KnowledgeArticleResponseMetadata:
-      type: object
-      properties: {}
-      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
-      title: KnowledgeArticleResponseMetadata
   securitySchemes:
-    bearerAuth:
+    BearerAuth:
       type: http
       scheme: bearer

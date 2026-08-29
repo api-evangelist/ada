@@ -1,0 +1,183 @@
+openapi: 3.2.0
+info:
+  title: Knowledge Variables API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support/api
+  description: Production
+tags:
+- name: Variables
+paths:
+  /v2/variables/:
+    get:
+      operationId: list
+      summary: List Variables
+      description: 'Returns the Variables accessible to the AI Agent (the Variables shown
+
+        on the dashboard). Note: Reserved and internal Variables are not included.
+
+        '
+      tags:
+      - Variables
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of Variables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variables_list_Response_200'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+  /v2/variables/{id}:
+    get:
+      operationId: get
+      summary: Get a Variable
+      description: 'Returns a single accessible Variable by id. An id that is unknown,
+
+        malformed, or refers to a reserved or internal Variable returns `404`.
+
+        '
+      tags:
+      - Variables
+      parameters:
+      - name: id
+        in: path
+        description: The id of the Variable to retrieve
+        required: true
+        schema:
+          type: string
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Variable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableSummary'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+components:
+  schemas:
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    variables_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableSummary'
+      required:
+      - data
+      title: variables_list_Response_200
+    VariableSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the Variable
+        name:
+          type: string
+          description: The name of the Variable
+      required:
+      - id
+      - name
+      description: 'A Variable as returned by the list and get endpoints. Carries the
+
+        Variable''s id, used to reference it elsewhere, and its name.
+
+        '
+      title: VariableSummary
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

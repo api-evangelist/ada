@@ -1,0 +1,241 @@
+openapi: 3.2.0
+info:
+  title: Knowledge Persona API
+  version: 1.0.0
+servers:
+- url: https://example.ada.support/api
+  description: Production
+tags:
+- name: persona
+paths:
+  /v2/persona/:
+    get:
+      operationId: get-persona
+      summary: Get persona
+      description: Retrieve the current persona configuration.
+      tags:
+      - persona
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+    patch:
+      operationId: update-persona
+      summary: Update persona
+      description: Partially update the persona configuration. Only the fields provided in the request body are updated; omitted fields retain their existing values. Fields that are not part of the public persona schema are rejected.
+      tags:
+      - persona
+      parameters:
+      - name: Authorization
+        in: header
+        description: Bearer authentication
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '403':
+          description: Authorization Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonaUpdate'
+components:
+  schemas:
+    PersonaMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaMessageLength
+    PersonaUpdate:
+      type: object
+      properties:
+        personality:
+          type: array
+          items:
+            type: string
+        emoji_usage:
+          type: boolean
+        allowed_emojis:
+          type: string
+        default_timezone:
+          type: string
+        company_description:
+          type:
+          - string
+          - 'null'
+        community_guidelines_url:
+          type:
+          - string
+          - 'null'
+        message_length:
+          $ref: '#/components/schemas/PersonaUpdateMessageLength'
+        ask_for_more_help:
+          type: boolean
+        no_customer_pi:
+          type: boolean
+        no_competitors:
+          type: boolean
+        competitor_names:
+          type:
+          - string
+          - 'null'
+        enable_acknowledgment_messages:
+          type: boolean
+      description: Partial persona update. All fields optional.
+      title: PersonaUpdate
+    Persona:
+      type: object
+      properties:
+        personality:
+          type: array
+          items:
+            type: string
+        emoji_usage:
+          type: boolean
+        allowed_emojis:
+          type: string
+        default_timezone:
+          type: string
+        company_description:
+          type:
+          - string
+          - 'null'
+        community_guidelines_url:
+          type:
+          - string
+          - 'null'
+        message_length:
+          $ref: '#/components/schemas/PersonaMessageLength'
+        ask_for_more_help:
+          type: boolean
+        no_customer_pi:
+          type: boolean
+        no_competitors:
+          type: boolean
+        competitor_names:
+          type:
+          - string
+          - 'null'
+        enable_acknowledgment_messages:
+          type: boolean
+      required:
+      - personality
+      - emoji_usage
+      - allowed_emojis
+      - default_timezone
+      - message_length
+      - ask_for_more_help
+      - no_customer_pi
+      - no_competitors
+      - enable_acknowledgment_messages
+      description: Persona configuration
+      title: Persona
+    PersonaUpdateMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaUpdateMessageLength
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

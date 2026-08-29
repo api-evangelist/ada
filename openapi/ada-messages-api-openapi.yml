@@ -1,20 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Data Compliance subpackage_channels subpackage_messages API
+  title: Ada Messages API
   version: 1.0.0
+  description: 'Operations tagged messages across 2 of this provider''s published API definitions: ada-data-export-openapi.yml, ada-data-export-v1-4-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://example.ada.support/api
+  description: https://example.ada.support/api
 - url: https://example.ada.support
-  description: ada
-- url: https://example.att.ada.support
-  description: att.ada
-- url: https://example.maple.ada.support
-  description: maple.ada
-- url: https://example.ficanex.ada.support
-  description: ficanex.ada
-- url: https://example.eu.ada.support
-  description: eu.ada
+  description: https://example.ada.support/
 tags:
-- name: subpackage_messages
+- name: messages
 paths:
   /v2/export/messages:
     get:
@@ -22,7 +17,7 @@ paths:
       summary: Return messages matching the parameters
       description: Returns a list of `message` objects along with a `next_page_uri` if applicable
       tags:
-      - subpackage_messages
+      - messages
       parameters:
       - name: created_since
         in: query
@@ -105,13 +100,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Errors'
+    servers:
+    - url: https://example.ada.support/api
+      description: https://example.ada.support/api
   /data_api/v1.4/messages:
     get:
       operationId: return-messages-matching-the-parameters
       summary: Return messages matching the parameters
       description: Returns a list of `message` objects along with a status message and `next_page_uri` if applicable.
       tags:
-      - subpackage_messages
+      - messages
       parameters:
       - name: created_since
         in: query
@@ -205,89 +203,11 @@ paths:
             application/json:
               schema:
                 description: Any type
+    servers:
+    - url: https://example.ada.support
+      description: https://example.ada.support/
 components:
   schemas:
-    Message_2:
-      type: object
-      properties:
-        _id:
-          type: string
-          description: Unique ID for the message record
-        answer_id:
-          type: string
-          description: Internal ID of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, and None if it was sent by a generative bot
-        answer_title:
-          type: string
-          description: Title of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, or if it was sent by a generative bot
-        chatter_id:
-          type: string
-          description: Internal ID of the chatter who sent this message. Corresponds to the `_id` field of Chatter objects
-        conversation_id:
-          type: string
-          description: Internal ID of the conversation in which this message was sent. Corresponds to the `_id` field of Conversation objects
-        date_created:
-          type: string
-          format: date-time
-          description: Time the record was created (UTC)
-        link_was_clicked:
-          type: boolean
-          description: Indicates if the link in the answer (response) was clicked
-        message_data:
-          $ref: '#/components/schemas/MessageMessageData'
-          description: Data associated with this message
-        recipient:
-          type: string
-          description: Recipient of this message
-        record_last_updated:
-          type: string
-          format: date-time
-          description: Date and time the record was uploaded to the API (UTC)
-        review:
-          type: integer
-          description: Rating given to this answer by the chatter
-        sender:
-          type: string
-          description: Sender of this message
-        in_response_to:
-          type: string
-          description: Internal ID of the message that this message is in response to. None if the message is not in response to another message
-      title: Message
-    MessagesResponseMeta:
-      type: object
-      properties:
-        next_page_uri:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page of results matching the query
-      title: MessagesResponseMeta
-    MessagesResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
-          description: Records returned from the query
-        meta:
-          $ref: '#/components/schemas/MessagesResponseMeta'
-      title: MessagesResponse
-    MessageMessageData:
-      type: object
-      properties: {}
-      description: Data associated with this message
-      title: MessageMessageData
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
     Message:
       type: object
       properties:
@@ -341,6 +261,31 @@ components:
           type: string
           description: Internal ID of the message that this message is in response to. None if the message is not in response to another message.
       title: Message
+    MessagesResponseMeta:
+      type: object
+      properties:
+        next_page_uri:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page of results matching the query
+      title: MessagesResponseMeta
+    MessagesResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          description: Records returned from the query
+        meta:
+          $ref: '#/components/schemas/MessagesResponseMeta'
+      title: MessagesResponse
+    MessageMessageData:
+      type: object
+      properties: {}
+      description: Data associated with this message
+      title: MessageMessageData
     ErrorsErrorsItems:
       type: object
       properties:
@@ -359,6 +304,62 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    Message_2:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Unique ID for the message record
+        answer_id:
+          type: string
+          description: Internal ID of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, and None if it was sent by a generative bot
+        answer_title:
+          type: string
+          description: Title of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, or if it was sent by a generative bot
+        chatter_id:
+          type: string
+          description: Internal ID of the chatter who sent this message. Corresponds to the `_id` field of Chatter objects
+        conversation_id:
+          type: string
+          description: Internal ID of the conversation in which this message was sent. Corresponds to the `_id` field of Conversation objects
+        date_created:
+          type: string
+          format: date-time
+          description: Time the record was created (UTC)
+        link_was_clicked:
+          type: boolean
+          description: Indicates if the link in the answer (response) was clicked
+        message_data:
+          $ref: '#/components/schemas/MessageMessageData'
+          description: Data associated with this message
+        recipient:
+          type: string
+          description: Recipient of this message
+        record_last_updated:
+          type: string
+          format: date-time
+          description: Date and time the record was uploaded to the API (UTC)
+        review:
+          type: integer
+          description: Rating given to this answer by the chatter
+        sender:
+          type: string
+          description: Sender of this message
+        in_response_to:
+          type: string
+          description: Internal ID of the message that this message is in response to. None if the message is not in response to another message
+      title: Message
     MessagesResponse_2:
       type: object
       properties:
@@ -378,3 +379,6 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+x-refined-from:
+- ada-data-export-openapi.yml
+- ada-data-export-v1-4-openapi.yml
