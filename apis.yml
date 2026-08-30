@@ -49,15 +49,15 @@ description: 'Ada is an AI-powered customer service automation platform that ena
   '
 tags:
 - Artificial Intelligence
-- Customer Service
+- customer-service
 - Chatbots
-- Automation
-- Conversational AI
-- Help Desk
+- automation
+- conversational-ai
+- helpdesk
 - CRM
 - Integration
-- Knowledge-Management
-- Data Export
+- knowledge-management
+- data-export
 tags_raw:
 - ai
 - customer-service
@@ -158,6 +158,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Audit Log
+  tags_raw:
   - auditLog
   properties:
   - type: OpenAPI
@@ -174,6 +176,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Channels
+  tags_raw:
   - channels
   properties:
   - type: OpenAPI
@@ -190,6 +194,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Conversations
+  tags_raw:
   - conversations
   properties:
   - type: OpenAPI
@@ -206,6 +212,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Custom Instructions
+  tags_raw:
   - customInstructions
   properties:
   - type: OpenAPI
@@ -221,7 +229,8 @@ apis:
   description: The deleteChatterData API from Ada — 1 operation(s) for deletechatterdata.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - deleteChatterData
   properties:
   - type: OpenAPI
@@ -238,6 +247,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - End Users
+  tags_raw:
   - endUsers
   properties:
   - type: OpenAPI
@@ -253,7 +264,8 @@ apis:
   description: The getDeletionJob API from Ada — 1 operation(s) for getdeletionjob.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - getDeletionJob
   properties:
   - type: OpenAPI
@@ -286,6 +298,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Knowledge Articles
+  tags_raw:
   - knowledge > articles
   properties:
   - type: OpenAPI
@@ -334,6 +348,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Message
+  tags_raw:
   - messages
   properties:
   - type: OpenAPI
@@ -350,6 +366,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Persona
+  tags_raw:
   - persona
   properties:
   - type: OpenAPI
@@ -365,7 +383,8 @@ apis:
   description: The platformIntegrations API from Ada — 4 operation(s) for platformintegrations.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - platformIntegrations
   properties:
   - type: OpenAPI
@@ -381,7 +400,8 @@ apis:
   description: The submitDeletionRequest API from Ada — 1 operation(s) for submitdeletionrequest.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
-  tags:
+  tags: []
+  tags_raw:
   - submitDeletionRequest
   properties:
   - type: OpenAPI
@@ -414,6 +434,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Webhook Management
+  tags_raw:
   - webhookManagement
   properties:
   - type: OpenAPI
