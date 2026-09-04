@@ -27,24 +27,20 @@ accessModel:
   - https://www.ada.cx/
   generated: '2026-08-14'
   method: searched
-  note: >-
-    Corrected 2026-08-14. Ada has no self-serve signup: the site offers /demo/ (book a demo) and
-    /login/ (existing customers) and no pricing page, API keys are issued from an existing
-    instance dashboard, and the docs API Playground requires your own key against your own
-    instance. There is no anonymous way to obtain credentials.
+  note: 'Corrected 2026-08-14. Ada has no self-serve signup: the site offers /demo/ (book a demo) and /login/ (existing
+    customers) and no pricing page, API keys are issued from an existing instance dashboard, and the docs API Playground
+    requires your own key against your own instance. There is no anonymous way to obtain credentials.'
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ada.png
 url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/apis.yml
 created: 2026-06-12
 modified: 2026-08-14
 specificationVersion: '0.23'
-description: 'Ada is an AI-powered customer service automation platform that enables
-  enterprises to deploy AI agents capable of resolving customer inquiries across digital
-  channels without human intervention. The platform exposes a suite of REST APIs for
-  managing knowledge bases, end-user profiles, conversation handling, data export,
-  data compliance, and external integrations. All APIs use rotatable API keys for
-  authentication, return JSON, and support cursor-based pagination. Ada serves global
-  brands including Pinterest, Square, Ancestry, and Zendesk, and has powered more
-  than 6.4 billion customer interactions since its founding in 2016.
+description: 'Ada is an AI-powered customer service automation platform that enables enterprises to deploy AI agents
+  capable of resolving customer inquiries across digital channels without human intervention. The platform exposes
+  a suite of REST APIs for managing knowledge bases, end-user profiles, conversation handling, data export, data
+  compliance, and external integrations. All APIs use rotatable API keys for authentication, return JSON, and support
+  cursor-based pagination. Ada serves global brands including Pinterest, Square, Ancestry, and Zendesk, and has
+  powered more than 6.4 billion customer interactions since its founding in 2016.
 
   '
 tags:
@@ -71,8 +67,7 @@ tags_raw:
 - data-export
 apis:
 - name: Ada End Users API
-  description: >-
-    Real-time management of end-user profile information with webhook events for new chats and profile
+  description: Real-time management of end-user profile information with webhook events for new chats and profile
     updates.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
@@ -88,8 +83,7 @@ apis:
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
 - name: Ada Conversations API
-  description: >-
-    Build custom channels and extend Ada into proprietary apps or third-party platforms with full conversation
+  description: Build custom channels and extend Ada into proprietary apps or third-party platforms with full conversation
     lifecycle control.
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
@@ -105,8 +99,7 @@ apis:
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
 - name: Ada Integrations API
-  description: >-
-    Connect external applications to Ada using OAuth to extend AI agent capabilities with partner-built
+  description: Connect external applications to Ada using OAuth to extend AI agent capabilities with partner-built
     integrations.
   humanURL: https://docs.ada.cx/reference/integrations/overview
   baseURL: https://example.ada.support
@@ -123,12 +116,11 @@ apis:
     url: https://docs.ada.cx/reference/integrations/overview
 - aid: ada:ada-mcp-server
   name: Ada MCP Server
-  description: >-
-    Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation
-    transcripts, knowledge and coaching search, entity discovery, test cases and runs, change sets, and
-    staged writes to Agent behaviour. Served from the customer's own Ada instance host over JSON-RPC 2.0
-    (SSE is not supported), authenticated by OAuth with dashboard role-based access control, or by API
-    key. Eighteen documented tools plus a nine-prompt library.
+  description: Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation
+    transcripts, knowledge and coaching search, entity discovery, test cases and runs, change sets, and staged writes
+    to Agent behaviour. Served from the customer's own Ada instance host over JSON-RPC 2.0 (SSE is not supported),
+    authenticated by OAuth with dashboard role-based access control, or by API key. Eighteen documented tools plus
+    a nine-prompt library.
   humanURL: https://docs.ada.cx/mcp/introduction/overview
   baseURL: https://example.ada.support/api/mcp
   tags:
@@ -446,6 +438,128 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-rest-api
+  name: Ada REST API
+  description: The Ada REST API is the unified v2 interface to the Ada AI customer service platform. It covers knowledge
+    sources and articles, end users, conversations, integrations (Actions), data export, data compliance, and webhooks.
+    Authentication uses rotatable API keys scoped to a customer instance.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - AI Agent
+  - Conversations
+  - Customer Service
+  - Knowledge
+  - Webhook
+  tags_raw:
+  - AI Agent
+  - Conversations
+  - Customer Service
+  - Knowledge
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Authentication
+    url: https://docs.ada.cx/reference/introduction/authentication
+  - type: OpenAPI
+    url: https://docs.ada.cx/openapi.yaml
+  - url: graphql/ada-cx-graphql.md
+    type: GraphQL
+- aid: ada:ada-knowledge-api
+  name: Ada Knowledge API
+  description: Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer
+    questions.
+  humanURL: https://docs.ada.cx/reference/knowledge/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Articles
+  - Knowledge
+  - Sources
+  - Tags
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/knowledge/overview
+- aid: ada:ada-conversations-api
+  name: Ada Conversations API
+  description: Read and manage conversations handled by the Ada AI Agent across all supported channels.
+  humanURL: https://docs.ada.cx/reference/conversations/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Conversations
+  - Messaging
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/conversations/overview
+- aid: ada:ada-end-users-api
+  name: Ada End Users API
+  description: Create, look up, and update end users (customers) along with their metadata for use by Ada's AI Agent
+    and Actions.
+  humanURL: https://docs.ada.cx/reference/end-users/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Customers
+  - End Users
+  - Profiles
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
+- aid: ada:ada-integrations-api
+  name: Ada Integrations (Actions) API
+  description: Configure and invoke Actions, the integration layer that lets the Ada AI Agent call external systems
+    and APIs during a conversation.
+  humanURL: https://docs.ada.cx/reference/integrations/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Actions
+  - Integration
+  - Tools
+  tags_raw:
+  - Actions
+  - Integrations
+  - Tools
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/integrations/overview
+- aid: ada:ada-data-export-api
+  name: Ada Data Export API
+  description: Export conversation, message, and analytics data from Ada to data warehouses and BI tooling.
+  humanURL: https://docs.ada.cx/reference/data-export/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Analytics
+  - Data Export
+  - Reporting
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+- aid: ada:ada-data-compliance-api
+  name: Ada Data Compliance API
+  description: Run data subject access requests, data deletion, and other compliance operations across the Ada platform.
+  humanURL: https://docs.ada.cx/reference/data-compliance/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Compliance
+  - GDPR
+  - Privacy
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-webhooks-api
+  name: Ada Webhooks API
+  description: Configure and consume webhooks that notify external systems of conversation lifecycle events and
+    other platform activity.
+  humanURL: https://docs.ada.cx/reference/webhooks/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Event
+  - Webhook
+  tags_raw:
+  - Events
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/webhooks/overview
 common:
 - type: Overlay
   url: overlays/ada-subpackage-channels-overlay.yaml
