@@ -148,24 +148,6 @@ apis:
     url: https://docs.ada.cx/mcp/introduction/overview
   - type: Authentication
     url: https://docs.ada.cx/mcp/introduction/authentication
-- aid: ada:ada-auditlog-api
-  name: Ada Audit Log API
-  description: The auditLog API from Ada — 1 operation(s) for auditlog.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Audit Log
-  tags_raw:
-  - auditLog
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-auditlog-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-channels-api
   name: Ada Channels API
   description: The channels API from Ada — 2 operation(s) for channels.
@@ -231,24 +213,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/ada-deletechatterdata-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-endusers-api
-  name: Ada End Users API
-  description: The endUsers API from Ada — 2 operation(s) for endusers.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - End Users
-  tags_raw:
-  - endUsers
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-endusers-api-openapi.yml
   - type: Documentation
     url: https://docs.ada.cx/reference/introduction/overview
   - type: Documentation
@@ -424,24 +388,6 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-webhookmanagement-api
-  name: Ada Webhook Management API
-  description: The webhookManagement API from Ada — 5 operation(s) for webhookmanagement.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Webhook Management
-  tags_raw:
-  - webhookManagement
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-webhookmanagement-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-knowledge-api
   name: Ada Knowledge API
   description: >-
@@ -542,6 +488,54 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.ada.cx/reference/webhooks/overview
+- aid: ada:ada-audit-log-api
+  name: Ada Audit Log API
+  description: The Audit Log API from Ada — 1 operation(s) for audit log.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Audit Log
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-audit-log-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-end-users-api
+  name: Ada End Users API
+  description: The End Users API from Ada — 2 operation(s) for end users.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - End Users
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-end-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-webhook-management-api
+  name: Ada Webhook Management API
+  description: The Webhook Management API from Ada — 5 operation(s) for webhook management.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Webhook Management
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-webhook-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
 common:
 - type: Overlay
   url: overlays/ada-subpackage-channels-overlay.yaml
