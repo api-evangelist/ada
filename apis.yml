@@ -43,6 +43,9 @@ description: 'Ada is an AI-powered customer service automation platform that ena
   powered more than 6.4 billion customer interactions since its founding in 2016.
 
   '
+x-docs-platform: fern
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-17
 tags:
 - Artificial Intelligence
 - Customer Service
@@ -326,7 +329,7 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
-  - Persona
+  - Personas
   tags_raw:
   - persona
   properties:
@@ -494,6 +497,8 @@ apis:
   humanURL: https://docs.ada.cx/reference/introduction/overview
   baseURL: https://example.ada.support
   tags:
+  - Audit Logs
+  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
