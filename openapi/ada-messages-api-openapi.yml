@@ -9,7 +9,7 @@ servers:
 - url: https://example.ada.support
   description: https://example.ada.support/
 tags:
-- name: messages
+- name: Messages
 paths:
   /v2/export/messages:
     get:
@@ -17,7 +17,7 @@ paths:
       summary: Return messages matching the parameters
       description: Returns a list of `message` objects along with a `next_page_uri` if applicable
       tags:
-      - messages
+      - Messages
       parameters:
       - name: created_since
         in: query
@@ -109,7 +109,7 @@ paths:
       summary: Return messages matching the parameters
       description: Returns a list of `message` objects along with a status message and `next_page_uri` if applicable.
       tags:
-      - messages
+      - Messages
       parameters:
       - name: created_since
         in: query
@@ -270,6 +270,17 @@ components:
           - 'null'
           description: Link to the next page of results matching the query
       title: MessagesResponseMeta
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     MessagesResponse:
       type: object
       properties:
@@ -281,11 +292,6 @@ components:
         meta:
           $ref: '#/components/schemas/MessagesResponseMeta'
       title: MessagesResponse
-    MessageMessageData:
-      type: object
-      properties: {}
-      description: Data associated with this message
-      title: MessageMessageData
     ErrorsErrorsItems:
       type: object
       properties:
@@ -304,17 +310,11 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    Errors:
+    MessageMessageData:
       type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
+      properties: {}
+      description: Data associated with this message
+      title: MessageMessageData
     Message_2:
       type: object
       properties:

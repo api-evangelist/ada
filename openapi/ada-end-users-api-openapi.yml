@@ -6,7 +6,7 @@ servers:
 - url: https://example.ada.support/api
   description: Production
 tags:
-- name: endUsers
+- name: End Users
 paths:
   /v2/end-users/{end_user_id}:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: Get an end user
       description: Get a specific end user by id
       tags:
-      - endUsers
+      - End Users
       parameters:
       - name: end_user_id
         in: path
@@ -71,7 +71,7 @@ paths:
       summary: Update an end user
       description: Update a specific end user by id
       tags:
-      - endUsers
+      - End Users
       parameters:
       - name: end_user_id
         in: path
@@ -140,7 +140,7 @@ paths:
       summary: Get multiple end users
       description: Get multiple end users. You can specify how many users appear per page, and which user id to start from. Alternatively, supply an `external_id` query parameter to look up a single end user by their caller-supplied identifier. When `external_id` is supplied, the 200 response is a single end user object (same shape as `GET /v2/end-users/{end_user_id}`) and is mutually exclusive with cursor/limit pagination. The `external_id` query parameter is available for custom channel integrations only (V1).
       tags:
-      - endUsers
+      - End Users
       parameters:
       - name: external_id
         in: query
@@ -209,7 +209,7 @@ paths:
       summary: Create an end user
       description: Create a new end user with optional profile data and sensitive metadata. Use this endpoint to establish an end user with context (language, metadata, sensitive metadata) before starting a conversation via POST /v2/conversations/. This ensures the AI Agent has full user context from the first turn. Available for custom channel (Conversations API) integrations. End users created through this endpoint that are not associated with a conversation within 24 hours of creation are automatically deleted.
       tags:
-      - endUsers
+      - End Users
       parameters:
       - name: Authorization
         in: header
@@ -261,96 +261,59 @@ paths:
               $ref: '#/components/schemas/CreateEndUserRequest'
 components:
   schemas:
-    End_Users_getEndUsers_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/EndUser'
-      - $ref: '#/components/schemas/EndUsers'
-      title: End Users_getEndUsers_Response_200
-    EndUsers:
+    EndUser:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EndUser'
-          description: The list of end user profiles
-        meta:
-          $ref: '#/components/schemas/CursorPaginationMetadata'
-      title: EndUsers
-    CreateEndUserRequestProfileSensitiveMetadataFields:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      title: CreateEndUserRequestProfileSensitiveMetadataFields
-    EndUserProfileSystemProperties:
-      type: object
-      properties:
-        sunshine_user_id:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
           type:
           - string
           - 'null'
-          description: The Sunshine Conversations user id for the end user
-      description: Read-only profile information set by Ada
-      title: EndUserProfileSystemProperties
-    EndUserRequestProfileSensitiveMetadataFields:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      title: EndUserRequestProfileSensitiveMetadataFields
-    CursorPaginationMetadata:
+          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      title: EndUser
+    EndUserRequestProfileSensitiveMetadata:
       type: object
       properties:
-        next_page_url:
-          type: string
-          format: url
-          description: Link to the next page of data using a cursor value
-      description: Metadata returned with the results including but not limited to a link to the next page of data
-      title: CursorPaginationMetadata
-    EndUserRequest:
+        fields:
+          type: object
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadataFields'
+            - type: 'null'
+          description: A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Setting a key to null removes the metavariable. Maximum 20 key-value pairs per request.
+      required:
+      - fields
+      description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      title: EndUserRequestProfileSensitiveMetadata
+    CreateEndUserRequest:
       type: object
       properties:
         external_id:
           type:
           - string
           - 'null'
-          description: Set or update the external identifier for this end user. Pass null to remove the current external_id. Must be unique per AI Agent; maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. Returns 409 if the external_id is already assigned to a different end user. Available for custom channel integrations only (V1).
+          description: Optional caller-supplied identifier (for example a CRM contact ID or a phone number). Maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. If an end user with this external_id already exists, that existing user is returned with HTTP 200 (idempotent upsert); otherwise a new end user is created with HTTP 201. Available for custom channel integrations only (V1).
         profile:
-          $ref: '#/components/schemas/EndUserRequestProfile'
-          description: The end user's profile information
-      required:
-      - profile
-      title: EndUserRequest
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
+          $ref: '#/components/schemas/CreateEndUserRequestProfile'
+          description: The end user's profile information. Optional — omitting profile creates a blank end user.
+      title: CreateEndUserRequest
+    CreateEndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      title: CreateEndUserRequestProfileSensitiveMetadataFields
     CreateEndUserRequestProfile:
       type: object
       properties:
@@ -406,27 +369,6 @@ components:
           description: Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
       description: The end user's profile information. Optional — omitting profile creates a blank end user.
       title: CreateEndUserRequestProfile
-    EndUser:
-      type: object
-      properties:
-        end_user_id:
-          type: string
-          description: The unique Ada-generated id for the end user
-        external_id:
-          type:
-          - string
-          - 'null'
-          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
-        profile:
-          $ref: '#/components/schemas/EndUserProfile'
-          description: The end user's profile information
-        created_at:
-          type: string
-          description: The date and time the end user was created
-        updated_at:
-          type: string
-          description: The date and time the end user was updated
-      title: EndUser
     EndUserProfile:
       type: object
       properties:
@@ -470,18 +412,20 @@ components:
           description: Read-only profile information set by Ada
       description: The end user's profile information
       title: EndUserProfile
-    CreateEndUserRequest:
+    EndUserRequest:
       type: object
       properties:
         external_id:
           type:
           - string
           - 'null'
-          description: Optional caller-supplied identifier (for example a CRM contact ID or a phone number). Maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. If an end user with this external_id already exists, that existing user is returned with HTTP 200 (idempotent upsert); otherwise a new end user is created with HTTP 201. Available for custom channel integrations only (V1).
+          description: Set or update the external identifier for this end user. Pass null to remove the current external_id. Must be unique per AI Agent; maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. Returns 409 if the external_id is already assigned to a different end user. Available for custom channel integrations only (V1).
         profile:
-          $ref: '#/components/schemas/CreateEndUserRequestProfile'
-          description: The end user's profile information. Optional — omitting profile creates a blank end user.
-      title: CreateEndUserRequest
+          $ref: '#/components/schemas/EndUserRequestProfile'
+          description: The end user's profile information
+      required:
+      - profile
+      title: EndUserRequest
     EndUserRequestProfile:
       type: object
       properties:
@@ -537,6 +481,76 @@ components:
           description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
       description: The end user's profile information
       title: EndUserRequestProfile
+    EndUserProfileSystemProperties:
+      type: object
+      properties:
+        sunshine_user_id:
+          type:
+          - string
+          - 'null'
+          description: The Sunshine Conversations user id for the end user
+      description: Read-only profile information set by Ada
+      title: EndUserProfileSystemProperties
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    EndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      title: EndUserRequestProfileSensitiveMetadataFields
+    EndUsers:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndUser'
+          description: The list of end user profiles
+        meta:
+          $ref: '#/components/schemas/CursorPaginationMetadata'
+      title: EndUsers
+    End_Users_getEndUsers_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/EndUser'
+      - $ref: '#/components/schemas/EndUsers'
+      title: End Users_getEndUsers_Response_200
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    CursorPaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type: string
+          format: url
+          description: Link to the next page of data using a cursor value
+      description: Metadata returned with the results including but not limited to a link to the next page of data
+      title: CursorPaginationMetadata
     CreateEndUserRequestProfileSensitiveMetadata:
       type: object
       properties:
@@ -551,20 +565,6 @@ components:
       - fields
       description: Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
       title: CreateEndUserRequestProfileSensitiveMetadata
-    EndUserRequestProfileSensitiveMetadata:
-      type: object
-      properties:
-        fields:
-          type: object
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadataFields'
-            - type: 'null'
-          description: A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Setting a key to null removes the metavariable. Maximum 20 key-value pairs per request.
-      required:
-      - fields
-      description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
-      title: EndUserRequestProfileSensitiveMetadata
   securitySchemes:
     BearerAuth:
       type: http

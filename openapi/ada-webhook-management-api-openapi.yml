@@ -6,7 +6,7 @@ servers:
 - url: https://example.ada.support/api
   description: Production
 tags:
-- name: webhookManagement
+- name: Webhook Management
 paths:
   /v2/webhooks/:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: List webhooks
       description: List all webhook subscriptions configured for this AI Agent
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: limit
         in: query
@@ -58,7 +58,7 @@ paths:
       summary: Create a webhook
       description: Create a new webhook subscription. If this is the first webhook for this AI Agent, the webhook infrastructure is automatically provisioned
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: Authorization
         in: header
@@ -116,7 +116,7 @@ paths:
       summary: Get a webhook
       description: Get the details of a specific webhook subscription
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: id
         in: path
@@ -154,7 +154,7 @@ paths:
       summary: Delete a webhook
       description: Delete a webhook subscription
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: id
         in: path
@@ -192,7 +192,7 @@ paths:
       summary: Update a webhook
       description: Update a webhook subscription. Only the fields provided in the request body will be updated
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: id
         in: path
@@ -258,7 +258,7 @@ paths:
       summary: Get webhook signing secret
       description: Get the signing secret for a webhook. Use this secret to verify that incoming webhook payloads are authentic
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: id
         in: path
@@ -297,7 +297,7 @@ paths:
       summary: Rotate webhook signing secret
       description: Rotate the signing secret for a webhook. Optionally provide a custom key. The new secret is not returned in the response — use the get secret endpoint to retrieve it
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: id
         in: path
@@ -345,7 +345,7 @@ paths:
       summary: List webhook event types
       description: List all available event types that webhooks can subscribe to
       tags:
-      - webhookManagement
+      - Webhook Management
       parameters:
       - name: Authorization
         in: header
@@ -378,19 +378,6 @@ components:
         meta:
           $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
       title: Webhook Management_listWebhooks_Response_200
-    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: URL for the next page of results, or null if no pages remain
-      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
-    Webhook_Management_rotateWebhookSecret_Response_200:
-      type: object
-      properties: {}
-      title: Webhook Management_rotateWebhookSecret_Response_200
     V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems:
       type: object
       properties:
@@ -401,29 +388,23 @@ components:
           type: string
           description: Human-readable description of the event type
       title: V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems
-    Webhook_Management_deleteWebhook_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Webhook Management_deleteWebhook_Response_204
-    ErrorsErrorsItems:
+    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
       type: object
       properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
+        next_page_url:
           type:
           - string
           - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
+          description: URL for the next page of results, or null if no pages remain
+      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
+    Webhook_Management_listWebhookEventTypes_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
+      title: Webhook Management_listWebhookEventTypes_Response_200
     Errors:
       type: object
       properties:
@@ -435,13 +416,6 @@ components:
       required:
       - errors
       title: Errors
-    Webhook_Management_getWebhookSecret_Response_200:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The webhook signing secret
-      title: Webhook Management_getWebhookSecret_Response_200
     Webhook:
       type: object
       properties:
@@ -472,14 +446,40 @@ components:
           format: date-time
           description: When the webhook was last updated
       title: Webhook
-    Webhook_Management_listWebhookEventTypes_Response_200:
+    ErrorsErrorsItems:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
-      title: Webhook Management_listWebhookEventTypes_Response_200
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Webhook_Management_deleteWebhook_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Webhook Management_deleteWebhook_Response_204
+    Webhook_Management_getWebhookSecret_Response_200:
+      type: object
+      properties:
+        key:
+          type: string
+          description: The webhook signing secret
+      title: Webhook Management_getWebhookSecret_Response_200
+    Webhook_Management_rotateWebhookSecret_Response_200:
+      type: object
+      properties: {}
+      title: Webhook Management_rotateWebhookSecret_Response_200
   securitySchemes:
     BearerAuth:
       type: http

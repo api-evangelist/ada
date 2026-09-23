@@ -12,7 +12,6 @@ paths:
     get:
       operationId: list
       summary: Get article tags
-      description: Get article tags
       tags:
       - knowledge > tags
       parameters:
@@ -117,9 +116,7 @@ paths:
       description: 'Upsert an array of tags for articles
 
 
-        This endpoint will create or update tags based on the unique `id` field of each tag. If a tag with the same `id` already exists, it will be updated. Otherwise, a new tag will be created.
-
-        '
+        This endpoint will create or update tags based on the unique `id` field of each tag. If a tag with the same `id` already exists, it will be updated. Otherwise, a new tag will be created.'
       tags:
       - knowledge > tags
       parameters:
@@ -171,23 +168,38 @@ paths:
                 $ref: '#/components/schemas/ArticleTag'
 components:
   schemas:
-    ArticleTagUpsertResponse:
+    ArticleTag:
       type: object
       properties:
-        success:
-          type: boolean
-          description: Whether the article tag was successfully created/updated
-        created:
-          type: boolean
-          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
         id:
           type: string
-          description: The id of the article tag
+          description: A unique identifier for the tag
+        name:
+          type: string
+          description: The name of the tag
       required:
-      - success
-      - created
       - id
-      title: ArticleTagUpsertResponse
+      - name
+      title: ArticleTag
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    knowledge_tags_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArticleTag'
+      title: knowledge_tags_list_Response_200
     ErrorsErrorsItems:
       type: object
       properties:
@@ -206,43 +218,28 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ArticleTag:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the tag
-        name:
-          type: string
-          description: The name of the tag
-      required:
-      - id
-      - name
-      title: ArticleTag
-    knowledge_tags_list_Response_200:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArticleTag'
-      title: knowledge_tags_list_Response_200
     knowledge_tags_delete_Response_204:
       type: object
       properties: {}
       description: Empty response body
       title: knowledge_tags_delete_Response_204
+    ArticleTagUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article tag was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
+        id:
+          type: string
+          description: The id of the article tag
+      required:
+      - success
+      - created
+      - id
+      title: ArticleTagUpsertResponse
   securitySchemes:
     BearerAuth:
       type: http

@@ -6,7 +6,7 @@ servers:
 - url: https://example.ada.support/api
   description: Production
 tags:
-- name: auditLog
+- name: Audit Log
 paths:
   /v2/analytics/audit-log/events/:
     get:
@@ -29,7 +29,7 @@ paths:
 
         Backfilling vs incremental pulls: a single request covers at most 30 days. To backfill more history, issue successive requests over adjacent windows of up to 30 days. For incremental pulls, set `start_date` to just after the newest `timestamp` you have already stored, then follow `next_page_url` until it is `null`.'
       tags:
-      - auditLog
+      - Audit Log
       parameters:
       - name: start_date
         in: query
@@ -103,22 +103,6 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
-    AuditLogEventList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditLogEvent'
-          description: The page of Audit log events (at most `limit` items)
-        meta:
-          $ref: '#/components/schemas/AuditLogEventListMeta'
-          description: Pagination metadata
-      required:
-      - data
-      - meta
-      description: A cursor-paginated page of Audit log events
-      title: AuditLogEventList
     AuditLogEventListMeta:
       type: object
       properties:
@@ -129,35 +113,6 @@ components:
           description: URL for the next page of results, or `null` on the last or empty page. Replay it unchanged to keep the time window and the cursor constant across pages.
       description: Pagination metadata
       title: AuditLogEventListMeta
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
     AuditLogEvent:
       type: object
       properties:
@@ -209,6 +164,51 @@ components:
       - activity
       description: 'A single Audit log event: one configuration change recorded for the account. Empty-string fields mean the value was unavailable for that event (for example, a system actor has no email).'
       title: AuditLogEvent
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    AuditLogEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEvent'
+          description: The page of Audit log events (at most `limit` items)
+        meta:
+          $ref: '#/components/schemas/AuditLogEventListMeta'
+          description: Pagination metadata
+      required:
+      - data
+      - meta
+      description: A cursor-paginated page of Audit log events
+      title: AuditLogEventList
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
   securitySchemes:
     BearerAuth:
       type: http

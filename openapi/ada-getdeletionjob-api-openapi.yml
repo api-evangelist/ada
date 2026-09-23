@@ -55,6 +55,26 @@ paths:
                 description: Any type
 components:
   schemas:
+    DeletionJobStatus:
+      type: string
+      enum:
+      - queued
+      - in_progress
+      - completed
+      - partial
+      - failed
+      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
+      title: DeletionJobStatus
+    IdentifierDispositionDisposition:
+      type: string
+      enum:
+      - accepted
+      - not_found
+      - invalid
+      - exceeds_limit
+      - duplicate
+      description: How the identifier was handled. `accepted` identifiers are queued for erasure; the other values indicate the identifier contributed no erasure.
+      title: IdentifierDispositionDisposition
     DeletionJob:
       type: object
       properties:
@@ -129,26 +149,6 @@ components:
       - variable_match
       description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
       title: DeletionIdentifierType
-    DeletionJobStatus:
-      type: string
-      enum:
-      - queued
-      - in_progress
-      - completed
-      - partial
-      - failed
-      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
-      title: DeletionJobStatus
-    IdentifierDispositionDisposition:
-      type: string
-      enum:
-      - accepted
-      - not_found
-      - invalid
-      - exceeds_limit
-      - duplicate
-      description: How the identifier was handled. `accepted` identifiers are queued for erasure; the other values indicate the identifier contributed no erasure.
-      title: IdentifierDispositionDisposition
   securitySchemes:
     BearerAuth:
       type: http

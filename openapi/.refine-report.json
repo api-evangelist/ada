@@ -25,7 +25,9 @@
     "ada-submitdeletionrequest-api-openapi.yml",
     "ada-webhookmanagement-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 3 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -62,18 +64,27 @@
     "ada-knowledge-openapi.yml: declared missing tag: submitDeletionRequest",
     "ada-knowledge-openapi.yml: declared missing tag: webhookManagement",
     "tag 'conversations' spans 3 source specs (ada-data-export-openapi.yml, ada-data-export-v1-4-openapi.yml, ada-knowledge-openapi.yml): per-path servers applied",
-    "tag 'messages' spans 2 source specs (ada-data-export-openapi.yml, ada-data-export-v1-4-openapi.yml): per-path servers applied"
+    "tag 'messages' spans 2 source specs (ada-data-export-openapi.yml, ada-data-export-v1-4-openapi.yml): per-path servers applied",
+    "superseded outputs removed: ada-audit-log-api-openapi.yml, ada-end-users-api-openapi.yml, ada-webhook-management-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 28 total)"
   ],
   "skipped": [
-    "ada-subpackage-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-conversations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-deletechatterdata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-endusers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-knowledge-subpackage-knowledge-articles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-knowledge-subpackage-knowledge-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-knowledge-subpackage-knowledge-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-platformintegrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "ada-subpackage-webhookmanagement-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "ada-audit-log-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-conversations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-custominstructions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-deletechatterdata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-end-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-getdeletionjob-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-knowledge-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-knowledge-articles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-knowledge-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-knowledge-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-persona-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-platformintegrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-submitdeletionrequest-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-variables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ada-webhook-management-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

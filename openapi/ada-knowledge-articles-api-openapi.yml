@@ -12,7 +12,6 @@ paths:
     get:
       operationId: list
       summary: Get knowledge articles
-      description: Get knowledge articles
       tags:
       - knowledge > articles
       parameters:
@@ -121,9 +120,7 @@ paths:
       description: 'Delete multiple articles
 
 
-        Deletion is asynchronous: a `204` response means the deletion request was accepted and the matching articles are deleted in the background. To confirm completion, re-query `GET /v2/knowledge/articles/` with the same filters until no articles match. A `404` is still returned when no articles match the provided filters.
-
-        '
+        Deletion is asynchronous: a `204` response means the deletion request was accepted and the matching articles are deleted in the background. To confirm completion, re-query `GET /v2/knowledge/articles/` with the same filters until no articles match. A `404` is still returned when no articles match the provided filters.'
       tags:
       - knowledge > articles
       parameters:
@@ -341,9 +338,7 @@ paths:
 
         **Behavior at the article limit:**
 
-        Requests that only update existing articles (every `id` in the request already exists) continue to succeed even when your knowledge base is at its article limit. A request that introduces any new article `id` while at the limit is rejected as a whole with a `400` response. The error message is `Maximum article limit of {N} exceeded`, where `{N}` is your article limit, and the error details include a `code` of `knowledge.articles.total_exceeded`, the list of `new_article_ids` that triggered the rejection (capped at the first 100), and the total `new_article_count`. Use these fields to separate new articles from update-only batches, which can still be submitted.
-
-        '
+        Requests that only update existing articles (every `id` in the request already exists) continue to succeed even when your knowledge base is at its article limit. A request that introduces any new article `id` while at the limit is rejected as a whole with a `400` response. The error message is `Maximum article limit of {N} exceeded`, where `{N}` is your article limit, and the error details include a `code` of `knowledge.articles.total_exceeded`, the list of `new_article_ids` that triggered the rejection (capped at the first 100), and the total `new_article_count`. Use these fields to separate new articles from update-only batches, which can still be submitted.'
       tags:
       - knowledge > articles
       parameters:
@@ -395,6 +390,11 @@ paths:
                 $ref: '#/components/schemas/KnowledgeArticleUpsertRequest'
 components:
   schemas:
+    KnowledgeArticleUpsertRequestMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      title: KnowledgeArticleUpsertRequestMetadata
     AvailabilityRuleCondition:
       type: object
       properties:
@@ -415,21 +415,6 @@ components:
       - operator
       description: A single condition comparing a variable to a value.
       title: AvailabilityRuleCondition
-    KnowledgeArticleResponseMetadata:
-      type: object
-      properties: {}
-      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
-      title: KnowledgeArticleResponseMetadata
-    knowledge_articles_deleteById_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_articles_deleteById_Response_204
-    AvailabilityRuleConditionsItems:
-      oneOf:
-      - $ref: '#/components/schemas/AvailabilityRuleCondition'
-      - $ref: '#/components/schemas/AvailabilityRuleConditionGroup'
-      title: AvailabilityRuleConditionsItems
     ErrorsErrorsItems:
       type: object
       properties:
@@ -448,61 +433,69 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    ArticleLanguage:
+    knowledge_articles_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_delete_Response_204
+    AvailabilityRule:
+      type: object
+      properties:
+        match:
+          $ref: '#/components/schemas/AvailabilityRuleMatch'
+          description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilityRuleConditionsItems'
+          description: List of conditions or condition groups. Must contain at least one entry. Each entry is either a `Condition` object (with `variable`, `operator`, and optional `value`) or a `ConditionGroup` object (with its own `match` and nested `conditions` list).
+      required:
+      - match
+      - conditions
+      description: A two-level tree of conditions that determines availability based on variable values during a conversation. The root group has a `match` combinator and a list of conditions or condition groups. A rule may contain at most 1000 conditions in total, counting every condition across the root and all nested condition groups.
+      title: AvailabilityRule
+    KnowledgeArticleUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article was created, `false` if an existing article was updated'
+        id:
+          type: string
+          description: A unique identifier for the article
+      required:
+      - id
+      title: KnowledgeArticleUpsertResponse
+    AvailabilityRuleConditionGroupMatch:
       type: string
       enum:
-      - ar
-      - zh
-      - zh-tw
-      - da
-      - nl
-      - en
-      - fi
-      - fr
-      - de
-      - he
-      - hi
-      - id
-      - in
-      - it
-      - ja
-      - ko
-      - ms
-      - pt
-      - pa
-      - ru
-      - es
-      - sv
-      - tl
-      - ta
-      - th
-      - tr
-      - vi
-      - ht
-      - my
-      - km
-      - bg
-      - ro
-      - el
-      - hu
-      - pl
-      - cs
-      - et
-      - hr
-      - lt
-      - lv
-      - sl
-      - sk
-      - is
-      - be
-      - uk
-      - ca
-      - sq
-      - bs
-      - sr
-      - kk
-      description: The ISO 639-1 language code of the article, defaults to `en`
-      title: ArticleLanguage
+      - all
+      - any
+      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+      title: AvailabilityRuleConditionGroupMatch
+    KnowledgeArticleResponseMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
+      title: KnowledgeArticleResponseMetadata
+    AvailabilityRuleConditionOperator:
+      type: string
+      enum:
+      - equals
+      - does_not_equal
+      - greater_than
+      - less_than
+      - starts_with
+      - ends_with
+      - contains
+      - does_not_contain
+      - is_set
+      - is_not_set
+      description: The comparison operator. Unary operators (`is_set`, `is_not_set`) must not include a `value` field.
+      title: AvailabilityRuleConditionOperator
     KnowledgeArticleResponse:
       type: object
       properties:
@@ -571,72 +564,15 @@ components:
       - name
       - content
       title: KnowledgeArticleResponse
-    AvailabilityRuleConditionVariable:
+    PaginationMetadata:
       type: object
       properties:
-        id:
-          type: string
-          description: The id of the variable.
-      required:
-      - id
-      description: The variable to test, referenced by `id`. Look up the ids for your Agent through the variables endpoint. Not every variable can be used in a rule; referencing one that can't returns a `400`.
-      title: AvailabilityRuleConditionVariable
-    AvailabilityRuleConditionGroup:
-      type: object
-      properties:
-        match:
-          $ref: '#/components/schemas/AvailabilityRuleConditionGroupMatch'
-          description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
-        conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/AvailabilityRuleCondition'
-          description: List of conditions inside this condition group. Must contain at least one entry.
-      required:
-      - match
-      - conditions
-      description: A nested group of conditions inside a rule's top-level `conditions` list. Condition groups may contain only `Condition` objects — further nesting is not supported.
-      title: AvailabilityRuleConditionGroup
-    AvailabilityRuleConditionValue:
-      oneOf:
-      - type: string
-      - type: number
-        format: double
-      - type: boolean
-      description: The value to compare against. Omit for unary operators (`is_set`, `is_not_set`).
-      title: AvailabilityRuleConditionValue
-    knowledge_articles_delete_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_articles_delete_Response_204
-    AvailabilityRuleMatch:
-      type: string
-      enum:
-      - all
-      - any
-      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
-      title: AvailabilityRuleMatch
-    AvailabilityRuleConditionOperator:
-      type: string
-      enum:
-      - equals
-      - does_not_equal
-      - greater_than
-      - less_than
-      - starts_with
-      - ends_with
-      - contains
-      - does_not_contain
-      - is_set
-      - is_not_set
-      description: The comparison operator. Unary operators (`is_set`, `is_not_set`) must not include a `value` field.
-      title: AvailabilityRuleConditionOperator
-    KnowledgeArticleUpsertRequestMetadata:
-      type: object
-      properties: {}
-      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the article.
-      title: KnowledgeArticleUpsertRequestMetadata
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
     KnowledgeArticleUpsertRequest:
       type: object
       properties:
@@ -697,63 +633,92 @@ components:
       - content
       - knowledge_source_id
       title: KnowledgeArticleUpsertRequest
-    KnowledgeArticleUpsertResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the article was successfully created/updated
-        created:
-          type: boolean
-          description: '`True` if a new article was created, `false` if an existing article was updated'
-        id:
-          type: string
-          description: A unique identifier for the article
-      required:
-      - id
-      title: KnowledgeArticleUpsertResponse
-    AvailabilityRuleConditionGroupMatch:
-      type: string
-      enum:
-      - all
-      - any
-      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
-      title: AvailabilityRuleConditionGroupMatch
-    AvailabilityRule:
+    AvailabilityRuleConditionGroup:
       type: object
       properties:
         match:
-          $ref: '#/components/schemas/AvailabilityRuleMatch'
+          $ref: '#/components/schemas/AvailabilityRuleConditionGroupMatch'
           description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
         conditions:
           type: array
           items:
-            $ref: '#/components/schemas/AvailabilityRuleConditionsItems'
-          description: List of conditions or condition groups. Must contain at least one entry. Each entry is either a `Condition` object (with `variable`, `operator`, and optional `value`) or a `ConditionGroup` object (with its own `match` and nested `conditions` list).
+            $ref: '#/components/schemas/AvailabilityRuleCondition'
+          description: List of conditions inside this condition group. Must contain at least one entry.
       required:
       - match
       - conditions
-      description: A two-level tree of conditions that determines availability based on variable values during a conversation. The root group has a `match` combinator and a list of conditions or condition groups. A rule may contain at most 1000 conditions in total, counting every condition across the root and all nested condition groups.
-      title: AvailabilityRule
-    PaginationMetadata:
+      description: A nested group of conditions inside a rule's top-level `conditions` list. Condition groups may contain only `Condition` objects — further nesting is not supported.
+      title: AvailabilityRuleConditionGroup
+    AvailabilityRuleConditionsItems:
+      oneOf:
+      - $ref: '#/components/schemas/AvailabilityRuleCondition'
+      - $ref: '#/components/schemas/AvailabilityRuleConditionGroup'
+      title: AvailabilityRuleConditionsItems
+    AvailabilityRuleConditionVariable:
       type: object
       properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: The URL to the next page of results
-      title: PaginationMetadata
-    knowledge_articles_list_Response_200:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/KnowledgeArticleResponse'
-        meta:
-          $ref: '#/components/schemas/PaginationMetadata'
-      title: knowledge_articles_list_Response_200
+        id:
+          type: string
+          description: The id of the variable.
+      required:
+      - id
+      description: The variable to test, referenced by `id`. Look up the ids for your Agent through the variables endpoint. Not every variable can be used in a rule; referencing one that can't returns a `400`.
+      title: AvailabilityRuleConditionVariable
+    ArticleLanguage:
+      type: string
+      enum:
+      - ar
+      - zh
+      - zh-tw
+      - da
+      - nl
+      - en
+      - fi
+      - fr
+      - de
+      - he
+      - hi
+      - id
+      - in
+      - it
+      - ja
+      - ko
+      - ms
+      - pt
+      - pa
+      - ru
+      - es
+      - sv
+      - tl
+      - ta
+      - th
+      - tr
+      - vi
+      - ht
+      - my
+      - km
+      - bg
+      - ro
+      - el
+      - hu
+      - pl
+      - cs
+      - et
+      - hr
+      - lt
+      - lv
+      - sl
+      - sk
+      - is
+      - be
+      - uk
+      - ca
+      - sq
+      - bs
+      - sr
+      - kk
+      description: The ISO 639-1 language code of the article, defaults to `en`
+      title: ArticleLanguage
     Errors:
       type: object
       properties:
@@ -765,6 +730,36 @@ components:
       required:
       - errors
       title: Errors
+    AvailabilityRuleMatch:
+      type: string
+      enum:
+      - all
+      - any
+      description: Whether all conditions must pass (`all`) or any one condition must pass (`any`).
+      title: AvailabilityRuleMatch
+    knowledge_articles_deleteById_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_articles_deleteById_Response_204
+    AvailabilityRuleConditionValue:
+      oneOf:
+      - type: string
+      - type: number
+        format: double
+      - type: boolean
+      description: The value to compare against. Omit for unary operators (`is_set`, `is_not_set`).
+      title: AvailabilityRuleConditionValue
+    knowledge_articles_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeArticleResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: knowledge_articles_list_Response_200
   securitySchemes:
     BearerAuth:
       type: http

@@ -6,7 +6,7 @@ servers:
 - url: https://example.ada.support/api
   description: Production
 tags:
-- name: persona
+- name: Persona
 paths:
   /v2/persona/:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: Get persona
       description: Retrieve the current persona configuration.
       tags:
-      - persona
+      - Persona
       parameters:
       - name: Authorization
         in: header
@@ -58,7 +58,7 @@ paths:
       summary: Update persona
       description: Partially update the persona configuration. Only the fields provided in the request body are updated; omitted fields retain their existing values. Fields that are not part of the public persona schema are rejected.
       tags:
-      - persona
+      - Persona
       parameters:
       - name: Authorization
         in: header
@@ -110,12 +110,6 @@ paths:
               $ref: '#/components/schemas/PersonaUpdate'
 components:
   schemas:
-    PersonaMessageLength:
-      type: string
-      enum:
-      - concise
-      - normal
-      title: PersonaMessageLength
     PersonaUpdate:
       type: object
       properties:
@@ -153,6 +147,17 @@ components:
           type: boolean
       description: Partial persona update. All fields optional.
       title: PersonaUpdate
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     Persona:
       type: object
       properties:
@@ -200,23 +205,18 @@ components:
       - enable_acknowledgment_messages
       description: Persona configuration
       title: Persona
+    PersonaMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaMessageLength
     PersonaUpdateMessageLength:
       type: string
       enum:
       - concise
       - normal
       title: PersonaUpdateMessageLength
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
     ErrorsErrorsItems:
       type: object
       properties:

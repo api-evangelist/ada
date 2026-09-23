@@ -65,6 +65,16 @@ paths:
               $ref: '#/components/schemas/DeletionRequest'
 components:
   schemas:
+    DeletionJobStatus:
+      type: string
+      enum:
+      - queued
+      - in_progress
+      - completed
+      - partial
+      - failed
+      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
+      title: DeletionJobStatus
     DeletionIdentifier:
       type: object
       properties:
@@ -100,26 +110,6 @@ components:
           description: Time the job was created, in ISO 8601 format.
       description: Acknowledgment returned when a deletion request is accepted for processing.
       title: DeletionRequestAccepted
-    DeletionIdentifierType:
-      type: string
-      enum:
-      - email
-      - chatter_id
-      - external_id
-      - end_user_id
-      - variable_match
-      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
-      title: DeletionIdentifierType
-    DeletionJobStatus:
-      type: string
-      enum:
-      - queued
-      - in_progress
-      - completed
-      - partial
-      - failed
-      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
-      title: DeletionJobStatus
     DeletionRequest:
       type: object
       properties:
@@ -136,6 +126,16 @@ components:
       required:
       - identifiers
       title: DeletionRequest
+    DeletionIdentifierType:
+      type: string
+      enum:
+      - email
+      - chatter_id
+      - external_id
+      - end_user_id
+      - variable_match
+      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
+      title: DeletionIdentifierType
   securitySchemes:
     BearerAuth:
       type: http

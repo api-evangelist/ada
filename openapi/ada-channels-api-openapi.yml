@@ -6,7 +6,7 @@ servers:
 - url: https://example.ada.support/api
   description: Production
 tags:
-- name: channels
+- name: Channels
 paths:
   /v2/channels/:
     get:
@@ -14,7 +14,7 @@ paths:
       summary: Get a list of channels
       description: Get a list of channels. This list can be filtered by modality and paginated. The default and maximum limits are 100 channels per page
       tags:
-      - channels
+      - Channels
       parameters:
       - name: limit
         in: query
@@ -82,7 +82,7 @@ paths:
       summary: Create a new channel
       description: Create a new channel. A maximum of 100 channels can be created per account per day. The maximum request size is 10MB.
       tags:
-      - channels
+      - Channels
       parameters:
       - name: Authorization
         in: header
@@ -138,7 +138,7 @@ paths:
       summary: Update a channel
       description: Update a channel's capabilities. Only custom channels can be updated; native channels are read-only.
       tags:
-      - channels
+      - Channels
       parameters:
       - name: channel_id
         in: path
@@ -197,102 +197,6 @@ paths:
               $ref: '#/components/schemas/UpdateChannel'
 components:
   schemas:
-    BaseChannelCapabilities:
-      type: object
-      properties:
-        markdown:
-          type: boolean
-          default: false
-          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
-      description: What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface.
-      title: BaseChannelCapabilities
-    BaseChannelModality:
-      type: string
-      enum:
-      - messaging
-      - email
-      - voice
-      description: The modality of the channel
-      title: BaseChannelModality
-    Channels_getChannels_Response_200:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Channel'
-        meta:
-          $ref: '#/components/schemas/PaginationMetadata'
-      title: Channels_getChannels_Response_200
-    V2ChannelsGetParametersType:
-      type: string
-      enum:
-      - custom
-      - native
-      title: V2ChannelsGetParametersType
-    PaginationMetadata:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: The URL to the next page of results
-      title: PaginationMetadata
-    UpdateChannelCapabilities:
-      type: object
-      properties:
-        markdown:
-          type: boolean
-          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
-      description: Capabilities to update. Only the fields you include are changed; omitted fields keep their current value.
-      title: UpdateChannelCapabilities
-    UpdateChannel:
-      type: object
-      properties:
-        capabilities:
-          $ref: '#/components/schemas/UpdateChannelCapabilities'
-          description: Capabilities to update. Only the fields you include are changed; omitted fields keep their current value.
-      required:
-      - capabilities
-      description: Fields that can be updated on an existing custom channel
-      title: UpdateChannel
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    V2ChannelsGetParametersModality:
-      type: string
-      enum:
-      - messaging
-      - email
-      - voice
-      title: V2ChannelsGetParametersModality
     Channel:
       oneOf:
       - type: object
@@ -366,6 +270,79 @@ components:
       discriminator:
         propertyName: type
       title: Channel
+    BaseChannelModality:
+      type: string
+      enum:
+      - messaging
+      - email
+      - voice
+      description: The modality of the channel
+      title: BaseChannelModality
+    PaginationMetadata:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    UpdateChannelCapabilities:
+      type: object
+      properties:
+        markdown:
+          type: boolean
+          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
+      description: Capabilities to update. Only the fields you include are changed; omitted fields keep their current value.
+      title: UpdateChannelCapabilities
+    CustomChannelMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: CustomChannelMetadata
+    UpdateChannel:
+      type: object
+      properties:
+        capabilities:
+          $ref: '#/components/schemas/UpdateChannelCapabilities'
+          description: Capabilities to update. Only the fields you include are changed; omitted fields keep their current value.
+      required:
+      - capabilities
+      description: Fields that can be updated on an existing custom channel
+      title: UpdateChannel
+    CustomChannelType:
+      type: string
+      enum:
+      - custom
+      description: The type of the channel
+      title: CustomChannelType
+    V2ChannelsGetParametersType:
+      type: string
+      enum:
+      - custom
+      - native
+      title: V2ChannelsGetParametersType
     CustomChannel:
       type: object
       properties:
@@ -408,20 +385,43 @@ components:
       - description
       - modality
       title: CustomChannel
-    CustomChannelMetadata:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      - type: number
-        format: double
-      title: CustomChannelMetadata
-    CustomChannelType:
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    Channels_getChannels_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      title: Channels_getChannels_Response_200
+    V2ChannelsGetParametersModality:
       type: string
       enum:
-      - custom
-      description: The type of the channel
-      title: CustomChannelType
+      - messaging
+      - email
+      - voice
+      title: V2ChannelsGetParametersModality
+    BaseChannelCapabilities:
+      type: object
+      properties:
+        markdown:
+          type: boolean
+          default: false
+          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
+      description: What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface.
+      title: BaseChannelCapabilities
     NativeChannelType:
       type: string
       enum:
