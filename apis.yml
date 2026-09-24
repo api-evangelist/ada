@@ -55,8 +55,9 @@ tags:
 - Help Desk
 - CRM
 - Integration
-- Knowledge-Management
+- Knowledge Management
 - Data Export
+- Canada
 tags_raw:
 - ai
 - customer-service
@@ -68,58 +69,8 @@ tags_raw:
 - integrations
 - knowledge-management
 - data-export
+- Knowledge-Management
 apis:
-- name: Ada End Users API
-  description: >-
-    Real-time management of end-user profile information with webhook events for new chats and profile
-    updates.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - User
-  - Profiles
-  - Webhook
-  tags_raw:
-  - users
-  - profiles
-  - webhooks
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-- name: Ada Conversations API
-  description: >-
-    Build custom channels and extend Ada into proprietary apps or third-party platforms with full conversation
-    lifecycle control.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Conversations
-  - Channels
-  - Integration
-  tags_raw:
-  - conversations
-  - channels
-  - integrations
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-- name: Ada Integrations API
-  description: >-
-    Connect external applications to Ada using OAuth to extend AI agent capabilities with partner-built
-    integrations.
-  humanURL: https://docs.ada.cx/reference/integrations/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Integration
-  - Authentication
-  - Extensions
-  tags_raw:
-  - integrations
-  - oauth
-  - extensions
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/integrations/overview
 - aid: ada:ada-mcp-server
   name: Ada MCP Server
   description: >-
@@ -171,13 +122,15 @@ apis:
     url: https://developers.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-conversations-api
   name: Ada Conversations API
-  description: The conversations API from Ada — 9 operation(s) for conversations.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
+  description: Read and manage conversations handled by the Ada AI Agent across all supported channels.
+  humanURL: https://docs.ada.cx/reference/conversations/overview
+  baseURL: https://{handle}.ada.support/api/v2
   tags:
   - Conversations
+  - Messaging
   tags_raw:
   - conversations
+  - Messaging
   properties:
   - type: OpenAPI
     url: openapi/ada-conversations-api-openapi.yml
@@ -187,6 +140,8 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/conversations/overview
 - aid: ada:ada-custominstructions-api
   name: Ada Custom Instructions API
   description: The customInstructions API from Ada — 2 operation(s) for custominstructions.
@@ -241,11 +196,15 @@ apis:
     url: https://developers.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-knowledge-api
   name: Ada Knowledge API
-  description: The Knowledge API from Ada — 0 operation(s) for knowledge.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
+  description: Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to
+    customer questions.
+  humanURL: https://docs.ada.cx/reference/knowledge/overview
+  baseURL: https://{handle}.ada.support/api/v2
   tags:
   - Knowledge
+  - Articles
+  - Sources
+  - Tags
   properties:
   - type: OpenAPI
     url: openapi/ada-knowledge-api-openapi.yml
@@ -255,6 +214,8 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/knowledge/overview
 - aid: ada:ada-knowledge-articles-api
   name: Ada knowledge > articles API
   description: The knowledge > articles API from Ada — 3 operation(s) for knowledge > articles.
@@ -391,46 +352,6 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-knowledge-api
-  name: Ada Knowledge API
-  description: >-
-    Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer
-    questions.
-  humanURL: https://docs.ada.cx/reference/knowledge/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Articles
-  - Knowledge
-  - Sources
-  - Tags
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/knowledge/overview
-- aid: ada:ada-conversations-api
-  name: Ada Conversations API
-  description: Read and manage conversations handled by the Ada AI Agent across all supported channels.
-  humanURL: https://docs.ada.cx/reference/conversations/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Conversations
-  - Messaging
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/conversations/overview
-- aid: ada:ada-end-users-api
-  name: Ada End Users API
-  description: >-
-    Create, look up, and update end users (customers) along with their metadata for use by Ada's AI Agent
-    and Actions.
-  humanURL: https://docs.ada.cx/reference/end-users/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Customers
-  - End Users
-  - Profiles
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/end-users/overview
 - aid: ada:ada-integrations-api
   name: Ada Integrations (Actions) API
   description: >-
@@ -511,11 +432,14 @@ apis:
     url: https://developers.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-end-users-api
   name: Ada End Users API
-  description: The End Users API from Ada — 2 operation(s) for end users.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
+  description: Create, look up, and update end users (customers) along with their metadata for use by Ada's
+    AI Agent and Actions.
+  humanURL: https://docs.ada.cx/reference/end-users/overview
+  baseURL: https://{handle}.ada.support/api/v2
   tags:
   - End Users
+  - Customers
+  - Profiles
   properties:
   - type: OpenAPI
     url: openapi/ada-end-users-api-openapi.yml
@@ -525,6 +449,8 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
 - aid: ada:ada-webhook-management-api
   name: Ada Webhook Management API
   description: The Webhook Management API from Ada — 5 operation(s) for webhook management.
