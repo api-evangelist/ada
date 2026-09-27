@@ -164,33 +164,6 @@ components:
       - activity
       description: 'A single Audit log event: one configuration change recorded for the account. Empty-string fields mean the value was unavailable for that event (for example, a system actor has no email).'
       title: AuditLogEvent
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    AuditLogEventList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditLogEvent'
-          description: The page of Audit log events (at most `limit` items)
-        meta:
-          $ref: '#/components/schemas/AuditLogEventListMeta'
-          description: Pagination metadata
-      required:
-      - data
-      - meta
-      description: A cursor-paginated page of Audit log events
-      title: AuditLogEventList
     ErrorsErrorsItems:
       type: object
       properties:
@@ -209,6 +182,33 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
+    AuditLogEventList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogEvent'
+          description: The page of Audit log events (at most `limit` items)
+        meta:
+          $ref: '#/components/schemas/AuditLogEventListMeta'
+          description: Pagination metadata
+      required:
+      - data
+      - meta
+      description: A cursor-paginated page of Audit log events
+      title: AuditLogEventList
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

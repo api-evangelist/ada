@@ -127,6 +127,24 @@ components:
       required:
       - errors
       title: Errors
+    VariableSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the Variable
+        name:
+          type: string
+          description: The name of the Variable
+      required:
+      - id
+      - name
+      description: 'A Variable as returned by the list and get endpoints. Carries the
+
+        Variable''s id, used to reference it elsewhere, and its name.
+
+        '
+      title: VariableSummary
     ErrorsErrorsItems:
       type: object
       properties:
@@ -155,24 +173,6 @@ components:
       required:
       - data
       title: variables_list_Response_200
-    VariableSummary:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the Variable
-        name:
-          type: string
-          description: The name of the Variable
-      required:
-      - id
-      - name
-      description: 'A Variable as returned by the list and get endpoints. Carries the
-
-        Variable''s id, used to reference it elsewhere, and its name.
-
-        '
-      title: VariableSummary
   securitySchemes:
     BearerAuth:
       type: http

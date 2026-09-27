@@ -208,6 +208,33 @@ paths:
       description: https://example.ada.support/
 components:
   schemas:
+    MessagesResponseMeta:
+      type: object
+      properties:
+        next_page_uri:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page of results matching the query
+      title: MessagesResponseMeta
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
     Message:
       type: object
       properties:
@@ -261,15 +288,11 @@ components:
           type: string
           description: Internal ID of the message that this message is in response to. None if the message is not in response to another message.
       title: Message
-    MessagesResponseMeta:
+    MessageMessageData:
       type: object
-      properties:
-        next_page_uri:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page of results matching the query
-      title: MessagesResponseMeta
+      properties: {}
+      description: Data associated with this message
+      title: MessageMessageData
     Errors:
       type: object
       properties:
@@ -292,29 +315,6 @@ components:
         meta:
           $ref: '#/components/schemas/MessagesResponseMeta'
       title: MessagesResponse
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    MessageMessageData:
-      type: object
-      properties: {}
-      description: Data associated with this message
-      title: MessageMessageData
     Message_2:
       type: object
       properties:

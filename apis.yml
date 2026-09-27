@@ -70,6 +70,7 @@ tags_raw:
 - knowledge-management
 - data-export
 - Knowledge-Management
+- Canada
 apis:
 - aid: ada:ada-mcp-server
   name: Ada MCP Server
@@ -196,8 +197,9 @@ apis:
     url: https://developers.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-knowledge-api
   name: Ada Knowledge API
-  description: Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to
-    customer questions.
+  description: >-
+    Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer
+    questions.
   humanURL: https://docs.ada.cx/reference/knowledge/overview
   baseURL: https://{handle}.ada.support/api/v2
   tags:
@@ -415,11 +417,9 @@ apis:
 - aid: ada:ada-audit-log-api
   name: Ada Audit Log API
   description: The Audit Log API from Ada — 1 operation(s) for audit log.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
   tags:
-  - Audit Logs
-  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
@@ -430,16 +430,15 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
 - aid: ada:ada-end-users-api
   name: Ada End Users API
-  description: Create, look up, and update end users (customers) along with their metadata for use by Ada's
-    AI Agent and Actions.
-  humanURL: https://docs.ada.cx/reference/end-users/overview
-  baseURL: https://{handle}.ada.support/api/v2
+  description: The End Users API from Ada — 2 operation(s) for end users.
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
   tags:
   - End Users
-  - Customers
-  - Profiles
   properties:
   - type: OpenAPI
     url: openapi/ada-end-users-api-openapi.yml
@@ -454,8 +453,8 @@ apis:
 - aid: ada:ada-webhook-management-api
   name: Ada Webhook Management API
   description: The Webhook Management API from Ada — 5 operation(s) for webhook management.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
   tags:
   - Webhook Management
   properties:
@@ -467,6 +466,8 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
 common:
 - type: Overlay
   url: overlays/ada-subpackage-channels-overlay.yaml

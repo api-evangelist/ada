@@ -147,17 +147,12 @@ components:
           type: boolean
       description: Partial persona update. All fields optional.
       title: PersonaUpdate
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
+    PersonaMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaMessageLength
     Persona:
       type: object
       properties:
@@ -205,18 +200,6 @@ components:
       - enable_acknowledgment_messages
       description: Persona configuration
       title: Persona
-    PersonaMessageLength:
-      type: string
-      enum:
-      - concise
-      - normal
-      title: PersonaMessageLength
-    PersonaUpdateMessageLength:
-      type: string
-      enum:
-      - concise
-      - normal
-      title: PersonaUpdateMessageLength
     ErrorsErrorsItems:
       type: object
       properties:
@@ -235,6 +218,23 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
+    PersonaUpdateMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaUpdateMessageLength
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

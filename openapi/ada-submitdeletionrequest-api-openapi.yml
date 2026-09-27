@@ -65,16 +65,33 @@ paths:
               $ref: '#/components/schemas/DeletionRequest'
 components:
   schemas:
-    DeletionJobStatus:
+    DeletionRequestAccepted:
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: Identifier of the created deletion job. Use it to poll job status.
+        status:
+          $ref: '#/components/schemas/DeletionJobStatus'
+        submitted_count:
+          type: integer
+          description: Number of identifiers received in the request.
+        created_at:
+          type: string
+          format: date-time
+          description: Time the job was created, in ISO 8601 format.
+      description: Acknowledgment returned when a deletion request is accepted for processing.
+      title: DeletionRequestAccepted
+    DeletionIdentifierType:
       type: string
       enum:
-      - queued
-      - in_progress
-      - completed
-      - partial
-      - failed
-      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
-      title: DeletionJobStatus
+      - email
+      - chatter_id
+      - external_id
+      - end_user_id
+      - variable_match
+      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
+      title: DeletionIdentifierType
     DeletionIdentifier:
       type: object
       properties:
@@ -93,23 +110,16 @@ components:
       - value
       description: A single reference to the end user(s) whose data should be erased.
       title: DeletionIdentifier
-    DeletionRequestAccepted:
-      type: object
-      properties:
-        job_id:
-          type: string
-          description: Identifier of the created deletion job. Use it to poll job status.
-        status:
-          $ref: '#/components/schemas/DeletionJobStatus'
-        submitted_count:
-          type: integer
-          description: Number of identifiers received in the request.
-        created_at:
-          type: string
-          format: date-time
-          description: Time the job was created, in ISO 8601 format.
-      description: Acknowledgment returned when a deletion request is accepted for processing.
-      title: DeletionRequestAccepted
+    DeletionJobStatus:
+      type: string
+      enum:
+      - queued
+      - in_progress
+      - completed
+      - partial
+      - failed
+      description: Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.
+      title: DeletionJobStatus
     DeletionRequest:
       type: object
       properties:
@@ -126,16 +136,6 @@ components:
       required:
       - identifiers
       title: DeletionRequest
-    DeletionIdentifierType:
-      type: string
-      enum:
-      - email
-      - chatter_id
-      - external_id
-      - end_user_id
-      - variable_match
-      description: The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.
-      title: DeletionIdentifierType
   securitySchemes:
     BearerAuth:
       type: http

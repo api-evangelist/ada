@@ -66,7 +66,7 @@
     "tag 'conversations' spans 3 source specs (ada-data-export-openapi.yml, ada-data-export-v1-4-openapi.yml, ada-knowledge-openapi.yml): per-path servers applied",
     "tag 'messages' spans 2 source specs (ada-data-export-openapi.yml, ada-data-export-v1-4-openapi.yml): per-path servers applied",
     "superseded outputs removed: ada-audit-log-api-openapi.yml, ada-end-users-api-openapi.yml, ada-webhook-management-api-openapi.yml",
-    "apis.yml register: written (+3 apis, 28 total)"
+    "apis.yml register: written (+3 apis, 22 total)"
   ],
   "skipped": [
     "ada-audit-log-api-openapi.yml: previously refined output, superseded by openapi/_original/",
