@@ -819,55 +819,6 @@ paths:
       description: Production
 components:
   schemas:
-    ConversationUsedArticlesItems:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        url:
-          type:
-          - string
-          - 'null'
-        source:
-          type:
-          - string
-          - 'null'
-      title: ConversationUsedArticlesItems
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ConversationClassificationsItemsIntentsItems:
-      type: object
-      properties:
-        intent_id:
-          type: string
-          description: Ada ID of the classified Intent
-        intent_name:
-          type: string
-          description: Name of the classified Intent
-        status:
-          type: string
-          description: Status of the Intent (for example, active)
-      title: ConversationClassificationsItemsIntentsItems
-    ConversationsResponseMeta:
-      type: object
-      properties:
-        next_page_uri:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page of results matching the query
-      title: ConversationsResponseMeta
     ErrorsErrorsItems:
       type: object
       properties:
@@ -886,46 +837,49 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    ConversationUsedPlaybooksItems:
+    ConversationMetavariables:
+      type: object
+      properties: {}
+      description: Object of metavariables and their values active during this conversations
+      title: ConversationMetavariables
+    ConversationsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Conversation'
+          description: Records returned from the query
+        meta:
+          $ref: '#/components/schemas/ConversationsResponseMeta'
+      title: ConversationsResponse
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ConversationUsedArticlesItems:
       type: object
       properties:
         id:
           type: string
         name:
           type: string
-        playbook_execution_id:
+        url:
           type:
           - string
           - 'null'
-        outcome_status:
+        source:
           type:
           - string
           - 'null'
-      title: ConversationUsedPlaybooksItems
-    ConversationUsedCoachingItems:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        entity_name:
-          type:
-          - string
-          - 'null'
-        coaching_type:
-          type:
-          - string
-          - 'null'
-        coaching_instructions:
-          type:
-          - string
-          - 'null'
-        coaching_intent:
-          type:
-          - string
-          - 'null'
-      title: ConversationUsedCoachingItems
+      title: ConversationUsedArticlesItems
     Conversation:
       type: object
       properties:
@@ -1072,6 +1026,78 @@ components:
           $ref: '#/components/schemas/ConversationVariables'
           description: Object of autocapture and global variables and their values last active during this conversations
       title: Conversation
+    ConversationVariables:
+      type: object
+      properties: {}
+      description: Object of autocapture and global variables and their values last active during this conversations
+      title: ConversationVariables
+    ConversationUsedPlaybooksItems:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        playbook_execution_id:
+          type:
+          - string
+          - 'null'
+        outcome_status:
+          type:
+          - string
+          - 'null'
+      title: ConversationUsedPlaybooksItems
+    ConversationCsat:
+      type: object
+      properties: {}
+      description: Object of customer satisfaction survey data for this conversation
+      title: ConversationCsat
+    ConversationUsedCoachingItems:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        entity_name:
+          type:
+          - string
+          - 'null'
+        coaching_type:
+          type:
+          - string
+          - 'null'
+        coaching_instructions:
+          type:
+          - string
+          - 'null'
+        coaching_intent:
+          type:
+          - string
+          - 'null'
+      title: ConversationUsedCoachingItems
+    ConversationsResponseMeta:
+      type: object
+      properties:
+        next_page_uri:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page of results matching the query
+      title: ConversationsResponseMeta
+    ConversationClassificationsItemsIntentsItems:
+      type: object
+      properties:
+        intent_id:
+          type: string
+          description: Ada ID of the classified Intent
+        intent_name:
+          type: string
+          description: Name of the classified Intent
+        status:
+          type: string
+          description: Status of the Intent (for example, active)
+      title: ConversationClassificationsItemsIntentsItems
     ConversationClassificationsItems:
       type: object
       properties:
@@ -1087,31 +1113,20 @@ components:
             $ref: '#/components/schemas/ConversationClassificationsItemsIntentsItems'
           description: Intents classified within this Topic
       title: ConversationClassificationsItems
-    ConversationMetavariables:
-      type: object
-      properties: {}
-      description: Object of metavariables and their values active during this conversations
-      title: ConversationMetavariables
-    ConversationVariables:
-      type: object
-      properties: {}
-      description: Object of autocapture and global variables and their values last active during this conversations
-      title: ConversationVariables
-    ConversationCsat:
-      type: object
-      properties: {}
-      description: Object of customer satisfaction survey data for this conversation
-      title: ConversationCsat
-    ConversationsResponse:
+    ConversationsResponse_2:
       type: object
       properties:
+        message:
+          type: string
+          description: Request status message
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Conversation'
+            $ref: '#/components/schemas/Conversation_2'
           description: Records returned from the query
-        meta:
-          $ref: '#/components/schemas/ConversationsResponseMeta'
+        next_page_uri:
+          type: string
+          description: Relative link to the next page of results matching the query
       title: ConversationsResponse
     Conversation_2:
       type: object
@@ -1219,190 +1234,46 @@ components:
           $ref: '#/components/schemas/ConversationVariables'
           description: Object of autocapture and global variables and their values last active during this conversations
       title: Conversation
-    ConversationsResponse_2:
+    PaginationMetadata:
       type: object
       properties:
-        message:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: The URL to the next page of results
+      title: PaginationMetadata
+    EmailConversationCreateRequest:
+      type: object
+      properties:
+        name:
           type: string
-          description: Request status message
-        data:
+          description: The customer's full name
+        subject:
+          type: string
+          description: The subject of the customer's inquiry; used as the subject for the AI Agent's reply
+        reply_to:
+          type: string
+          description: The customer's email address
+        text:
+          type: string
+          description: The customer's inquiry, limited to 10 KB
+        reply_as:
+          type: string
+          description: The company email address you want to use to reply to the customer. Defaults to the Ada provided email address.
+        cc:
           type: array
           items:
-            $ref: '#/components/schemas/Conversation_2'
-          description: Records returned from the query
-        next_page_uri:
-          type: string
-          description: Relative link to the next page of results matching the query
-      title: ConversationsResponse
-    Conversations_endHandoff_Response_200:
-      type: object
-      properties:
-        message:
-          type: string
-      title: Conversations_endHandoff_Response_200
-    Conversations_endConversation_Response_200:
-      type: object
-      properties:
-        message:
-          type: string
-      title: Conversations_endConversation_Response_200
-    Message:
-      type: object
-      properties:
-        id:
-          type: string
-          format: id
-          description: The ID of the message
-        conversation_id:
-          type: string
-          format: id
-          description: The ID of the conversation
-        author:
-          $ref: '#/components/schemas/ConversationMessageAuthor'
-        content:
-          $ref: '#/components/schemas/MessageContent'
-          description: The message content
-        created_at:
-          type: string
-          format: date-time
-          description: The date and time the message was created
-        updated_at:
-          type: string
-          format: date-time
-          description: The date and time the message was updated
-      title: Message
-    ConversationCreateRequestMetadata:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      - type: number
-        format: double
-      title: ConversationCreateRequestMetadata
-    MessageCreateRequest:
-      type: object
-      properties:
-        author:
-          $ref: '#/components/schemas/ConversationMessageAuthor'
-        content:
-          $ref: '#/components/schemas/MessageCreateRequestContent'
-          description: The message content
-      required:
-      - author
-      - content
-      title: MessageCreateRequest
-    EmailConversationCreateResponse:
-      type: object
-      properties:
-        conversation_id:
-          type: string
-          description: The Ada-generated conversation id
-      title: EmailConversationCreateResponse
-    AttachmentUploadResponse:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: Presigned URL to access the uploaded file (valid for 7 days)
-        mime_type:
-          type: string
-          description: MIME type of the uploaded file
-        filename:
-          type: string
-          description: Name of the uploaded file
-      required:
-      - url
-      - mime_type
-      - filename
-      title: AttachmentUploadResponse
-    MessageLogs:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/MessageLogsType'
-          description: The type of the message
-        message_id:
-          type: string
-          description: The ID of the message log
-        created_at:
-          type: string
-          description: The date and time the message was created
-        author:
-          $ref: '#/components/schemas/MessageLogsAuthor'
-          description: Information about the message author
-        content:
-          $ref: '#/components/schemas/MessageLogsContent'
-          description: 'The message content. The structure varies based on the `type` field. Supported types: text, link, file.'
-      title: MessageLogs
-    LinkContent:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/LinkContentType'
-          description: The type of the message
-        url:
-          type: string
-          description: The link's URL
-        link_text:
-          type:
-          - string
-          - 'null'
-          description: Text that can be used to display the link
-      description: The content of a standalone link style messages, such as CSAT
-      title: LinkContent
-    ConversationPatchRequest:
-      type: object
-      properties:
+            type: string
+          description: The email addresses in the email's CC field
         metadata:
-          type: object
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/ConversationPatchRequestMetadata'
-            - type: 'null'
-          description: 'A dictionary of key, value pairs to add to the conversation metadata additively
-
-            - `metadata` keys may only be of type: `string`
-
-            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
-
-            - `metadata` keys with a `null` value will be removed from the conversation metadata
-
-            '
+          $ref: '#/components/schemas/EmailConversationCreateRequestMetadata'
+          description: Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.
       required:
-      - metadata
-      title: ConversationPatchRequest
-    MessageLogsType:
-      type: string
-      enum:
-      - message_logs
-      description: The type of the message
-      title: MessageLogsType
-    ConversationMessageAuthor:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The ID of the user that will be participating in the conversation. Required when the role is `end_user`.
-        role:
-          $ref: '#/components/schemas/ConversationMessageAuthorRole'
-          description: The author's role
-        avatar:
-          type:
-          - string
-          - 'null'
-          description: The URL of the author's avatar
-        display_name:
-          type:
-          - string
-          - 'null'
-          description: The author's display name. Required when the role is `human_agent`.
-      required:
-      - role
-      description: Information about the message author
-      title: ConversationMessageAuthor
+      - name
+      - subject
+      - reply_to
+      title: EmailConversationCreateRequest
     MessageLogsContent:
       oneOf:
       - $ref: '#/components/schemas/TextContent'
@@ -1439,46 +1310,78 @@ components:
             $ref: '#/components/schemas/ConversationMetadata'
           description: "A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada metavariables. To create or update metavariables, use the End Users API.\n - `metadata` keys may only be of type: `string`\n - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n"
       title: Conversation
-    PaginationMetadata:
+    MessageList:
       type: object
       properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: The URL to the next page of results
-      title: PaginationMetadata
-    MessageEvents:
-      oneOf:
-      - $ref: '#/components/schemas/MessageLogs'
-      title: MessageEvents
-    MessageContent:
-      oneOf:
-      - $ref: '#/components/schemas/TextContent'
-      - $ref: '#/components/schemas/FileContent'
-      description: The message content
-      title: MessageContent
-    ConversationMetadata:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      - type: number
-        format: double
-      title: ConversationMetadata
-    ConversationMessageAuthorRole:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageEvents'
+          description: List of messages in the conversation
+        meta:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+      - data
+      - meta
+      title: MessageList
+    MessageLogsType:
       type: string
       enum:
-      - end_user
-      - human_agent
-      description: The author's role
-      title: ConversationMessageAuthorRole
+      - message_logs
+      description: The type of the message
+      title: MessageLogsType
+    ConversationPatchRequest:
+      type: object
+      properties:
+        metadata:
+          type: object
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/ConversationPatchRequestMetadata'
+            - type: 'null'
+          description: 'A dictionary of key, value pairs to add to the conversation metadata additively
+
+            - `metadata` keys may only be of type: `string`
+
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+
+            - `metadata` keys with a `null` value will be removed from the conversation metadata
+
+            '
+      required:
+      - metadata
+      title: ConversationPatchRequest
     FileContentType:
       type: string
       enum:
       - file
       description: The type of the message
       title: FileContentType
+    AttachmentUploadResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Presigned URL to access the uploaded file (valid for 7 days)
+        mime_type:
+          type: string
+          description: MIME type of the uploaded file
+        filename:
+          type: string
+          description: Name of the uploaded file
+      required:
+      - url
+      - mime_type
+      - filename
+      title: AttachmentUploadResponse
+    ConversationStatus:
+      type: string
+      enum:
+      - active
+      - ended
+      description: The status of the conversation
+      title: ConversationStatus
     ConversationCreateRequest:
       type: object
       properties:
@@ -1498,18 +1401,77 @@ components:
       required:
       - channel_id
       title: ConversationCreateRequest
+    Conversations_endConversation_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Conversations_endConversation_Response_200
+    MessageCreateRequest:
+      type: object
+      properties:
+        author:
+          $ref: '#/components/schemas/ConversationMessageAuthor'
+        content:
+          $ref: '#/components/schemas/MessageCreateRequestContent'
+          description: The message content
+      required:
+      - author
+      - content
+      title: MessageCreateRequest
+    MessageEvents:
+      oneOf:
+      - $ref: '#/components/schemas/MessageLogs'
+      title: MessageEvents
+    Conversations_endHandoff_Response_200:
+      type: object
+      properties:
+        message:
+          type: string
+      title: Conversations_endHandoff_Response_200
+    MessageLogsAuthorRole:
+      type: string
+      enum:
+      - end_user
+      - ai_agent
+      - human_agent
+      description: The author's role
+      title: MessageLogsAuthorRole
+    ConversationMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationMetadata
+    ConversationCreateRequestMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationCreateRequestMetadata
+    EmailConversationCreateRequestMetadata:
+      type: object
+      properties: {}
+      description: Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.
+      title: EmailConversationCreateRequestMetadata
+    ConversationPatchRequestMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationPatchRequestMetadata
     TextContentType:
       type: string
       enum:
       - text
       description: The type of the message
       title: TextContentType
-    MessageCreateRequestContent:
-      oneOf:
-      - $ref: '#/components/schemas/TextContent'
-      - $ref: '#/components/schemas/FileContent'
-      description: The message content
-      title: MessageCreateRequestContent
     MessageLogsAuthor:
       type: object
       properties:
@@ -1533,12 +1495,6 @@ components:
           description: The author's display name
       description: Information about the message author
       title: MessageLogsAuthor
-    LinkContentType:
-      type: string
-      enum:
-      - link
-      description: The type of the message
-      title: LinkContentType
     FileContent:
       type: object
       properties:
@@ -1562,14 +1518,31 @@ components:
       - filename
       description: The content of a file message
       title: FileContent
-    MessageLogsAuthorRole:
-      type: string
-      enum:
-      - end_user
-      - ai_agent
-      - human_agent
-      description: The author's role
-      title: MessageLogsAuthorRole
+    MessageCreateRequestContent:
+      oneOf:
+      - $ref: '#/components/schemas/TextContent'
+      - $ref: '#/components/schemas/FileContent'
+      description: The message content
+      title: MessageCreateRequestContent
+    MessageLogs:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/MessageLogsType'
+          description: The type of the message
+        message_id:
+          type: string
+          description: The ID of the message log
+        created_at:
+          type: string
+          description: The date and time the message was created
+        author:
+          $ref: '#/components/schemas/MessageLogsAuthor'
+          description: Information about the message author
+        content:
+          $ref: '#/components/schemas/MessageLogsContent'
+          description: 'The message content. The structure varies based on the `type` field. Supported types: text, link, file.'
+      title: MessageLogs
     TextContent:
       type: object
       properties:
@@ -1584,71 +1557,98 @@ components:
       - body
       description: The content of the text message
       title: TextContent
-    MessageList:
+    LinkContent:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageEvents'
-          description: List of messages in the conversation
-        meta:
-          $ref: '#/components/schemas/PaginationMetadata'
-      required:
-      - data
-      - meta
-      title: MessageList
-    ConversationStatus:
+        type:
+          $ref: '#/components/schemas/LinkContentType'
+          description: The type of the message
+        url:
+          type: string
+          description: The link's URL
+        link_text:
+          type:
+          - string
+          - 'null'
+          description: Text that can be used to display the link
+      description: The content of a standalone link style messages, such as CSAT
+      title: LinkContent
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          format: id
+          description: The ID of the message
+        conversation_id:
+          type: string
+          format: id
+          description: The ID of the conversation
+        author:
+          $ref: '#/components/schemas/ConversationMessageAuthor'
+        content:
+          $ref: '#/components/schemas/MessageContent'
+          description: The message content
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time the message was created
+        updated_at:
+          type: string
+          format: date-time
+          description: The date and time the message was updated
+      title: Message
+    EmailConversationCreateResponse:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: The Ada-generated conversation id
+      title: EmailConversationCreateResponse
+    MessageContent:
+      oneOf:
+      - $ref: '#/components/schemas/TextContent'
+      - $ref: '#/components/schemas/FileContent'
+      description: The message content
+      title: MessageContent
+    LinkContentType:
       type: string
       enum:
-      - active
-      - ended
-      description: The status of the conversation
-      title: ConversationStatus
-    EmailConversationCreateRequest:
+      - link
+      description: The type of the message
+      title: LinkContentType
+    ConversationMessageAuthorRole:
+      type: string
+      enum:
+      - end_user
+      - human_agent
+      description: The author's role
+      title: ConversationMessageAuthorRole
+    ConversationMessageAuthor:
       type: object
       properties:
-        name:
-          type: string
-          description: The customer's full name
-        subject:
-          type: string
-          description: The subject of the customer's inquiry; used as the subject for the AI Agent's reply
-        reply_to:
-          type: string
-          description: The customer's email address
-        text:
-          type: string
-          description: The customer's inquiry, limited to 10 KB
-        reply_as:
-          type: string
-          description: The company email address you want to use to reply to the customer. Defaults to the Ada provided email address.
-        cc:
-          type: array
-          items:
-            type: string
-          description: The email addresses in the email's CC field
-        metadata:
-          $ref: '#/components/schemas/EmailConversationCreateRequestMetadata'
-          description: Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.
+        id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the user that will be participating in the conversation. Required when the role is `end_user`.
+        role:
+          $ref: '#/components/schemas/ConversationMessageAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The author's display name. Required when the role is `human_agent`.
       required:
-      - name
-      - subject
-      - reply_to
-      title: EmailConversationCreateRequest
-    EmailConversationCreateRequestMetadata:
-      type: object
-      properties: {}
-      description: Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.
-      title: EmailConversationCreateRequestMetadata
-    ConversationPatchRequestMetadata:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      - type: number
-        format: double
-      title: ConversationPatchRequestMetadata
+      - role
+      description: Information about the message author
+      title: ConversationMessageAuthor
   securitySchemes:
     bearerAuth:
       type: http

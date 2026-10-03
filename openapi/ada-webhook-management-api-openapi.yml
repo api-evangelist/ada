@@ -368,17 +368,6 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
-    Webhook_Management_rotateWebhookSecret_Response_200:
-      type: object
-      properties: {}
-      title: Webhook Management_rotateWebhookSecret_Response_200
-    Webhook_Management_getWebhookSecret_Response_200:
-      type: object
-      properties:
-        key:
-          type: string
-          description: The webhook signing secret
-      title: Webhook Management_getWebhookSecret_Response_200
     ErrorsErrorsItems:
       type: object
       properties:
@@ -397,20 +386,13 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
+    Webhook_Management_getWebhookSecret_Response_200:
       type: object
       properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: URL for the next page of results, or null if no pages remain
-      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
-    Webhook_Management_deleteWebhook_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: Webhook Management_deleteWebhook_Response_204
+        key:
+          type: string
+          description: The webhook signing secret
+      title: Webhook Management_getWebhookSecret_Response_200
     V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems:
       type: object
       properties:
@@ -432,16 +414,27 @@ components:
       required:
       - errors
       title: Errors
-    Webhook_Management_listWebhooks_Response_200:
+    Webhook_Management_listWebhookEventTypes_Response_200:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Webhook'
-        meta:
-          $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
-      title: Webhook Management_listWebhooks_Response_200
+            $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
+      title: Webhook Management_listWebhookEventTypes_Response_200
+    Webhook_Management_rotateWebhookSecret_Response_200:
+      type: object
+      properties: {}
+      title: Webhook Management_rotateWebhookSecret_Response_200
+    V2WebhooksGetResponsesContentApplicationJsonSchemaMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page of results, or null if no pages remain
+      title: V2WebhooksGetResponsesContentApplicationJsonSchemaMeta
     Webhook:
       type: object
       properties:
@@ -472,14 +465,21 @@ components:
           format: date-time
           description: When the webhook was last updated
       title: Webhook
-    Webhook_Management_listWebhookEventTypes_Response_200:
+    Webhook_Management_deleteWebhook_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: Webhook Management_deleteWebhook_Response_204
+    Webhook_Management_listWebhooks_Response_200:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/V2WebhooksEventTypesGetResponsesContentApplicationJsonSchemaDataItems'
-      title: Webhook Management_listWebhookEventTypes_Response_200
+            $ref: '#/components/schemas/Webhook'
+        meta:
+          $ref: '#/components/schemas/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta'
+      title: Webhook Management_listWebhooks_Response_200
   securitySchemes:
     BearerAuth:
       type: http

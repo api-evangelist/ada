@@ -168,24 +168,6 @@ paths:
                 $ref: '#/components/schemas/ArticleTag'
 components:
   schemas:
-    knowledge_tags_delete_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_tags_delete_Response_204
-    ArticleTag:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the tag
-        name:
-          type: string
-          description: The name of the tag
-      required:
-      - id
-      - name
-      title: ArticleTag
     ErrorsErrorsItems:
       type: object
       properties:
@@ -232,6 +214,24 @@ components:
       required:
       - errors
       title: Errors
+    ArticleTag:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the tag
+        name:
+          type: string
+          description: The name of the tag
+      required:
+      - id
+      - name
+      title: ArticleTag
+    knowledge_tags_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_tags_delete_Response_204
     knowledge_tags_list_Response_200:
       type: object
       properties:

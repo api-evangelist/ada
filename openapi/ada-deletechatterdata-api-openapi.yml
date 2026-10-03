@@ -79,36 +79,6 @@ paths:
               $ref: '#/components/schemas/DeleteSubjectRequest'
 components:
   schemas:
-    DeleteSubjectResponse:
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/EmailType'
-      title: DeleteSubjectResponse
-    IdentifiersTypeItems:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/IdentifiersTypeItemsType'
-        value:
-          type: string
-      title: IdentifiersTypeItems
-    TokenType:
-      type: string
-      enum:
-      - ERASURE
-      description: Type of data subject request. Must be set to ERASURE.
-      title: TokenType
-    EmailType:
-      type: string
-      description: Email of the chatter whose data you wish to delete from Ada's systems.
-      title: EmailType
-    IdentifiersTypeItemsType:
-      type: string
-      enum:
-      - email
-      - chatter_id
-      title: IdentifiersTypeItemsType
     IdentifiersType:
       type: array
       items:
@@ -127,6 +97,36 @@ components:
       required:
       - type
       title: DeleteSubjectRequest
+    DeleteSubjectResponse:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/EmailType'
+      title: DeleteSubjectResponse
+    TokenType:
+      type: string
+      enum:
+      - ERASURE
+      description: Type of data subject request. Must be set to ERASURE.
+      title: TokenType
+    EmailType:
+      type: string
+      description: Email of the chatter whose data you wish to delete from Ada's systems.
+      title: EmailType
+    IdentifiersTypeItemsType:
+      type: string
+      enum:
+      - email
+      - chatter_id
+      title: IdentifiersTypeItemsType
+    IdentifiersTypeItems:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/IdentifiersTypeItemsType'
+        value:
+          type: string
+      title: IdentifiersTypeItems
   securitySchemes:
     bearerAuth:
       type: http

@@ -110,49 +110,35 @@ paths:
               $ref: '#/components/schemas/PersonaUpdate'
 components:
   schemas:
-    PersonaUpdate:
+    ErrorsErrorsItems:
       type: object
       properties:
-        personality:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
           type: array
           items:
-            type: string
-        emoji_usage:
-          type: boolean
-        allowed_emojis:
-          type: string
-        default_timezone:
-          type: string
-        company_description:
-          type:
-          - string
-          - 'null'
-        community_guidelines_url:
-          type:
-          - string
-          - 'null'
-        message_length:
-          $ref: '#/components/schemas/PersonaUpdateMessageLength'
-        ask_for_more_help:
-          type: boolean
-        no_customer_pi:
-          type: boolean
-        no_competitors:
-          type: boolean
-        competitor_names:
-          type:
-          - string
-          - 'null'
-        enable_acknowledgment_messages:
-          type: boolean
-      description: Partial persona update. All fields optional.
-      title: PersonaUpdate
-    PersonaMessageLength:
-      type: string
-      enum:
-      - concise
-      - normal
-      title: PersonaMessageLength
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     Persona:
       type: object
       properties:
@@ -200,41 +186,55 @@ components:
       - enable_acknowledgment_messages
       description: Persona configuration
       title: Persona
-    ErrorsErrorsItems:
+    PersonaUpdate:
       type: object
       properties:
-        type:
+        personality:
+          type: array
+          items:
+            type: string
+        emoji_usage:
+          type: boolean
+        allowed_emojis:
           type: string
-          description: The error type
-        message:
+        default_timezone:
           type: string
-          description: The error message
-        details:
+        company_description:
           type:
           - string
           - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
+        community_guidelines_url:
+          type:
+          - string
+          - 'null'
+        message_length:
+          $ref: '#/components/schemas/PersonaUpdateMessageLength'
+        ask_for_more_help:
+          type: boolean
+        no_customer_pi:
+          type: boolean
+        no_competitors:
+          type: boolean
+        competitor_names:
+          type:
+          - string
+          - 'null'
+        enable_acknowledgment_messages:
+          type: boolean
+      description: Partial persona update. All fields optional.
+      title: PersonaUpdate
+    PersonaMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaMessageLength
     PersonaUpdateMessageLength:
       type: string
       enum:
       - concise
       - normal
       title: PersonaUpdateMessageLength
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

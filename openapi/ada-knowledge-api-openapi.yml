@@ -116,14 +116,59 @@ webhooks:
       - Knowledge
 components:
   schemas:
-    ConversationMessageWebhookPayloadDataAuthorRole:
-      type: string
-      enum:
-      - end_user
-      - ai_agent
-      - human_agent
-      description: The author's role
-      title: ConversationMessageWebhookPayloadDataAuthorRole
+    EndUserProfileSystemProperties:
+      type: object
+      properties:
+        sunshine_user_id:
+          type:
+          - string
+          - 'null'
+          description: The Sunshine Conversations user id for the end user
+      description: Read-only profile information set by Ada
+      title: EndUserProfileSystemProperties
+    EndUserProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+          - string
+          - 'null'
+          description: The end user's email address
+        language:
+          type:
+          - string
+          - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: 'A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`'
+        system_properties:
+          $ref: '#/components/schemas/EndUserProfileSystemProperties'
+          description: Read-only profile information set by Ada
+      description: The end user's profile information
+      title: EndUserProfile
     EndUserCreatedWebhookPayload:
       type: object
       properties:
@@ -142,51 +187,55 @@ components:
             type: string
           description: A list of tags that Ada provides. You can use tags to filter webhook events in the Ada dashboard. Includes the `end_user_id` value for the webhook payload by default. Ada may add additional tags at any time.
       title: EndUserCreatedWebhookPayload
-    ConversationCreatedWebhookPayloadDataMetadata:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      - type: number
-        format: double
-      title: ConversationCreatedWebhookPayloadDataMetadata
-    BaseChannelCapabilities:
+    ConversationMessageWebhookPayloadDataAuthor:
       type: object
       properties:
-        markdown:
-          type: boolean
-          default: false
-          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
-      description: What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface.
-      title: BaseChannelCapabilities
-    ConversationCreatedWebhookPayloadType:
-      type: string
-      enum:
-      - v1.conversation.created
-      description: The webhook event type
-      title: ConversationCreatedWebhookPayloadType
-    EndUserUpdatedWebhookPayloadData:
-      type: object
-      properties:
-        end_user_id:
-          type: string
-          description: The unique Ada-generated id for the end user
-        external_id:
+        id:
           type:
           - string
           - 'null'
-          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
-        profile:
-          $ref: '#/components/schemas/EndUserProfile'
-          description: The end user's profile information
-        created_at:
+          description: The ID of the user that will be participating in the conversation
+        role:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataAuthorRole'
+          description: The author's role
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: The URL of the author's avatar
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The author's display name
+      description: Information about the message author
+      title: ConversationMessageWebhookPayloadDataAuthor
+    ConversationMessageWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
           type: string
-          description: The date and time the end user was created
-        updated_at:
+          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering needs
+        data:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationMessageWebhookPayload
+    ConversationCreatedWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationCreatedWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
           type: string
-          description: The date and time the end user was updated
-      description: The webhook event data
-      title: EndUserUpdatedWebhookPayloadData
+          description: The timestamp for when the event was generated (uses millisecond precision to help with event ordering)
+        data:
+          $ref: '#/components/schemas/ConversationCreatedWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationCreatedWebhookPayload
     AuditLogWebhookEventDataActivity:
       type: string
       enum:
@@ -199,96 +248,21 @@ components:
       - deactivated
       description: What happened to the entity
       title: AuditLogWebhookEventDataActivity
-    EndUserProfileSystemProperties:
+    ConversationMessageWebhookNativeChannelType:
+      type: string
+      enum:
+      - native
+      description: The type of the channel
+      title: ConversationMessageWebhookNativeChannelType
+    BaseChannelCapabilities:
       type: object
       properties:
-        sunshine_user_id:
-          type:
-          - string
-          - 'null'
-          description: The Sunshine Conversations user id for the end user
-      description: Read-only profile information set by Ada
-      title: EndUserProfileSystemProperties
-    LinkContent:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/LinkContentType'
-          description: The type of the message
-        url:
-          type: string
-          description: The link's URL
-        link_text:
-          type:
-          - string
-          - 'null'
-          description: Text that can be used to display the link
-      description: The content of a standalone link style messages, such as CSAT
-      title: LinkContent
-    ConversationCreatedWebhookPayloadData:
-      type: object
-      properties:
-        conversation_id:
-          type: string
-          description: The ID of the conversation
-        channel_id:
-          type: string
-          description: The ID of the channel
-        created_at:
-          type: string
-          description: The date and time the conversation was created
-        end_user_id:
-          type: string
-          description: The ID of the end user associated with the conversation
-        metadata:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ConversationCreatedWebhookPayloadDataMetadata'
-          description: 'A dictionary of key, value pairs assigned to the conversation
-
-            - `metadata` keys may only be of type: `string`
-
-            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
-
-            '
-        ai_agent_domain:
-          type: string
-          description: The API domain of the AI Agent environment this webhook event is emitted from
-      description: The webhook event data
-      title: ConversationCreatedWebhookPayloadData
-    ConversationMessageWebhookPayloadData:
-      type: object
-      properties:
-        message_id:
-          type: string
-          description: The ID of the message that triggered the webhook event
-        conversation_id:
-          type: string
-          description: The ID of the conversation that contains the message
-        end_user_id:
-          type: string
-          description: The ID of the end user associated with the conversation
-        handoff_integration:
-          type:
-          - string
-          - 'null'
-          description: The name of the handoff integration if the message is part of a handoff conversation. This field is null when the message is directed to the AI Agent.
-        channel:
-          $ref: '#/components/schemas/ConversationMessageWebhookChannel'
-          description: The channel that the message was sent on
-        created_at:
-          type: string
-          description: The date and time the message was created
-        author:
-          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataAuthor'
-          description: Information about the message author
-        content:
-          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataContent'
-        ai_agent_domain:
-          type: string
-          description: The API domain of the AI Agent environment this webhook event is emitted from
-      description: The webhook event data
-      title: ConversationMessageWebhookPayloadData
+        markdown:
+          type: boolean
+          default: false
+          description: Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text.
+      description: What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface.
+      title: BaseChannelCapabilities
     ConversationHandoffEndedWebhookPayloadData:
       type: object
       properties:
@@ -311,86 +285,108 @@ components:
       - ai_agent_domain
       description: The webhook event data
       title: ConversationHandoffEndedWebhookPayloadData
-    ConversationEndedWebhookPayloadDataEndedBy:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The ID of the user that ended the conversation
-        role:
-          $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataEndedByRole'
-          description: The role that ended the conversation
-      title: ConversationEndedWebhookPayloadDataEndedBy
-    BaseChannelModality:
-      type: string
-      enum:
-      - messaging
-      - email
-      - voice
-      description: The modality of the channel
-      title: BaseChannelModality
-    ConversationMessageWebhookPayloadDataContent:
-      oneOf:
-      - $ref: '#/components/schemas/TextContent'
-      - $ref: '#/components/schemas/LinkContent'
-      - $ref: '#/components/schemas/FileContent'
-      title: ConversationMessageWebhookPayloadDataContent
     FileContentType:
       type: string
       enum:
       - file
       description: The type of the message
       title: FileContentType
-    ConversationEndedWebhookPayloadData:
-      type: object
-      properties:
-        conversation_id:
-          type: string
-          description: The ID of the conversation that was ended
-        channel_id:
-          type: string
-          description: The ID of the channel
-        end_user_id:
-          type: string
-          description: The ID of the end user associated with the conversation
-        created_at:
-          type: string
-          description: The date and time the conversation was created
-        updated_at:
-          type: string
-          description: The date and time the conversation was last updated
-        ended_by:
-          $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataEndedBy'
-        metadata:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataMetadata'
-          description: 'A dictionary of key, value pairs assigned to the conversation
-
-            - `metadata` keys may only be of type: `string`
-
-            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
-
-            '
-        ai_agent_domain:
-          type: string
-          description: The API domain of the AI Agent environment this webhook event is emitted from
-      description: The webhook event data
-      title: ConversationEndedWebhookPayloadData
-    ConversationHandoffEndedWebhookPayloadType:
-      type: string
-      enum:
-      - v1.conversation.handoff.ended
-      description: The webhook event type
-      title: ConversationHandoffEndedWebhookPayloadType
-    ConversationMessageWebhookCustomChannelMetadata:
+    ConversationEndedWebhookPayloadDataMetadata:
       oneOf:
       - type: string
       - type: boolean
       - type: integer
-      title: ConversationMessageWebhookCustomChannelMetadata
+      - type: number
+        format: double
+      title: ConversationEndedWebhookPayloadDataMetadata
+    ConversationEndedWebhookPayloadDataEndedByRole:
+      type: string
+      enum:
+      - end_user
+      - system
+      - human_agent
+      description: The role that ended the conversation
+      title: ConversationEndedWebhookPayloadDataEndedByRole
+    ConversationMessageWebhookPayloadDataContent:
+      oneOf:
+      - $ref: '#/components/schemas/TextContent'
+      - $ref: '#/components/schemas/LinkContent'
+      - $ref: '#/components/schemas/FileContent'
+      title: ConversationMessageWebhookPayloadDataContent
+    ConversationHandoffEndedWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering
+        data:
+          $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationHandoffEndedWebhookPayload
+    ConversationCreatedWebhookPayloadType:
+      type: string
+      enum:
+      - v1.conversation.created
+      description: The webhook event type
+      title: ConversationCreatedWebhookPayloadType
+    ConversationEndedWebhookPayloadType:
+      type: string
+      enum:
+      - v1.conversation.ended
+      description: The webhook event type
+      title: ConversationEndedWebhookPayloadType
+    EndUserUpdatedWebhookPayloadData:
+      type: object
+      properties:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      description: The webhook event data
+      title: EndUserUpdatedWebhookPayloadData
+    ConversationEndedWebhookPayload:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadType'
+          description: The webhook event type
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering
+        data:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadData'
+          description: The webhook event data
+      title: ConversationEndedWebhookPayload
+    ConversationCreatedWebhookPayloadDataMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      - type: number
+        format: double
+      title: ConversationCreatedWebhookPayloadDataMetadata
+    ConversationMessageWebhookCustomChannelType:
+      type: string
+      enum:
+      - custom
+      description: The type of the channel
+      title: ConversationMessageWebhookCustomChannelType
     AuditLogWebhookEventData:
       type: object
       properties:
@@ -442,135 +438,134 @@ components:
       - activity
       description: A configuration change recorded by the Audit log, delivered as the `data` field of a `v1.audit_log.emitted` webhook.
       title: AuditLogWebhookEventData
-    EndUserProfile:
+    ConversationEndedWebhookPayloadData:
       type: object
       properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's first name
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's last name
-        display_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's display name
-        avatar:
-          type:
-          - string
-          - 'null'
-          description: URL to the end user's avatar image
-        email:
-          type:
-          - string
-          - 'null'
-          description: The end user's email address
-        language:
-          type:
-          - string
-          - 'null'
-          description: The end user's language in BCP 47 format
+        conversation_id:
+          type: string
+          description: The ID of the conversation that was ended
+        channel_id:
+          type: string
+          description: The ID of the channel
+        end_user_id:
+          type: string
+          description: The ID of the end user associated with the conversation
+        created_at:
+          type: string
+          description: The date and time the conversation was created
+        updated_at:
+          type: string
+          description: The date and time the conversation was last updated
+        ended_by:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataEndedBy'
         metadata:
           type: object
           additionalProperties:
-            description: Any type
-          description: 'A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`'
-        system_properties:
-          $ref: '#/components/schemas/EndUserProfileSystemProperties'
-          description: Read-only profile information set by Ada
-      description: The end user's profile information
-      title: EndUserProfile
-    ConversationEndedWebhookPayload:
+            $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataMetadata'
+          description: 'A dictionary of key, value pairs assigned to the conversation
+
+            - `metadata` keys may only be of type: `string`
+
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+
+            '
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
+      description: The webhook event data
+      title: ConversationEndedWebhookPayloadData
+    ConversationMessageWebhookCustomChannelMetadata:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      title: ConversationMessageWebhookCustomChannelMetadata
+    ConversationCreatedWebhookPayloadData:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/ConversationEndedWebhookPayloadType'
-          description: The webhook event type
-        timestamp:
+        conversation_id:
           type: string
-          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering
-        data:
-          $ref: '#/components/schemas/ConversationEndedWebhookPayloadData'
-          description: The webhook event data
-      title: ConversationEndedWebhookPayload
-    EndUserCreatedWebhookPayloadData:
-      type: object
-      properties:
-        end_user_id:
+          description: The ID of the conversation
+        channel_id:
           type: string
-          description: The unique Ada-generated id for the end user
-        external_id:
-          type:
-          - string
-          - 'null'
-          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
-        profile:
-          $ref: '#/components/schemas/EndUserProfile'
-          description: The end user's profile information
+          description: The ID of the channel
         created_at:
           type: string
-          description: The date and time the end user was created
-        updated_at:
+          description: The date and time the conversation was created
+        end_user_id:
           type: string
-          description: The date and time the end user was updated
+          description: The ID of the end user associated with the conversation
+        metadata:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConversationCreatedWebhookPayloadDataMetadata'
+          description: 'A dictionary of key, value pairs assigned to the conversation
+
+            - `metadata` keys may only be of type: `string`
+
+            - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)
+
+            '
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
       description: The webhook event data
-      title: EndUserCreatedWebhookPayloadData
-    ConversationHandoffEndedWebhookPayload:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayloadType'
-          description: The webhook event type
-        timestamp:
-          type: string
-          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering
-        data:
-          $ref: '#/components/schemas/ConversationHandoffEndedWebhookPayloadData'
-          description: The webhook event data
-      title: ConversationHandoffEndedWebhookPayload
-    EndUserUpdatedWebhookPayload:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The webhook event type description
-        timestamp:
-          type: string
-          description: The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.
-        data:
-          $ref: '#/components/schemas/EndUserUpdatedWebhookPayloadData'
-          description: The webhook event data
-        tags:
-          type: array
-          items:
-            type: string
-          description: A list of tags that Ada provides. You can use tags to filter webhook events in the Ada dashboard. Includes the `end_user_id` value for the webhook payload by default. Ada may add additional tags at any time.
-      title: EndUserUpdatedWebhookPayload
-    ConversationEndedWebhookPayloadDataEndedByRole:
+      title: ConversationCreatedWebhookPayloadData
+    ConversationHandoffEndedWebhookPayloadType:
       type: string
       enum:
-      - end_user
-      - system
-      - human_agent
-      description: The role that ended the conversation
-      title: ConversationEndedWebhookPayloadDataEndedByRole
-    ConversationMessageWebhookCustomChannelType:
-      type: string
-      enum:
-      - custom
-      description: The type of the channel
-      title: ConversationMessageWebhookCustomChannelType
+      - v1.conversation.handoff.ended
+      description: The webhook event type
+      title: ConversationHandoffEndedWebhookPayloadType
     TextContentType:
       type: string
       enum:
       - text
       description: The type of the message
       title: TextContentType
+    ConversationEndedWebhookPayloadDataEndedBy:
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          description: The ID of the user that ended the conversation
+        role:
+          $ref: '#/components/schemas/ConversationEndedWebhookPayloadDataEndedByRole'
+          description: The role that ended the conversation
+      title: ConversationEndedWebhookPayloadDataEndedBy
+    BaseChannelModality:
+      type: string
+      enum:
+      - messaging
+      - email
+      - voice
+      description: The modality of the channel
+      title: BaseChannelModality
+    FileContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FileContentType'
+          description: The type of the message
+        url:
+          type: string
+          format: uri
+          description: Presigned URL from the attachment upload endpoint (valid for 7 days)
+        mime_type:
+          type: string
+          description: MIME type of the file
+        filename:
+          type: string
+          description: Name of the file
+      required:
+      - type
+      - url
+      - mime_type
+      - filename
+      description: The content of a file message
+      title: FileContent
     ConversationMessageWebhookChannel:
       oneOf:
       - type: object
@@ -646,6 +641,129 @@ components:
       discriminator:
         propertyName: type
       title: ConversationMessageWebhookChannel
+    LinkContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/LinkContentType'
+          description: The type of the message
+        url:
+          type: string
+          description: The link's URL
+        link_text:
+          type:
+          - string
+          - 'null'
+          description: Text that can be used to display the link
+      description: The content of a standalone link style messages, such as CSAT
+      title: LinkContent
+    TextContent:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TextContentType'
+          description: The type of the message
+        body:
+          type: string
+          description: The body of the message
+      required:
+      - type
+      - body
+      description: The content of the text message
+      title: TextContent
+    ConversationMessageWebhookPayloadDataAuthorRole:
+      type: string
+      enum:
+      - end_user
+      - ai_agent
+      - human_agent
+      description: The author's role
+      title: ConversationMessageWebhookPayloadDataAuthorRole
+    EndUserUpdatedWebhookPayload:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The webhook event type description
+        timestamp:
+          type: string
+          description: The timestamp for when the event was generated. Uses millisecond precision to help with event ordering needs.
+        data:
+          $ref: '#/components/schemas/EndUserUpdatedWebhookPayloadData'
+          description: The webhook event data
+        tags:
+          type: array
+          items:
+            type: string
+          description: A list of tags that Ada provides. You can use tags to filter webhook events in the Ada dashboard. Includes the `end_user_id` value for the webhook payload by default. Ada may add additional tags at any time.
+      title: EndUserUpdatedWebhookPayload
+    ConversationMessageWebhookPayloadType:
+      type: string
+      enum:
+      - v1.conversation.message
+      description: The webhook event type
+      title: ConversationMessageWebhookPayloadType
+    LinkContentType:
+      type: string
+      enum:
+      - link
+      description: The type of the message
+      title: LinkContentType
+    EndUserCreatedWebhookPayloadData:
+      type: object
+      properties:
+        end_user_id:
+          type: string
+          description: The unique Ada-generated id for the end user
+        external_id:
+          type:
+          - string
+          - 'null'
+          description: Caller-supplied identifier that links this end user to your own system (for example a CRM contact ID or a phone number). Unique per AI Agent. Null if not set. Maximum 36 characters; values are case-insensitive. Available for custom channel integrations only (V1).
+        profile:
+          $ref: '#/components/schemas/EndUserProfile'
+          description: The end user's profile information
+        created_at:
+          type: string
+          description: The date and time the end user was created
+        updated_at:
+          type: string
+          description: The date and time the end user was updated
+      description: The webhook event data
+      title: EndUserCreatedWebhookPayloadData
+    ConversationMessageWebhookPayloadData:
+      type: object
+      properties:
+        message_id:
+          type: string
+          description: The ID of the message that triggered the webhook event
+        conversation_id:
+          type: string
+          description: The ID of the conversation that contains the message
+        end_user_id:
+          type: string
+          description: The ID of the end user associated with the conversation
+        handoff_integration:
+          type:
+          - string
+          - 'null'
+          description: The name of the handoff integration if the message is part of a handoff conversation. This field is null when the message is directed to the AI Agent.
+        channel:
+          $ref: '#/components/schemas/ConversationMessageWebhookChannel'
+          description: The channel that the message was sent on
+        created_at:
+          type: string
+          description: The date and time the message was created
+        author:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataAuthor'
+          description: Information about the message author
+        content:
+          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataContent'
+        ai_agent_domain:
+          type: string
+          description: The API domain of the AI Agent environment this webhook event is emitted from
+      description: The webhook event data
+      title: ConversationMessageWebhookPayloadData
     AuditLogWebhookPayload:
       type: object
       properties:
@@ -670,124 +788,6 @@ components:
       - data
       description: The body delivered to your endpoint for a `v1.audit_log.emitted` event
       title: AuditLogWebhookPayload
-    ConversationEndedWebhookPayloadDataMetadata:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      - type: number
-        format: double
-      title: ConversationEndedWebhookPayloadDataMetadata
-    ConversationEndedWebhookPayloadType:
-      type: string
-      enum:
-      - v1.conversation.ended
-      description: The webhook event type
-      title: ConversationEndedWebhookPayloadType
-    LinkContentType:
-      type: string
-      enum:
-      - link
-      description: The type of the message
-      title: LinkContentType
-    ConversationMessageWebhookPayload:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/ConversationMessageWebhookPayloadType'
-          description: The webhook event type
-        timestamp:
-          type: string
-          description: The timestamp for when the event was generated, uses millisecond precision to help with event ordering needs
-        data:
-          $ref: '#/components/schemas/ConversationMessageWebhookPayloadData'
-          description: The webhook event data
-      title: ConversationMessageWebhookPayload
-    FileContent:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/FileContentType'
-          description: The type of the message
-        url:
-          type: string
-          format: uri
-          description: Presigned URL from the attachment upload endpoint (valid for 7 days)
-        mime_type:
-          type: string
-          description: MIME type of the file
-        filename:
-          type: string
-          description: Name of the file
-      required:
-      - type
-      - url
-      - mime_type
-      - filename
-      description: The content of a file message
-      title: FileContent
-    TextContent:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/TextContentType'
-          description: The type of the message
-        body:
-          type: string
-          description: The body of the message
-      required:
-      - type
-      - body
-      description: The content of the text message
-      title: TextContent
-    ConversationMessageWebhookPayloadType:
-      type: string
-      enum:
-      - v1.conversation.message
-      description: The webhook event type
-      title: ConversationMessageWebhookPayloadType
-    ConversationMessageWebhookNativeChannelType:
-      type: string
-      enum:
-      - native
-      description: The type of the channel
-      title: ConversationMessageWebhookNativeChannelType
-    ConversationCreatedWebhookPayload:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/ConversationCreatedWebhookPayloadType'
-          description: The webhook event type
-        timestamp:
-          type: string
-          description: The timestamp for when the event was generated (uses millisecond precision to help with event ordering)
-        data:
-          $ref: '#/components/schemas/ConversationCreatedWebhookPayloadData'
-          description: The webhook event data
-      title: ConversationCreatedWebhookPayload
-    ConversationMessageWebhookPayloadDataAuthor:
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          description: The ID of the user that will be participating in the conversation
-        role:
-          $ref: '#/components/schemas/ConversationMessageWebhookPayloadDataAuthorRole'
-          description: The author's role
-        avatar:
-          type:
-          - string
-          - 'null'
-          description: The URL of the author's avatar
-        display_name:
-          type:
-          - string
-          - 'null'
-          description: The author's display name
-      description: Information about the message author
-      title: ConversationMessageWebhookPayloadDataAuthor
   securitySchemes:
     BearerAuth:
       type: http
