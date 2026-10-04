@@ -110,35 +110,12 @@ paths:
               $ref: '#/components/schemas/PersonaUpdate'
 components:
   schemas:
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
+    PersonaMessageLength:
+      type: string
+      enum:
+      - concise
+      - normal
+      title: PersonaMessageLength
     Persona:
       type: object
       properties:
@@ -186,6 +163,17 @@ components:
       - enable_acknowledgment_messages
       description: Persona configuration
       title: Persona
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     PersonaUpdate:
       type: object
       properties:
@@ -223,18 +211,30 @@ components:
           type: boolean
       description: Partial persona update. All fields optional.
       title: PersonaUpdate
-    PersonaMessageLength:
-      type: string
-      enum:
-      - concise
-      - normal
-      title: PersonaMessageLength
     PersonaUpdateMessageLength:
       type: string
       enum:
       - concise
       - normal
       title: PersonaUpdateMessageLength
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
   securitySchemes:
     BearerAuth:
       type: http

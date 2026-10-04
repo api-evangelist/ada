@@ -103,34 +103,6 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    AuditLogEventListMeta:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: URL for the next page of results, or `null` on the last or empty page. Replay it unchanged to keep the time window and the cursor constant across pages.
-      description: Pagination metadata
-      title: AuditLogEventListMeta
     Errors:
       type: object
       properties:
@@ -209,6 +181,34 @@ components:
       - activity
       description: 'A single Audit log event: one configuration change recorded for the account. Empty-string fields mean the value was unavailable for that event (for example, a system actor has no email).'
       title: AuditLogEvent
+    AuditLogEventListMeta:
+      type: object
+      properties:
+        next_page_url:
+          type:
+          - string
+          - 'null'
+          description: URL for the next page of results, or `null` on the last or empty page. Replay it unchanged to keep the time window and the cursor constant across pages.
+      description: Pagination metadata
+      title: AuditLogEventListMeta
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
   securitySchemes:
     BearerAuth:
       type: http

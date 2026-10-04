@@ -168,6 +168,60 @@ paths:
                 $ref: '#/components/schemas/ArticleTag'
 components:
   schemas:
+    knowledge_tags_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArticleTag'
+      title: knowledge_tags_list_Response_200
+    knowledge_tags_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_tags_delete_Response_204
+    ArticleTag:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the tag
+        name:
+          type: string
+          description: The name of the tag
+      required:
+      - id
+      - name
+      title: ArticleTag
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    ArticleTagUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article tag was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
+        id:
+          type: string
+          description: The id of the article tag
+      required:
+      - success
+      - created
+      - id
+      title: ArticleTagUpsertResponse
     ErrorsErrorsItems:
       type: object
       properties:
@@ -186,60 +240,6 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    ArticleTagUpsertResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the article tag was successfully created/updated
-        created:
-          type: boolean
-          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
-        id:
-          type: string
-          description: The id of the article tag
-      required:
-      - success
-      - created
-      - id
-      title: ArticleTagUpsertResponse
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ArticleTag:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the tag
-        name:
-          type: string
-          description: The name of the tag
-      required:
-      - id
-      - name
-      title: ArticleTag
-    knowledge_tags_delete_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_tags_delete_Response_204
-    knowledge_tags_list_Response_200:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ArticleTag'
-      title: knowledge_tags_list_Response_200
   securitySchemes:
     BearerAuth:
       type: http

@@ -208,6 +208,17 @@ paths:
       description: https://example.ada.support/
 components:
   schemas:
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     ErrorsErrorsItems:
       type: object
       properties:
@@ -279,17 +290,15 @@ components:
           type: string
           description: Internal ID of the message that this message is in response to. None if the message is not in response to another message.
       title: Message
-    Errors:
+    MessagesResponseMeta:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
+        next_page_uri:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page of results matching the query
+      title: MessagesResponseMeta
     MessagesResponse:
       type: object
       properties:
@@ -306,30 +315,6 @@ components:
       properties: {}
       description: Data associated with this message
       title: MessageMessageData
-    MessagesResponseMeta:
-      type: object
-      properties:
-        next_page_uri:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page of results matching the query
-      title: MessagesResponseMeta
-    MessagesResponse_2:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message_2'
-          description: Records returned from the query
-        message:
-          type: string
-          description: Request status message
-        next_page_uri:
-          type: string
-          description: Relative link to the next page of results matching the query
-      title: MessagesResponse
     Message_2:
       type: object
       properties:
@@ -375,6 +360,21 @@ components:
           type: string
           description: Internal ID of the message that this message is in response to. None if the message is not in response to another message
       title: Message
+    MessagesResponse_2:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message_2'
+          description: Records returned from the query
+        message:
+          type: string
+          description: Request status message
+        next_page_uri:
+          type: string
+          description: Relative link to the next page of results matching the query
+      title: MessagesResponse
   securitySchemes:
     bearerAuth:
       type: http

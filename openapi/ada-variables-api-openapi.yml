@@ -116,6 +116,27 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
+    variables_list_Response_200:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableSummary'
+      required:
+      - data
+      title: variables_list_Response_200
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
     ErrorsErrorsItems:
       type: object
       properties:
@@ -134,16 +155,6 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
-    variables_list_Response_200:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariableSummary'
-      required:
-      - data
-      title: variables_list_Response_200
     VariableSummary:
       type: object
       properties:
@@ -162,17 +173,6 @@ components:
 
         '
       title: VariableSummary
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
   securitySchemes:
     BearerAuth:
       type: http
