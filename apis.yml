@@ -420,6 +420,8 @@ apis:
   humanURL: https://docs.ada.cx/mcp/introduction/overview
   baseURL: https://example.ada.support/api/mcp
   tags:
+  - Audit Logs
+  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
@@ -469,6 +471,9 @@ apis:
   - type: Documentation
     url: https://docs.ada.cx/reference/end-users/overview
 common:
+- type: CapabilityMap
+  url: capabilities/ada-capability-edges.yml
+  name: Ada Business Capability Map
 - type: Overlay
   url: overlays/ada-subpackage-channels-overlay.yaml
 - type: Overlay

@@ -1,30 +1,28 @@
-# Kin Score artifact — ada — 2026-09-02T224043
+# Kin Score artifact — ada — 2026-09-24T161608
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: ada
-  schema_version: 0.18.0
-  scored_at: '2026-09-02'
-  run_ts: 2026-09-02T224043
-  composite: 73.9
+  schema_version: 0.22.0
+  scored_at: '2026-09-24'
+  run_ts: 2026-09-24T161608
+  composite: 82.9
   band: exemplar
   facets:
     discoverability: 92.6
-    contract_quality: 71.6
-    governance: 43.2
+    contract_quality: 70.2
+    contract_governance: 43.2
     operational_transparency: 60.5
     developer_ergonomics: 85.7
-    commercial_clarity: 82.9
-    contract_governance: 43.2
     access_clarity: 82.9
   agent_readiness:
-    score: 45.5
+    score: 47.3
     band: agent-native
     dimensions:
       spec_presence: true
       agentic_access: derived
       reversibility_documented: false
-      mcp_server: documented
+      mcp_server: templated
       auth_clarity: bearer
       idempotency: documented
       error_semantics: verified
