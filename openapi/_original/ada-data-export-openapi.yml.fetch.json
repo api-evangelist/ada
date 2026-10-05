@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.ada.cx/_fern-files/ada.docs.buildwithfern.com/6c1b0526c08fc24b1c9f72ed76cf2ecde9c97649bc9858b8319068b7459302fe/apis/data-export-v2/openapi.json",
+ "requested_url": "https://docs.ada.cx/_fern-files/ada.docs.buildwithfern.com/6c1b0526c08fc24b1c9f72ed76cf2ecde9c97649bc9858b8319068b7459302fe/apis/data-export-v2/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 45788,
+ "sha256": "6c1b0526c08fc24b1c9f72ed76cf2ecde9c97649bc9858b8319068b7459302fe",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
