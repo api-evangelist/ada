@@ -1,0 +1,36 @@
+slug: ada
+provider: Ada
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Conversations
+  spec_file: ada-conversations-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.75
+  evidence: POST /v2/conversations/ create-conversation 'Create a new conversation'; POST /v2/conversations/{conversation_id}/end-handoff/
+    'End Handoff'; schema ConversationCsat
+  reason: Operations create, retrieve, message within and end customer-service conversations on an AI
+    customer-support platform, including handoff to agents and CSAT — inbound customer contact handling
+    and resolution.
+- tag: deleteChatterData
+  spec_file: ada-deletechatterdata-api-openapi.yml
+  capability_id: BC-130.50
+  capability_id_l1: BC-130
+  capability_name: Privacy & Data Protection Management
+  confidence: 0.72
+  evidence: POST /api/v1/data-subject-request 'Delete all data associated with a chatter's email address';
+    schemas DeleteSubjectRequest, DeleteSubjectResponse
+  reason: Explicit data-subject-request deletion endpoint realises privacy/data-protection rights handling
+    (GDPR erasure).
