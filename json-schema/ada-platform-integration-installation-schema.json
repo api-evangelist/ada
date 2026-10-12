@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-platform-integration-installation-schema.json",
+  "title": "PlatformIntegrationInstallation",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-platformintegrations-api-openapi.yml#/components/schemas/PlatformIntegrationInstallation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "id",
+      "description": "The unique identifier for the integration installation"
+    },
+    "platform_integration_id": {
+      "type": "string",
+      "format": "id",
+      "description": "The unique identifier for the integration"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the installation was created"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the installation was last updated"
+    },
+    "configuration": {
+      "$ref": "#/$defs/PlatformIntegrationInstallationConfiguration",
+      "description": "The configuration settings for the integration"
+    },
+    "status": {
+      "type": "string",
+      "description": "The current state of the integration installation (incomplete, complete)"
+    }
+  },
+  "$defs": {
+    "PlatformIntegrationInstallationConfiguration": {
+      "type": "object",
+      "properties": {},
+      "description": "The configuration settings for the integration",
+      "title": "PlatformIntegrationInstallationConfiguration"
+    }
+  }
+}

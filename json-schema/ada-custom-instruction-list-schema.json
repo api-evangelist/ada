@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-custom-instruction-list-schema.json",
+  "title": "CustomInstructionList",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-custominstructions-api-openapi.yml#/components/schemas/CustomInstructionList",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CustomInstruction"
+      },
+      "description": "The list of custom instructions"
+    },
+    "meta": {
+      "$ref": "#/$defs/CustomInstructionListMeta",
+      "description": "Pagination metadata"
+    }
+  },
+  "required": [
+    "data",
+    "meta"
+  ],
+  "$defs": {
+    "CustomInstruction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier for the custom instruction"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display name for the custom instruction (unique per Agent)"
+        },
+        "text": {
+          "type": "string",
+          "description": "The instruction content — the rule the Agent should follow"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether the instruction is enabled. False means inactive."
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Internal notes about this instruction (not shown to the Agent)"
+        },
+        "availability_rules": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Availability rule gating which end users this instruction applies to, as a rule-expression string with `v(\"<variable_name>\")` variable lookups. `null` when no rule is set."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "text",
+        "enabled"
+      ],
+      "description": "A custom instruction — system-level behavioral guidance for the AI Agent",
+      "title": "CustomInstruction"
+    },
+    "CustomInstructionListMeta": {
+      "type": "object",
+      "properties": {
+        "next_page_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "URL for the next page of results, or null on the last/empty page. Replay it unchanged to fetch the next page."
+        }
+      },
+      "description": "Pagination metadata",
+      "title": "CustomInstructionListMeta"
+    }
+  }
+}

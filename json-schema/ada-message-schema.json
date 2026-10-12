@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-message-schema.json",
+  "title": "Message",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-conversations-api-openapi.yml#/components/schemas/Message",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "id",
+      "description": "The ID of the message"
+    },
+    "conversation_id": {
+      "type": "string",
+      "format": "id",
+      "description": "The ID of the conversation"
+    },
+    "author": {
+      "$ref": "#/$defs/ConversationMessageAuthor"
+    },
+    "content": {
+      "$ref": "#/$defs/MessageContent",
+      "description": "The message content"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the message was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time the message was updated"
+    }
+  },
+  "$defs": {
+    "ConversationMessageAuthor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The ID of the user that will be participating in the conversation. Required when the role is `end_user`."
+        },
+        "role": {
+          "$ref": "#/$defs/ConversationMessageAuthorRole",
+          "description": "The author's role"
+        },
+        "avatar": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The URL of the author's avatar"
+        },
+        "display_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The author's display name. Required when the role is `human_agent`."
+        }
+      },
+      "required": [
+        "role"
+      ],
+      "description": "Information about the message author",
+      "title": "ConversationMessageAuthor"
+    },
+    "ConversationMessageAuthorRole": {
+      "type": "string",
+      "enum": [
+        "end_user",
+        "human_agent"
+      ],
+      "description": "The author's role",
+      "title": "ConversationMessageAuthorRole"
+    },
+    "FileContent": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/FileContentType",
+          "description": "The type of the message"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Presigned URL from the attachment upload endpoint (valid for 7 days)"
+        },
+        "mime_type": {
+          "type": "string",
+          "description": "MIME type of the file"
+        },
+        "filename": {
+          "type": "string",
+          "description": "Name of the file"
+        }
+      },
+      "required": [
+        "type",
+        "url",
+        "mime_type",
+        "filename"
+      ],
+      "description": "The content of a file message",
+      "title": "FileContent"
+    },
+    "FileContentType": {
+      "type": "string",
+      "enum": [
+        "file"
+      ],
+      "description": "The type of the message",
+      "title": "FileContentType"
+    },
+    "MessageContent": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/TextContent"
+        },
+        {
+          "$ref": "#/$defs/FileContent"
+        }
+      ],
+      "description": "The message content",
+      "title": "MessageContent"
+    },
+    "TextContent": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/TextContentType",
+          "description": "The type of the message"
+        },
+        "body": {
+          "type": "string",
+          "description": "The body of the message"
+        }
+      },
+      "required": [
+        "type",
+        "body"
+      ],
+      "description": "The content of the text message",
+      "title": "TextContent"
+    },
+    "TextContentType": {
+      "type": "string",
+      "enum": [
+        "text"
+      ],
+      "description": "The type of the message",
+      "title": "TextContentType"
+    }
+  }
+}

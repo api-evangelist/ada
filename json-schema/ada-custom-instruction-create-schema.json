@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-custom-instruction-create-schema.json",
+  "title": "CustomInstructionCreate",
+  "description": "Fields for creating a custom instruction",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-custominstructions-api-openapi.yml#/components/schemas/CustomInstructionCreate",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Display name for the custom instruction (unique per Agent)"
+    },
+    "text": {
+      "type": "string",
+      "description": "The instruction content — the rule the Agent should follow"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the instruction is enabled. False means inactive."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes about this instruction (not shown to the Agent)"
+    },
+    "availability_rules": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional availability rule as a rule-expression string with `v(\"<variable_name>\")` lookups. Omit or send `null` for no rule. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400."
+    }
+  },
+  "required": [
+    "title",
+    "text"
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-channels-get-channels-response-200-schema.json",
+  "title": "Channels_getChannels_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-channels-api-openapi.yml#/components/schemas/Channels_getChannels_Response_200",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Channel"
+      }
+    },
+    "meta": {
+      "$ref": "#/$defs/PaginationMetadata"
+    }
+  },
+  "$defs": {
+    "BaseChannelCapabilities": {
+      "type": "object",
+      "properties": {
+        "markdown": {
+          "type": "boolean",
+          "default": false,
+          "description": "Preserve Markdown (bold, italic, and links) in replies instead of flattening to plain text."
+        }
+      },
+      "description": "What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface.",
+      "title": "BaseChannelCapabilities"
+    },
+    "BaseChannelModality": {
+      "type": "string",
+      "enum": [
+        "messaging",
+        "email",
+        "voice"
+      ],
+      "description": "The modality of the channel",
+      "title": "BaseChannelModality"
+    },
+    "Channel": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "$ref": "#/$defs/CustomChannelType",
+              "description": "The type of the channel"
+            },
+            "id": {
+              "type": "string",
+              "format": "id",
+              "description": "The channel ID"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the channel"
+            },
+            "description": {
+              "type": "string",
+              "description": "A description of the channel"
+            },
+            "modality": {
+              "$ref": "#/$defs/BaseChannelModality",
+              "description": "The modality of the channel"
+            },
+            "capabilities": {
+              "$ref": "#/$defs/BaseChannelCapabilities",
+              "description": "What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface."
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/CustomChannelMetadata"
+              },
+              "description": "A dictionary of key, value pairs assigned to the channel. Metadata may not exceed 4KB total.\n- `metadata` keys may only be of type: `string`\n- `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "The date and time the channel was created"
+            }
+          },
+          "required": [
+            "type",
+            "name",
+            "description",
+            "modality"
+          ],
+          "description": "custom variant"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "$ref": "#/$defs/NativeChannelType",
+              "description": "The type of the channel"
+            },
+            "id": {
+              "type": "string",
+              "description": "The channel ID"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the channel"
+            },
+            "description": {
+              "type": "string",
+              "description": "A description of the channel"
+            },
+            "modality": {
+              "$ref": "#/$defs/BaseChannelModality",
+              "description": "The modality of the channel"
+            },
+            "capabilities": {
+              "$ref": "#/$defs/BaseChannelCapabilities",
+              "description": "What the channel's surface can render. The AI Agent tailors replies to the declared capabilities. Omitted fields default to false. Read-only on native channels, whose capabilities are fixed by the surface."
+            }
+          },
+          "required": [
+            "type",
+            "name",
+            "description",
+            "modality"
+          ],
+          "description": "native variant"
+        }
+      ],
+      "title": "Channel"
+    },
+    "CustomChannelMetadata": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        }
+      ],
+      "title": "CustomChannelMetadata"
+    },
+    "CustomChannelType": {
+      "type": "string",
+      "enum": [
+        "custom"
+      ],
+      "description": "The type of the channel",
+      "title": "CustomChannelType"
+    },
+    "NativeChannelType": {
+      "type": "string",
+      "enum": [
+        "native"
+      ],
+      "description": "The type of the channel",
+      "title": "NativeChannelType"
+    },
+    "PaginationMetadata": {
+      "type": "object",
+      "properties": {
+        "next_page_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The URL to the next page of results"
+        }
+      },
+      "title": "PaginationMetadata"
+    }
+  }
+}

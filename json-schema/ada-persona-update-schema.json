@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-persona-update-schema.json",
+  "title": "PersonaUpdate",
+  "description": "Partial persona update. All fields optional.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-persona-api-openapi.yml#/components/schemas/PersonaUpdate",
+  "type": "object",
+  "properties": {
+    "personality": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "emoji_usage": {
+      "type": "boolean"
+    },
+    "allowed_emojis": {
+      "type": "string"
+    },
+    "default_timezone": {
+      "type": "string"
+    },
+    "company_description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "community_guidelines_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "message_length": {
+      "$ref": "#/$defs/PersonaUpdateMessageLength"
+    },
+    "ask_for_more_help": {
+      "type": "boolean"
+    },
+    "no_customer_pi": {
+      "type": "boolean"
+    },
+    "no_competitors": {
+      "type": "boolean"
+    },
+    "competitor_names": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "enable_acknowledgment_messages": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "PersonaUpdateMessageLength": {
+      "type": "string",
+      "enum": [
+        "concise",
+        "normal"
+      ],
+      "title": "PersonaUpdateMessageLength"
+    }
+  }
+}

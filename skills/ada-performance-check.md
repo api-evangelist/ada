@@ -6,7 +6,9 @@ compatibility: Requires Ada MCP server connected to Claude Desktop or compatible
 metadata:
   author: ada
   version: "1.0"
-allowed-tools: get_ada_metric get_available_filters
+allowed-tools:
+  - get_ada_metric
+  - get_available_filters
 ---
 
 # Ada Performance Health Check

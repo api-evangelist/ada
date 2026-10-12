@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-create-end-user-request-schema.json",
+  "title": "CreateEndUserRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-end-users-api-openapi.yml#/components/schemas/CreateEndUserRequest",
+  "type": "object",
+  "properties": {
+    "external_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional caller-supplied identifier (for example a CRM contact ID or a phone number). Maximum 36 characters; must not contain < or > characters. Values are stored case-insensitively. If an end user with this external_id already exists, that existing user is returned with HTTP 200 (idempotent upsert); otherwise a new end user is created with HTTP 201. Available for custom channel integrations only (V1)."
+    },
+    "profile": {
+      "$ref": "#/$defs/CreateEndUserRequestProfile",
+      "description": "The end user's profile information. Optional — omitting profile creates a blank end user."
+    }
+  },
+  "$defs": {
+    "CreateEndUserRequestProfile": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The end user's first name"
+        },
+        "last_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The end user's last name"
+        },
+        "display_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The end user's display name"
+        },
+        "avatar": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "URL to the end user's avatar image"
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The end user's email address"
+        },
+        "language": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The end user's language in BCP 47 format"
+        },
+        "metadata": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "description": "Any type"
+          },
+          "description": "A dictionary of arbitrary key, value pairs assigned to the end user.\n<br>- `metadata` keys may only be of type: `string`\n<br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`\n<br>**Note**: The total size of metadata is limited to 10KB.</br>\n"
+        },
+        "sensitive_metadata": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CreateEndUserRequestProfileSensitiveMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours."
+        }
+      },
+      "description": "The end user's profile information. Optional — omitting profile creates a blank end user.",
+      "title": "CreateEndUserRequestProfile"
+    },
+    "CreateEndUserRequestProfileSensitiveMetadata": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/CreateEndUserRequestProfileSensitiveMetadataFields"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": "A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Maximum 20 key-value pairs per request. Keys must not overlap with keys in the sibling metadata field."
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "description": "Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.",
+      "title": "CreateEndUserRequestProfileSensitiveMetadata"
+    },
+    "CreateEndUserRequestProfileSensitiveMetadataFields": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "title": "CreateEndUserRequestProfileSensitiveMetadataFields"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+arazzo: 1.0.1
+info:
+  title: Ada Gladly Answer Sync
+  summary: Copy a Gladly Answer into an Ada knowledge source.
+  description: Reads one Gladly Answer content block by language and type and upserts
+    it as an Ada knowledge article, the knowledge integration Ada documents for Gladly.
+  version: 1.0.0
+sourceDescriptions:
+- name: gladlyAnswers
+  url: https://raw.githubusercontent.com/api-evangelist/gladly/refs/heads/main/openapi/gladly-answer-management-api-openapi.yml
+  type: openapi
+- name: adaKnowledgeArticles
+  url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/openapi/ada-knowledge-articles-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: sync-gladly-answer
+  summary: Gladly answer to Ada article
+  inputs:
+    type: object
+    properties:
+      answerId:
+        type: string
+      language:
+        type: string
+      type:
+        type: string
+      externalId:
+        type: string
+      knowledgeSourceId:
+        type: string
+  steps:
+  - stepId: get-answer
+    description: Fetch the answer content.
+    operationId: $sourceDescriptions.gladlyAnswers.getAnswerContentByLanguageAndType
+    parameters:
+    - name: answerId
+      in: path
+      value: $inputs.answerId
+    - name: language
+      in: path
+      value: $inputs.language
+    - name: type
+      in: path
+      value: $inputs.type
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      title: $response.body#/title
+      body: $response.body#/bodyHtml
+  - stepId: upsert-into-ada
+    description: Bulk upsert the article into an Ada knowledge source.
+    operationId: $sourceDescriptions.adaKnowledgeArticles.bulk-upsert
+    requestBody:
+      contentType: application/json
+      payload:
+      - id: $inputs.externalId
+        name: $steps.get-answer.outputs.title
+        content: $steps.get-answer.outputs.body
+        knowledge_source_id: $inputs.knowledgeSourceId
+        language: $inputs.language
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      result: $response.body#/0/success
+  outputs:
+    success: $steps.upsert-into-ada.outputs.result
+x-integration:
+  partner: gladly
+  edge_evidence: https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
+  edge_type: claimed
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-opus-5-5 enrichment local-v5
+  guessed_steps:
+  - step: upsert-into-ada
+    cause: provider-contract
+    why: Ada expects markdown content; Gladly returns bodyHtml and neither contract
+      defines a conversion.

@@ -1,0 +1,68 @@
+arazzo: 1.0.1
+info:
+  title: Ada Zendesk Handoff Ticket
+  summary: Open a Zendesk ticket carrying an Ada conversation transcript.
+  description: Reads the messages of an Ada conversation and creates a Zendesk Support
+    ticket for a human agent, approximating the Zendesk ticketing handoff Ada documents.
+  version: 1.0.0
+sourceDescriptions:
+- name: adaConversations
+  url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/openapi/ada-conversations-api-openapi.yml
+  type: openapi
+- name: zendeskTickets
+  url: https://raw.githubusercontent.com/api-evangelist/zendesk/refs/heads/main/openapi/zendesk-tickets-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: handoff-to-zendesk-ticket
+  summary: Ada transcript to Zendesk ticket
+  inputs:
+    type: object
+    properties:
+      conversationId:
+        type: string
+      subject:
+        type: string
+  steps:
+  - stepId: get-messages
+    description: Fetch the conversation messages.
+    operationId: $sourceDescriptions.adaConversations.fetch-conversation-messages-by-id
+    parameters:
+    - name: conversation_id
+      in: path
+      value: $inputs.conversationId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      messages: $response.body#/data
+  - stepId: create-ticket
+    description: Create the Zendesk ticket.
+    operationId: $sourceDescriptions.zendeskTickets.CreateTicket
+    requestBody:
+      contentType: application/json
+      payload:
+        ticket:
+          subject: $inputs.subject
+          comment:
+            body: $steps.get-messages.outputs.messages
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      ticketId: $response.body#/ticket/id
+  outputs:
+    ticketId: $steps.create-ticket.outputs.ticketId
+x-integration:
+  partner: zendesk
+  edge_evidence: https://docs.ada.cx/docs/handoffs/zendesk.md
+  edge_type: claimed
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-opus-5-5 enrichment local-v5
+  guessed_steps:
+  - step: create-ticket
+    cause: partner-contract
+    why: 'Zendesk tickets spec references #/components/schemas/TicketCreateRequest,
+      which the file does not define; payload follows the Zendesk ticket envelope.'
+  - step: create-ticket
+    cause: provider-contract
+    why: Ada messages are an array of message logs; no operation renders a transcript
+      string.

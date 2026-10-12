@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-deletion-request-schema.json",
+  "title": "DeletionRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-submitdeletionrequest-api-openapi.yml#/components/schemas/DeletionRequest",
+  "type": "object",
+  "properties": {
+    "identifiers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DeletionIdentifier"
+      },
+      "description": "The identifiers to erase. At least one is required, and a single request accepts at most 1000."
+    },
+    "client_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional caller-supplied reference echoed back on the job. It is also the idempotency key: two identical requests that set the same reference within 24 hours resolve to the same job. Requests that omit it are not deduplicated."
+    }
+  },
+  "required": [
+    "identifiers"
+  ],
+  "$defs": {
+    "DeletionIdentifier": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/DeletionIdentifierType"
+        },
+        "value": {
+          "type": "string",
+          "description": "The identifier value. Email values are normalized and matched case-insensitively; `external_id` values are trimmed and lowercased at intake."
+        },
+        "variable": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Name of the stored variable to match against `value`. Required only when `type` is `variable_match`; leave null for all other types."
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "description": "A single reference to the end user(s) whose data should be erased.",
+      "title": "DeletionIdentifier"
+    },
+    "DeletionIdentifierType": {
+      "type": "string",
+      "enum": [
+        "email",
+        "chatter_id",
+        "external_id",
+        "end_user_id",
+        "variable_match"
+      ],
+      "description": "The kind of identifier supplied. `variable_match` selects every end user whose stored variable equals the value.",
+      "title": "DeletionIdentifierType"
+    }
+  }
+}

@@ -1,8 +1,9 @@
+name: Ada API Plans
 spec: API Commons Plans 0.1
 provider: Ada
 providerId: ada
-created: 2026-06-12
-modified: 2026-08-14
+created: '2026-06-12'
+modified: '2026-08-14'
 reconciled: true
 generated: '2026-08-14'
 method: searched
@@ -10,73 +11,91 @@ source: https://www.ada.cx/platform/
 url: https://www.ada.cx/platform/
 plan_count: 1
 public_pricing: false
-public_pricing_note: >-
-  Re-checked 2026-08-14. Ada's site still has no /pricing/ page — the footer and nav carry
-  /platform/, /demo/ and /login/ but no pricing link, and the marketing origin bot-challenges
-  unauthenticated clients (403 to curl). Ada is enterprise sales-led: there is exactly one
-  commercial motion, a negotiated Enterprise contract, so plan_count is 1 rather than 0. The
-  per-conversation and per-resolution figures below are indicative, sourced from Ada's own
-  pricing-model commentary and third-party reporting, not from a published rate card.
-notes: >
-  Ada does not publish public self-serve pricing tiers. Pricing is enterprise-only, sold
-  through direct sales. Third-party sources and Ada's own blog indicate a conversation-based
+public_pricing_note: 'Re-checked 2026-08-14. Ada''s site still has no /pricing/ page
+  — the footer and nav carry /platform/, /demo/ and /login/ but no pricing link, and
+  the marketing origin bot-challenges unauthenticated clients (403 to curl). Ada is
+  enterprise sales-led: there is exactly one commercial motion, a negotiated Enterprise
+  contract, so plan_count is 1 rather than 0. The per-conversation and per-resolution
+  figures below are indicative, sourced from Ada''s own pricing-model commentary and
+  third-party reporting, not from a published rate card.'
+notes: 'Ada does not publish public self-serve pricing tiers. Pricing is enterprise-only,
+  sold through direct sales. Third-party sources and Ada''s own blog indicate a conversation-based
   or resolution-based pricing model. The base enterprise contract starts around $30,000/year.
   Ada advocates for conversation-based pricing (charge per conversation handled) over
   resolution-based pricing (charge per successfully resolved conversation).
 
+  '
 plans:
-  - name: Enterprise
-    type: enterprise
-    description: >
-      Full-platform access for large enterprises. Includes AI agent deployment, all APIs,
-      analytics, compliance tools, dedicated support, and access to the Developer Toolkit
-      (APIs, MCP, SDKs). Priced by sales negotiation based on conversation volume and feature set.
-    quota:
-      - name: Annual Contract Minimum
-        description: Minimum reported annual contract value
-        unit: USD/year
-        limit: 30000
-        metered: false
-    pricing:
-      - name: Per Conversation
-        description: Conversation-based pricing model — charged per customer interaction handled by the AI agent, regardless of resolution outcome
-        unit: USD/conversation
-        low: 0.35
-        high: 1.50
-        metered: true
-      - name: Per Resolution
-        description: Resolution-based pricing model — charged only per conversation resolved by the AI agent without human escalation
-        unit: USD/resolution
-        low: 1.00
-        high: 3.50
-        metered: true
-    features:
-      - name: Knowledge API
-        included: true
-      - name: End Users API
-        included: true
-      - name: Conversations API
-        included: true
-      - name: Data Export API
-        included: true
-      - name: Data Compliance API
-        included: true
-      - name: Integrations API
-        included: true
-      - name: iOS SDK
-        included: true
-      - name: MCP Server
-        included: true
-      - name: Webhook Events
-        included: true
-      - name: Omnichannel Deployment
-        included: true
-      - name: Multilingual Support
-        included: true
-        note: May incur additional cost per language
-      - name: Dedicated Account Management
-        included: true
-        note: Available on premium support tiers at additional cost
+- name: Enterprise
+  type: enterprise
+  description: 'Full-platform access for large enterprises. Includes AI agent deployment,
+    all APIs, analytics, compliance tools, dedicated support, and access to the Developer
+    Toolkit (APIs, MCP, SDKs). Priced by sales negotiation based on conversation volume
+    and feature set.
+
+    '
+  quota:
+  - name: Annual Contract Minimum
+    description: Minimum reported annual contract value
+    unit: USD/year
+    limit: 30000
+    metered: false
+  pricing:
+  - name: Per Conversation
+    description: Conversation-based pricing model — charged per customer interaction
+      handled by the AI agent, regardless of resolution outcome
+    unit: USD/conversation
+    low: 0.35
+    high: 1.5
+    metered: true
+  - name: Per Resolution
+    description: Resolution-based pricing model — charged only per conversation resolved
+      by the AI agent without human escalation
+    unit: USD/resolution
+    low: 1.0
+    high: 3.5
+    metered: true
+  features:
+  - Knowledge API
+  - End Users API
+  - Conversations API
+  - Data Export API
+  - Data Compliance API
+  - Integrations API
+  - iOS SDK
+  - MCP Server
+  - Webhook Events
+  - Omnichannel Deployment
+  - Multilingual Support (May incur additional cost per language)
+  - Dedicated Account Management (Available on premium support tiers at additional
+    cost)
+  features_detail:
+  - name: Knowledge API
+    included: true
+  - name: End Users API
+    included: true
+  - name: Conversations API
+    included: true
+  - name: Data Export API
+    included: true
+  - name: Data Compliance API
+    included: true
+  - name: Integrations API
+    included: true
+  - name: iOS SDK
+    included: true
+  - name: MCP Server
+    included: true
+  - name: Webhook Events
+    included: true
+  - name: Omnichannel Deployment
+    included: true
+  - name: Multilingual Support
+    included: true
+    note: May incur additional cost per language
+  - name: Dedicated Account Management
+    included: true
+    note: Available on premium support tiers at additional cost
 x-canonical:
   generated: '2026-10-08'
   vocabulary: all/0-working/economics/plans-canonical.yml
@@ -90,3 +109,11 @@ x-canonical:
     model_how: derived
     units: []
     periods: []
+audience: business-product
+pricing_basis: negotiated
+published: false
+delivery:
+  delivery: managed
+note: '2026-10-12: https://www.ada.cx/platform/ returned 403 to a browser-UA curl,
+  so no price_text could be re-verified; Ada publishes no numeric price and sells
+  one negotiated Enterprise motion via /demo/.'

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-webhook-management-delete-webhook-response-204-schema.json",
+  "title": "Webhook Management_deleteWebhook_Response_204",
+  "description": "Empty response body",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-webhook-management-api-openapi.yml#/components/schemas/Webhook_Management_deleteWebhook_Response_204",
+  "type": "object",
+  "properties": {}
+}

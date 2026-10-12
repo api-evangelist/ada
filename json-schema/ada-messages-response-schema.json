@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-messages-response-schema.json",
+  "title": "MessagesResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-messages-api-openapi.yml#/components/schemas/MessagesResponse",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Message"
+      },
+      "description": "Records returned from the query"
+    },
+    "meta": {
+      "$ref": "#/$defs/MessagesResponseMeta"
+    }
+  },
+  "$defs": {
+    "Message": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "description": "Unique ID for the message record"
+        },
+        "answer_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Internal ID of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, and None if it was sent by a generative bot."
+        },
+        "answer_title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Title of the answer (response) that triggered this message. Null if the message was not sent by an Ada bot, or if it was sent by a generative bot."
+        },
+        "chatter_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Internal ID of the chatter who sent this message. Corresponds to the `_id` field of Chatter objects."
+        },
+        "conversation_id": {
+          "type": "string",
+          "description": "Internal ID of the conversation in which this message was sent. Corresponds to the `_id` field of Conversation objects."
+        },
+        "date_created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Time the record was created (UTC)"
+        },
+        "link_was_clicked": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Indicates if the link in the answer (response) was clicked"
+        },
+        "message_data": {
+          "$ref": "#/$defs/MessageMessageData",
+          "description": "Data associated with this message"
+        },
+        "recipient": {
+          "type": "string",
+          "description": "Recipient of this message"
+        },
+        "record_last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time the record was uploaded to the API (UTC)"
+        },
+        "review": {
+          "type": "integer",
+          "description": "Rating given to this answer by the chatter"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender of this message"
+        },
+        "in_response_to": {
+          "type": "string",
+          "description": "Internal ID of the message that this message is in response to. None if the message is not in response to another message."
+        }
+      },
+      "title": "Message"
+    },
+    "MessageMessageData": {
+      "type": "object",
+      "properties": {},
+      "description": "Data associated with this message",
+      "title": "MessageMessageData"
+    },
+    "MessagesResponseMeta": {
+      "type": "object",
+      "properties": {
+        "next_page_uri": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Link to the next page of results matching the query"
+        }
+      },
+      "title": "MessagesResponseMeta"
+    }
+  }
+}

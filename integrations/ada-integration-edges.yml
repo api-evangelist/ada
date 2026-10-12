@@ -1,0 +1,115 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/ada/integrations
+- https://n8n.io/integrations/ada/
+- https://composio.dev/toolkits/ada
+- https://monid.ai/tools/ada
+checked:
+- https://composio.dev/toolkits/ada
+- https://docs.ada.cx/docs/channels/social/instagram-setup.md
+- https://docs.ada.cx/docs/channels/social/sunshine-conversations-setup.md
+- https://docs.ada.cx/docs/handoffs/genesys.md
+- https://docs.ada.cx/docs/handoffs/gladly.md
+- https://docs.ada.cx/docs/handoffs/nice-c-xone.md
+- https://docs.ada.cx/docs/handoffs/salesforce.md
+- https://docs.ada.cx/docs/handoffs/twilio-flex.md
+- https://docs.ada.cx/docs/handoffs/zendesk.md
+- https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
+- https://docs.ada.cx/llms.txt
+- https://monid.ai/tools/ada
+- https://n8n.io/integrations/ada/
+- https://www.ada.cx/integrations (403 to curl)
+- https://zapier.com/apps/ada/integrations
+summary: 'Ada names its partners in its docs, not a marketplace: contact-center handoffs (Zendesk, Salesforce, Genesys,
+  Twilio Flex, Gladly, NICE CXone), knowledge-base sync (Zendesk Guide, Salesforce Knowledge, ServiceNow, Dixa,
+  Helpjuice, Gladly) and social channels. No Zapier/Make/n8n app.'
+marketplace_apps: []
+edges:
+- partner_name: Zendesk
+  partner: zendesk
+  type: claimed
+  evidence: https://docs.ada.cx/docs/handoffs/zendesk.md
+  direction: provider-built
+  use_case: handoff + knowledge (Zendesk Guide) + Zendesk Social/SDK channels
+- partner_name: Salesforce
+  partner: salesforce
+  type: claimed
+  evidence: https://docs.ada.cx/docs/handoffs/salesforce.md
+  direction: provider-built
+  use_case: handoff (Chat, Messaging) + Salesforce Knowledge
+- partner_name: Genesys
+  partner: genesys
+  type: claimed
+  evidence: https://docs.ada.cx/docs/handoffs/genesys.md
+  direction: provider-built
+  use_case: handoff
+- partner_name: Twilio Flex
+  partner: twilio
+  type: claimed
+  evidence: https://docs.ada.cx/docs/handoffs/twilio-flex.md
+  direction: provider-built
+  use_case: handoff
+- partner_name: Gladly
+  partner: gladly
+  type: claimed
+  evidence: https://docs.ada.cx/docs/handoffs/gladly.md
+  direction: provider-built
+  use_case: handoff + knowledge integration
+- partner_name: NICE CXone
+  partner: null
+  type: claimed
+  evidence: https://docs.ada.cx/docs/handoffs/nice-c-xone.md
+  direction: provider-built
+  use_case: handoff
+- partner_name: ServiceNow
+  partner: servicenow
+  type: claimed
+  evidence: https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
+  direction: provider-built
+  use_case: knowledge integration
+- partner_name: Dixa
+  partner: dixa
+  type: claimed
+  evidence: https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
+  direction: provider-built
+  use_case: knowledge integration
+- partner_name: Helpjuice
+  partner: null
+  type: claimed
+  evidence: https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
+  direction: provider-built
+  use_case: knowledge integration
+- partner_name: Instagram
+  partner: instagram
+  type: claimed
+  evidence: https://docs.ada.cx/docs/channels/social/instagram-setup.md
+  direction: provider-built
+  use_case: social channel
+- partner_name: Sunshine Conversations (Zendesk)
+  partner: zendesk
+  type: claimed
+  evidence: https://docs.ada.cx/docs/channels/social/sunshine-conversations-setup.md
+  direction: provider-built
+  use_case: social / web messenger channel
+templates: []
+skips:
+- label: Salesforce
+  cause: partner-contract
+  why: salesforce-knowledge-api exposes only language settings, no article read; handoff runs through Salesforce
+    Chat/Messaging config, not a REST call.
+- label: Genesys
+  cause: catalog
+  why: Handoff is configured in Genesys Web Messaging/Architect; not authored this run.
+- label: Twilio Flex
+  cause: catalog
+  why: Handoff is a Flex plugin/Studio flow configuration; not authored this run.
+- label: ServiceNow
+  cause: partner-contract
+  why: No knowledge-article operation in the catalog spec; only generic table records.
+- label: Instagram
+  cause: provider-contract
+  why: Channel setup is dashboard configuration; Ada exposes no channel-connect operation.
+- label: Sunshine Conversations (Zendesk)
+  cause: provider-contract
+  why: Channel setup is dashboard configuration.

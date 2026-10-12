@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-knowledge-source-create-request-schema.json",
+  "title": "KnowledgeSourceCreateRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-knowledge-sources-api-openapi.yml#/components/schemas/KnowledgeSourceCreateRequest",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A unique identifier for the knowledge source"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the knowledge source"
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/KnowledgeSourceCreateRequestMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source."
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "$defs": {
+    "KnowledgeSourceCreateRequestMetadata": {
+      "type": "object",
+      "properties": {},
+      "description": "A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.",
+      "title": "KnowledgeSourceCreateRequestMetadata"
+    }
+  }
+}

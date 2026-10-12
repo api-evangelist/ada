@@ -1,0 +1,130 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 10
+  own: 3
+  other_domain: 3
+  platform: 4
+  roles:
+  - other
+  - portal
+  - source
+  - status
+  - website
+hosts:
+- host: ca.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: docs.ada.cx
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - Documentation
+  - DeveloperPortal
+  - APIReference
+  - GettingStarted
+  - Deprecation
+  - ReleaseNotes
+  - APICatalog
+  serves:
+  - docs
+  - hosting
+  vendor: vercel
+  registrable_domain: ada.cx
+  role: portal
+  relation: own
+- host: example.ada.support
+  found_by:
+  - apis[]
+  - vendor-detect
+  types: []
+  serves:
+  - api
+  - cdn
+  vendor: cloudfront
+  registrable_domain: ada.support
+  role: other
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: security.ada.cx
+  found_by:
+  - pointer
+  types:
+  - Compliance
+  serves: []
+  registrable_domain: ada.cx
+  role: other
+  relation: own
+- host: status.ada.support
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: ada.support
+  role: status
+  relation: other-domain
+- host: www.ada.cx
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Website
+  - Blog
+  - Pricing
+  - TermsOfService
+  - PrivacyPolicy
+  - Demo
+  - Login
+  - Security
+  serves:
+  - cdn
+  vendor: cloudflare
+  registrable_domain: ada.cx
+  role: website
+  relation: own
+- host: www.youtube.com
+  found_by:
+  - pointer
+  types:
+  - YouTube
+  serves: []
+  registrable_domain: youtube.com
+  role: other
+  relation: platform
+- host: x.com
+  found_by:
+  - pointer
+  types:
+  - X
+  serves: []
+  registrable_domain: x.com
+  role: other
+  relation: platform
+- host: '{handle}.ada.support'
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: ada.support
+  role: other
+  relation: other-domain

@@ -1,99 +1,102 @@
+name: Ada API Rate Limits
 spec: API Commons Rate Limits 0.1
 provider: Ada
 providerId: ada
-created: 2026-06-12
-modified: 2026-08-14
-generated: '2026-08-14'
+created: '2026-06-12'
+modified: '2026-10-12'
+generated: '2026-10-12'
 method: searched
 source: https://docs.ada.cx/reference/introduction/limits
 url: https://docs.ada.cx/reference/introduction/limits
-limit_count: 6
+limit_count: 12
 scope: per Ada instance
 headers:
-  published: false
-  request: []
-  response: []
-  retry_after: false
-  note: >-
-    Re-read 2026-08-14. Ada publishes the numbers but NOT the runtime signal: no RateLimit-*,
-    no X-RateLimit-*, no Retry-After, and no remaining/reset field in any response. Neither the
-    limits page nor any of the four OpenAPI documents declares a rate-limit response header. An
-    agent therefore cannot see itself approaching a limit — it only discovers it has crossed one
-    by receiving a 429, and must then guess the wait. Ada's own guidance is "implement retry
-    logic with exponential backoff and jitter", which is the workaround for exactly this gap.
+  published: true
+  response:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  retry_after: true
   exhaustion_status: 429
   oversize_status: 413
-notes: >
-  Ada enforces global rate limits across all REST API families to ensure high availability.
-  Individual API families may apply their own elevated or additional local limits.
-  Exceeding any limit returns HTTP 429 Too Many Requests. Ada recommends implementing
-  retry logic with exponential backoff and jitter. Rate limits were increased for the
-  End Users API and Conversations API in March 2026 (doubled from 30,000 to 60,000 per day).
+  note: 'Re-read 2026-10-12 (supersedes the 2026-08-14 finding of no headers): every
+    /v2/ endpoint and the MCP server return X-RateLimit-* on successful authenticated
+    responses, describing the longest window; a rate-limiter 429 carries Retry-After;
+    legacy /data_api/v1.x/ endpoints return no rate limit headers.'
+notes: 'Ada enforces global rate limits across all REST API families to ensure high
+  availability. Individual API families may apply their own elevated or additional
+  local limits. Exceeding any limit returns HTTP 429 Too Many Requests. Ada recommends
+  implementing retry logic with exponential backoff and jitter. Rate limits were increased
+  for the End Users API and Conversations API in March 2026 (doubled from 30,000 to
+  60,000 per day).
 
-global:
-  throttledStatus: 429
-  retryAfter: true
-  retryStrategy: exponential-backoff-with-jitter
-  limits:
-    - name: Requests Per Second (Global Default)
-      unit: requests/second
-      limit: 10
-      scope: global
-    - name: Requests Per Minute (Global Default)
-      unit: requests/minute
-      limit: 100
-      scope: global
-    - name: Requests Per Day (Global Default)
-      unit: requests/day
-      limit: 10000
-      scope: global
-    - name: Maximum Request Body Size
-      unit: MB
-      limit: 10
-      errorStatus: 413
-
-apis:
-  - name: End Users API
-    limits:
-      - name: Requests Per Second
-        unit: requests/second
-        limit: 30
-      - name: Requests Per Minute
-        unit: requests/minute
-        limit: 300
-      - name: Requests Per Day
-        unit: requests/day
-        limit: 60000
-        note: Doubled from 30,000 on 2026-03-03
-    endpoints:
-      - pattern: /v2/end-users/{end_user_id}
-        methods: [GET, PUT, PATCH, DELETE]
-
-  - name: Conversations API
-    limits:
-      - name: Requests Per Second
-        unit: requests/second
-        limit: 30
-      - name: Requests Per Minute
-        unit: requests/minute
-        limit: 300
-      - name: Requests Per Day
-        unit: requests/day
-        limit: 60000
-        note: Doubled from 30,000 on 2026-03-03
-    endpoints:
-      - pattern: /v2/conversations/
-        methods: [POST]
-      - pattern: /v2/conversations/{conversation_id}/
-        methods: [GET]
-      - pattern: /v2/conversations/{conversation_id}/end/
-        methods: [POST]
-
-  - name: Data Export API
-    limits:
-      - name: Requests Per Second Per Endpoint
-        unit: requests/second
-        limit: 10
-      - name: Requests Per Day
-        unit: requests/day
-        limit: 15000
+  '
+limits:
+- name: 'Default: requests per day'
+  limit_text: 'Requests per day: 10,000'
+  scope: per Ada instance
+  window: 1 day
+  max: 10000
+- name: 'Default: requests per minute'
+  limit_text: 'Requests per minute: 100'
+  scope: per Ada instance
+  window: 1 minute
+  max: 100
+- name: 'Default: requests per second'
+  limit_text: 'Requests per second: 10'
+  scope: per Ada instance
+  window: 1 second
+  max: 10
+- name: Data Export API (v2) per second
+  limit_text: 10 requests/second (per endpoint)
+  scope: per endpoint
+  window: 1 second
+  max: 10
+  endpoint: Data Export API (v2)
+- name: Data Export API (v2) per minute
+  limit_text: 100 requests/minute
+  scope: per Ada instance
+  window: 1 minute
+  max: 100
+  endpoint: Data Export API (v2)
+- name: Data Export API (v2) per day
+  limit_text: 15,000 requests/day
+  scope: per Ada instance
+  window: 1 day
+  max: 15000
+  endpoint: Data Export API (v2)
+- name: Data Export API (v1.4) per second
+  limit_text: 10 requests/second (per endpoint)
+  scope: per endpoint
+  window: 1 second
+  max: 10
+  endpoint: Data Export API (v1.4)
+- name: MCP server per second
+  limit_text: 50 requests/second
+  scope: per AI Agent; per user for OAuth sign-in
+  window: 1 second
+  max: 50
+  endpoint: MCP server
+- name: MCP server per minute
+  limit_text: 200 requests/minute
+  scope: per AI Agent; per user for OAuth sign-in
+  window: 1 minute
+  max: 200
+  endpoint: MCP server
+- name: MCP server per day
+  limit_text: 30,000 requests/day
+  scope: per AI Agent; per user for OAuth sign-in
+  window: 1 day
+  max: 30000
+  endpoint: MCP server
+- name: MCP server failed-request IP block
+  limit_text: after 300 requests from that address fail authentication or exceed the
+    budget
+  scope: per IP address
+  window: 1 minute
+  max: 300
+  endpoint: MCP server
+- name: Max request body size
+  limit_text: 'Max request body size: 10MB'
+  scope: per Ada instance
+  kind: data

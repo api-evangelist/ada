@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-variables-list-response-200-schema.json",
+  "title": "variables_list_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-variables-api-openapi.yml#/components/schemas/variables_list_Response_200",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/VariableSummary"
+      }
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "$defs": {
+    "VariableSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "A unique identifier for the Variable"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the Variable"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "description": "A Variable as returned by the list and get endpoints. Carries the\nVariable's id, used to reference it elsewhere, and its name.\n",
+      "title": "VariableSummary"
+    }
+  }
+}

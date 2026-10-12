@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-attachment-upload-response-schema.json",
+  "title": "AttachmentUploadResponse",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-conversations-api-openapi.yml#/components/schemas/AttachmentUploadResponse",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Presigned URL to access the uploaded file (valid for 7 days)"
+    },
+    "mime_type": {
+      "type": "string",
+      "description": "MIME type of the uploaded file"
+    },
+    "filename": {
+      "type": "string",
+      "description": "Name of the uploaded file"
+    }
+  },
+  "required": [
+    "url",
+    "mime_type",
+    "filename"
+  ]
+}

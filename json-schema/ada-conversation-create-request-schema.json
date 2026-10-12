@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-conversation-create-request-schema.json",
+  "title": "ConversationCreateRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-conversations-api-openapi.yml#/components/schemas/ConversationCreateRequest",
+  "type": "object",
+  "properties": {
+    "channel_id": {
+      "type": "string",
+      "format": "id",
+      "description": "The ID of the channel to create a conversation in"
+    },
+    "end_user_id": {
+      "type": "string",
+      "format": "id",
+      "description": "The ID of the end user participating in the conversation. If not provided, the system will create a new end user automatically."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ConversationCreateRequestMetadata"
+      },
+      "description": "A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada metavariables. To create or update metavariables, use the End Users API.\n - `metadata` keys may only be of type: `string`\n - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n"
+    }
+  },
+  "required": [
+    "channel_id"
+  ],
+  "$defs": {
+    "ConversationCreateRequestMetadata": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        }
+      ],
+      "title": "ConversationCreateRequestMetadata"
+    }
+  }
+}

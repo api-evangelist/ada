@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-conversation-3-schema.json",
+  "title": "Conversation",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-conversations-api-openapi.yml#/components/schemas/Conversation_3",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "id",
+      "description": "The ID of the conversation"
+    },
+    "channel_id": {
+      "type": "string",
+      "description": "The ID of the channel"
+    },
+    "end_user_id": {
+      "type": "string",
+      "format": "id",
+      "description": "The ID of the end user participating in the conversation"
+    },
+    "status": {
+      "$ref": "#/$defs/ConversationStatus",
+      "description": "The status of the conversation"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The date and time the conversation was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "The date and time the conversation was last updated"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ConversationMetadata"
+      },
+      "description": "A dictionary of key value pairs assigned to the conversation. Note: This metadata does not create or set Ada metavariables. To create or update metavariables, use the End Users API.\n - `metadata` keys may only be of type: `string`\n - `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n"
+    }
+  },
+  "$defs": {
+    "ConversationMetadata": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        }
+      ],
+      "title": "ConversationMetadata"
+    },
+    "ConversationStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "ended"
+      ],
+      "description": "The status of the conversation",
+      "title": "ConversationStatus"
+    }
+  }
+}

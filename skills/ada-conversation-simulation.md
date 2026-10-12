@@ -6,7 +6,12 @@ compatibility: Requires Ada MCP server with simulation beta access. Contact your
 metadata:
   author: ada
   version: "1.0"
-allowed-tools: simulate_conversation list_channels get_ada_configuration search_knowledge search_coaching
+allowed-tools:
+  - simulate_conversation
+  - list_channels
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
 ---
 
 # Testing Ada Agent Responses

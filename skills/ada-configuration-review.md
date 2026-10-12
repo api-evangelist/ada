@@ -6,7 +6,11 @@ compatibility: Requires Ada MCP server connected to Claude Desktop or compatible
 metadata:
   author: ada
   version: "1.0"
-allowed-tools: get_ada_configuration search_knowledge search_coaching list_channels
+allowed-tools:
+  - get_ada_configuration
+  - search_knowledge
+  - search_coaching
+  - list_channels
 ---
 
 # Reviewing Ada Configuration

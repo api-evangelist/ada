@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-webhook-management-list-webhooks-response-200-schema.json",
+  "title": "Webhook Management_listWebhooks_Response_200",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-webhook-management-api-openapi.yml#/components/schemas/Webhook_Management_listWebhooks_Response_200",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Webhook"
+      }
+    },
+    "meta": {
+      "$ref": "#/$defs/V2WebhooksGetResponsesContentApplicationJsonSchemaMeta"
+    }
+  },
+  "$defs": {
+    "V2WebhooksGetResponsesContentApplicationJsonSchemaMeta": {
+      "type": "object",
+      "properties": {
+        "next_page_url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "URL for the next page of results, or null if no pages remain"
+        }
+      },
+      "title": "V2WebhooksGetResponsesContentApplicationJsonSchemaMeta"
+    },
+    "Webhook": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The webhook ID"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL that will receive webhook events"
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the webhook"
+        },
+        "event_filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Event types this webhook is subscribed to. If empty, the webhook receives all events"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether the webhook is enabled"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the webhook was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the webhook was last updated"
+        }
+      },
+      "title": "Webhook"
+    }
+  }
+}

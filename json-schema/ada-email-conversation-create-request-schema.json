@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-email-conversation-create-request-schema.json",
+  "title": "EmailConversationCreateRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-conversations-api-openapi.yml#/components/schemas/EmailConversationCreateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The customer's full name"
+    },
+    "subject": {
+      "type": "string",
+      "description": "The subject of the customer's inquiry; used as the subject for the AI Agent's reply"
+    },
+    "reply_to": {
+      "type": "string",
+      "description": "The customer's email address"
+    },
+    "text": {
+      "type": "string",
+      "description": "The customer's inquiry, limited to 10 KB"
+    },
+    "reply_as": {
+      "type": "string",
+      "description": "The company email address you want to use to reply to the customer. Defaults to the Ada provided email address."
+    },
+    "cc": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The email addresses in the email's CC field"
+    },
+    "metadata": {
+      "$ref": "#/$defs/EmailConversationCreateRequestMetadata",
+      "description": "Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard."
+    }
+  },
+  "required": [
+    "name",
+    "subject",
+    "reply_to"
+  ],
+  "$defs": {
+    "EmailConversationCreateRequestMetadata": {
+      "type": "object",
+      "properties": {},
+      "description": "Any metadata associated with the conversation, up to 4 KB. All metadata passed through this field will appear as metavariables in your dashboard.",
+      "title": "EmailConversationCreateRequestMetadata"
+    }
+  }
+}

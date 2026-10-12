@@ -6,15 +6,9 @@ feeds:
   rss: https://docs.ada.cx/release-notes.rss
   llms: https://docs.ada.cx/release-notes/llms.txt
   mcp: https://docs.ada.cx/release-notes/_mcp/server
-  email: Weekly summary every Friday at 11 a.m. Eastern, when there was at least one release that week
-scheme:
-  type: dated-entries
-  cadence: continuous (multiple entries per week)
-  api_version_current: v2
-  filterable: Ada tags entries; filter by the "APIs" tag to see only API updates
-  note: >-
-    Entries are dated, not numbered. There is no semantic version for the platform; the only
-    version identifier that moves is the REST path version (v2) and the webhook payload prefix (v1).
+  email: Weekly summary every Friday at 11 a.m. Eastern, when there was at least one
+    release that week
+scheme: dated-entries
 window:
   from: '2026-06-08'
   to: '2026-08-13'
@@ -75,7 +69,8 @@ entries:
   area: api
   kind: addition
   url: https://docs.ada.cx/release-notes/2026/7/27
-  note: Added GET/POST/PATCH/DELETE /v2/custom-instructions/ to the Knowledge OpenAPI document.
+  note: Added GET/POST/PATCH/DELETE /v2/custom-instructions/ to the Knowledge OpenAPI
+    document.
 - date: '2026-07-23'
   title: 'Data Export API: last_agent fields now reflect the most recent handler'
   area: api
@@ -112,9 +107,11 @@ entries:
   area: api
   kind: addition
   url: https://docs.ada.cx/release-notes/2026/7/14
-  note: Added POST /v2/end-users/delete and GET /v2/jobs/{job_id}. Successor to the deprecated Data Compliance API.
+  note: Added POST /v2/end-users/delete and GET /v2/jobs/{job_id}. Successor to the
+    deprecated Data Compliance API.
 - date: '2026-07-14'
-  title: 'Data Export API: last_agent_id and last_agent_name on the Conversations endpoint'
+  title: 'Data Export API: last_agent_id and last_agent_name on the Conversations
+    endpoint'
   area: api
   kind: addition
   url: https://docs.ada.cx/2026-07-14-data-export-last-agent-fields
@@ -233,8 +230,16 @@ entries:
   kind: addition
   url: https://docs.ada.cx/2026-06-03-mcp-improvement-and-confirmation
 entry_count: 41
-observation: >-
-  Thirteen of the last ten weeks' entries are API additions that landed in the Knowledge OpenAPI
-  document (Custom Instructions, Persona, Variables, Audit Log, Bulk End-User Deletion, channel
-  PATCH) — the spec grew from 40 to 53 operations between the 2026-07-22 harvest and 2026-08-14.
-  MCP is the fastest-moving surface in the changelog by entry count.
+observation: Thirteen of the last ten weeks' entries are API additions that landed
+  in the Knowledge OpenAPI document (Custom Instructions, Persona, Variables, Audit
+  Log, Bulk End-User Deletion, channel PATCH) — the spec grew from 40 to 53 operations
+  between the 2026-07-22 harvest and 2026-08-14. MCP is the fastest-moving surface
+  in the changelog by entry count.
+scheme_detail:
+  type: dated-entries
+  cadence: continuous (multiple entries per week)
+  api_version_current: v2
+  filterable: Ada tags entries; filter by the "APIs" tag to see only API updates
+  note: Entries are dated, not numbered. There is no semantic version for the platform;
+    the only version identifier that moves is the REST path version (v2) and the webhook
+    payload prefix (v1).

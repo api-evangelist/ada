@@ -1,6 +1,9 @@
 aid: ada
+
 name: Ada
+
 type: Index
+
 deliveryModel:
   model: saas
   open_source: false
@@ -13,6 +16,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: enterprise
   onboarding: sales-led
@@ -27,25 +31,34 @@ accessModel:
   - https://www.ada.cx/
   generated: '2026-08-14'
   method: searched
-  note: 'Corrected 2026-08-14. Ada has no self-serve signup: the site offers /demo/ (book a demo) and /login/ (existing
-    customers) and no pricing page, API keys are issued from an existing instance dashboard, and the docs API Playground
-    requires your own key against your own instance. There is no anonymous way to obtain credentials.'
+  note: 'Corrected 2026-08-14. Ada has no self-serve signup: the site offers /demo/ (book a demo) and /login/ (existing customers) and no pricing
+    page, API keys are issued from an existing instance dashboard, and the docs API Playground requires your own key against your own instance.
+    There is no anonymous way to obtain credentials.'
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ada.png
+
 url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/apis.yml
-created: 2026-06-12
-modified: 2026-08-14
+
+created: '2026-06-12'
+
+modified: '2026-08-14'
+
 specificationVersion: '0.23'
-description: 'Ada is an AI-powered customer service automation platform that enables enterprises to deploy AI agents
-  capable of resolving customer inquiries across digital channels without human intervention. The platform exposes
-  a suite of REST APIs for managing knowledge bases, end-user profiles, conversation handling, data export, data
-  compliance, and external integrations. All APIs use rotatable API keys for authentication, return JSON, and support
-  cursor-based pagination. Ada serves global brands including Pinterest, Square, Ancestry, and Zendesk, and has
-  powered more than 6.4 billion customer interactions since its founding in 2016.
+
+description: 'Ada is an AI-powered customer service automation platform that enables enterprises to deploy AI agents capable of resolving customer
+  inquiries across digital channels without human intervention. The platform exposes a suite of REST APIs for managing knowledge bases, end-user
+  profiles, conversation handling, data export, data compliance, and external integrations. All APIs use rotatable API keys for authentication,
+  return JSON, and support cursor-based pagination. Ada serves global brands including Pinterest, Square, Ancestry, and Zendesk, and has powered
+  more than 6.4 billion customer interactions since its founding in 2016.
 
   '
+
 x-docs-platform: fern
+
 x-docs-platform-confidence: medium
+
 x-docs-platform-checked: 2026-09-17
+
 tags:
 - Artificial Intelligence
 - Customer Service
@@ -58,6 +71,7 @@ tags:
 - Knowledge Management
 - Data Export
 - Canada
+
 tags_raw:
 - ai
 - customer-service
@@ -71,404 +85,26 @@ tags_raw:
 - data-export
 - Knowledge-Management
 - Canada
-apis:
-- aid: ada:ada-mcp-server
-  name: Ada MCP Server
-  description: >-
-    Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation
-    transcripts, knowledge and coaching search, entity discovery, test cases and runs, change sets, and
-    staged writes to Agent behaviour. Served from the customer's own Ada instance host over JSON-RPC 2.0
-    (SSE is not supported), authenticated by OAuth with dashboard role-based access control, or by API
-    key. Eighteen documented tools plus a nine-prompt library.
-  humanURL: https://docs.ada.cx/mcp/introduction/overview
-  baseURL: https://example.ada.support/api/mcp
-  tags:
-  - MCP
-  - Agents
-  - Analytics
-  - Testing
-  tags_raw:
-  - mcp
-  - agents
-  - analytics
-  - testing
-  properties:
-  - type: MCPServer
-    url: mcp/ada-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/ada-tool-crosswalk.yml
-  - type: AgentSkill
-    url: skills/_index.yml
-  - type: Documentation
-    url: https://docs.ada.cx/mcp/introduction/overview
-  - type: Authentication
-    url: https://docs.ada.cx/mcp/introduction/authentication
-- aid: ada:ada-channels-api
-  name: Ada Channels API
-  description: The channels API from Ada — 2 operation(s) for channels.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Channels
-  tags_raw:
-  - channels
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-channels-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-conversations-api
-  name: Ada Conversations API
-  description: Read and manage conversations handled by the Ada AI Agent across all supported channels.
-  humanURL: https://docs.ada.cx/reference/conversations/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Conversations
-  - Messaging
-  tags_raw:
-  - conversations
-  - Messaging
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-conversations-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/conversations/overview
-- aid: ada:ada-custominstructions-api
-  name: Ada Custom Instructions API
-  description: The customInstructions API from Ada — 2 operation(s) for custominstructions.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Custom Instructions
-  tags_raw:
-  - customInstructions
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-custominstructions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-deletechatterdata-api
-  name: Ada Delete Chatter Data API
-  description: The deleteChatterData API from Ada — 1 operation(s) for deletechatterdata.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - deleteChatterData
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-deletechatterdata-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-getdeletionjob-api
-  name: Ada Get Deletion Job API
-  description: The getDeletionJob API from Ada — 1 operation(s) for getdeletionjob.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - getDeletionJob
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-getdeletionjob-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-knowledge-api
-  name: Ada Knowledge API
-  description: >-
-    Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer
-    questions.
-  humanURL: https://docs.ada.cx/reference/knowledge/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Knowledge
-  - Articles
-  - Sources
-  - Tags
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-knowledge-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/knowledge/overview
-- aid: ada:ada-knowledge-articles-api
-  name: Ada knowledge > articles API
-  description: The knowledge > articles API from Ada — 3 operation(s) for knowledge > articles.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Knowledge Articles
-  tags_raw:
-  - knowledge > articles
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-knowledge-articles-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-knowledge-sources-api
-  name: Ada knowledge > sources API
-  description: The knowledge > sources API from Ada — 2 operation(s) for knowledge > sources.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - knowledge > sources
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-knowledge-sources-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-knowledge-tags-api
-  name: Ada knowledge > tags API
-  description: The knowledge > tags API from Ada — 3 operation(s) for knowledge > tags.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - knowledge > tags
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-knowledge-tags-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-messages-api
-  name: Ada Messages API
-  description: The messages API from Ada — 2 operation(s) for messages.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Message
-  tags_raw:
-  - messages
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-messages-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-persona-api
-  name: Ada Persona API
-  description: The persona API from Ada — 1 operation(s) for persona.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Personas
-  tags_raw:
-  - persona
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-persona-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-platformintegrations-api
-  name: Ada Platform Integrations API
-  description: The platformIntegrations API from Ada — 4 operation(s) for platformintegrations.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - platformIntegrations
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-platformintegrations-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-submitdeletionrequest-api
-  name: Ada Submit Deletion Request API
-  description: The submitDeletionRequest API from Ada — 1 operation(s) for submitdeletionrequest.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags: []
-  tags_raw:
-  - submitDeletionRequest
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-submitdeletionrequest-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-variables-api
-  name: Ada Variables API
-  description: The Variables API from Ada — 2 operation(s) for variables.
-  humanURL: https://docs.ada.cx/reference/introduction/overview
-  baseURL: https://example.ada.support
-  tags:
-  - Variables
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-variables-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-integrations-api
-  name: Ada Integrations (Actions) API
-  description: >-
-    Configure and invoke Actions, the integration layer that lets the Ada AI Agent call external systems
-    and APIs during a conversation.
-  humanURL: https://docs.ada.cx/reference/integrations/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Actions
-  - Integration
-  - Tools
-  tags_raw:
-  - Actions
-  - Integrations
-  - Tools
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/integrations/overview
-- aid: ada:ada-data-export-api
-  name: Ada Data Export API
-  description: >-
-    Export conversation, message, and analytics data from Ada to data warehouses and BI tooling.
-  humanURL: https://docs.ada.cx/reference/data-export/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Analytics
-  - Data Export
-  - Reporting
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-- aid: ada:ada-data-compliance-api
-  name: Ada Data Compliance API
-  description: >-
-    Run data subject access requests, data deletion, and other compliance operations across the Ada platform.
-  humanURL: https://docs.ada.cx/reference/data-compliance/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Compliance
-  - GDPR
-  - Privacy
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-compliance/overview
-- aid: ada:ada-webhooks-api
-  name: Ada Webhooks API
-  description: >-
-    Configure and consume webhooks that notify external systems of conversation lifecycle events and other
-    platform activity.
-  humanURL: https://docs.ada.cx/reference/webhooks/overview
-  baseURL: https://{handle}.ada.support/api/v2
-  tags:
-  - Event
-  - Webhook
-  tags_raw:
-  - Events
-  - Webhooks
-  properties:
-  - type: Documentation
-    url: https://docs.ada.cx/reference/webhooks/overview
-- aid: ada:ada-audit-log-api
-  name: Ada Audit Log API
-  description: The Audit Log API from Ada — 1 operation(s) for audit log.
-  humanURL: https://docs.ada.cx/mcp/introduction/overview
-  baseURL: https://example.ada.support/api/mcp
-  tags:
-  - Audit Log
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-audit-log-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/end-users/overview
-- aid: ada:ada-end-users-api
-  name: Ada End Users API
-  description: The End Users API from Ada — 2 operation(s) for end users.
-  humanURL: https://docs.ada.cx/mcp/introduction/overview
-  baseURL: https://example.ada.support/api/mcp
-  tags:
-  - End Users
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-end-users-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/end-users/overview
-- aid: ada:ada-webhook-management-api
-  name: Ada Webhook Management API
-  description: The Webhook Management API from Ada — 5 operation(s) for webhook management.
-  humanURL: https://docs.ada.cx/mcp/introduction/overview
-  baseURL: https://example.ada.support/api/mcp
-  tags:
-  - Webhook Management
-  properties:
-  - type: OpenAPI
-    url: openapi/ada-webhook-management-api-openapi.yml
-  - type: Documentation
-    url: https://docs.ada.cx/reference/introduction/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/data-export/overview
-  - type: Documentation
-    url: https://developers.ada.cx/reference/data-compliance/overview
-  - type: Documentation
-    url: https://docs.ada.cx/reference/end-users/overview
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
+- type: Spectral
+  url: rules/ada-rules.yml
+- type: Spectral
+  url: rules/ada-jsonschema-spectral-rules.yml
+- type: JSONLD
+  url: json-ld/ada-context.jsonld
+- type: LLMsTxt
+  url: llms/ada-generative-llms.txt
+- type: Hosts
+  url: hosts/ada-hosts.yml
+- type: IntegrationEdges
+  url: integrations/ada-integration-edges.yml
+- type: Vendors
+  url: vendors/ada-vendors.yml
 - type: CapabilityMap
   url: capabilities/ada-capability-edges.yml
   name: Ada Business Capability Map
@@ -594,11 +230,510 @@ common:
   url: asyncapi/ada-webhooks.yml
 - type: Overlay
   url: overlays/ada-subpackage-knowledge-subpackage-knowledge-articles-overlay.yaml
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
+apis:
+- aid: ada:ada-mcp-server
+  name: Ada MCP Server
+  description: Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation transcripts, knowledge
+    and coaching search, entity discovery, test cases and runs, change sets, and staged writes to Agent behaviour. Served from the customer's
+    own Ada instance host over JSON-RPC 2.0 (SSE is not supported), authenticated by OAuth with dashboard role-based access control, or by API
+    key. Eighteen documented tools plus a nine-prompt library.
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
+  tags:
+  - MCP
+  - Agents
+  - Analytics
+  - Testing
+  tags_raw:
+  - mcp
+  - agents
+  - analytics
+  - testing
+  properties:
+  - type: MCPServer
+    url: mcp/ada-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/ada-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Documentation
+    url: https://docs.ada.cx/mcp/introduction/overview
+  - type: Authentication
+    url: https://docs.ada.cx/mcp/introduction/authentication
+- aid: ada:ada-channels-api
+  name: Ada Channels API
+  description: The channels API from Ada — 2 operation(s) for channels.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Channels
+  tags_raw:
+  - channels
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-channels-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-custom-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-update-channel-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-channels-get-channels-response-200-schema.json
+- aid: ada:ada-conversations-api
+  name: Ada Conversations API
+  description: Read and manage conversations handled by the Ada AI Agent across all supported channels.
+  humanURL: https://docs.ada.cx/reference/conversations/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Conversations
+  - Messaging
+  tags_raw:
+  - conversations
+  - Messaging
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-conversations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/conversations/overview
+  - type: JSONSchema
+    url: json-schema/ada-conversation-3-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-email-conversation-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-conversation-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-message-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-conversation-patch-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-attachment-upload-response-schema.json
+- aid: ada:ada-custominstructions-api
+  name: Ada Custom Instructions API
+  description: The customInstructions API from Ada — 2 operation(s) for custominstructions.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Custom Instructions
+  tags_raw:
+  - customInstructions
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-custominstructions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-custom-instruction-update-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-custom-instruction-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-custom-instruction-create-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-custom-instruction-list-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-custom-instructions-delete-custom-instruction-response-204-schema.json
+- aid: ada:ada-deletechatterdata-api
+  name: Ada Delete Chatter Data API
+  description: The deleteChatterData API from Ada — 1 operation(s) for deletechatterdata.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags: []
+  tags_raw:
+  - deleteChatterData
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-deletechatterdata-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-delete-subject-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-delete-subject-response-schema.json
+- aid: ada:ada-getdeletionjob-api
+  name: Ada Get Deletion Job API
+  description: The getDeletionJob API from Ada — 1 operation(s) for getdeletionjob.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags: []
+  tags_raw:
+  - getDeletionJob
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-getdeletionjob-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-deletion-job-schema.json
+- aid: ada:ada-knowledge-api
+  name: Ada Knowledge API
+  description: Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer questions.
+  humanURL: https://docs.ada.cx/reference/knowledge/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Knowledge
+  - Articles
+  - Sources
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/knowledge/overview
+- aid: ada:ada-knowledge-articles-api
+  name: Ada knowledge > articles API
+  description: The knowledge > articles API from Ada — 3 operation(s) for knowledge > articles.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Knowledge Articles
+  tags_raw:
+  - knowledge > articles
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-articles-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-article-upsert-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-article-response-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-article-upsert-response-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-articles-list-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-articles-delete-by-id-response-204-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-articles-delete-response-204-schema.json
+- aid: ada:ada-knowledge-sources-api
+  name: Ada knowledge > sources API
+  description: The knowledge > sources API from Ada — 2 operation(s) for knowledge > sources.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - knowledge > sources
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-source-response-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-source-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-source-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-sources-list-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-sources-delete-response-204-schema.json
+- aid: ada:ada-knowledge-tags-api
+  name: Ada knowledge > tags API
+  description: The knowledge > tags API from Ada — 3 operation(s) for knowledge > tags.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - knowledge > tags
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-knowledge-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-article-tag-upsert-response-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-article-tag-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-tags-list-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-knowledge-tags-delete-response-204-schema.json
+- aid: ada:ada-messages-api
+  name: Ada Messages API
+  description: The messages API from Ada — 2 operation(s) for messages.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Message
+  tags_raw:
+  - messages
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-messages-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-messages-response-2-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-messages-response-schema.json
+- aid: ada:ada-persona-api
+  name: Ada Persona API
+  description: The persona API from Ada — 1 operation(s) for persona.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Personas
+  tags_raw:
+  - persona
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-persona-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-persona-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-persona-update-schema.json
+- aid: ada:ada-platformintegrations-api
+  name: Ada Platform Integrations API
+  description: The platformIntegrations API from Ada — 4 operation(s) for platformintegrations.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags: []
+  tags_raw:
+  - platformIntegrations
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-platformintegrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-platform-integrations-create-platform-integration-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-platform-integration-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-platform-integration-create-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-platform-integration-update-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-platform-integration-installation-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-platform-integrations-get-platform-integrations-response-200-schema.json
+- aid: ada:ada-submitdeletionrequest-api
+  name: Ada Submit Deletion Request API
+  description: The submitDeletionRequest API from Ada — 1 operation(s) for submitdeletionrequest.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags: []
+  tags_raw:
+  - submitDeletionRequest
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-submitdeletionrequest-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-deletion-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-deletion-request-accepted-schema.json
+- aid: ada:ada-variables-api
+  name: Ada Variables API
+  description: The Variables API from Ada — 2 operation(s) for variables.
+  humanURL: https://docs.ada.cx/reference/introduction/overview
+  baseURL: https://example.ada.support
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-variables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: JSONSchema
+    url: json-schema/ada-variable-summary-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-variables-list-response-200-schema.json
+- aid: ada:ada-integrations-api
+  name: Ada Integrations (Actions) API
+  description: Configure and invoke Actions, the integration layer that lets the Ada AI Agent call external systems and APIs during a conversation.
+  humanURL: https://docs.ada.cx/reference/integrations/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Actions
+  - Integration
+  - Tools
+  tags_raw:
+  - Actions
+  - Integrations
+  - Tools
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/integrations/overview
+- aid: ada:ada-data-export-api
+  name: Ada Data Export API
+  description: Export conversation, message, and analytics data from Ada to data warehouses and BI tooling.
+  humanURL: https://docs.ada.cx/reference/data-export/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Analytics
+  - Data Export
+  - Reporting
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+- aid: ada:ada-data-compliance-api
+  name: Ada Data Compliance API
+  description: Run data subject access requests, data deletion, and other compliance operations across the Ada platform.
+  humanURL: https://docs.ada.cx/reference/data-compliance/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Compliance
+  - GDPR
+  - Privacy
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-compliance/overview
+- aid: ada:ada-webhooks-api
+  name: Ada Webhooks API
+  description: Configure and consume webhooks that notify external systems of conversation lifecycle events and other platform activity.
+  humanURL: https://docs.ada.cx/reference/webhooks/overview
+  baseURL: https://{handle}.ada.support/api/v2
+  tags:
+  - Event
+  - Webhook
+  tags_raw:
+  - Events
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://docs.ada.cx/reference/webhooks/overview
+- aid: ada:ada-audit-log-api
+  name: Ada Audit Log API
+  description: The Audit Log API from Ada — 1 operation(s) for audit log.
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
+  tags:
+  - Audit Log
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-audit-log-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
+  - type: JSONSchema
+    url: json-schema/ada-audit-log-event-list-schema.json
+- aid: ada:ada-end-users-api
+  name: Ada End Users API
+  description: The End Users API from Ada — 2 operation(s) for end users.
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
+  tags:
+  - End Users
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-end-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
+  - type: JSONSchema
+    url: json-schema/ada-end-user-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-create-end-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-users-get-end-users-response-200-schema.json
+- aid: ada:ada-webhook-management-api
+  name: Ada Webhook Management API
+  description: The Webhook Management API from Ada — 5 operation(s) for webhook management.
+  humanURL: https://docs.ada.cx/mcp/introduction/overview
+  baseURL: https://example.ada.support/api/mcp
+  tags:
+  - Webhook Management
+  properties:
+  - type: OpenAPI
+    url: openapi/ada-webhook-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.ada.cx/reference/introduction/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/data-export/overview
+  - type: Documentation
+    url: https://developers.ada.cx/reference/data-compliance/overview
+  - type: Documentation
+    url: https://docs.ada.cx/reference/end-users/overview
+  - type: JSONSchema
+    url: json-schema/ada-webhook-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-list-webhooks-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-list-webhook-event-types-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-get-webhook-secret-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-delete-webhook-response-204-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-rotate-webhook-secret-response-200-schema.json
 x-enrichment:
-  date: '2026-08-14'
+  date: '2026-10-12'
   status: enriched
-  artifacts_added: 36
-  pass: local-v1
+  artifacts_added: 5
+  pass: local-v5

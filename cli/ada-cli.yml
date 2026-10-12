@@ -1,21 +1,21 @@
 generated: '2026-08-14'
 method: searched
-source: >-
-  https://github.com/AdaSupport/homebrew-tap,
-  https://github.com/AdaSupport/homebrew-tap/blob/main/Formula/adacli.rb,
-  https://github.com/AdaSupport/homebrew-tap/blob/main/bucket/adacli.json,
-  `adacli --help` and `adacli agent-context` from the official adacli-v0.4.0 darwin-arm64 release tarball
+source: https://github.com/AdaSupport/homebrew-tap, https://github.com/AdaSupport/homebrew-tap/blob/main/Formula/adacli.rb,
+  https://github.com/AdaSupport/homebrew-tap/blob/main/bucket/adacli.json, `adacli
+  --help` and `adacli agent-context` from the official adacli-v0.4.0 darwin-arm64
+  release tarball
 name: adacli
 tagline: Agent-native CLI for managing and improving Ada AI Agents
-description: >-
-  A standalone binary (no Node runtime required) that drives Ada's management dashboard API — the
-  same private surface the MCP server sits on, and a much larger surface than the four public
-  REST APIs. 213 commands across 36 groups. Notably it is designed to be driven BY an agent:
-  `adacli agent-context` emits a 93 KB machine-readable JSON description of the entire command
-  tree, global flags, typed exit codes and the error envelope.
+description: 'A standalone binary (no Node runtime required) that drives Ada''s management
+  dashboard API — the same private surface the MCP server sits on, and a much larger
+  surface than the four public REST APIs. 213 commands across 36 groups. Notably it
+  is designed to be driven BY an agent: `adacli agent-context` emits a 93 KB machine-readable
+  JSON description of the entire command tree, global flags, typed exit codes and
+  the error envelope.'
 version: 0.4.0
 released: '2026-07-03'
-license: Proprietary — "AdaCLI License Notice (© Ada Support Inc.)", not an SPDX/open-source licence
+license: Proprietary — "AdaCLI License Notice (© Ada Support Inc.)", not an SPDX/open-source
+  licence
 repository: https://github.com/AdaSupport/homebrew-tap
 docs_in_binary: adacli docs guide | adacli docs claude-code
 install:
@@ -30,19 +30,19 @@ install:
 - method: scoop
   platforms:
   - Windows x64
-  command: scoop bucket add adasupport https://github.com/AdaSupport/homebrew-tap.git && scoop install adacli
+  command: scoop bucket add adasupport https://github.com/AdaSupport/homebrew-tap.git
+    && scoop install adacli
   upgrade: scoop update adacli
 - method: release-tarball
   url: https://github.com/AdaSupport/homebrew-tap/releases
-  note: >-
-    Per-arch tarballs attached to tag adacli-v<version>, SHA-256 verified by the formula. macOS
-    binaries are ad-hoc signed but not notarized.
+  note: Per-arch tarballs attached to tag adacli-v<version>, SHA-256 verified by the
+    formula. macOS binaries are ad-hoc signed but not notarized.
 usage: adacli <instance> <command> [subcommand] [options]
 instance_argument:
   required: true
-  description: >-
-    Nearly every command takes the Ada instance handle as its first positional argument
-    (e.g. `adacli gennie knowledge list`), matching the per-tenant <handle>.ada.support host model.
+  description: Nearly every command takes the Ada instance handle as its first positional
+    argument (e.g. `adacli gennie knowledge list`), matching the per-tenant <handle>.ada.support
+    host model.
 global_flags:
 - flag: --json
   description: JSON output on stdout (auto-on when piped)
@@ -76,9 +76,8 @@ exit_codes:
   '7': READ_ONLY
   '8': NETWORK
 error_contract:
-  description: >-
-    On failure in --json mode a JSON envelope is written to stderr and the process exits with the
-    typed code above.
+  description: On failure in --json mode a JSON envelope is written to stderr and
+    the process exits with the typed code above.
   category_to_exit_code:
     usage: 2
     auth: 3
@@ -89,17 +88,10 @@ error_contract:
     network: 8
     api: 1
     internal: 1
-  example: |
-    {
-      "error": {
-        "code": "SESSION_EXPIRED",
-        "category": "auth",
-        "message": "Session expired. Please log in again.",
-        "exitCode": 3,
-        "hint": "Run: adacli <instance> login"
-      }
-    }
-command_groups:
+  example: "{\n  \"error\": {\n    \"code\": \"SESSION_EXPIRED\",\n    \"category\"\
+    : \"auth\",\n    \"message\": \"Session expired. Please log in again.\",\n   \
+    \ \"exitCode\": 3,\n    \"hint\": \"Run: adacli <instance> login\"\n  }\n}\n"
+command_groups: &id001
 - group: Auth
   commands:
   - name: login
@@ -251,7 +243,8 @@ command_groups:
     description: Export, import, or diff instance configuration snapshots
     subcommands: 3
   - name: optimize
-    description: Track and visualize an agent-optimization hill-climb (example → improved performance)
+    description: Track and visualize an agent-optimization hill-climb (example → improved
+      performance)
     subcommands: 5
   - name: chat
     description: Interactive chat with the AI agent (browserless HTTP+Pusher transport)
@@ -283,9 +276,9 @@ key_flows:
   steps:
   - adacli agent-context | jq '.commands | length'
 command_count: 213
-surface_note: >-
-  This CLI reaches roughly four times as many resources as Ada's four public OpenAPI documents —
-  glossary, coaching, topics, scorecards, custom metrics, playbooks, proactives, actions, test
-  cases/runs, redactions, team, snapshots and analytics all exist here with no published REST
-  contract. See mcp/ada-tool-crosswalk.yml.
+surface_note: This CLI reaches roughly four times as many resources as Ada's four
+  public OpenAPI documents — glossary, coaching, topics, scorecards, custom metrics,
+  playbooks, proactives, actions, test cases/runs, redactions, team, snapshots and
+  analytics all exist here with no published REST contract. See mcp/ada-tool-crosswalk.yml.
 packaged_in: packages/ada-packages.yml
+commands: *id001

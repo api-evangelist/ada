@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-conversation-patch-request-schema.json",
+  "title": "ConversationPatchRequest",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-conversations-api-openapi.yml#/components/schemas/ConversationPatchRequest",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ConversationPatchRequestMetadata"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "description": "A dictionary of key, value pairs to add to the conversation metadata additively\n- `metadata` keys may only be of type: `string`\n- `metadata` values may only be one of type: `string`, `boolean`, `integer`, or `number` (float)\n- `metadata` keys with a `null` value will be removed from the conversation metadata\n"
+    }
+  },
+  "required": [
+    "metadata"
+  ],
+  "$defs": {
+    "ConversationPatchRequestMetadata": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        }
+      ],
+      "title": "ConversationPatchRequestMetadata"
+    }
+  }
+}

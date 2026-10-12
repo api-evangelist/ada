@@ -1,0 +1,73 @@
+arazzo: 1.0.1
+info:
+  title: Ada Dixa Article Sync
+  summary: Copy a Dixa knowledge article into Ada.
+  description: Reads one Dixa knowledge article in a language and upserts it as an
+    Ada knowledge article, the knowledge integration Ada documents for Dixa.
+  version: 1.0.0
+sourceDescriptions:
+- name: dixaKnowledge
+  url: https://raw.githubusercontent.com/api-evangelist/dixa/refs/heads/main/openapi/dixa-knowledge-api-openapi.yml
+  type: openapi
+- name: adaKnowledgeArticles
+  url: https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/openapi/ada-knowledge-articles-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: sync-dixa-article
+  summary: Dixa article to Ada article
+  inputs:
+    type: object
+    properties:
+      articleId:
+        type: string
+      language:
+        type: string
+      externalId:
+        type: string
+      knowledgeSourceId:
+        type: string
+  steps:
+  - stepId: get-article
+    description: Fetch the Dixa article.
+    operationId: $sourceDescriptions.dixaKnowledge.getKnowledgeArticlesArticleid
+    parameters:
+    - name: articleId
+      in: path
+      value: $inputs.articleId
+    - name: language
+      in: query
+      value: $inputs.language
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      title: $response.body#/data/translation/published/title
+      content: $response.body#/data/translation/published/contents
+  - stepId: upsert-into-ada
+    description: Bulk upsert the article into an Ada knowledge source.
+    operationId: $sourceDescriptions.adaKnowledgeArticles.bulk-upsert
+    requestBody:
+      contentType: application/json
+      payload:
+      - id: $inputs.externalId
+        name: $steps.get-article.outputs.title
+        content: $steps.get-article.outputs.content
+        knowledge_source_id: $inputs.knowledgeSourceId
+        language: $inputs.language
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      result: $response.body#/0/success
+  outputs:
+    success: $steps.upsert-into-ada.outputs.result
+x-integration:
+  partner: dixa
+  edge_evidence: https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
+  edge_type: claimed
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-opus-5-5 enrichment local-v5
+  guessed_steps:
+  - step: get-article
+    cause: partner-contract
+    why: Dixa ArticleTranslation.contents format (HTML vs markdown) is unstated; Ada
+      expects markdown.

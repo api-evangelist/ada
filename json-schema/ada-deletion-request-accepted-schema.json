@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ada/main/json-schema/ada-deletion-request-accepted-schema.json",
+  "title": "DeletionRequestAccepted",
+  "description": "Acknowledgment returned when a deletion request is accepted for processing.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/ada-submitdeletionrequest-api-openapi.yml#/components/schemas/DeletionRequestAccepted",
+  "type": "object",
+  "properties": {
+    "job_id": {
+      "type": "string",
+      "description": "Identifier of the created deletion job. Use it to poll job status."
+    },
+    "status": {
+      "$ref": "#/$defs/DeletionJobStatus"
+    },
+    "submitted_count": {
+      "type": "integer",
+      "description": "Number of identifiers received in the request."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time the job was created, in ISO 8601 format."
+    }
+  },
+  "$defs": {
+    "DeletionJobStatus": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "in_progress",
+        "completed",
+        "partial",
+        "failed"
+      ],
+      "description": "Lifecycle state of a deletion job. `queued` and `in_progress` are non-terminal; `completed`, `partial`, and `failed` are terminal.",
+      "title": "DeletionJobStatus"
+    }
+  }
+}
