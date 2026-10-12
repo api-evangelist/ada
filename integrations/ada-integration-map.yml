@@ -1,0 +1,133 @@
+# DERIVED by derive-integration-map.py (roadmap#949): each integration workflow, step by step,
+# resolved to spec file -> tag -> business capability (Turbo EA, CC BY 4.0) and the operation's
+# phrasing intent. Read from our own files; an unmapped link says why.
+slug: ada
+workflows:
+- file: ada-dixa-article-to-ada-knowledge.yml
+  title: Ada Dixa Article Sync
+  partner: dixa
+  template: null
+  repos:
+  - dixa
+  - ada
+  steps:
+  - step: get-article
+    repo: dixa
+    spec_file: dixa-knowledge-api-openapi.yml
+    operationId: getKnowledgeArticlesArticleid
+    tag: Knowledge
+    capability_id: BC-430.40
+    capability: Self-Service Management
+    capability_l1: BC-430
+    intent: null
+    effect: null
+    unmapped: null
+  - step: upsert-into-ada
+    repo: ada
+    spec_file: ada-knowledge-articles-api-openapi.yml
+    operationId: bulk-upsert
+    tag: knowledge > articles
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: Create or update knowledge articles in bulk
+    effect: write
+    unmapped: no capability edge for this spec file
+  connects:
+    dixa:
+      capabilities:
+      - BC-430.40
+      tags:
+      - Knowledge
+    ada:
+      capabilities: []
+      tags:
+      - knowledge > articles
+  intents:
+  - Create or update knowledge articles in bulk
+- file: ada-gladly-answer-to-ada-knowledge.yml
+  title: Ada Gladly Answer Sync
+  partner: gladly
+  template: null
+  repos:
+  - gladly
+  - ada
+  steps:
+  - step: get-answer
+    repo: gladly
+    spec_file: gladly-answer-management-api-openapi.yml
+    operationId: getAnswerContentByLanguageAndType
+    tag: Answer Management
+    capability_id: BC-430.40
+    capability: Self-Service Management
+    capability_l1: BC-430
+    intent: null
+    effect: null
+    unmapped: null
+  - step: upsert-into-ada
+    repo: ada
+    spec_file: ada-knowledge-articles-api-openapi.yml
+    operationId: bulk-upsert
+    tag: knowledge > articles
+    capability_id: null
+    capability: null
+    capability_l1: null
+    intent: Create or update knowledge articles in bulk
+    effect: write
+    unmapped: no capability edge for this spec file
+  connects:
+    gladly:
+      capabilities:
+      - BC-430.40
+      tags:
+      - Answer Management
+    ada:
+      capabilities: []
+      tags:
+      - knowledge > articles
+  intents:
+  - Create or update knowledge articles in bulk
+- file: ada-zendesk-handoff-ticket.yml
+  title: Ada Zendesk Handoff Ticket
+  partner: zendesk
+  template: null
+  repos:
+  - ada
+  - zendesk
+  steps:
+  - step: get-messages
+    repo: ada
+    spec_file: ada-conversations-api-openapi.yml
+    operationId: fetch-conversation-messages-by-id
+    tag: Conversations
+    capability_id: BC-430.10
+    capability: Customer Inquiry Management
+    capability_l1: BC-430
+    intent: Read the messages in one conversation
+    effect: read
+    unmapped: null
+  - step: create-ticket
+    repo: zendesk
+    spec_file: zendesk-tickets-api-openapi.yml
+    operationId: CreateTicket
+    tag: Tickets
+    capability_id: BC-430.10
+    capability: Customer Inquiry Management
+    capability_l1: BC-430
+    intent: Create a ticket via the v2 endpoint
+    effect: write
+    unmapped: null
+  connects:
+    ada:
+      capabilities:
+      - BC-430.10
+      tags:
+      - Conversations
+    zendesk:
+      capabilities:
+      - BC-430.10
+      tags:
+      - Tickets
+  intents:
+  - Read the messages in one conversation
+  - Create a ticket via the v2 endpoint
