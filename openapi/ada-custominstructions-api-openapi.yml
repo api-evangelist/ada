@@ -293,32 +293,11 @@ paths:
               $ref: '#/components/schemas/CustomInstructionUpdate'
 components:
   schemas:
-    CustomInstructionListMeta:
-      type: object
-      properties:
-        next_page_url:
-          type:
-          - string
-          - 'null'
-          description: URL for the next page of results, or null on the last/empty page. Replay it unchanged to fetch the next page.
-      description: Pagination metadata
-      title: CustomInstructionListMeta
     Custom_Instructions_deleteCustomInstruction_Response_204:
       type: object
       properties: {}
       description: Empty response body
       title: Custom Instructions_deleteCustomInstruction_Response_204
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
     CustomInstructionList:
       type: object
       properties:
@@ -334,54 +313,16 @@ components:
       - data
       - meta
       title: CustomInstructionList
-    CustomInstructionCreate:
+    CustomInstructionListMeta:
       type: object
       properties:
-        title:
-          type: string
-          description: Display name for the custom instruction (unique per Agent)
-        text:
-          type: string
-          description: The instruction content — the rule the Agent should follow
-        enabled:
-          type: boolean
-          default: false
-          description: Whether the instruction is enabled. False means inactive.
-        notes:
-          type: string
-          description: Internal notes about this instruction (not shown to the Agent)
-        availability_rules:
+        next_page_url:
           type:
           - string
           - 'null'
-          description: Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Omit or send `null` for no rule. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
-      required:
-      - title
-      - text
-      description: Fields for creating a custom instruction
-      title: CustomInstructionCreate
-    CustomInstructionUpdate:
-      type: object
-      properties:
-        title:
-          type: string
-          description: Display name for the custom instruction (unique per Agent)
-        text:
-          type: string
-          description: The instruction content — the rule the Agent should follow
-        enabled:
-          type: boolean
-          description: Whether the instruction is enabled. False means inactive.
-        notes:
-          type: string
-          description: Internal notes about this instruction (not shown to the Agent). Send an empty string to blank it; omit it to leave the existing notes unchanged.
-        availability_rules:
-          type:
-          - string
-          - 'null'
-          description: Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Send a non-empty string to set or replace it, `null` to clear it, or omit to leave it unchanged. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
-      description: Fields for updating a custom instruction. Only the fields provided are changed; omitted fields are left as they are.
-      title: CustomInstructionUpdate
+          description: URL for the next page of results, or null on the last/empty page. Replay it unchanged to fetch the next page.
+      description: Pagination metadata
+      title: CustomInstructionListMeta
     CustomInstruction:
       type: object
       properties:
@@ -415,6 +356,32 @@ components:
       - enabled
       description: A custom instruction — system-level behavioral guidance for the AI Agent
       title: CustomInstruction
+    CustomInstructionCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          default: false
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type: string
+          description: Internal notes about this instruction (not shown to the Agent)
+        availability_rules:
+          type:
+          - string
+          - 'null'
+          description: Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Omit or send `null` for no rule. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
+      required:
+      - title
+      - text
+      description: Fields for creating a custom instruction
+      title: CustomInstructionCreate
     ErrorsErrorsItems:
       type: object
       properties:
@@ -433,6 +400,39 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
+    CustomInstructionUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Display name for the custom instruction (unique per Agent)
+        text:
+          type: string
+          description: The instruction content — the rule the Agent should follow
+        enabled:
+          type: boolean
+          description: Whether the instruction is enabled. False means inactive.
+        notes:
+          type: string
+          description: Internal notes about this instruction (not shown to the Agent). Send an empty string to blank it; omit it to leave the existing notes unchanged.
+        availability_rules:
+          type:
+          - string
+          - 'null'
+          description: Optional availability rule as a rule-expression string with `v("<variable_name>")` lookups. Send a non-empty string to set or replace it, `null` to clear it, or omit to leave it unchanged. A rule that references an unknown variable, or that is malformed or uses an unsupported operator, is rejected with 400.
+      description: Fields for updating a custom instruction. Only the fields provided are changed; omitted fields are left as they are.
+      title: CustomInstructionUpdate
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

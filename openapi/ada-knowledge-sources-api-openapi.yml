@@ -227,68 +227,6 @@ components:
       properties: {}
       description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
       title: KnowledgeSourceCreateRequestMetadata
-    knowledge_sources_delete_Response_204:
-      type: object
-      properties: {}
-      description: Empty response body
-      title: knowledge_sources_delete_Response_204
-    KnowledgeSourceCreateRequest:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the knowledge source
-        name:
-          type: string
-          description: The name of the knowledge source
-        metadata:
-          oneOf:
-          - $ref: '#/components/schemas/KnowledgeSourceCreateRequestMetadata'
-          - type: 'null'
-          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
-      required:
-      - id
-      - name
-      title: KnowledgeSourceCreateRequest
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
-    KnowledgeSourceUpdateRequestMetadata:
-      type: object
-      properties: {}
-      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
-      title: KnowledgeSourceUpdateRequestMetadata
-    KnowledgeSourceResponseMetadata:
-      type: object
-      properties: {}
-      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
-      title: KnowledgeSourceResponseMetadata
     KnowledgeSourceResponse:
       type: object
       properties:
@@ -327,6 +265,64 @@ components:
       - id
       - name
       title: KnowledgeSourceResponse
+    KnowledgeSourceUpdateRequestMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceUpdateRequestMetadata
+    KnowledgeSourceResponseStatus:
+      type: string
+      enum:
+      - deleting
+      - delete_failed
+      description: 'Deletion lifecycle status of the knowledge source: `deleting` while an asynchronous deletion is in progress, `delete_failed` if the deletion failed. `null` when no deletion is in progress.'
+      title: KnowledgeSourceResponseStatus
+    KnowledgeSourceCreateRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the knowledge source
+        name:
+          type: string
+          description: The name of the knowledge source
+        metadata:
+          oneOf:
+          - $ref: '#/components/schemas/KnowledgeSourceCreateRequestMetadata'
+          - type: 'null'
+          description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      required:
+      - id
+      - name
+      title: KnowledgeSourceCreateRequest
+    knowledge_sources_delete_Response_204:
+      type: object
+      properties: {}
+      description: Empty response body
+      title: knowledge_sources_delete_Response_204
+    KnowledgeSourceResponseMetadata:
+      type: object
+      properties: {}
+      description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
+      title: KnowledgeSourceResponseMetadata
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
     knowledge_sources_list_Response_200:
       type: object
       properties:
@@ -335,13 +331,6 @@ components:
           items:
             $ref: '#/components/schemas/KnowledgeSourceResponse'
       title: knowledge_sources_list_Response_200
-    KnowledgeSourceResponseStatus:
-      type: string
-      enum:
-      - deleting
-      - delete_failed
-      description: 'Deletion lifecycle status of the knowledge source: `deleting` while an asynchronous deletion is in progress, `delete_failed` if the deletion failed. `null` when no deletion is in progress.'
-      title: KnowledgeSourceResponseStatus
     KnowledgeSourceUpdateRequest:
       type: object
       properties:
@@ -359,6 +348,17 @@ components:
           - type: 'null'
           description: A dictionary of arbitrary key,value pairs.                     This data is not used by Ada, but can be used by the client to store additional information about                     the knowledge source.
       title: KnowledgeSourceUpdateRequest
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

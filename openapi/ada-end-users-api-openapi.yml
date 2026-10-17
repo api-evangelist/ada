@@ -261,12 +261,6 @@ paths:
               $ref: '#/components/schemas/CreateEndUserRequest'
 components:
   schemas:
-    EndUserRequestProfileSensitiveMetadataFields:
-      oneOf:
-      - type: string
-      - type: boolean
-      - type: integer
-      title: EndUserRequestProfileSensitiveMetadataFields
     CreateEndUserRequest:
       type: object
       properties:
@@ -279,16 +273,6 @@ components:
           $ref: '#/components/schemas/CreateEndUserRequestProfile'
           description: The end user's profile information. Optional — omitting profile creates a blank end user.
       title: CreateEndUserRequest
-    EndUserProfileSystemProperties:
-      type: object
-      properties:
-        sunshine_user_id:
-          type:
-          - string
-          - 'null'
-          description: The Sunshine Conversations user id for the end user
-      description: Read-only profile information set by Ada
-      title: EndUserProfileSystemProperties
     EndUserRequest:
       type: object
       properties:
@@ -312,17 +296,6 @@ components:
           description: Link to the next page of data using a cursor value
       description: Metadata returned with the results including but not limited to a link to the next page of data
       title: CursorPaginationMetadata
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
     EndUser:
       type: object
       properties:
@@ -344,140 +317,12 @@ components:
           type: string
           description: The date and time the end user was updated
       title: EndUser
-    EndUserRequestProfileSensitiveMetadata:
-      type: object
-      properties:
-        fields:
-          type: object
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadataFields'
-            - type: 'null'
-          description: A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Setting a key to null removes the metavariable. Maximum 20 key-value pairs per request.
-      required:
-      - fields
-      description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
-      title: EndUserRequestProfileSensitiveMetadata
-    End_Users_getEndUsers_Response_200:
-      oneOf:
-      - $ref: '#/components/schemas/EndUser'
-      - $ref: '#/components/schemas/EndUsers'
-      title: End Users_getEndUsers_Response_200
-    EndUserRequestProfile:
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's first name
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's last name
-        display_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's display name
-        avatar:
-          type:
-          - string
-          - 'null'
-          description: URL to the end user's avatar image
-        email:
-          type:
-          - string
-          - 'null'
-          description: The end user's email address
-        language:
-          type:
-          - string
-          - 'null'
-          description: The end user's language in BCP 47 format
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            description: Any type
-          description: 'A dictionary of arbitrary key, value pairs assigned to the end user.
-
-            <br>- `metadata` keys may only be of type: `string`
-
-            <br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`
-
-            <br>**Note**: The total size of metadata is limited to 10KB.</br>
-
-            '
-        sensitive_metadata:
-          oneOf:
-          - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadata'
-          - type: 'null'
-          description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
-      description: The end user's profile information
-      title: EndUserRequestProfile
-    EndUsers:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/EndUser'
-          description: The list of end user profiles
-        meta:
-          $ref: '#/components/schemas/CursorPaginationMetadata'
-      title: EndUsers
-    EndUserProfile:
-      type: object
-      properties:
-        first_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's first name
-        last_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's last name
-        display_name:
-          type:
-          - string
-          - 'null'
-          description: The end user's display name
-        avatar:
-          type:
-          - string
-          - 'null'
-          description: URL to the end user's avatar image
-        email:
-          type:
-          - string
-          - 'null'
-          description: The end user's email address
-        language:
-          type:
-          - string
-          - 'null'
-          description: The end user's language in BCP 47 format
-        metadata:
-          type: object
-          additionalProperties:
-            description: Any type
-          description: 'A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`'
-        system_properties:
-          $ref: '#/components/schemas/EndUserProfileSystemProperties'
-          description: Read-only profile information set by Ada
-      description: The end user's profile information
-      title: EndUserProfile
-    CreateEndUserRequestProfileSensitiveMetadataFields:
+    EndUserRequestProfileSensitiveMetadataFields:
       oneOf:
       - type: string
       - type: boolean
       - type: integer
-      title: CreateEndUserRequestProfileSensitiveMetadataFields
+      title: EndUserRequestProfileSensitiveMetadataFields
     CreateEndUserRequestProfile:
       type: object
       properties:
@@ -533,6 +378,21 @@ components:
           description: Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
       description: The end user's profile information. Optional — omitting profile creates a blank end user.
       title: CreateEndUserRequestProfile
+    EndUserProfileSystemProperties:
+      type: object
+      properties:
+        sunshine_user_id:
+          type:
+          - string
+          - 'null'
+          description: The Sunshine Conversations user id for the end user
+      description: Read-only profile information set by Ada
+      title: EndUserProfileSystemProperties
+    End_Users_getEndUsers_Response_200:
+      oneOf:
+      - $ref: '#/components/schemas/EndUser'
+      - $ref: '#/components/schemas/EndUsers'
+      title: End Users_getEndUsers_Response_200
     ErrorsErrorsItems:
       type: object
       properties:
@@ -551,6 +411,86 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
+    EndUserRequestProfileSensitiveMetadata:
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            oneOf:
+            - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadataFields'
+            - type: 'null'
+          description: A dictionary of sensitive key-value pairs. Keys must match the pattern [A-Za-z0-9_-]+. Values must be non-empty strings, booleans, integers, or null. Setting a key to null removes the metavariable. Maximum 20 key-value pairs per request.
+      required:
+      - fields
+      description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      title: EndUserRequestProfileSensitiveMetadata
+    EndUsers:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EndUser'
+          description: The list of end user profiles
+        meta:
+          $ref: '#/components/schemas/CursorPaginationMetadata'
+      title: EndUsers
+    EndUserRequestProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+          - string
+          - 'null'
+          description: The end user's email address
+        language:
+          type:
+          - string
+          - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            description: Any type
+          description: 'A dictionary of arbitrary key, value pairs assigned to the end user.
+
+            <br>- `metadata` keys may only be of type: `string`
+
+            <br>- `metadata` values may only be one of type: `string`, `boolean`, or `integer`
+
+            <br>**Note**: The total size of metadata is limited to 10KB.</br>
+
+            '
+        sensitive_metadata:
+          oneOf:
+          - $ref: '#/components/schemas/EndUserRequestProfileSensitiveMetadata'
+          - type: 'null'
+          description: Sensitive key-value pairs to update on the end user. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
+      description: The end user's profile information
+      title: EndUserRequestProfile
     CreateEndUserRequestProfileSensitiveMetadata:
       type: object
       properties:
@@ -565,6 +505,66 @@ components:
       - fields
       description: Sensitive key-value pairs to associate with the end user at creation time. Values are stored in an encrypted, isolated store and are never returned in any API response, dashboard view, conversation transcript, or LLM prompt. Values are automatically and permanently deleted after 24 hours.
       title: CreateEndUserRequestProfileSensitiveMetadata
+    CreateEndUserRequestProfileSensitiveMetadataFields:
+      oneOf:
+      - type: string
+      - type: boolean
+      - type: integer
+      title: CreateEndUserRequestProfileSensitiveMetadataFields
+    EndUserProfile:
+      type: object
+      properties:
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's first name
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's last name
+        display_name:
+          type:
+          - string
+          - 'null'
+          description: The end user's display name
+        avatar:
+          type:
+          - string
+          - 'null'
+          description: URL to the end user's avatar image
+        email:
+          type:
+          - string
+          - 'null'
+          description: The end user's email address
+        language:
+          type:
+          - string
+          - 'null'
+          description: The end user's language in BCP 47 format
+        metadata:
+          type: object
+          additionalProperties:
+            description: Any type
+          description: 'A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`'
+        system_properties:
+          $ref: '#/components/schemas/EndUserProfileSystemProperties'
+          description: Read-only profile information set by Ada
+      description: The end user's profile information
+      title: EndUserProfile
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

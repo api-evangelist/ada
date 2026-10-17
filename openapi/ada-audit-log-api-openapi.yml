@@ -103,17 +103,6 @@ paths:
                 $ref: '#/components/schemas/Errors'
 components:
   schemas:
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
     AuditLogEventList:
       type: object
       properties:
@@ -130,6 +119,24 @@ components:
       - meta
       description: A cursor-paginated page of Audit log events
       title: AuditLogEventList
+    ErrorsErrorsItems:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
     AuditLogEvent:
       type: object
       properties:
@@ -191,24 +198,17 @@ components:
           description: URL for the next page of results, or `null` on the last or empty page. Replay it unchanged to keep the time window and the cursor constant across pages.
       description: Pagination metadata
       title: AuditLogEventListMeta
-    ErrorsErrorsItems:
+    Errors:
       type: object
       properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
       required:
-      - type
-      - message
-      title: ErrorsErrorsItems
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

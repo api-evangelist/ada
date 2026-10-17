@@ -194,34 +194,6 @@ components:
       - id
       - name
       title: ArticleTag
-    Errors:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ArticleTagUpsertResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Whether the article tag was successfully created/updated
-        created:
-          type: boolean
-          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
-        id:
-          type: string
-          description: The id of the article tag
-      required:
-      - success
-      - created
-      - id
-      title: ArticleTagUpsertResponse
     ErrorsErrorsItems:
       type: object
       properties:
@@ -240,6 +212,34 @@ components:
       - type
       - message
       title: ErrorsErrorsItems
+    ArticleTagUpsertResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the article tag was successfully created/updated
+        created:
+          type: boolean
+          description: '`True` if a new article tag was created, `false` if an existing article tag was updated'
+        id:
+          type: string
+          description: The id of the article tag
+      required:
+      - success
+      - created
+      - id
+      title: ArticleTagUpsertResponse
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
   securitySchemes:
     BearerAuth:
       type: http

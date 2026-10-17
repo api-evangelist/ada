@@ -234,9 +234,11 @@ common:
 apis:
 - aid: ada:ada-mcp-server
   name: Ada MCP Server
-  description: Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation transcripts, knowledge
-    and coaching search, entity discovery, test cases and runs, change sets, and staged writes to Agent behaviour. Served from the customer's
-    own Ada instance host over JSON-RPC 2.0 (SSE is not supported), authenticated by OAuth with dashboard role-based access control, or by API
+  description: >-
+    Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation
+    transcripts, knowledge and coaching search, entity discovery, test cases and runs, change sets, and
+    staged writes to Agent behaviour. Served from the customer's own Ada instance host over JSON-RPC 2.0
+    (SSE is not supported), authenticated by OAuth with dashboard role-based access control, or by API
     key. Eighteen documented tools plus a nine-prompt library.
   humanURL: https://docs.ada.cx/mcp/introduction/overview
   baseURL: https://example.ada.support/api/mcp
@@ -389,7 +391,9 @@ apis:
     url: json-schema/ada-deletion-job-schema.json
 - aid: ada:ada-knowledge-api
   name: Ada Knowledge API
-  description: Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer questions.
+  description: >-
+    Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer
+    questions.
   humanURL: https://docs.ada.cx/reference/knowledge/overview
   baseURL: https://{handle}.ada.support/api/v2
   tags:
@@ -550,7 +554,8 @@ apis:
   - type: Documentation
     url: https://developers.ada.cx/reference/data-compliance/overview
   - type: JSONSchema
-    url: json-schema/ada-platform-integrations-create-platform-integration-response-200-schema.json
+    url: >-
+      json-schema/ada-platform-integrations-create-platform-integration-response-200-schema.json
   - type: JSONSchema
     url: json-schema/ada-platform-integration-schema.json
   - type: JSONSchema
@@ -604,7 +609,9 @@ apis:
     url: json-schema/ada-variables-list-response-200-schema.json
 - aid: ada:ada-integrations-api
   name: Ada Integrations (Actions) API
-  description: Configure and invoke Actions, the integration layer that lets the Ada AI Agent call external systems and APIs during a conversation.
+  description: >-
+    Configure and invoke Actions, the integration layer that lets the Ada AI Agent call external systems
+    and APIs during a conversation.
   humanURL: https://docs.ada.cx/reference/integrations/overview
   baseURL: https://{handle}.ada.support/api/v2
   tags:
@@ -620,7 +627,8 @@ apis:
     url: https://docs.ada.cx/reference/integrations/overview
 - aid: ada:ada-data-export-api
   name: Ada Data Export API
-  description: Export conversation, message, and analytics data from Ada to data warehouses and BI tooling.
+  description: >-
+    Export conversation, message, and analytics data from Ada to data warehouses and BI tooling.
   humanURL: https://docs.ada.cx/reference/data-export/overview
   baseURL: https://{handle}.ada.support/api/v2
   tags:
@@ -632,7 +640,8 @@ apis:
     url: https://docs.ada.cx/reference/data-export/overview
 - aid: ada:ada-data-compliance-api
   name: Ada Data Compliance API
-  description: Run data subject access requests, data deletion, and other compliance operations across the Ada platform.
+  description: >-
+    Run data subject access requests, data deletion, and other compliance operations across the Ada platform.
   humanURL: https://docs.ada.cx/reference/data-compliance/overview
   baseURL: https://{handle}.ada.support/api/v2
   tags:
@@ -644,7 +653,9 @@ apis:
     url: https://docs.ada.cx/reference/data-compliance/overview
 - aid: ada:ada-webhooks-api
   name: Ada Webhooks API
-  description: Configure and consume webhooks that notify external systems of conversation lifecycle events and other platform activity.
+  description: >-
+    Configure and consume webhooks that notify external systems of conversation lifecycle events and other
+    platform activity.
   humanURL: https://docs.ada.cx/reference/webhooks/overview
   baseURL: https://{handle}.ada.support/api/v2
   tags:
@@ -676,6 +687,26 @@ apis:
     url: https://docs.ada.cx/reference/end-users/overview
   - type: JSONSchema
     url: json-schema/ada-audit-log-event-list-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-user-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-create-end-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-users-get-end-users-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-list-webhooks-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-list-webhook-event-types-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-get-webhook-secret-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-delete-webhook-response-204-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-rotate-webhook-secret-response-200-schema.json
 - aid: ada:ada-end-users-api
   name: Ada End Users API
   description: The End Users API from Ada — 2 operation(s) for end users.
@@ -695,6 +726,8 @@ apis:
   - type: Documentation
     url: https://docs.ada.cx/reference/end-users/overview
   - type: JSONSchema
+    url: json-schema/ada-audit-log-event-list-schema.json
+  - type: JSONSchema
     url: json-schema/ada-end-user-schema.json
   - type: JSONSchema
     url: json-schema/ada-create-end-user-request-schema.json
@@ -702,6 +735,18 @@ apis:
     url: json-schema/ada-end-user-request-schema.json
   - type: JSONSchema
     url: json-schema/ada-end-users-get-end-users-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-list-webhooks-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-list-webhook-event-types-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-get-webhook-secret-response-200-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-delete-webhook-response-204-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-webhook-management-rotate-webhook-secret-response-200-schema.json
 - aid: ada:ada-webhook-management-api
   name: Ada Webhook Management API
   description: The Webhook Management API from Ada — 5 operation(s) for webhook management.
@@ -720,6 +765,16 @@ apis:
     url: https://developers.ada.cx/reference/data-compliance/overview
   - type: Documentation
     url: https://docs.ada.cx/reference/end-users/overview
+  - type: JSONSchema
+    url: json-schema/ada-audit-log-event-list-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-user-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-create-end-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-user-request-schema.json
+  - type: JSONSchema
+    url: json-schema/ada-end-users-get-end-users-response-200-schema.json
   - type: JSONSchema
     url: json-schema/ada-webhook-schema.json
   - type: JSONSchema

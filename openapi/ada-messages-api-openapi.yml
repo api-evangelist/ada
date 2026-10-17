@@ -208,35 +208,11 @@ paths:
       description: https://example.ada.support/
 components:
   schemas:
-    Errors:
+    MessageMessageData:
       type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ErrorsErrorsItems'
-          description: A list of errors
-      required:
-      - errors
-      title: Errors
-    ErrorsErrorsItems:
-      type: object
-      properties:
-        type:
-          type: string
-          description: The error type
-        message:
-          type: string
-          description: The error message
-        details:
-          type:
-          - string
-          - 'null'
-          description: Extra information about the error
-      required:
-      - type
-      - message
-      title: ErrorsErrorsItems
+      properties: {}
+      description: Data associated with this message
+      title: MessageMessageData
     Message:
       type: object
       properties:
@@ -310,11 +286,50 @@ components:
         meta:
           $ref: '#/components/schemas/MessagesResponseMeta'
       title: MessagesResponse
-    MessageMessageData:
+    ErrorsErrorsItems:
       type: object
-      properties: {}
-      description: Data associated with this message
-      title: MessageMessageData
+      properties:
+        type:
+          type: string
+          description: The error type
+        message:
+          type: string
+          description: The error message
+        details:
+          type:
+          - string
+          - 'null'
+          description: Extra information about the error
+      required:
+      - type
+      - message
+      title: ErrorsErrorsItems
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorsErrorsItems'
+          description: A list of errors
+      required:
+      - errors
+      title: Errors
+    MessagesResponse_2:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message_2'
+          description: Records returned from the query
+        message:
+          type: string
+          description: Request status message
+        next_page_uri:
+          type: string
+          description: Relative link to the next page of results matching the query
+      title: MessagesResponse
     Message_2:
       type: object
       properties:
@@ -360,21 +375,6 @@ components:
           type: string
           description: Internal ID of the message that this message is in response to. None if the message is not in response to another message
       title: Message
-    MessagesResponse_2:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message_2'
-          description: Records returned from the query
-        message:
-          type: string
-          description: Request status message
-        next_page_uri:
-          type: string
-          description: Relative link to the next page of results matching the query
-      title: MessagesResponse
   securitySchemes:
     bearerAuth:
       type: http
