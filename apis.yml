@@ -673,6 +673,8 @@ apis:
   humanURL: https://docs.ada.cx/mcp/introduction/overview
   baseURL: https://example.ada.support/api/mcp
   tags:
+  - Audit Logs
+  tags_raw:
   - Audit Log
   properties:
   - type: OpenAPI
