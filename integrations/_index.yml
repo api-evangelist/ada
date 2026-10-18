@@ -159,5 +159,5 @@
     - connectors/applications/ada
     vendor_link: https://www.ada.cx/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
