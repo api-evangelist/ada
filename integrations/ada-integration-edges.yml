@@ -6,6 +6,7 @@ source:
 - https://composio.dev/toolkits/ada
 - https://monid.ai/tools/ada
 checked:
+- gorgias/integrations/gorgias-integration-edges.yml
 - https://api.nuget.org/v3
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
@@ -256,6 +257,22 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Gorgias (own)
+  partner: gorgias
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.gorgias.com/apps/ada
+  mirror_of: gorgias/integrations/gorgias-integration-edges.yml
+  apps:
+  - Ada
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
 templates: []
 skips:
 - label: Salesforce
