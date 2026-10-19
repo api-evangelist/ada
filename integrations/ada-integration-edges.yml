@@ -6,9 +6,11 @@ source:
 - https://composio.dev/toolkits/ada
 - https://monid.ai/tools/ada
 checked:
+- https://api.nuget.org/v3
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/ada
+- https://crates.io/api/v1
 - https://docs.ada.cx/docs/channels/social/instagram-setup.md
 - https://docs.ada.cx/docs/channels/social/sunshine-conversations-setup.md
 - https://docs.ada.cx/docs/handoffs/genesys.md
@@ -23,6 +25,11 @@ checked:
 - https://fivetran.com/docs/connectors/partner-built-program
 - https://monid.ai/tools/ada
 - https://n8n.io/integrations/ada/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://www.ada.cx/integrations (403 to curl)
 - https://zapier.com/apps/ada/integrations
 summary: 'Ada names its partners in its docs, not a marketplace: contact-center handoffs (Zendesk, Salesforce, Genesys,
@@ -152,6 +159,102 @@ edges:
     vendor_link: https://www.ada.cx/
     builder: Fivetran
   detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: io.github.adasupport:android-sdk
+      version: 1.8.8
+      released: '2025-08-26'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk
+      repo_leg: github-org:adasupport
+      publisher_leg: org:adasupport
+      matched_by: github-org
+    - name: io.github.adasupport:android-sdk-appcompat
+      version: 1.8.8
+      released: '2025-08-26'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk-appcompat
+      repo_leg: github-org:adasupport
+      publisher_leg: org:adasupport
+      matched_by: github-org
+    - name: io.github.adasupport:android-sdk-appcompat-legacy
+      version: 1.8.8
+      released: '2025-08-26'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk-appcompat-legacy
+      repo_leg: github-org:adasupport
+      publisher_leg: org:adasupport
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@ada-support/ada-widget-sdk
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@ada-support/ada-widget-sdk'
+      version: 2.7.2
+      released: '2026-03-31'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@ada-support/ada-widget-sdk
+      repo_leg: github-org:adasupport
+      publisher_leg: org:ada-support
+      matched_by: github-org
+    - name: '@ada-support/embed-types'
+      version: 1.10.2
+      released: '2026-09-02'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@ada-support/embed-types
+      repo_leg: github-org:adasupport
+      publisher_leg: org:ada-support
+      matched_by: github-org
+    - name: '@ada-support/embed2'
+      version: 1.16.11
+      released: '2026-10-15'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@ada-support/embed2
+      repo_leg: github-org:adasupport
+      publisher_leg: org:ada-support
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
 templates: []
 skips:

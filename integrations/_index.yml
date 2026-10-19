@@ -161,3 +161,101 @@
     builder: Fivetran
   status: not-a-workflow
   arazzo: null
+- slug: ada-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: io.github.adasupport:android-sdk
+      version: 1.8.8
+      released: '2025-08-26'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk
+      repo_leg: github-org:adasupport
+      publisher_leg: org:adasupport
+      matched_by: github-org
+    - name: io.github.adasupport:android-sdk-appcompat
+      version: 1.8.8
+      released: '2025-08-26'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk-appcompat
+      repo_leg: github-org:adasupport
+      publisher_leg: org:adasupport
+      matched_by: github-org
+    - name: io.github.adasupport:android-sdk-appcompat-legacy
+      version: 1.8.8
+      released: '2025-08-26'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/io.github.adasupport/android-sdk-appcompat-legacy
+      repo_leg: github-org:adasupport
+      publisher_leg: org:adasupport
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: ada-npm-registry
+  label: npm registry
+  partner: npm
+  partner_name: npm registry
+  category: official SDK (JavaScript/TypeScript)
+  type: register
+  channel: package-registry
+  evidence: https://www.npmjs.com/package/@ada-support/ada-widget-sdk
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@ada-support/ada-widget-sdk'
+      version: 2.7.2
+      released: '2026-03-31'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@ada-support/ada-widget-sdk
+      repo_leg: github-org:adasupport
+      publisher_leg: org:ada-support
+      matched_by: github-org
+    - name: '@ada-support/embed-types'
+      version: 1.10.2
+      released: '2026-09-02'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@ada-support/embed-types
+      repo_leg: github-org:adasupport
+      publisher_leg: org:ada-support
+      matched_by: github-org
+    - name: '@ada-support/embed2'
+      version: 1.16.11
+      released: '2026-10-15'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@ada-support/embed2
+      repo_leg: github-org:adasupport
+      publisher_leg: org:ada-support
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
