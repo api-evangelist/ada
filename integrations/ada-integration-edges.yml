@@ -10,6 +10,7 @@ checked:
 - https://api.nuget.org/v3
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
+- https://cloudsecurityalliance.org/star/registry
 - https://composio.dev/toolkits/ada
 - https://crates.io/api/v1
 - https://docs.ada.cx/docs/channels/social/instagram-setup.md
@@ -22,6 +23,7 @@ checked:
 - https://docs.ada.cx/docs/handoffs/zendesk.md
 - https://docs.ada.cx/docs/knowledge/content-ingestion/knowledge-integration.md
 - https://docs.ada.cx/llms.txt
+- https://eucoc.cloud/en/public-register/list-of-adherent-services
 - https://fivetran.com/docs-sitemap.xml
 - https://fivetran.com/docs/connectors/partner-built-program
 - https://monid.ai/tools/ada
@@ -135,32 +137,6 @@ edges:
   seller_name: Ada
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
-- partner_name: Fivetran
-  partner: fivetran
-  partner_match: aggregator
-  type: marketplace
-  marketplace: fivetran-connectors
-  channel: elt-connector
-  relationship: ipaas-bridge
-  direction: third-party
-  evidence: https://fivetran.com/docs/connectors/applications/ada
-  category: null
-  contract_reference:
-    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
-    spec_file: null
-    role: elt-connector:fivetran
-    registered_name: Ada
-    matched_domain: ada.cx
-    matched_by: domain
-    detected_by: sweep-data-integration.py
-    detected: '2026-10-18'
-    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
-    connector_paths:
-    - connectors/applications/ada
-    vendor_link: https://www.ada.cx/
-    builder: Fivetran
-  detected_by: sweep-data-integration.py
-  first_seen: '2026-10-18'
 - partner_name: Maven Central
   partner: maven-central
   partner_match: register
@@ -273,6 +249,63 @@ edges:
   listing_count: 1
   detected: '2026-10-19'
   detected_by: mirror-platform-listings.py
+- partner_name: Fivetran
+  partner: fivetran
+  partner_match: aggregator
+  type: marketplace
+  marketplace: fivetran-connectors
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://fivetran.com/docs/connectors/applications/ada
+  category: null
+  contract_reference:
+    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
+    spec_file: null
+    role: elt-connector:fivetran
+    registered_name: Ada
+    matched_domain: ada.cx
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    connector_paths:
+    - connectors/applications/ada
+    vendor_link: https://www.ada.cx/
+    builder: Fivetran
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Cloud Security Alliance STAR Registry
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://cloudsecurityalliance.org/star/registry/ada/services/ada
+  category: Cloud security assurance
+  contract_reference:
+    register: CSA STAR Registry (cloudsecurityalliance.org/star/registry)
+    spec_file: null
+    standard: CSA STAR
+    role: star-level-1
+    registered_name: Ada
+    registry_id: ada
+    service_url: https://www.ada.cx/
+    matched_domain: ada.cx
+    matched_by: domain
+    identity_source: the service URL the organisation filed on its STAR listing (no lookup)
+    levels:
+    - AIUC-1
+    - Partner Entries
+    certified_products: []
+    signal_note: STAR Level 1 (CAIQ self-assessment) = participation; certified_products = one entry per STAR Level
+      2 / STAR for AI Level 2 assessment TYPE (third-party certification, attestation, C-STAR, ValidAIted); lapsed
+      = every instance marked (Deprecated) by the registry; service counts never recorded
+    detected_by: sweep-compliance-assurance.py
+    detected: '2026-10-20'
+  detected_by: sweep-compliance-assurance.py
+  first_seen: '2026-10-20'
 templates: []
 skips:
 - label: Salesforce
