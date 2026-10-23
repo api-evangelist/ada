@@ -12,6 +12,9 @@ artifacts:
   authentication/ada-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  capabilities/ada-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/ada-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -97,12 +100,87 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   finops/ada-finops.yml:
-    method: unknown
-    evidence: no authorship recorded
+    method: generated
+    evidence: declared in the artifact
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/ada-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/ada-dixa-article-to-ada-knowledge-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  integrations/ada-dixa-article-to-ada-knowledge.yml:
+    method: generated
+    evidence: declared in the artifact
+  integrations/ada-gladly-answer-to-ada-knowledge-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  integrations/ada-gladly-answer-to-ada-knowledge.yml:
+    method: generated
+    evidence: declared in the artifact
+  integrations/ada-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
+  integrations/ada-integration-map.yml:
+    method: unknown
+    evidence: no authorship recorded
+  integrations/ada-zendesk-handoff-ticket-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  integrations/ada-zendesk-handoff-ticket.yml:
+    method: generated
+    evidence: declared in the artifact
   json-ld/ada-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-article-tag-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-article-tag-upsert-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-attachment-upload-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-audit-log-event-list-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-channels-get-channels-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-conversation-3-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-conversation-create-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-conversation-patch-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-create-end-user-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-custom-channel-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-custom-instruction-create-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-custom-instruction-list-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-custom-instruction-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-custom-instruction-update-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-custom-instructions-delete-custom-instruction-response-204-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/ada-data-compliance-schemas.json:
@@ -114,130 +192,136 @@ artifacts:
   json-schema/ada-data-export-v1-4-schemas.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/ada-delete-subject-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-delete-subject-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-deletion-job-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-deletion-request-accepted-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-deletion-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-email-conversation-create-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-end-user-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-end-user-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-end-users-get-end-users-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-article-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-article-upsert-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-article-upsert-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-articles-delete-by-id-response-204-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-articles-delete-response-204-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-articles-list-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/ada-knowledge-schemas.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  json-schema/ada-knowledge-source-create-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-source-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-source-update-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-sources-delete-response-204-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-sources-list-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-tags-delete-response-204-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-knowledge-tags-list-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-message-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-messages-response-2-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-messages-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-persona-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-persona-update-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-platform-integration-create-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-platform-integration-installation-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-platform-integration-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-platform-integration-update-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-platform-integrations-create-platform-integration-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-platform-integrations-get-platform-integrations-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-update-channel-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-variable-summary-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-variables-list-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-webhook-management-delete-webhook-response-204-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-webhook-management-get-webhook-secret-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-webhook-management-list-webhook-event-types-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-webhook-management-list-webhooks-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-webhook-management-rotate-webhook-secret-response-200-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/ada-webhook-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -321,10 +405,28 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/ada-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
   llms/ada-generative-llms.txt:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
+  llms/ada-llms-provenance.yml:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
   llms/ada-llms.txt:
@@ -341,12 +443,12 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/ada-data-compliance-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://docs.ada.cx/openapi/data-compliance-deprecated.yaml (sha256
+      b218fab486cb, fetched 2026-10-04)
   openapi/_original/ada-data-export-openapi.yml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://docs.ada.cx/_fern-files/ada.docs.buildwithfern.com/6c1b0526c08fc24b1c9f72ed76cf2ecde9c97649bc9858b8319068b7459302fe/apis/data-export-v2/openapi.json
+      (sha256 6c1b0526c08f, fetched 2026-10-04)
   openapi/_original/ada-data-export-v1-4-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
@@ -406,34 +508,82 @@ artifacts:
   openapi/ada-webhook-management-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/ada-audit-log-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-channels-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-conversations-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-custominstructions-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-deletechatterdata-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-end-users-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-getdeletionjob-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-knowledge-articles-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-knowledge-sources-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-knowledge-tags-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-messages-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-persona-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-platformintegrations-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/ada-submitdeletionrequest-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/ada-subpackage-channels-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-conversations-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-deletechatterdata-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-endusers-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-knowledge-subpackage-knowledge-articles-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-knowledge-subpackage-knowledge-sources-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-knowledge-subpackage-knowledge-tags-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-messages-overlay.yaml:
-    method: generated
-    evidence: declared in the artifact
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   overlays/ada-subpackage-platformintegrations-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/ada-subpackage-webhookmanagement-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/ada-variables-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
-  overlays/ada-subpackage-webhookmanagement-overlay.yaml:
+  overlays/ada-webhook-management-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/ada-packages.yml:
@@ -446,6 +596,9 @@ artifacts:
     method: searched
     evidence: declared in the artifact
   rules/ada-jsonschema-spectral-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  rules/ada-rules.yml:
     method: generated
     evidence: declared in the artifact
   sandbox/ada-sandbox.yml:
@@ -484,9 +637,12 @@ artifacts:
   skills/ada-performance-check.md:
     method: unknown
     evidence: no authorship recorded
-  vocabulary/ada-vocabulary.yml:
+  vendors/ada-vendors.yml:
     method: unknown
     evidence: no authorship recorded
+  vocabulary/ada-vocabulary.yml:
+    method: derived
+    evidence: declared in the artifact
   well-known/ada-api-catalog.json:
     method: unknown
     evidence: no authorship recorded
