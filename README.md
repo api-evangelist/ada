@@ -1,4 +1,4 @@
-# Ada (ada)
+# Ada
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,75 +64,270 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ada is an AI-powered customer service automation platform that enables enterprises to deploy AI agents capable of resolving customer inquiries across digital channels. The platform exposes a suite of REST APIs for managing knowledge bases, end-user profiles, conversation handling, data export, data compliance, and external integrations. All APIs authenticate via rotatable API keys, return JSON, and support cursor-based pagination. Ada serves global brands including Pinterest, Square, Ancestry, and Zendesk, and has powered more than 6.4 billion customer interactions since 2016.
+Ada is an AI-powered customer service automation platform that enables enterprises to deploy AI agents capable of resolving customer inquiries across digital channels without human intervention. The platform exposes a suite of REST APIs for managing knowledge bases, end-user profiles, conversation handling, data export, data compliance, and external integrations. All APIs use rotatable API keys for authentication, return JSON, and support cursor-based pagination. Ada serves global brands including Pinterest, Square, Ancestry, and Zendesk, and has powered more than 6.4 billion customer interactions since its founding in 2016.
 
-**APIs.json:** https://raw.githubusercontent.com/api-evangelist/ada/refs/heads/main/apis.yml
+**Areas:** Artificial Intelligence · Customer Service · Chatbots · Automation · Conversational AI · Help Desk · CRM · Integration · Knowledge Management · Data Export · Canada
 
-**Naftiko:** https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=ada-api-evangelist&utm_content=repo
+## Ada on APIs.io
 
----
+Everything profiled for Ada is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ada/](https://apis.io/providers/ada/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (22)
 
-`ai` `customer-service` `chatbot` `automation` `conversational-ai` `helpdesk` `crm` `integrations` `knowledge-management` `data-export`
+- [Ada MCP Server](https://apis.io/apis/ada/ada-mcp-server/) — Model Context Protocol server exposing Ada's management surface to AI assistants — metrics, conversation transcripts, knowledge and coaching search, entity…
+- [Ada Channels API](https://apis.io/apis/ada/ada-channels-api/) — The channels API from Ada — 2 operation(s) for channels.
+- [Ada Conversations API](https://apis.io/apis/ada/ada-conversations-api/) — Read and manage conversations handled by the Ada AI Agent across all supported channels.
+- [Ada Custom Instructions API](https://apis.io/apis/ada/ada-custominstructions-api/) — The customInstructions API from Ada — 2 operation(s) for custominstructions.
+- [Ada Delete Chatter Data API](https://apis.io/apis/ada/ada-deletechatterdata-api/) — The deleteChatterData API from Ada — 1 operation(s) for deletechatterdata.
+- [Ada Get Deletion Job API](https://apis.io/apis/ada/ada-getdeletionjob-api/) — The getDeletionJob API from Ada — 1 operation(s) for getdeletionjob.
+- [Ada Knowledge API](https://apis.io/apis/ada/ada-knowledge-api/) — Manage knowledge sources, articles, and tags that Ada's AI Agent uses to ground answers to customer questions.
+- [Ada knowledge > articles API](https://apis.io/apis/ada/ada-knowledge-articles-api/) — The knowledge > articles API from Ada — 3 operation(s) for knowledge > articles.
+- [Ada knowledge > sources API](https://apis.io/apis/ada/ada-knowledge-sources-api/) — The knowledge > sources API from Ada — 2 operation(s) for knowledge > sources.
+- [Ada knowledge > tags API](https://apis.io/apis/ada/ada-knowledge-tags-api/) — The knowledge > tags API from Ada — 3 operation(s) for knowledge > tags.
+- [Ada Messages API](https://apis.io/apis/ada/ada-messages-api/) — The messages API from Ada — 2 operation(s) for messages.
+- [Ada Persona API](https://apis.io/apis/ada/ada-persona-api/) — The persona API from Ada — 1 operation(s) for persona.
+- [Ada Platform Integrations API](https://apis.io/apis/ada/ada-platformintegrations-api/) — The platformIntegrations API from Ada — 4 operation(s) for platformintegrations.
+- [Ada Submit Deletion Request API](https://apis.io/apis/ada/ada-submitdeletionrequest-api/) — The submitDeletionRequest API from Ada — 1 operation(s) for submitdeletionrequest.
+- [Ada Variables API](https://apis.io/apis/ada/ada-variables-api/) — The Variables API from Ada — 2 operation(s) for variables.
+- [Ada Integrations (Actions) API](https://apis.io/apis/ada/ada-integrations-api/) — Configure and invoke Actions, the integration layer that lets the Ada AI Agent call external systems and APIs during a conversation.
+- [Ada Data Export API](https://apis.io/apis/ada/ada-data-export-api/) — Export conversation, message, and analytics data from Ada to data warehouses and BI tooling.
+- [Ada Data Compliance API](https://apis.io/apis/ada/ada-data-compliance-api/) — Run data subject access requests, data deletion, and other compliance operations across the Ada platform.
+- [Ada Webhooks API](https://apis.io/apis/ada/ada-webhooks-api/) — Configure and consume webhooks that notify external systems of conversation lifecycle events and other platform activity.
+- [Ada Audit Log API](https://apis.io/apis/ada/ada-audit-log-api/) — The Audit Log API from Ada — 1 operation(s) for audit log.
+- [Ada End Users API](https://apis.io/apis/ada/ada-end-users-api/) — The End Users API from Ada — 2 operation(s) for end users.
+- [Ada Webhook Management API](https://apis.io/apis/ada/ada-webhook-management-api/) — The Webhook Management API from Ada — 5 operation(s) for webhook management.
 
----
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-| Name | Description |
-|------|-------------|
-| Ada Knowledge API | Import and sync knowledge articles into Ada for AI-generated responses |
-| Ada End Users API | Real-time user profile management with webhook events |
-| Ada Conversations API | Build custom channels and extend Ada into third-party platforms |
-| Ada Data Export API | Access conversation and message records for analytics |
-| Ada Data Compliance API | Delete personal data by email for GDPR compliance |
-| Ada Integrations API | Connect external applications to Ada via OAuth |
+#### AsyncAPI (1)
 
----
+Event-driven and webhook contracts.
 
-## Plans / Rate Limits / FinOps
+- [Ada Webhooks](https://apis.io/asyncapis/ada/ada-webhooks/)
 
-| Resource | Detail |
-|----------|--------|
-| Pricing model | Enterprise only; conversation-based ($0.35–$1.50/conversation) or resolution-based ($1.00–$3.50/resolution) |
-| Minimum contract | ~$30,000 USD/year |
-| Global rate limit | 10 req/sec, 100 req/min, 10,000 req/day |
-| End Users & Conversations APIs | 30 req/sec, 300 req/min, 60,000 req/day |
-| Data Export API | 10 req/sec/endpoint, 15,000 req/day |
-| Throttle response | HTTP 429 Too Many Requests |
-| FinOps billing model | Consumption (conversation or resolution units) |
+#### GraphQL (1)
 
-- Plans: [plans/ada-plans-pricing.yml](plans/ada-plans-pricing.yml)
-- Rate Limits: [rate-limits/ada-rate-limits.yml](rate-limits/ada-rate-limits.yml)
-- FinOps: [finops/ada-finops.yml](finops/ada-finops.yml)
+GraphQL schemas.
 
----
+- [Moved to /providers/ada/](https://apis.io/graphqls/ada/ada-graphql/)
 
-## Timestamps
+#### MCP servers (1)
 
-| Field | Value |
-|-------|-------|
-| Created | 2026-06-12 |
-| Modified | 2026-06-12 |
+Model Context Protocol servers that expose the API to agents.
 
----
+- [ada-mcp.yml](https://apis.io/servers/ada/ada-mcp-yml/)
 
-## Common Properties
+#### Agentic access (1)
 
-| Type | URL |
-|------|-----|
-| Website | https://www.ada.cx/ |
-| Documentation | https://docs.ada.cx/reference/introduction/overview |
-| GitHub Organization | https://github.com/adasupport |
-| LinkedIn | https://ca.linkedin.com/company/ada-cx |
-| Blog | https://www.ada.cx/blog/ |
-| Pricing | https://www.ada.cx/platform/ |
-| Status Page | https://status.ada.support/ |
-| X (Twitter) | https://x.com/ada_cx |
+Which operations an agent can call, which act, and which need a human in the loop.
 
----
+- [Ada Agentic Access](https://apis.io/agentic-access/ada/ada-agentic-access/)
 
-## Maintainers
+#### JSON Schema (61)
 
-**Kin Lane** — kin@apievangelist.com
+The data models the API reads and writes.
+
+- [ArticleTag](https://apis.io/schemas/ada/ada-article-tag/)
+- [ArticleTagUpsertResponse](https://apis.io/schemas/ada/ada-article-tag-upsert-response/)
+- [AttachmentUploadResponse](https://apis.io/schemas/ada/ada-attachment-upload-response/)
+- [AuditLogEventList](https://apis.io/schemas/ada/ada-audit-log-event-list/)
+- [Channels_getChannels_Response_200](https://apis.io/schemas/ada/ada-channels-get-channels-response-200/)
+- [Conversation](https://apis.io/schemas/ada/ada-conversation-3/)
+- [ConversationCreateRequest](https://apis.io/schemas/ada/ada-conversation-create-request/)
+- [ConversationPatchRequest](https://apis.io/schemas/ada/ada-conversation-patch-request/)
+- [CreateEndUserRequest](https://apis.io/schemas/ada/ada-create-end-user-request/)
+- [CustomChannel](https://apis.io/schemas/ada/ada-custom-channel/)
+- [CustomInstruction](https://apis.io/schemas/ada/ada-custom-instruction/)
+- [CustomInstructionCreate](https://apis.io/schemas/ada/ada-custom-instruction-create/)
+- [CustomInstructionList](https://apis.io/schemas/ada/ada-custom-instruction-list/)
+- [CustomInstructionUpdate](https://apis.io/schemas/ada/ada-custom-instruction-update/)
+- [Custom Instructions_deleteCustomInstruction_Response_204](https://apis.io/schemas/ada/ada-custom-instructions-delete-custom-instruction-response-204/)
+- [Ada Data Compliance Schemas](https://apis.io/schemas/ada/ada-data-compliance-schemas/)
+- [Ada Data Export Schemas](https://apis.io/schemas/ada/ada-data-export-schemas/)
+- [Ada Data Export V1 4 Schemas](https://apis.io/schemas/ada/ada-data-export-v1-4-schemas/)
+- [DeleteSubjectRequest](https://apis.io/schemas/ada/ada-delete-subject-request/)
+- [DeleteSubjectResponse](https://apis.io/schemas/ada/ada-delete-subject-response/)
+- [DeletionJob](https://apis.io/schemas/ada/ada-deletion-job/)
+- [DeletionRequest](https://apis.io/schemas/ada/ada-deletion-request/)
+- [DeletionRequestAccepted](https://apis.io/schemas/ada/ada-deletion-request-accepted/)
+- [EmailConversationCreateRequest](https://apis.io/schemas/ada/ada-email-conversation-create-request/)
+- [EndUser](https://apis.io/schemas/ada/ada-end-user/)
+- …and 36 more published on APIs.io
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Ada Context](https://apis.io/jsonld/ada/ada-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Ada API Vocabulary](https://apis.io/vocabularies/ada/ada-vocabulary/)
+
+#### Examples (1)
+
+Example requests and responses.
+
+- [Ada Knowledge Examples](https://apis.io/examples/ada/ada-knowledge-examples/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Data Compliance subpackage_channels API](https://apis.io/collections/ada/open-ada-subpackage-channels-api/)
+- [Data Compliance subpackage_channels subpackage_conversations API](https://apis.io/collections/ada/open-ada-subpackage-conversations-api/)
+- [Data Compliance subpackage_channels subpackage_deleteChatterData API](https://apis.io/collections/ada/open-ada-subpackage-deletechatterdata-api/)
+- [Data Compliance subpackage_channels subpackage_endUsers API](https://apis.io/collections/ada/open-ada-subpackage-endusers-api/)
+- [Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/articles API](https://apis.io/collections/ada/open-ada-subpackage-knowledge-subpackage-knowledge-articles-api/)
+- [Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/sources API](https://apis.io/collections/ada/open-ada-subpackage-knowledge-subpackage-knowledge-sources-api/)
+- [Data Compliance subpackage_channels subpackage_knowledge.subpackage_knowledge/tags API](https://apis.io/collections/ada/open-ada-subpackage-knowledge-subpackage-knowledge-tags-api/)
+- [Data Compliance subpackage_channels subpackage_messages API](https://apis.io/collections/ada/open-ada-subpackage-messages-api/)
+- [Data Compliance subpackage_channels subpackage_platformIntegrations API](https://apis.io/collections/ada/open-ada-subpackage-platformintegrations-api/)
+- [Data Compliance subpackage_channels subpackage_webhookManagement API](https://apis.io/collections/ada/open-ada-subpackage-webhookmanagement-api/)
+
+#### Overlays (26)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ada Audit Log Api Phrasing Overlay](https://apis.io/overlays/ada/ada-audit-log-api-phrasing-overlay/)
+- [Ada Channels Api Phrasing Overlay](https://apis.io/overlays/ada/ada-channels-api-phrasing-overlay/)
+- [Ada Conversations Api Phrasing Overlay](https://apis.io/overlays/ada/ada-conversations-api-phrasing-overlay/)
+- [Ada Custominstructions Api Phrasing Overlay](https://apis.io/overlays/ada/ada-custominstructions-api-phrasing-overlay/)
+- [Ada Deletechatterdata Api Phrasing Overlay](https://apis.io/overlays/ada/ada-deletechatterdata-api-phrasing-overlay/)
+- [Ada End Users Api Phrasing Overlay](https://apis.io/overlays/ada/ada-end-users-api-phrasing-overlay/)
+- [Ada Getdeletionjob Api Phrasing Overlay](https://apis.io/overlays/ada/ada-getdeletionjob-api-phrasing-overlay/)
+- [Ada Knowledge Articles Api Phrasing Overlay](https://apis.io/overlays/ada/ada-knowledge-articles-api-phrasing-overlay/)
+- [Ada Knowledge Sources Api Phrasing Overlay](https://apis.io/overlays/ada/ada-knowledge-sources-api-phrasing-overlay/)
+- [Ada Knowledge Tags Api Phrasing Overlay](https://apis.io/overlays/ada/ada-knowledge-tags-api-phrasing-overlay/)
+- [Ada Messages Api Phrasing Overlay](https://apis.io/overlays/ada/ada-messages-api-phrasing-overlay/)
+- [Ada Persona Api Phrasing Overlay](https://apis.io/overlays/ada/ada-persona-api-phrasing-overlay/)
+- [Ada Platformintegrations Api Phrasing Overlay](https://apis.io/overlays/ada/ada-platformintegrations-api-phrasing-overlay/)
+- [Ada Submitdeletionrequest Api Phrasing Overlay](https://apis.io/overlays/ada/ada-submitdeletionrequest-api-phrasing-overlay/)
+- [Ada Subpackage Channels Overlay](https://apis.io/overlays/ada/ada-subpackage-channels-overlay/)
+- [Ada Subpackage Conversations Overlay](https://apis.io/overlays/ada/ada-subpackage-conversations-overlay/)
+- [Ada Subpackage Deletechatterdata Overlay](https://apis.io/overlays/ada/ada-subpackage-deletechatterdata-overlay/)
+- [Ada Subpackage Endusers Overlay](https://apis.io/overlays/ada/ada-subpackage-endusers-overlay/)
+- [Ada Subpackage Knowledge Subpackage Knowledge Articles Overlay](https://apis.io/overlays/ada/ada-subpackage-knowledge-subpackage-knowledge-articles-overlay/)
+- [Ada Subpackage Knowledge Subpackage Knowledge Sources Overlay](https://apis.io/overlays/ada/ada-subpackage-knowledge-subpackage-knowledge-sources-overlay/)
+- [Ada Subpackage Knowledge Subpackage Knowledge Tags Overlay](https://apis.io/overlays/ada/ada-subpackage-knowledge-subpackage-knowledge-tags-overlay/)
+- [Ada Subpackage Messages Overlay](https://apis.io/overlays/ada/ada-subpackage-messages-overlay/)
+- [Ada Subpackage Platformintegrations Overlay](https://apis.io/overlays/ada/ada-subpackage-platformintegrations-overlay/)
+- [Ada Subpackage Webhookmanagement Overlay](https://apis.io/overlays/ada/ada-subpackage-webhookmanagement-overlay/)
+- [Ada Variables Api Phrasing Overlay](https://apis.io/overlays/ada/ada-variables-api-phrasing-overlay/)
+- …and 1 more published on APIs.io
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Ada — jsonschema rules](https://apis.io/rules/ada/ada-jsonschema-spectral-rules/)
+- [Ada API Rules](https://apis.io/rules/ada/ada-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ada Authentication](https://apis.io/security/ada/ada-authentication/)
+- [Ada Domain Security](https://apis.io/security/ada/ada-domain-security/)
+- [Ada Trust Center](https://apis.io/security/ada/ada-trust-center/)
+- [Ada Vulnerability Disclosure](https://apis.io/security/ada/ada-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Ada Scopes](https://apis.io/scopes/ada/ada-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ada Plans Pricing](https://apis.io/plans/ada/ada-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ada Rate Limits](https://apis.io/rate-limits/ada/ada-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Ada Finops](https://apis.io/finops/ada/ada-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.ada.cx/)
+- [Documentation](https://docs.ada.cx/reference/introduction/overview)
+- [Getting started](https://docs.ada.cx/docs/welcome/getting-started)
+- [API reference](https://docs.ada.cx/generative/reference)
+- [Pricing](https://www.ada.cx/platform/)
+- [Blog](https://www.ada.cx/blog/)
+- [Security](https://www.ada.cx/legal/vulnerability-disclosure/)
+- [Compliance](https://security.ada.cx/)
+- [Terms of service](https://www.ada.cx/legal/customer-terms-of-use/)
+- [Privacy policy](https://www.ada.cx/legal/privacy-policy/)
+- [GitHub](https://github.com/adasupport)
+- [Status](https://status.ada.support/)
+
+## API Evangelist rating
+
+**Kin Score 87.6** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 83.3 |
+| Contract quality | 72.0 |
+| Contract governance | 35.6 |
+| Operational transparency | 92.1 |
+| Developer ergonomics | 85.7 |
+| Access clarity | 75.0 |
+
+**Agent readiness 47.4** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | templated |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 41.8** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ada/](https://apis.io/providers/ada/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ada: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ada/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
